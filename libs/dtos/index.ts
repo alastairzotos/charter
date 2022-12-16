@@ -1,4 +1,8 @@
-export interface Person {
+export interface OperatorDto {
+  _id: string;
   name: string;
-  age: number;
+  email: string;
+  phoneNumber: string;
+  address: string;
+  photo: string;
 }
