@@ -16,6 +16,9 @@ export class User implements LoggedInUserDetails {
 
   @Prop()
   givenName: string;
+
+  @Prop()
+  role: 'user' | 'admin';
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

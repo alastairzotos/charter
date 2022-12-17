@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    const auth = headers.authentication;
+    const auth = headers.authentication || headers.authorization;
     if (!auth) {
       return false;
     }
@@ -41,6 +41,7 @@ export class AuthGuard implements CanActivate {
 
     try {
       const payload = jwt.verify(token, this.envService.get().jwtSigningKey) as jwt.JwtPayload;
+
       if (!payload) {
         return false;
       }

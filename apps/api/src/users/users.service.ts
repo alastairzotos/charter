@@ -29,11 +29,12 @@ export class UsersService {
     await this.usersRepository.deleteUser(id);
   }
 
-  async registerUser({ givenName, email, password }: RegisterDetails): Promise<LoginResponse> {
+  async registerUser({ givenName, email, role = 'user', password }: RegisterDetails): Promise<LoginResponse> {
     const user = await this.usersRepository.registerUser(
       {
         givenName,
-        email
+        email,
+        role,
       },
       await bcrypt.hash(password, 10)
     );
