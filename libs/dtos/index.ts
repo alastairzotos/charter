@@ -14,7 +14,7 @@ export interface LoginResponse {
 export interface UserDetails {
   email: string;
   givenName: string;
-  role: 'user' | 'admin';
+  role?: 'user' | 'admin';
 }
 
 export interface RegisterDetails extends UserDetails {
