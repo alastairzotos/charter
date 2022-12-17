@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from 'mongoose';
 import { Operator } from "../schemas/operator.schema";
-import { OperatorDto } from 'dtos';
+import { OperatorDto, OperatorNoId } from 'dtos';
 
 @Injectable()
 export class OperatorsRepository {
@@ -14,7 +14,11 @@ export class OperatorsRepository {
     return await this.operatorsModel.find();
   }
 
-  async createOperator(operator: OperatorDto) {
+  async getOperatorById(id: string) {
+    return await this.operatorsModel.findById(id);
+  }
+
+  async createOperator(operator: OperatorNoId) {
     const { _id } = await this.operatorsModel.create(operator);
 
     return _id;

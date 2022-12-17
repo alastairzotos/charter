@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useUserState } from "../src/state/user";
 
 export default function Web() {
@@ -9,6 +10,7 @@ export default function Web() {
       {!!user && <p>Welcome {user.givenName}</p>}
       {!user && <p>Welcome user</p>}
       
+      <Link href="/operators">Operators</Link>
     </div>
   );
 }

@@ -26,7 +26,7 @@ export interface UserStateActions {
 
 export type UserState = UserStateValues & UserStateActions;
 
-const createUserState = (
+export const createUserState = (
   initialState: UserStateValues,
   userService: IUserService,
   localStorage: ILocalStorageService,

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { OperatorsRepository } from "./operators.repository";
-import { OperatorDto } from 'dtos';
+import { OperatorDto, OperatorNoId } from 'dtos';
 
 @Injectable()
 export class OperatorsService {
@@ -10,7 +10,11 @@ export class OperatorsService {
     return await this.operatorsRepo.getOperators();
   }
 
-  async createOperator(operator: OperatorDto) {
+  async getOperatorById(id: string) {
+    return await this.operatorsRepo.getOperatorById(id);
+  }
+
+  async createOperator(operator: OperatorNoId) {
     return await this.operatorsRepo.createOperator(operator);
   }
 

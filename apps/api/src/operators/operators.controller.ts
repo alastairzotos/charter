@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Patch, Delete, Body, UseGuards } from "@nestjs/common";
-import { OperatorDto } from "dtos";
+import { Controller, Get, Post, Patch, Delete, Body, UseGuards, Param } from "@nestjs/common";
+import { OperatorDto, OperatorNoId } from "dtos";
 import { AuthGuard } from "../auth/auth.guard";
 import { Roles } from "../auth/roles.decorator";
 import { OperatorsService } from "./operators.service";
@@ -15,9 +15,15 @@ export class OperatorsController {
     return await this.operatorsService.getOperators();
   }
 
+  @Get(':id')
+  @Roles('all')
+  async getOperatorById(@Param('id') id: string) {
+    return await this.operatorsService.getOperatorById(id);
+  }
+
   @Post()
   async createOperator(
-    @Body() operator: OperatorDto,
+    @Body() operator: OperatorNoId,
   ) {
     return await this.operatorsService.createOperator(operator);
   }

@@ -7,6 +7,8 @@ export interface OperatorDto {
   photo: string;
 }
 
+export type OperatorNoId = Omit<OperatorDto, '_id'>;
+
 export interface LoginResponse {
   accessToken: string;
 }

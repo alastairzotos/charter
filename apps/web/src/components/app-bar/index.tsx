@@ -31,10 +31,9 @@ export const AppBar: React.FC = () => {
 
           {!accessToken && (
             <Button
-              component="a"
+              component={Link}
               color="inherit"
               href="/login"
-              LinkComponent={Link}
             >
               Login
             </Button>
