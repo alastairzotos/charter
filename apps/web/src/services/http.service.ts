@@ -12,6 +12,7 @@ export class HttpService {
         'Content-Type': 'application/json'
       }
     });
+    
     this.httpClient.interceptors.request.use(
       config => {
         const accessToken = useUserState.getState().accessToken;

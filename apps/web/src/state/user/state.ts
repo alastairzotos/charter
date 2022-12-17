@@ -4,7 +4,7 @@ import * as jwt from 'jsonwebtoken';
 
 import { FetchStatus } from '../../models';
 import { IUserService, UserService } from '../../services/user.service';
-import { getLocalStorage, removeLocalStorage, setLocalStorage } from '../../util/localstorage';
+import { ILocalStorageService, LocalStorageService } from '../../services/localstorage.service';
 
 const ACCESS_TOKEN_LOCALSTORAGE_KEY = 'boatrental:auth-token';
 
@@ -25,12 +25,16 @@ export interface UserStateActions {
 
 export type UserState = UserStateValues & UserStateActions;
 
-const createUserState = (initialState: UserStateValues, userService: IUserService) =>
+const createUserState = (
+  initialState: UserStateValues,
+  userService: IUserService,
+  localStorage: ILocalStorageService,
+) =>
   create<UserState>((set, self) => ({
     ...initialState,
 
     initLocalStorage: () => {
-      const accessToken = getLocalStorage(ACCESS_TOKEN_LOCALSTORAGE_KEY);
+      const accessToken = localStorage.get(ACCESS_TOKEN_LOCALSTORAGE_KEY);
       if (accessToken) {
         set({ accessToken });
       }
@@ -54,7 +58,8 @@ const createUserState = (initialState: UserStateValues, userService: IUserServic
 
         const { accessToken } = await userService.loginUser(email, password);
 
-        setLocalStorage(ACCESS_TOKEN_LOCALSTORAGE_KEY, accessToken);
+        localStorage.set(ACCESS_TOKEN_LOCALSTORAGE_KEY, accessToken);
+        
         set({
           loginStatus: 'success',
           accessToken,
@@ -72,12 +77,12 @@ const createUserState = (initialState: UserStateValues, userService: IUserServic
         loggedInUser: undefined,
       })
 
-      removeLocalStorage(ACCESS_TOKEN_LOCALSTORAGE_KEY);
+      localStorage.remove(ACCESS_TOKEN_LOCALSTORAGE_KEY);
     }
   }))
 
 export const useUserState = createUserState(
-  {
-  },
-  new UserService()
+  {},
+  new UserService(),
+  new LocalStorageService(),
 );
