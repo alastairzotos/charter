@@ -1,7 +1,7 @@
 import { OperatorNoId } from 'dtos';
 import { useRouter } from 'next/router';
 import React from 'react';
-import { createOperatorsState, useOperatorsState } from '../../state/operators';
+import { useOperatorsState } from '../../state/operators';
 import { ManageOperatorForm } from '../operator-manage';
 
 export const OperatorCreate: React.FC = () => {
