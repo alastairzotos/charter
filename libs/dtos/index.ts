@@ -6,3 +6,25 @@ export interface OperatorDto {
   address: string;
   photo: string;
 }
+
+export interface LoginResponse {
+  accessToken: string;
+}
+
+export interface UserDetails {
+  email: string;
+  givenName: string;
+}
+
+export interface RegisterDetails extends UserDetails {
+  password: string;
+}
+
+export interface LoginDetails {
+  email: string;
+  password: string;
+}
+
+export interface LoggedInUserDetails extends UserDetails {
+  _id: string;
+}

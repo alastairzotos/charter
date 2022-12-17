@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common';
 export class EnvService {
   private readonly env_vars = {
     dbConnectionString: process.env.DB_CONNECTION_STRING as string,
+    jwtSigningKey: process.env.JWT_SIGNING_KEY as string,
   };
 
   get() {
