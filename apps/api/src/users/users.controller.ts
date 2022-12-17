@@ -10,24 +10,25 @@ export class UsersController {
 
   @Get()
   async getUsers() {
-
+    return await this.usersService.getUsers();
   }
 
   @Get(':email')
   async getUserByEmail(@Param('email') email: string) {
-
+    return await this.usersService.getUserByEmail(email);
   }
 
   @Patch()
-  async updateUser(id: string, newUser: Partial<UserDetails>) {
-
+  async updateUser(
+    @Body() { id, newUser }: { id: string, newUser: Partial<UserDetails> }) {
+    return await this.usersService.updateUser(id, newUser);
   }
 
   @Delete()
   async deleteUser(
     @Body() { id }: { id: string }
   ) {
-
+    return await this.usersService.deleteUser(id);
   }
 
   @Post()

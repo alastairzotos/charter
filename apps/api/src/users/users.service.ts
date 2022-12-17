@@ -26,7 +26,7 @@ export class UsersService {
   }
 
   async deleteUser(id: string) {
-    await this.usersRepository.deleteUser
+    await this.usersRepository.deleteUser(id);
   }
 
   async registerUser({ givenName, email, password }: RegisterDetails): Promise<LoginResponse> {
