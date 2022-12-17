@@ -9,6 +9,7 @@ import { ILocalStorageService, LocalStorageService } from '../../services/locals
 const ACCESS_TOKEN_LOCALSTORAGE_KEY = 'boatrental:auth-token';
 
 export interface UserStateValues {
+  initialised: boolean;
   registerStatus?: FetchStatus;
   loginStatus?: FetchStatus;
   accessToken?: string;
@@ -36,7 +37,13 @@ const createUserState = (
     initLocalStorage: () => {
       const accessToken = localStorage.get(ACCESS_TOKEN_LOCALSTORAGE_KEY);
       if (accessToken) {
-        set({ accessToken });
+        set({
+          initialised: true,
+          accessToken,
+          loggedInUser: jwt.decode(accessToken) as UserDetails,
+        });
+      } else {
+        set({ initialised: true });
       }
     },
 
@@ -82,7 +89,9 @@ const createUserState = (
   }))
 
 export const useUserState = createUserState(
-  {},
+  {
+    initialised: false,
+  },
   new UserService(),
   new LocalStorageService(),
 );
