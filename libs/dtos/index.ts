@@ -9,6 +9,17 @@ export interface OperatorDto {
 
 export type OperatorNoId = Omit<OperatorDto, '_id'>;
 
+export interface TripDto {
+  _id: string;
+  operator: OperatorDto;
+  name: string;
+  duration: string;
+  startLocation: string;
+  startTime: string;
+}
+
+export type TripNoId = Omit<TripDto, '_id'>;
+
 export interface LoginResponse {
   accessToken: string;
 }

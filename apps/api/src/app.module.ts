@@ -5,6 +5,7 @@ import { EnvModule } from './environment/environment.module';
 import { EnvService } from './environment/environment.service';
 import { HealthModule } from './health/health.module';
 import { OperatorsModule } from './operators/operators.module';
+import { TripsModule } from './trips/trips.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -14,6 +15,7 @@ import { UsersModule } from './users/users.module';
     HealthModule,
     UsersModule,
     OperatorsModule,
+    TripsModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],
