@@ -33,7 +33,12 @@ export const OperatorItem: React.FC<Props> = ({ id }) => {
                 <Typography variant="subtitle2">{operator.email}</Typography>
                 <Typography variant="subtitle2">{operator.address}</Typography>
                 <Typography variant="subtitle2">{operator.phoneNumber}</Typography>
-                <Button href={urls.admin.operatorEdit(id)} variant="outlined" sx={{ mt: 3, mb: 3 }}>
+                <Button
+                  href={urls.admin.operatorEdit(id)}
+                  LinkComponent={Link}
+                  variant="outlined"
+                  sx={{ mt: 3, mb: 3 }}
+                >
                   Edit
                 </Button>
               </>
