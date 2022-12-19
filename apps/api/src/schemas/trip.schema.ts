@@ -23,6 +23,9 @@ export class Trip implements TripDto {
 
   @Prop()
   startTime: string;
+
+  @Prop()
+  description: string;
 }
 
 export const TripSchema = SchemaFactory.createForClass(Trip);

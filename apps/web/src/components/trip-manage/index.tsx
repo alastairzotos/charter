@@ -26,6 +26,7 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
   const [duration, setDuration] = useState(trip.duration);
   const [startLocation, setStartLocation] = useState(trip.startLocation);
   const [startTime, setStartTime] = useState(trip.startTime);
+  const [description, setDescription] = useState(trip.description);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
@@ -79,6 +80,15 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
         disabled={isFetching}
       />
 
+      <TextField
+        placeholder='Description'
+        value={description}
+        onChange={e => setDescription(e.target.value)}
+        disabled={isFetching}
+        multiline
+        rows={4}
+      />
+
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between' }}
       >
@@ -91,6 +101,7 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
             duration,
             startLocation,
             startTime,
+            description,
             operator: operatorId as any
           })}
         >
