@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 import { AdminRoute } from '../../src/components/admin-route';
 import { Breadcrumbs } from '../../src/components/breadcrumbs';
 import { urls } from '../../src/urls';
+import { Paper } from '@mui/material';
 
 const AdminPage: React.FC = () => {
   return (
@@ -13,9 +14,11 @@ const AdminPage: React.FC = () => {
           list={[{ href: urls.home(), title: 'Home' }]}
           current="Admin"
         />
+        
+        <Paper sx={{ p: 3 }}>
+          <Link href={urls.admin.operators()}>Operators</Link>
+        </Paper>
       </Container>
-
-      <Link href={urls.admin.operators()}>Operators</Link>
     </AdminRoute>
   )
 }
