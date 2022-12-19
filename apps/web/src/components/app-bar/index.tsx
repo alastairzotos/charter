@@ -27,7 +27,7 @@ export const AppBar: React.FC = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Boat trip booking app thing
+            BookingYourBoatTrip
           </Typography>
 
           {!accessToken && (
