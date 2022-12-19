@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { CircularProgress, Typography, Paper } from '@mui/material';
 import { useOperatorsState } from '../../state/operators';
 import { ManageOperatorForm } from '../operator-manage';
+import { Fetchable } from '../fetchable';
 
 interface Props {
   id: string;
@@ -19,21 +20,26 @@ export const OperatorItem: React.FC<Props> = ({ id }) => {
   }, [id]);
 
   return (
-    <>
-      {loadOperatorStatus === 'fetching' && <CircularProgress />}
-      {loadOperatorStatus === 'error' && <Typography>There was an error loading the operator</Typography>}
-      {(loadOperatorStatus === 'success' && !!operator) && (
-        <ManageOperatorForm
-          title="Edit operator"
-          id={id}
-          operator={operator}
-          onSave={newOperator => updateOperator(id, newOperator)}
-          saveStatus={updateOperatorStatus}
+    <Fetchable
+      status={loadOperatorStatus}
+      fetching={<CircularProgress />}
+      error={<Typography>There was an error loading the operator</Typography>}
+      success={(
+        <>
+          {!!operator && (
+            <ManageOperatorForm
+              title="Edit operator"
+              id={id}
+              operator={operator}
+              onSave={newOperator => updateOperator(id, newOperator)}
+              saveStatus={updateOperatorStatus}
 
-          onDelete={() => deleteOperator(id)}
-          deleteStatus={deleteOperatorStatus}
-        />
+              onDelete={() => deleteOperator(id)}
+              deleteStatus={deleteOperatorStatus}
+            />
+          )}
+        </>
       )}
-    </>
+    />
   )
 }

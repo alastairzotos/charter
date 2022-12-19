@@ -65,6 +65,8 @@ export const LoginForm: React.FC = () => {
             loginStatus === 'fetching' ? <CircularProgress size={20} /> : 'Login'
           }
         </Button>
+
+        {loginStatus === 'error' && <Typography>There was an error logging you in. Please ensure you have the correct email and password</Typography>}
       </Box>
     </Paper>
   )

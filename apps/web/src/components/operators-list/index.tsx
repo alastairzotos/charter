@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useOperatorsState } from '../../state/operators';
 import { OperatorListItem } from '../operator-list-item';
 import { urls } from '../../urls';
+import { Fetchable } from '../fetchable';
 
 export const OperatorsList: React.FC = () => {
   const [loadOperatorsStatus, loadOperators, operators] = useOperatorsState(s => [s.loadOperatorsStatus, s.loadOperators, s.operators]);
@@ -17,10 +18,11 @@ export const OperatorsList: React.FC = () => {
   }, [loadOperatorsStatus, loadOperators]);
 
   return (
-    <>
-      {loadOperatorsStatus === 'fetching' && <CircularProgress />}
-      {loadOperatorsStatus === 'error' && <Typography>There was an error loading the operators</Typography>}
-      {loadOperatorsStatus === 'success' && (
+    <Fetchable
+      status={loadOperatorsStatus}
+      fetching={<CircularProgress />}
+      error={<Typography>There was an error loading the operators</Typography>}
+      success={
         <>
           <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             {
@@ -39,7 +41,7 @@ export const OperatorsList: React.FC = () => {
             Create
           </Button>
         </>
-      )}
-    </>
+      }
+    />
   )
 }
