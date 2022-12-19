@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useUserState } from '../../state/user';
 import Link from 'next/link';
+import { urls } from '../../urls';
 
 export const AppBar: React.FC = () => {
   const [accessToken, logout] = useUserState(s => [s.accessToken, s.logout]);
@@ -33,7 +34,7 @@ export const AppBar: React.FC = () => {
             <Button
               component={Link}
               color="inherit"
-              href="/login"
+              href={urls.login()}
             >
               Login
             </Button>

@@ -7,6 +7,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useUserState } from '../../state/user';
+import { urls } from '../../urls';
 
 export const LoginForm: React.FC = () => {
   const router = useRouter();
@@ -18,7 +19,7 @@ export const LoginForm: React.FC = () => {
 
   React.useEffect(() => {
     if (loginStatus === 'success') {
-      router.push('/');
+      router.push(urls.home());
     }
   }, [loginStatus]);
 

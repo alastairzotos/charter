@@ -4,6 +4,7 @@ import { Button, CircularProgress, Paper, TextField, Typography, Box } from '@mu
 import { FetchStatus } from '../../models';
 import { DeleteOperatorModal } from './delete-modal';
 import { useRouter } from 'next/router';
+import { urls } from '../../urls';
 
 interface Props {
   title: string;
@@ -34,7 +35,7 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
   const handleDeleteOperator = async () => {
     if (!!onDelete) {
       await onDelete();
-      router.push('/operators');
+      router.push(urls.admin.operators());
     }
   }
 

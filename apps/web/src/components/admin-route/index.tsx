@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { useUserState } from '../../state/user';
+import { urls } from '../../urls';
 
 export const AdminRoute: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
@@ -9,7 +10,7 @@ export const AdminRoute: React.FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (user?.role !== 'admin') {
-        router.push('/');
+        router.push(urls.home());
       }
     }
   }, [user?.role])

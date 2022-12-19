@@ -43,7 +43,12 @@ export const DeleteOperatorModal: React.FC<Props> = ({ open, onClose, onDelete, 
         <Box
           sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}
         >
-          <Button onClick={onClose}>Cancel</Button>
+          <Button
+            onClick={onClose}
+            disabled={deleteStatus === 'fetching'}
+          >
+            Cancel
+          </Button>
 
           <Button
             color="warning"

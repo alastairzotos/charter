@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useRouter } from 'next/router'
 import Container from '@mui/material/Container';
-import { AdminRoute } from '../../../src/components/admin-route';
-import { OperatorItem } from '../../../src/components/operator-item';
+import { AdminRoute } from '../../../../src/components/admin-route';
+import { OperatorItem } from '../../../../src/components/operator-item';
 
 const OperatorPage: React.FC = () => {
   const router = useRouter()

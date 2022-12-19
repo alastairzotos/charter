@@ -5,6 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link';
+import { urls } from '../../urls';
 
 interface Props {
   operator: OperatorDto;
@@ -15,7 +16,7 @@ export const OperatorListItem: React.FC<Props> = ({ operator }) => {
     <ListItem
       alignItems="flex-start"
       component={Link}
-      href={`/operators/${operator._id}`}
+      href={urls.admin.operator(operator._id)}
     >
       <ListItemAvatar>
         <Avatar alt={operator.name} src={operator.photo} />

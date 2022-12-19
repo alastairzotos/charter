@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import { AdminRoute } from '../../src/components/admin-route';
-import { OperatorsList } from '../../src/components/operators-list';
+import { AdminRoute } from '../../../src/components/admin-route';
+import { OperatorsList } from '../../../src/components/operators-list';
 
 const OperatorsPage: React.FC = () => {
   return (

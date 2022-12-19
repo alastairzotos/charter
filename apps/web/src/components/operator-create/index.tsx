@@ -2,6 +2,7 @@ import { OperatorNoId } from 'dtos';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useOperatorsState } from '../../state/operators';
+import { urls } from '../../urls';
 import { ManageOperatorForm } from '../operator-manage';
 
 export const OperatorCreate: React.FC = () => {
@@ -10,7 +11,7 @@ export const OperatorCreate: React.FC = () => {
 
   const handleCreateOperator = async (operator: OperatorNoId) => {
     await createOperator(operator);
-    router.push('/operators');
+    router.push(urls.admin.operators());
   }
   
   return (

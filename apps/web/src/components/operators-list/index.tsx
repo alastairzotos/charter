@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useOperatorsState } from '../../state/operators';
 import { OperatorListItem } from '../operator-list-item';
+import { urls } from '../../urls';
 
 export const OperatorsList: React.FC = () => {
   const [loadOperatorsStatus, loadOperators, operators] = useOperatorsState(s => [s.loadOperatorsStatus, s.loadOperators, s.operators]);
@@ -32,7 +33,7 @@ export const OperatorsList: React.FC = () => {
           <Button
             variant="contained"
             component={Link}
-            href="/operators/create"
+            href={urls.admin.operatorsCreate()}
             sx={{ mt: 3 }}
           >
             Create
