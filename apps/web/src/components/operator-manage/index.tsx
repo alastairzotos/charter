@@ -42,7 +42,6 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
   return (
     <Paper
       sx={{
-        mt: 3,
         p: 3,
         display: 'flex',
         flexDirection: 'column',

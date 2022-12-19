@@ -11,7 +11,7 @@ export default function Web() {
       {!!user && <p>Welcome {user.givenName}</p>}
       {!user && <p>Welcome user</p>}
       
-      <Link href={urls.admin.operators()}>Operators</Link>
+      <Link href={urls.admin.home()}>Admin</Link>
     </div>
   );
 }
