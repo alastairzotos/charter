@@ -12,7 +12,6 @@ import { OperatorsService } from "./operators.service";
   imports: [
     UsersModule,
     EnvModule,
-    S3Module,
     MongooseModule.forFeature([
       { name: Operator.name, schema: OperatorSchema }
     ]),

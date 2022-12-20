@@ -5,6 +5,7 @@ import { FetchStatus } from '../../models';
 import { DeleteTripModal } from './delete-modal';
 import { useRouter } from 'next/router';
 import { urls } from '../../urls';
+import { TripPhotos } from '../trip-photos';
 
 interface Props {
   operatorId: string;
@@ -27,6 +28,7 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
   const [startLocation, setStartLocation] = useState(trip.startLocation);
   const [startTime, setStartTime] = useState(trip.startTime);
   const [description, setDescription] = useState(trip.description);
+  const [photos, setPhotos] = useState(trip.photos);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
@@ -89,6 +91,8 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
         rows={4}
       />
 
+      <TripPhotos photos={photos} onChange={setPhotos} />
+
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between' }}
       >
@@ -102,6 +106,7 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
             startLocation,
             startTime,
             description,
+            photos,
             operator: operatorId as any
           })}
         >

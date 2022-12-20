@@ -83,10 +83,7 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
         rows={4}
       />
 
-      <OperatorPhotoDropzone
-        operator={operator}
-        onReceiveUrl={setPhoto}
-      />
+      <OperatorPhotoDropzone photo={photo} onChange={setPhoto} />
 
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between' }}

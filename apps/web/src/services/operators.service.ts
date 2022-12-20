@@ -7,7 +7,6 @@ export interface IOperatorsService {
   createOperator(operator: OperatorNoId): Promise<string>;
   updateOperator(id: string, newOperator: Partial<OperatorDto>): Promise<void>;
   deleteOperator(id: string): Promise<void>;
-  uploadPhoto(file: File): Promise<string>;
 }
 
 export class OperatorsService extends HttpService implements IOperatorsService {
@@ -35,22 +34,5 @@ export class OperatorsService extends HttpService implements IOperatorsService {
 
   async deleteOperator(id: string): Promise<void> {
     await this.httpClient.delete<any, {}, { id: string }>('/operators', { data: { id } });
-  }
-
-  async uploadPhoto(photo: File): Promise<string> {
-    const formData = new FormData();
-    formData.append('file', photo);
-
-    const { data } = await this.httpClient.post<any, { data: string }, FormData>(
-      '/operators/photo',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-    );
-
-    return data;
   }
 }

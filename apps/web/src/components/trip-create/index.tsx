@@ -30,6 +30,7 @@ export const TripCreate: React.FC<Props> = ({ operatorId }) => {
         startLocation: '',
         startTime: '',
         description: '',
+        photos: [],
         operator: operatorId as any // This will be cast as an ObjectId in the backend
       }}
 

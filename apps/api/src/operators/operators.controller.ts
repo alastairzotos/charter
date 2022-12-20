@@ -11,12 +11,6 @@ import { OperatorsService } from "./operators.service";
 export class OperatorsController {
   constructor(private readonly operatorsService: OperatorsService) {}
 
-  @Post('/photo')
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadPhoto(@UploadedFile() file: Express.Multer.File) {
-    return await this.operatorsService.uploadPhoto(file.buffer);
-  }
-
   @Get()
   @Roles('all')
   async getOperators() {

@@ -26,6 +26,9 @@ export class Trip implements TripDto {
 
   @Prop()
   description: string;
+
+  @Prop([String])
+  photos: string[];
 }
 
 export const TripSchema = SchemaFactory.createForClass(Trip);

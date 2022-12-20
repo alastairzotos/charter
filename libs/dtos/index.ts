@@ -17,6 +17,7 @@ export interface TripDto {
   startLocation: string;
   startTime: string;
   description: string;
+  photos: string[];
 }
 
 export type TripNoId = Omit<TripDto, '_id'>;
