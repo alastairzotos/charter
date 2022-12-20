@@ -13,6 +13,9 @@ export interface OperatorsStateValues {
   updateOperatorStatus?: FetchStatus;
   createOperatorStatus?: FetchStatus;
   deleteOperatorStatus?: FetchStatus;
+  uploadPhotoStatus?: FetchStatus;
+
+  uploadedPhotoId?: string;
 }
 
 export interface OperatorsStateActions {
@@ -21,6 +24,7 @@ export interface OperatorsStateActions {
   updateOperator: (id: string, newOperator: Partial<OperatorDto>) => Promise<void>;
   createOperator: (operator: OperatorNoId) => Promise<void>;
   deleteOperator: (id: string) => Promise<void>;
+  uploadPhoto: (photo: File) => Promise<void>;
 }
 
 export type OperatorsState = OperatorsStateValues & OperatorsStateActions;
@@ -92,6 +96,18 @@ export const createOperatorsState = (
         await self().loadOperators();
       } catch {
         set({ deleteOperatorStatus: 'error' });
+      }
+    },
+
+    uploadPhoto: async (photo) => {
+      try {
+        set({ uploadPhotoStatus: 'fetching' });
+
+        const uploadedPhotoId = await operatorsService.uploadPhoto(photo);
+
+        set({ uploadPhotoStatus: 'success', uploadedPhotoId });
+      } catch {
+        set({ uploadPhotoStatus: 'error' });
       }
     }
   }))

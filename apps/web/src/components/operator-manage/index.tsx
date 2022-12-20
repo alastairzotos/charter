@@ -5,6 +5,7 @@ import { FetchStatus } from '../../models';
 import { DeleteOperatorModal } from './delete-modal';
 import { useRouter } from 'next/router';
 import { urls } from '../../urls';
+import { OperatorPhotoDropzone } from '../operator-photo-dropzone';
 
 interface Props {
   title: string;
@@ -25,6 +26,7 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
   const [email, setEmail] = useState(operator.email);
   const [phoneNumber, setPhoneNumber] = useState(operator.phoneNumber);
   const [address, setAddress] = useState(operator.address);
+  const [photo, setPhoto] = useState(operator.photo);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
@@ -81,6 +83,11 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
         rows={4}
       />
 
+      <OperatorPhotoDropzone
+        operator={operator}
+        onReceiveUrl={setPhoto}
+      />
+
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between' }}
       >
@@ -93,7 +100,7 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
             email,
             phoneNumber,
             address,
-            photo: '',
+            photo,
           })}
         >
           {saveStatus === 'fetching' ? <CircularProgress size={20} /> : 'Save'}

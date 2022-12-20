@@ -1,4 +1,6 @@
-import { Controller, Get, Post, Patch, Delete, Body, UseGuards, Param } from "@nestjs/common";
+import { Controller, Get, Post, Patch, Delete, Body, UseGuards, Param, UseInterceptors, UploadedFile} from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { Express } from 'express';
 import { OperatorDto, OperatorNoId } from "dtos";
 import { AuthGuard } from "../auth/auth.guard";
 import { Roles } from "../auth/roles.decorator";
@@ -8,6 +10,12 @@ import { OperatorsService } from "./operators.service";
 @UseGuards(AuthGuard)
 export class OperatorsController {
   constructor(private readonly operatorsService: OperatorsService) {}
+
+  @Post('/photo')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadPhoto(@UploadedFile() file: Express.Multer.File) {
+    return await this.operatorsService.uploadPhoto(file.buffer);
+  }
 
   @Get()
   @Roles('all')
