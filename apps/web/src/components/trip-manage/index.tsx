@@ -4,10 +4,10 @@ import { Button, CircularProgress, Paper, TextField, Typography, Box } from '@mu
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { FetchStatus } from '../../models';
-import { DeleteTripModal } from './delete-modal';
 import { useRouter } from 'next/router';
 import { urls } from '../../urls';
 import { ImageDropzone } from '../image-dropzone';
+import { DeleteConfirmModal } from '../modals/delete-confirm';
 
 interface Props {
   operatorId: string;
@@ -137,7 +137,9 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
 
       {saveStatus === 'error' && <Typography>There was an error saving the trip data</Typography>}
 
-      <DeleteTripModal
+      <DeleteConfirmModal
+        title="Delete trip?"
+        content="Are you sure you want to delete this trip?"
         open={deleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}
         onDelete={handleDeleteTrip}

@@ -2,10 +2,10 @@ import { OperatorNoId } from 'dtos';
 import React, { useState } from 'react';
 import { Button, CircularProgress, Paper, TextField, Typography, Box, Avatar } from '@mui/material';
 import { FetchStatus } from '../../models';
-import { DeleteOperatorModal } from './delete-modal';
 import { useRouter } from 'next/router';
 import { urls } from '../../urls';
 import { ImageDropzone } from '../image-dropzone';
+import { DeleteConfirmModal } from '../modals/delete-confirm';
 
 interface Props {
   title: string;
@@ -123,7 +123,9 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
 
       {saveStatus === 'error' && <Typography>There was an error saving the operator data</Typography>}
 
-      <DeleteOperatorModal
+      <DeleteConfirmModal
+        title="Delete operator?"
+        content="Are you sure you want to delete this operator?"
         open={deleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}
         onDelete={handleDeleteOperator}

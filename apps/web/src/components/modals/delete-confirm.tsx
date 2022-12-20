@@ -18,13 +18,15 @@ const style = {
 };
 
 interface Props {
+  title: string;
+  content: string;
   open: boolean;
   onClose: () => void;
   onDelete?: () => void;
   deleteStatus?: FetchStatus;
 }
 
-export const DeleteOperatorModal: React.FC<Props> = ({ open, onClose, onDelete, deleteStatus }) => {
+export const DeleteConfirmModal: React.FC<Props> = ({ title, content, open, onClose, onDelete, deleteStatus }) => {
   return (
     <Modal
       open={open}
@@ -34,10 +36,10 @@ export const DeleteOperatorModal: React.FC<Props> = ({ open, onClose, onDelete, 
     >
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
-          Delete operator?
+          {title}
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Are you sure you want to delete this operator?
+          {content}
         </Typography>
 
         <Box
