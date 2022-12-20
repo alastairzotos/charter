@@ -1,11 +1,13 @@
 import { TripNoId } from 'dtos';
 import React, { useState } from 'react';
 import { Button, CircularProgress, Paper, TextField, Typography, Box } from '@mui/material';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 import { FetchStatus } from '../../models';
 import { DeleteTripModal } from './delete-modal';
 import { useRouter } from 'next/router';
 import { urls } from '../../urls';
-import { TripPhotos } from '../trip-photos';
+import { ImageDropzone } from '../image-dropzone';
 
 interface Props {
   operatorId: string;
@@ -91,7 +93,16 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
         rows={4}
       />
 
-      <TripPhotos photos={photos} onChange={setPhotos} />
+      <Typography variant="h6">Photos</Typography>
+      <ImageDropzone multiple onReceiveUrls={setPhotos}>
+        <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+          {photos.map(photo => (
+            <ImageListItem key={photo}>
+              <img src={`${photo}?w=164&h=164&fit=crop&auto=format`} loading="lazy" />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </ImageDropzone>
 
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between' }}
