@@ -27,7 +27,6 @@ export const ImageDropper = styled('div')<{ active: boolean }>(({ theme, active 
   animation: active ? `${barberpole} 20s linear infinite` : '',
 }))
 
-
 export const ImageDropzone: React.FC<React.PropsWithChildren<Props>> = ({ multiple = true, onReceiveUrls, children }) => {
   const [uploadState, uploadImages, uploadStatus] = useImagesState(s => [s.uploadState, s.uploadImages, s.uploadStatus]);
 
