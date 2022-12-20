@@ -1,11 +1,11 @@
 import { OperatorNoId } from 'dtos';
 import React, { useState } from 'react';
-import { Button, CircularProgress, Paper, TextField, Typography, Box } from '@mui/material';
+import { Button, CircularProgress, Paper, TextField, Typography, Box, Avatar } from '@mui/material';
 import { FetchStatus } from '../../models';
 import { DeleteOperatorModal } from './delete-modal';
 import { useRouter } from 'next/router';
 import { urls } from '../../urls';
-import { OperatorPhotoDropzone } from '../operator-photo-dropzone';
+import { ImageDropzone } from '../image-dropzone';
 
 interface Props {
   title: string;
@@ -83,7 +83,14 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
         rows={4}
       />
 
-      <OperatorPhotoDropzone photo={photo} onChange={setPhoto} />
+      <ImageDropzone
+        multiple={false}
+        onReceiveUrls={urls => {
+          setPhoto(urls[0])
+        }}
+      >
+        <Avatar src={photo} sx={{ width: 128, height: 128 }} />
+      </ImageDropzone>
 
       <Box
         sx={{ display: 'flex', justifyContent: 'space-between' }}
