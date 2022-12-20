@@ -59,17 +59,19 @@ export const ImageDropzone: React.FC<React.PropsWithChildren<Props>> = ({ multip
       <input {...getInputProps()} />
 
       <ImageDropper active={isDragActive || uploading}>
-        <Typography color={uploading ? 'gray' : undefined}>
-          {
-            uploading
-              ? <CircularProgress size={20} color="secondary" />
-              : (
-                acceptedFiles.length > 0
-                  ? acceptedFiles.length > 1 ? `${acceptedFiles.length} images selected` : acceptedFiles[0].name
-                  : `Drop image${multiple ? 's' : ''} here`
-              )
-          }
-        </Typography>
+        {
+          uploading
+            ? <CircularProgress size={20} color="secondary" />
+            : (
+              <Typography color={uploading ? 'gray' : undefined}>
+                {
+                  acceptedFiles.length > 0
+                    ? acceptedFiles.length > 1 ? `${acceptedFiles.length} images selected` : acceptedFiles[0].name
+                    : `Drop image${multiple ? 's' : ''} here`
+                }
+              </Typography>
+            )
+        }
 
         {uploadStatus === 'error' && <Typography>There was an error</Typography>}
       </ImageDropper>
