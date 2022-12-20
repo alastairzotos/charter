@@ -31,7 +31,7 @@ export const createUserState = (
   userService: Pick<UserService, keyof UserService>,
   localStorage: Pick<LocalStorageService, keyof LocalStorageService>,
 ) =>
-  create<UserState>((set, self) => ({
+  create<UserState>((set) => ({
     ...initialState,
 
     initLocalStorage: () => {
