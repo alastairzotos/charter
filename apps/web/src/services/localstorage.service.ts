@@ -1,11 +1,4 @@
-
-export interface ILocalStorageService {
-  set(key: string, value: string): void;
-  get(key: string): any;
-  remove(key: string): void;
-}
-
-export class LocalStorageService implements ILocalStorageService {
+export class LocalStorageService {
   set(key: string, value: string): void {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem(key, value);

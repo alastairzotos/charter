@@ -1,6 +1,6 @@
 import create from 'zustand';
 import { FetchStatus } from '../../models';
-import { IImagesService, ImagesService } from '../../services/images.service';
+import { ImagesService } from '../../services/images.service';
 
 export interface ImagesStateValues {
   uploadStatus?: FetchStatus;
@@ -13,7 +13,7 @@ export interface ImagesStateActions {
 
 export type ImagesState = ImagesStateValues & ImagesStateActions;
 
-export const createImagesState = (initialValues: ImagesStateValues, imagesService: IImagesService) =>
+export const createImagesState = (initialValues: ImagesStateValues, imagesService: Pick<ImagesService, keyof ImagesService>) =>
   create<ImagesState>((set, self) => ({
     ...initialValues,
 

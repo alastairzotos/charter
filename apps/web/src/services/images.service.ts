@@ -1,10 +1,6 @@
 import { HttpService } from "./http.service";
 
-export interface IImagesService {
-  uploadImage(file: File): Promise<string>;
-}
-
-export class ImagesService extends HttpService implements IImagesService {
+export class ImagesService extends HttpService {
   async uploadImage(file: File): Promise<string> {
     const formData = new FormData();
     formData.append('file', file);

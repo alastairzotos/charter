@@ -3,8 +3,8 @@ import create from 'zustand';
 import * as jwt from 'jsonwebtoken';
 
 import { FetchStatus } from '../../models';
-import { IUserService, UserService } from '../../services/user.service';
-import { ILocalStorageService, LocalStorageService } from '../../services/localstorage.service';
+import { UserService } from '../../services/user.service';
+import { LocalStorageService } from '../../services/localstorage.service';
 
 const ACCESS_TOKEN_LOCALSTORAGE_KEY = 'boatrental:auth-token';
 
@@ -28,8 +28,8 @@ export type UserState = UserStateValues & UserStateActions;
 
 export const createUserState = (
   initialState: UserStateValues,
-  userService: IUserService,
-  localStorage: ILocalStorageService,
+  userService: Pick<UserService, keyof UserService>,
+  localStorage: Pick<LocalStorageService, keyof LocalStorageService>,
 ) =>
   create<UserState>((set, self) => ({
     ...initialState,

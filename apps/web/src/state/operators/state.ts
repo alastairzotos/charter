@@ -1,7 +1,7 @@
 import { OperatorDto, OperatorNoId } from 'dtos';
 import create from 'zustand';
 import { FetchStatus } from '../../models';
-import { IOperatorsService, OperatorsService } from '../../services/operators.service';
+import { OperatorsService } from '../../services/operators.service';
 
 export interface OperatorsStateValues {
   loadOperatorsStatus?: FetchStatus;
@@ -27,7 +27,7 @@ export type OperatorsState = OperatorsStateValues & OperatorsStateActions;
 
 export const createOperatorsState = (
   initialValues: OperatorsStateValues,
-  operatorsService: IOperatorsService,
+  operatorsService: Pick<OperatorsService, keyof OperatorsService>,
 ) =>
   create<OperatorsState>((set, self) => ({
     ...initialValues,

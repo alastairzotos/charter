@@ -1,7 +1,7 @@
 import { TripDto, TripNoId } from 'dtos';
 import create from 'zustand';
 import { FetchStatus } from '../../models';
-import { ITripsService, TripsService } from '../../services/trips.service';
+import { TripsService } from '../../services/trips.service';
 
 export interface TripsStateValues {
   currentOperatorId?: string;
@@ -27,7 +27,7 @@ export interface TripsStateActions {
 
 export type TripsState = TripsStateValues & TripsStateActions;
 
-export const createTripsState = (initialValues: TripsStateValues, tripsService: ITripsService) =>
+export const createTripsState = (initialValues: TripsStateValues, tripsService: Pick<TripsService, keyof TripsService>) =>
   create<TripsState>((set, self) => ({
     ...initialValues,
 

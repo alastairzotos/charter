@@ -1,15 +1,7 @@
 import { OperatorDto, OperatorNoId } from "dtos";
 import { HttpService } from "./http.service";
 
-export interface IOperatorsService {
-  getOperators(): Promise<OperatorDto[]>;
-  getOperator(id: string): Promise<OperatorDto>;
-  createOperator(operator: OperatorNoId): Promise<string>;
-  updateOperator(id: string, newOperator: Partial<OperatorDto>): Promise<void>;
-  deleteOperator(id: string): Promise<void>;
-}
-
-export class OperatorsService extends HttpService implements IOperatorsService {
+export class OperatorsService extends HttpService {
   async getOperators(): Promise<OperatorDto[]> {
     const { data } = await this.httpClient.get<OperatorDto[]>('/operators');
 
