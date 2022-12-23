@@ -17,6 +17,7 @@ export const urls = {
   user: {
     operators: () => '/operators',
     operator: ({ _id, name }: OperatorDto) => `/operator/${kebabCase(name)}-${_id}`,
-    trip: (trip: TripDto) => `/trip/${trip._id}`
+    trip: (trip: TripDto) => `/trip/${trip._id}`,
+    booking: (id: string) => `/booking/${id}`
   }
 }

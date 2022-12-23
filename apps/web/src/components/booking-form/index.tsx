@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { OperatorDto, TripDto } from 'dtos';
 import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -7,6 +7,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import { useUserState } from '../../state/user';
+import { createBookingsState, useBookingsState } from '../../state/bookings';
+import { useRouter } from 'next/router';
+import { urls } from '../../urls';
 
 const bookingModalStyle = {
   position: 'absolute' as 'absolute',
@@ -27,16 +30,34 @@ interface Props {
 }
 
 export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
+  const router = useRouter();
+
+  const [createBookingStatus, createBooking, bookingId] = useBookingsState(s => [s.createBookingStatus, s.createBooking, s.bookingId]);
+
   const loggedinUser = useUserState(s => s.loggedInUser);
   const [name, setName] = useState(loggedinUser?.givenName || '');
   const [email, setEmail] = useState(loggedinUser?.email || '');
   const [date, setDate] = useState<Dayjs | null>(dayjs());
   const [guests, setGuests] = useState(1);
 
+  useEffect(() => {
+    if (!!bookingId) {
+      router.push(urls.user.booking(bookingId));
+    }
+  }, [bookingId]);
+
   const isValid = name.trim().length && email.trim().length && guests > 0 && !!date && date.isValid();
 
   const handleBookClick = () => {
-    console.log('book')
+    createBooking({
+      operator,
+      trip,
+      name,
+      email,
+      date: date!.toString(),
+      guests,
+      status: 'pending'
+    })
   }
 
   return (
@@ -98,12 +119,14 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
           <Button
             color="success"
             variant="contained"
-            disabled={!isValid}
+            disabled={!isValid || createBookingStatus === 'fetching'}
             onClick={handleBookClick}
           >
             Book now
           </Button>
         </Box>
+
+        {createBookingStatus === 'error' && <Typography>There was an error creating your booking. Please try again later.</Typography>}
       </Box>
     </LocalizationProvider>
   )

@@ -22,6 +22,21 @@ export interface TripDto {
 
 export type TripNoId = Omit<TripDto, '_id'>;
 
+export type BookingStatus = 'pending' | 'confirmed' | 'rejected';
+
+export interface BookingDto {
+  _id: string;
+  trip: TripDto;
+  operator: OperatorDto;
+  name: string;
+  email: string;
+  date: string;
+  guests: number;
+  status: BookingStatus;
+}
+
+export type BookingNoId = Omit<BookingDto, '_id'>;
+
 export interface LoginResponse {
   accessToken: string;
 }
@@ -29,7 +44,7 @@ export interface LoginResponse {
 export interface UserDetails {
   email: string;
   givenName: string;
-  role?: 'user' | 'admin';
+  role?: 'user' | 'admin' | 'operator';
 }
 
 export interface RegisterDetails extends UserDetails {

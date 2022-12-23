@@ -8,40 +8,45 @@ import ImageGallery from 'react-image-gallery';
 import { BookingForm } from '../booking-form';
 
 interface Props {
+  bookingView?: boolean;
   trip: TripDto;
   operator: OperatorDto;
 }
 
-export const UserTripView: React.FC<Props> = ({ trip, operator }) => {
+export const UserTripView: React.FC<Props> = ({ bookingView = false, trip, operator }) => {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
 
   return (
     <>
-      <Button
-        component={Link}
-        href={urls.user.operator(operator)}
-        sx={{ mb: 2 }}
-      >
-        <ArrowBackIcon />
-        Back to trips
-      </Button>
+      {!bookingView && (
+        <Button
+          component={Link}
+          href={urls.user.operator(operator)}
+          sx={{ mb: 2 }}
+        >
+          <ArrowBackIcon />
+          Back to trips
+        </Button>
+      )}
 
       <Typography variant="h6">{trip.name}</Typography>
 
       <Typography sx={{ mt: 2, mb: 2 }}>{trip.description}</Typography>
 
-      <Box
-        sx={{ display: 'flex', justifyContent: 'center' }}
-      >
-        <Button
-          variant="contained"
-          color="success"
-          sx={{ mb: 2 }}
-          onClick={() => setBookingModalOpen(true)}
+      {!bookingView && (
+        <Box
+          sx={{ display: 'flex', justifyContent: 'center' }}
         >
-          Book now
-        </Button>
-      </Box>
+          <Button
+            variant="contained"
+            color="success"
+            sx={{ mb: 2 }}
+            onClick={() => setBookingModalOpen(true)}
+          >
+            Book now
+          </Button>
+        </Box>
+      )}
 
       <Typography color="text.secondary"><strong>Start location</strong>: {trip.startLocation}</Typography>
       <Typography color="text.secondary"><strong>Start time</strong>: {trip.startTime}</Typography>
