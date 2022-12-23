@@ -1,4 +1,4 @@
-import { OperatorDto, OperatorNoId } from "dtos";
+import { OperatorDto, OperatorNoId, TripDto } from "dtos";
 import { HttpService } from "./http.service";
 
 export class OperatorsService extends HttpService {
@@ -10,6 +10,12 @@ export class OperatorsService extends HttpService {
 
   async getOperator(id: string): Promise<OperatorDto> {
     const { data } = await this.httpClient.get<OperatorDto>(`/operators/${id}`);
+
+    return data;
+  }
+
+  async getOperatorWithTripsById(id: string): Promise<{ operator: OperatorDto, trips: TripDto[] }> {
+    const { data } = await this.httpClient.get<{ operator: OperatorDto, trips: TripDto[] }>(`/operators/with-trips/${id}`);
 
     return data;
   }

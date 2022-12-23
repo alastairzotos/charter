@@ -4,7 +4,6 @@ import { GetServerSideProps, NextPage } from 'next';
 import Link from 'next/link';
 import React from 'react';
 import { OperatorsService } from '../../src/services/operators.service';
-import { TripsService } from '../../src/services/trips.service';
 import { urls } from '../../src/urls';
 
 interface Props {
@@ -52,13 +51,14 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
   const operatorId = slug.split('-').pop()!;
 
   const operatorsService = new OperatorsService();
-  const tripsService = new TripsService();
 
   try {
+    const { operator, trips } = await operatorsService.getOperatorWithTripsById(operatorId);
+
     return {
       props: {
-        operator: await operatorsService.getOperator(operatorId),
-        trips: await tripsService.getTripsForOperator(operatorId)
+        operator,
+        trips
       }
     }
   } catch {

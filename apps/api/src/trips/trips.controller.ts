@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Patch, Delete, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Patch, Delete, Query, UseGuards, NotFoundException } from "@nestjs/common";
 import { TripDto, TripNoId } from "dtos";
 import { AuthGuard } from "../auth/auth.guard";
 import { Roles } from "../auth/roles.decorator";
@@ -21,6 +21,16 @@ export class TripsController {
   @Roles('all')
   async getTrip(@Param('id') id: string) {
     return await this.tripsService.getTrip(id);
+  }
+
+  @Get('with-operator/:id')
+  @Roles('all')
+  async getTripByIdWithOperator(@Param('id') id: string) {
+    try {
+      return await this.tripsService.getTripByIdWithOperator(id);
+    } catch {
+      throw new NotFoundException();
+    }
   }
 
   @Post()

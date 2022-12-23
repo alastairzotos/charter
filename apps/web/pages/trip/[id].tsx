@@ -3,7 +3,6 @@ import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import { OperatorsService } from '../../src/services/operators.service';
 import { TripsService } from '../../src/services/trips.service';
 import { urls } from '../../src/urls';
 
@@ -42,11 +41,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
   }
 
   const tripsService = new TripsService();
-  const operatorsService = new OperatorsService();
 
   try {
-    const trip = await tripsService.getTrip(id);
-    const operator = await operatorsService.getOperator(trip.operator as unknown as string);
+    const { trip, operator } = await tripsService.getTripByIdWithOperator(id);
 
     return {
       props: {

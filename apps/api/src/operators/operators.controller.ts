@@ -23,6 +23,12 @@ export class OperatorsController {
     return await this.operatorsService.getOperatorById(id);
   }
 
+  @Get('with-trips/:id')
+  @Roles('all')
+  async getOperatorWithTripsById(@Param('id') id: string) {
+    return await this.operatorsService.getOperatorWithTripsById(id);
+  }
+
   @Post()
   async createOperator(
     @Body() operator: OperatorNoId,
