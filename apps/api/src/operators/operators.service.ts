@@ -19,6 +19,10 @@ export class OperatorsService {
     return await this.operatorsRepo.getOperatorById(id);
   }
 
+  async getOperatorByEmail(email: string) {
+    return await this.operatorsRepo.getOperatorByEmail(email);
+  }
+
   async getOperatorWithTripsById(id: string) {
     const operator = await this.getOperatorById(id);
     const trips = await this.tripsService.getTripsForOperator(id);

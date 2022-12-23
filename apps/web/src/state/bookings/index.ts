@@ -1,4 +1,4 @@
-import { BookingNoId } from 'dtos';
+import { BookingDto, BookingNoId, BookingStatus } from 'dtos';
 import create from 'zustand';
 import { FetchStatus } from '../../models';
 import { BookingsService } from '../../services/bookings.service';
@@ -6,16 +6,27 @@ import { BookingsService } from '../../services/bookings.service';
 export interface BookingsStateValues {
   createBookingStatus?: FetchStatus;
   bookingId?: string;
+
+  getBookingsForUserStatus?: FetchStatus;
+  userBookings?: BookingDto[];
+
+  getBookingStatus?: FetchStatus;
+  booking?: BookingDto;
+
+  setBookingStatusStatus?: FetchStatus;
 }
 
 export interface BookingsStateActions {
   createBooking: (booking: BookingNoId) => Promise<void>;
+  getBookingsForUser: () => Promise<void>;
+  getBooking: (id: string) => Promise<void>;
+  setBookingStatus: (id: string, status: BookingStatus) => Promise<void>;
 }
 
 export type BookingsState = BookingsStateValues & BookingsStateActions;
 
 export const createBookingsState = (initialValues: BookingsStateValues, bookingsService: Pick<BookingsService, keyof BookingsService>) =>
-  create<BookingsState>((set) => ({
+  create<BookingsState>((set, self) => ({
     ...initialValues,
 
     createBooking: async (booking) => {
@@ -27,6 +38,43 @@ export const createBookingsState = (initialValues: BookingsStateValues, bookings
         set({ createBookingStatus: 'success', bookingId });
       } catch {
         set({ createBookingStatus: 'error' });
+      }
+    },
+
+    getBookingsForUser: async () => {
+      try {
+        set({ getBookingsForUserStatus: 'fetching' });
+
+        const userBookings = await bookingsService.getBookingsForUser();
+
+        set({ getBookingsForUserStatus: 'success', userBookings });
+      } catch {
+        set({ getBookingsForUserStatus: 'error' });
+      }
+    },
+
+    getBooking: async (id) => {
+      try {
+        set({ getBookingStatus: 'fetching' });
+
+        const booking = await bookingsService.getBookingById(id);
+
+        set({ getBookingStatus: 'success', booking });
+      } catch {
+        set({ getBookingStatus: 'error' });
+      }
+    },
+
+    setBookingStatus: async (id, status) => {
+      try {
+        set({ setBookingStatusStatus: 'fetching' });
+
+        await bookingsService.setBookingStatus(id, status);
+
+        set({ setBookingStatusStatus: 'success' });
+        self().getBookingsForUser();
+      } catch {
+        set({ setBookingStatusStatus: 'error' });
       }
     }
   }))

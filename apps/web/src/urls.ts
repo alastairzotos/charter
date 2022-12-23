@@ -19,5 +19,9 @@ export const urls = {
     operator: ({ _id, name }: OperatorDto) => `/operator/${kebabCase(name)}-${_id}`,
     trip: (trip: TripDto) => `/trip/${trip._id}`,
     booking: (id: string) => `/booking/${id}`
+  },
+  operators: {
+    home: () => '/operator-admin',
+    booking: (id: string) => `/operator-admin/booking/${id}`
   }
 }

@@ -14,6 +14,7 @@ export default function Web() {
       
       <Typography><Link href={urls.user.operators()}>Operators</Link></Typography>
       <Typography><Link href={urls.admin.home()}>Admin</Link></Typography>
+      <Typography><Link href={urls.operators.home()}>Operator Admin</Link></Typography>
     </div>
   );
 }

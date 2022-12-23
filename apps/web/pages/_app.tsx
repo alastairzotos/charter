@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app'
 import { AdminLayout } from '../src/components/admin-layout';
 import { useUserState } from '../src/state/user';
 import { UserLayout } from '../src/components/user-layout';
+import { OperatorsLayout } from '../src/components/operators-layout';
 
 function AppPage({ Component, pageProps, router }: AppProps) {
   const [initLocalStorage, initialised] = useUserState(s => [s.initLocalStorage, s.initialised]);
@@ -19,6 +20,14 @@ function AppPage({ Component, pageProps, router }: AppProps) {
       <AdminLayout>
         {initialised && <Component {...pageProps} />}
       </AdminLayout>
+    )
+  }
+
+  if (router.route.startsWith('/operator-admin')) {
+    return (
+      <OperatorsLayout>
+        {initialised && <Component {...pageProps} />}
+      </OperatorsLayout>
     )
   }
 

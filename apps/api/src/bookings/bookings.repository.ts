@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { BookingNoId } from "dtos";
+import { BookingNoId, BookingStatus, OperatorDto } from "dtos";
 import { Model } from "mongoose";
 import { Booking } from "../schemas/booking.schema";
 
@@ -14,7 +14,19 @@ export class BookingsRepository {
     return _id;
   }
 
+  async getBookingById(id: string) {
+    return await this.bookingsModel.findById(id).populate('trip');
+  }
+
   async getBookingWithOperatorAndTrip(id: string) {
     return await this.bookingsModel.findById(id).populate(['operator', 'trip']);
+  }
+
+  async getBookingsByOperator(operator: OperatorDto) {
+    return await this.bookingsModel.find({ operator }).populate('trip');
+  }
+
+  async setBookingStatus(id: string, status: BookingStatus) {
+    await this.bookingsModel.findOneAndUpdate({ _id: id }, { status });
   }
 }

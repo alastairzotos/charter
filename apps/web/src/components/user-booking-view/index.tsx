@@ -11,7 +11,6 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
     <>
       <Typography variant="h4">Your booking with {booking.operator.name}</Typography>
       <Box sx={{ p: 2 }}>
-
         <Typography color="text.secondary"><strong>Name</strong>: {booking.name}</Typography>
         <Typography color="text.secondary"><strong>Email</strong>: {booking.email}</Typography>
         <Typography color="text.secondary"><strong>Date</strong>: {booking.date}</Typography>

@@ -18,6 +18,10 @@ export class OperatorsRepository {
     return await this.operatorsModel.findById(id);
   }
 
+  async getOperatorByEmail(email: string) {
+    return await this.operatorsModel.findOne({ email });
+  }
+
   async createOperator(operator: OperatorNoId) {
     const { _id } = await this.operatorsModel.create(operator);
 
