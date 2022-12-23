@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { OperatorDto, TripDto } from 'dtos';
 import Link from 'next/link';
 import { urls } from '../../urls';
-import { Box, Button, ImageList, ImageListItem, Typography } from '@mui/material';
+import { Box, Button, Typography, Modal } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackIos';
 import ImageGallery from 'react-image-gallery';
+import { BookingForm } from '../booking-form';
 
 interface Props {
   trip: TripDto;
@@ -12,6 +13,8 @@ interface Props {
 }
 
 export const UserTripView: React.FC<Props> = ({ trip, operator }) => {
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+
   return (
     <>
       <Button
@@ -26,6 +29,19 @@ export const UserTripView: React.FC<Props> = ({ trip, operator }) => {
       <Typography variant="h6">{trip.name}</Typography>
 
       <Typography sx={{ mt: 2, mb: 2 }}>{trip.description}</Typography>
+
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center' }}
+      >
+        <Button
+          variant="contained"
+          color="success"
+          sx={{ mb: 2 }}
+          onClick={() => setBookingModalOpen(true)}
+        >
+          Book now
+        </Button>
+      </Box>
 
       <Typography color="text.secondary"><strong>Start location</strong>: {trip.startLocation}</Typography>
       <Typography color="text.secondary"><strong>Start time</strong>: {trip.startTime}</Typography>
@@ -43,6 +59,10 @@ export const UserTripView: React.FC<Props> = ({ trip, operator }) => {
           }
         />
       </Box>
+
+      <Modal open={bookingModalOpen} onClose={() => setBookingModalOpen(false)}>
+        <BookingForm operator={operator} trip={trip} onClose={() => setBookingModalOpen(false)} />
+      </Modal>
     </>
   )
 }
