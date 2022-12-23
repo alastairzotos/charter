@@ -1,10 +1,9 @@
+import React from 'react';
 import { OperatorDto, TripDto } from 'dtos';
 import { GetServerSideProps, NextPage } from 'next';
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import { OperatorLayout } from '../../src/components/operator-layout';
 import { TripsService } from '../../src/services/trips.service';
-import { urls } from '../../src/urls';
+import { UserTripView } from '../../src/components/user-trip-view';
 
 interface Props {
   trip: TripDto;
@@ -13,21 +12,9 @@ interface Props {
 
 const TripPage: NextPage<Props> = ({ trip, operator }) => {
   return (
-    <>
-      <Link href={urls.user.operator(operator)}>{operator.name}</Link>
-      <p>{trip.name}</p>
-      <p>{trip.description}</p>
-      <p>{trip.duration}</p>
-      <p>{trip.startLocation}</p>
-      <p>{trip.startTime}</p>
-      {
-        trip.photos.map(url => (
-          <div key={url} style={{ position: 'relative', width: 200, height: 200 }}>
-            <Image alt={operator.name + ' Trip'} src={url} fill style={{ objectFit: 'cover' }} />
-          </div>
-        ))
-      }
-    </>
+    <OperatorLayout operator={operator}>
+      <UserTripView trip={trip} operator={operator} />
+    </OperatorLayout>
   )
 }
 

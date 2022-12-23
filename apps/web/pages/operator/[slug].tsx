@@ -1,10 +1,9 @@
-import { Avatar } from '@mui/material';
+import React from 'react';
 import { OperatorDto, TripDto } from 'dtos';
 import { GetServerSideProps, NextPage } from 'next';
-import Link from 'next/link';
-import React from 'react';
+import { OperatorLayout } from '../../src/components/operator-layout';
+import { UserTripsView } from '../../src/components/user-trips-view';
 import { OperatorsService } from '../../src/services/operators.service';
-import { urls } from '../../src/urls';
 
 interface Props {
   operator: OperatorDto;
@@ -13,29 +12,9 @@ interface Props {
 
 const OperatorPage: NextPage<Props> = ({ operator, trips }) => {
   return (
-    <>
-      <div>
-        <h5>Operator</h5>
-        <Avatar src={operator.photo} />
-        <p>{operator.name}</p>
-        <p>{operator.email}</p>
-        <p>{operator.phoneNumber}</p>
-        <p>{operator.address}</p>
-      </div>
-
-      <div>
-        <h5>Trips</h5>
-        <ul>
-          {
-            trips.map(trip => (
-              <li key={trip._id}>
-                <Link href={urls.user.trip(trip)}>{trip.name}</Link>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </>
+    <OperatorLayout operator={operator}>
+      <UserTripsView trips={trips} />
+    </OperatorLayout>
   )
 }
 

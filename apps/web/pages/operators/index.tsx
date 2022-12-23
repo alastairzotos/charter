@@ -2,8 +2,8 @@ import React from 'react';
 import { OperatorDto } from 'dtos';
 import { GetServerSideProps, NextPage } from 'next';
 import { OperatorsService } from '../../src/services/operators.service';
-import Link from 'next/link';
-import { urls } from '../../src/urls';
+import { UserOperatorsList } from '../../src/components/user-operators-list';
+import { Typography } from '@mui/material';
 
 interface Props {
   operators: OperatorDto[];
@@ -12,15 +12,8 @@ interface Props {
 const OperatorsPage: NextPage<Props> = ({ operators }) => {
   return (
     <>
-      {
-        operators.map(o => (
-          <p key={o._id}>
-            <Link href={urls.user.operator(o)}>
-              {o.name}
-            </Link>
-          </p>
-        ))
-      }
+      <Typography variant="h6">Tour operators</Typography>
+      <UserOperatorsList operators={operators} />
     </>
   )
 }
