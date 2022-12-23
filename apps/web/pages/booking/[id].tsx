@@ -36,9 +36,15 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
 
   const bookingsService = new BookingsService();
 
-  return {
-    props: {
-      booking: await bookingsService.getBookingWithOperatorAndTrip(id)
+  try {
+    return {
+      props: {
+        booking: await bookingsService.getBookingWithOperatorAndTrip(id)
+      }
+    }
+  } catch {
+    return {
+      notFound: true
     }
   }
 }
