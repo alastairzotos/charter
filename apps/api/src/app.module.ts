@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BookingsModule } from './bookings/bookings.module';
+import { EmailModule } from './email/email.module';
 import { EnvModule } from './environment/environment.module';
 import { EnvService } from './environment/environment.service';
 import { HealthModule } from './health/health.module';
@@ -22,6 +23,7 @@ import { UsersModule } from './users/users.module';
     S3Module,
     ImagesModule,
     BookingsModule,
+    EmailModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],

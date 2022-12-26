@@ -9,9 +9,7 @@ export class BookingsRepository {
   constructor(@InjectModel(Booking.name) private readonly bookingsModel: Model<Booking>) {}
 
   async createBooking(booking: BookingNoId) {
-    const { _id } = await this.bookingsModel.create(booking);
-
-    return _id;
+    return await this.bookingsModel.create(booking);
   }
 
   async getBookingById(id: string) {

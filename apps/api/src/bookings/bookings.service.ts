@@ -1,24 +1,38 @@
 import { Injectable } from "@nestjs/common";
 import { BookingNoId, BookingStatus, UserDetails } from "dtos";
+import { emailContent } from "../content/email";
+import { EmailService } from "../email/email.service";
+import { EnvService } from "../environment/environment.service";
 import { OperatorsService } from "../operators/operators.service";
-import { TripsService } from "../trips/trips.service";
 import { BookingsRepository } from "./bookings.repository";
 
 @Injectable()
 export class BookingsService {
   constructor(
+    private readonly envService: EnvService,
     private readonly operatorsService: OperatorsService,
+    private readonly emailService: EmailService,
     private readonly bookingsRepository: BookingsRepository,
   ) {}
 
   async createBooking(booking: BookingNoId) {
-    const id = await this.bookingsRepository.createBooking(booking);
+    const { _id } = await this.bookingsRepository.createBooking(booking);
+    const createdBooking = await this.bookingsRepository.getBookingWithOperatorAndTrip(_id);
 
-    // Send email to operator and user
-    //  booking.email
-    //  booking.operator.email
+    // Send email to peter and me
 
-    return id;
+    await Promise.all([
+      this.emailService.sendEmail(
+        booking.operator.email,
+        emailContent(this.envService).bookingMadeOperator(createdBooking)
+      ),
+      this.emailService.sendEmail(
+        booking.email,
+        emailContent(this.envService).bookingMadeUser(createdBooking)
+      )
+    ])
+
+    return _id;
   }
 
   async getBookingWithOperatorAndTrip(id: string) {
@@ -30,6 +44,7 @@ export class BookingsService {
   }
 
   async getBookingsForUser(user: UserDetails) {
+    // TODO: move this to controller
     if (!user || (user.role !== 'admin' && user.role !== 'operator')) {
       return null;
     }
@@ -42,7 +57,13 @@ export class BookingsService {
 
   async setBookingStatus(id: string, status: BookingStatus) {
     await this.bookingsRepository.setBookingStatus(id, status);
+    const booking = await this.bookingsRepository.getBookingWithOperatorAndTrip(id);
 
-    // Email user
+    // Email user and maybe peter
+    const email = status === 'confirmed'
+      ? emailContent(this.envService).bookingConfirmedUser(booking)
+      : emailContent(this.envService).bookingRejectedUser(booking);
+
+    await this.emailService.sendEmail(booking.email, email);
   }
 }

@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
+import { EmailModule } from "../email/email.module";
 import { EnvModule } from "../environment/environment.module";
 import { OperatorsModule } from "../operators/operators.module";
 import { Booking, BookingSchema } from "../schemas/booking.schema";
@@ -17,6 +18,7 @@ import { BookingsService } from "./bookings.service";
     OperatorsModule,
     TripsModule,
     UsersModule,
+    EmailModule,
     MongooseModule.forFeature([
       { name: Booking.name, schema: BookingSchema },
       { name: Operator.name, schema: OperatorSchema },
