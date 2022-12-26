@@ -23,7 +23,7 @@ export const TripList: React.FC<Props> = ({ operatorId }) => {
     <Fetchable
       status={loadTripsStatus}
       fetching={<CircularProgress />}
-      error={<Typography>There was an error loading the operator's trips</Typography>}
+      error={<Typography>There was an error loading the operator&apos;s trips</Typography>}
       success={
         <>
           <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
