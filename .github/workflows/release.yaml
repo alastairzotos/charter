@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Docker login
+        run: docker login -u bitmetro -p ${{ secrets.DOCKER_PASSWORD }} docker.io
+
+      - name: Build and push web app
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: .
+          tags: bitmetro/boat-booking-web:${{ github.ref_name }}
+          build-args: |
+            SCOPE=web
+            PORT=3000
+            NEXT_PUBLIC_API_URL=https://boat-booking-api.bitmetro.io
+
+
+      - name: Build and push api
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: .
+          tags: bitmetro/boat-booking-api:${{ github.ref_name }}
+          build-args: |
+            SCOPE=api
+            PORT=3001
+            FRONTEND_URL=https://boat-booking.bitmetro.io
+            DB_CONNECTION_STRING=${{ secrets.DB_CONNECTION_STRING }}
+            JWT_SIGNING_KEY=${{ secrets.JWT_SIGNING_KEY }}
+            AWS_ACCESSKEY_ID=${{ secrets.AWS_ACCESSKEY_ID }}
+            AWS_ACCESS_KEY_SECRET=${{ secrets.AWS_ACCESS_KEY_SECRET }}
+            AWS_S3_BUCKET_NAME=boattrip
+            AWS_S3_REGION=eu-west-1
+            AWS_CLOUDFRONT_DOMAIN=https://d3tr1qr2feu6jb.cloudfront.net/
+            SENDGRID_API_KEY=${{ secrets.SENDGRID_API_KEY }}
