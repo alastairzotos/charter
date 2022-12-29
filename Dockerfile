@@ -41,7 +41,7 @@ COPY libs/dtos/package.json libs/dtos/package.json
 RUN yarn --frozen-lockfile
 
 # Build
-RUN yarn global add turbo
+RUN yarn global add turbo@1.5.5
 COPY turbo.json package.json yarn.lock ./
 COPY apps/${SCOPE} apps/${SCOPE}
 COPY libs libs
