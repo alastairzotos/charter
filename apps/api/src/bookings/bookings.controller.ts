@@ -21,13 +21,7 @@ export class BookingsController {
   @Get('for-user')
   @Roles('admin', 'operator')
   async getBookingsForUser(@Principal() user: UserDetails) {
-    const bookings = await this.bookingsService.getBookingsForUser(user);
-
-    if (!bookings) {
-      throw new ForbiddenException();
-    }
-
-    return bookings;
+    return await this.bookingsService.getBookingsForUser(user);
   }
 
   @Get(':id')
