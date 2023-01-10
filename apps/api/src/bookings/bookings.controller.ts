@@ -19,6 +19,7 @@ export class BookingsController {
   }
 
   @Get('for-user')
+  @Roles('admin', 'operator')
   async getBookingsForUser(@Principal() user: UserDetails) {
     const bookings = await this.bookingsService.getBookingsForUser(user);
 
@@ -28,7 +29,7 @@ export class BookingsController {
 
     return bookings;
   }
-x
+
   @Get(':id')
   async getBookingById(@Param('id') id: string) {
     return await this.bookingsService.getBookingById(id);

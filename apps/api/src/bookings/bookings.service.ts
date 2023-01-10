@@ -44,11 +44,6 @@ export class BookingsService {
   }
 
   async getBookingsForUser(user: UserDetails) {
-    // TODO: move this to controller
-    if (!user || (user.role !== 'admin' && user.role !== 'operator')) {
-      return null;
-    }
-
     const operator = await this.operatorsService.getOperatorByEmail(user.email);
     const bookings = await this.bookingsRepository.getBookingsByOperator(operator);
 
