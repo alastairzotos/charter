@@ -54,7 +54,7 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
       trip,
       name,
       email,
-      date: date!.toString(),
+      date: date!.format('DD MMM YYYY'),
       guests,
       status: 'pending'
     })
