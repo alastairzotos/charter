@@ -4,6 +4,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import { OperatorLayout } from '../../src/components/operator-layout';
 import { TripsService } from '../../src/services/trips.service';
 import { UserTripView } from '../../src/components/user-trip-view';
+import { SeoHead } from '../../src/components/seo/head';
 
 interface Props {
   trip: TripDto;
@@ -12,9 +13,12 @@ interface Props {
 
 const TripPage: NextPage<Props> = ({ trip, operator }) => {
   return (
-    <OperatorLayout operator={operator}>
-      <UserTripView trip={trip} operator={operator} />
-    </OperatorLayout>
+    <>
+      <SeoHead subtitle={`${trip.name} by ${operator.name}`} description={trip.description} />
+      <OperatorLayout operator={operator}>
+        <UserTripView trip={trip} operator={operator} />
+      </OperatorLayout>
+    </>
   )
 }
 

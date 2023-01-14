@@ -7,6 +7,7 @@ import { AppBarLoginLogout } from '../app-bar-login-logout';
 import { urls } from '../../urls';
 import Link from 'next/link';
 import Image from 'next/image';
+import { APP_NAME } from '../../util/misc';
 
 export const UserAppBar: React.FC = () => {
   return (
@@ -14,12 +15,12 @@ export const UserAppBar: React.FC = () => {
       <MuiAppBar position="static">
         <Toolbar>
           <Link href={urls.home()}>
-            <Image src="/logo.png" alt="Booking your boat trip logo" width={64} height={64} />
+            <Image src="/logo.png" alt={`${APP_NAME} logo`} width={64} height={64} />
           </Link>
 
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link href={urls.home()} style={{ textDecoration: 'none', color: 'white' }}>
-              BookingYourBoatTrip
+              {APP_NAME}
             </Link>
           </Typography>
 
