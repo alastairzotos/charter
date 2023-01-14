@@ -54,18 +54,20 @@ export const UserTripView: React.FC<Props> = ({ bookingView = false, trip, opera
       <Typography color="text.secondary"><strong>Adult Price</strong>: €{trip.adultPrice.toFixed(2)}</Typography>
       <Typography color="text.secondary"><strong>Child Price</strong>: €{trip.childPrice.toFixed(2)}</Typography>
 
-      <Box sx={{ mt: 3 }}>
-        <ImageGallery
-          items={
-            trip.photos.map(photo => ({
-              original: photo,
-              thumbnail: photo,
-              thumbnailHeight: 100,
-              originalHeight: 500
-            }))
-          }
-        />
-      </Box>
+      {(trip.photos && trip.photos.length > 0) && (
+        <Box sx={{ mt: 3 }}>
+          <ImageGallery
+            items={
+              trip.photos.map(photo => ({
+                original: photo,
+                thumbnail: photo,
+                thumbnailHeight: 100,
+                originalHeight: 500
+              }))
+            }
+          />
+        </Box>
+      )}
 
       <Modal open={bookingModalOpen} onClose={() => setBookingModalOpen(false)}>
         <BookingForm operator={operator} trip={trip} onClose={() => setBookingModalOpen(false)} />
