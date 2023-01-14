@@ -24,7 +24,7 @@ export const emailContent = (env: EnvService) => ({
         <li><strong>Date</strong>: ${booking.date}</li>
       </ul>
 
-      <a href="${env.get().frontendUrl}/operator-admin/booking/${booking._id}">Click here to confirm the booking</a>
+      <a href="${env.get().frontendUrl}/operator-admin/booking/${booking._id}">Click here to view the booking</a>
     `,
   }),
 
@@ -37,7 +37,7 @@ export const emailContent = (env: EnvService) => ({
         for
         <a href="${env.get().frontendUrl}/trip/${booking.trip._id}">${booking.trip.name}</a>
       </p>
-      <p>You can view <a href="${env.get().frontendUrl}/booking/${booking._id}">this page</a> to see status updates about your booking, but don't worry, we'll email you as soon as the operator confirms or rejects your booking!</p>
+      <p>You can view <a href="${env.get().frontendUrl}/booking/${booking._id}">this page</a> to view the booking</p>
     `
   }),
 

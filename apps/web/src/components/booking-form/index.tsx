@@ -59,7 +59,7 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
       date: date!.format('DD MMM YYYY'),
       adultGuests,
       childGuests,
-      status: 'pending'
+      status: 'confirmed'
     })
   }
 

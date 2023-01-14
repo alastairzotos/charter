@@ -62,35 +62,36 @@ export const OperatorBooking: React.FC<Props> = ({ id }) => {
                 <Typography color="text.secondary"><strong>Children</strong>: {booking.childGuests}</Typography>
                 <Typography color="text.secondary">
                   <strong>Price</strong>: €
-                  {(booking.adultGuests * booking.trip.adultPrice + booking.childGuests * booking.trip.childPrice).toFixed(2)}      
+                  {(booking.adultGuests * booking.trip.adultPrice + booking.childGuests * booking.trip.childPrice).toFixed(2)}
                 </Typography>
-
-                {booking.status === 'confirmed' && <Typography>You have confirmed this booking</Typography>}
-                {booking.status === 'rejected' && <Typography>You have rejected this booking</Typography>}
-                {booking.status === 'pending' && (
-                  <>
-                    <Box
-                      sx={{ display: 'flex', justifyContent: 'space-between', mt: 3 }}
-                    >
-                      <Button
-                        color="success"
-                        variant="contained"
-                        onClick={confirmBooking}
+                <Box sx={{ mt: 3 }}>
+                  {booking.status === 'confirmed' && <Typography>This booking has been confirmed</Typography>}
+                  {booking.status === 'rejected' && <Typography>You have rejected this booking</Typography>}
+                  {booking.status === 'pending' && (
+                    <>
+                      <Box
+                        sx={{ display: 'flex', justifyContent: 'space-between' }}
                       >
-                        {setBookingStatusStatus === 'fetching' ? <CircularProgress size={20} /> : 'Confirm'}
-                      </Button>
+                        <Button
+                          color="success"
+                          variant="contained"
+                          onClick={confirmBooking}
+                        >
+                          {setBookingStatusStatus === 'fetching' ? <CircularProgress size={20} /> : 'Confirm'}
+                        </Button>
 
-                      <Button
-                        color="warning"
-                        onClick={() => setRejectModalOpen(true)}
-                      >
-                        Reject
-                      </Button>
-                    </Box>
+                        <Button
+                          color="warning"
+                          onClick={() => setRejectModalOpen(true)}
+                        >
+                          Reject
+                        </Button>
+                      </Box>
 
-                    {setBookingStatusStatus === 'error' && <Typography>There was an error. Please try again later.</Typography>}
-                  </>
-                )}
+                      {setBookingStatusStatus === 'error' && <Typography>There was an error. Please try again later.</Typography>}
+                    </>
+                  )}
+                </Box>
 
                 <DeleteConfirmModal
                   title="Reject booking?"
