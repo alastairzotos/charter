@@ -32,7 +32,7 @@ interface Props {
 export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
   const router = useRouter();
 
-  const [createBookingStatus, createBooking, bookingId] = useBookingsState(s => [s.createBookingStatus, s.createBooking, s.bookingId]);
+  const [createBookingStatus, createBooking, bookingId, clearBooking] = useBookingsState(s => [s.createBookingStatus, s.createBooking, s.bookingId, s.clearBooking]);
 
   const loggedinUser = useUserState(s => s.loggedInUser);
   const [name, setName] = useState(loggedinUser?.givenName || '');
@@ -43,6 +43,7 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
 
   useEffect(() => {
     if (!!bookingId) {
+      clearBooking();
       router.push(urls.user.booking(bookingId));
     }
   }, [bookingId]);

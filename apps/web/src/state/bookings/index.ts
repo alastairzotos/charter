@@ -18,6 +18,7 @@ export interface BookingsStateValues {
 
 export interface BookingsStateActions {
   createBooking: (booking: BookingNoId) => Promise<void>;
+  clearBooking: () => void;
   getBookingsForUser: () => Promise<void>;
   getBooking: (id: string) => Promise<void>;
   setBookingStatus: (id: string, status: BookingStatus) => Promise<void>;
@@ -40,6 +41,12 @@ export const createBookingsState = (initialValues: BookingsStateValues, bookings
         set({ createBookingStatus: 'error' });
       }
     },
+
+    clearBooking: () =>
+      set({
+        createBookingStatus: undefined,
+        bookingId: undefined
+      }),
 
     getBookingsForUser: async () => {
       try {
