@@ -51,6 +51,8 @@ export const UserTripView: React.FC<Props> = ({ bookingView = false, trip, opera
       <Typography color="text.secondary"><strong>Start location</strong>: {trip.startLocation}</Typography>
       <Typography color="text.secondary"><strong>Start time</strong>: {trip.startTime}</Typography>
       <Typography color="text.secondary"><strong>Duration</strong>: {trip.duration}</Typography>
+      <Typography color="text.secondary"><strong>Adult Price</strong>: €{trip.adultPrice.toFixed(2)}</Typography>
+      <Typography color="text.secondary"><strong>Child Price</strong>: €{trip.childPrice.toFixed(2)}</Typography>
 
       <Box sx={{ mt: 3 }}>
         <ImageGallery

@@ -18,7 +18,9 @@ export const emailContent = (env: EnvService) => ({
       <ul>
         <li><strong>Name of guest</strong>: ${booking.name}</li>
         <li><strong>Guest email</strong>: ${booking.email}</li>
-        <li><strong>Number of guests</strong>: ${booking.guests}</li>
+        <li><strong>Number of adults</strong>: ${booking.adultGuests}</li>
+        <li><strong>Number of children</strong>: ${booking.childGuests}</li>
+        <li><strong>Price</strong>: €${(booking.adultGuests * booking.trip.adultPrice + booking.childGuests * booking.trip.childPrice).toFixed(2)}</li>
         <li><strong>Date</strong>: ${booking.date}</li>
       </ul>
 

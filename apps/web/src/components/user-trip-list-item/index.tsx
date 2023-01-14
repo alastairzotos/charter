@@ -21,7 +21,7 @@ export const UserTripListItem: React.FC<Props> = ({ trip }) => {
       href={urls.user.trip(trip)}
     >
       <ListItemText
-        primary={trip.name}
+        primary={`${trip.name} - From €${trip.adultPrice} per adult`}
         secondary={desc}
       />
     </ListItem>

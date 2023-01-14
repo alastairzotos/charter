@@ -18,6 +18,8 @@ export interface TripDto {
   startTime: string;
   description: string;
   photos: string[];
+  adultPrice: number;
+  childPrice: number;
 }
 
 export type TripNoId = Omit<TripDto, '_id'>;
@@ -31,7 +33,8 @@ export interface BookingDto {
   name: string;
   email: string;
   date: string;
-  guests: number;
+  adultGuests: number;
+  childGuests: number;
   status: BookingStatus;
 }
 

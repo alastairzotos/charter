@@ -26,7 +26,10 @@ export class Booking implements BookingDto {
   date: string;
 
   @Prop()
-  guests: number;
+  adultGuests: number;
+
+  @Prop()
+  childGuests: number;
 
   @Prop(String)
   status: BookingStatus;

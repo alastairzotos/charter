@@ -38,7 +38,8 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
   const [name, setName] = useState(loggedinUser?.givenName || '');
   const [email, setEmail] = useState(loggedinUser?.email || '');
   const [date, setDate] = useState<Dayjs | null>(dayjs());
-  const [guests, setGuests] = useState(1);
+  const [adultGuests, setAdultGuests] = useState(1);
+  const [childGuests, setChildGuests] = useState(0);
 
   useEffect(() => {
     if (!!bookingId) {
@@ -46,7 +47,7 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
     }
   }, [bookingId]);
 
-  const isValid = name.trim().length && email.trim().length && guests > 0 && !!date && date.isValid();
+  const isValid = name.trim().length && email.trim().length && adultGuests > 0 && !!date && date.isValid();
 
   const handleBookClick = () => {
     createBooking({
@@ -55,7 +56,8 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
       name,
       email,
       date: date!.format('DD MMM YYYY'),
-      guests,
+      adultGuests,
+      childGuests,
       status: 'pending'
     })
   }
@@ -109,10 +111,26 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
                 max: 10, min: 1
               }
             }}
-            label="Number of guests"
-            value={guests}
-            onChange={e => setGuests(parseInt(e.target.value, 10))}
+            label="Number of adults"
+            value={adultGuests}
+            onChange={e => setAdultGuests(parseInt(e.target.value, 10))}
           />
+
+          <TextField
+            type="number"
+            InputProps={{
+              inputProps: {
+                max: 10, min: 1
+              }
+            }}
+            label="Number of children"
+            value={childGuests}
+            onChange={e => setChildGuests(parseInt(e.target.value, 10))}
+          />
+
+          <Typography>
+            Total price: €{(adultGuests * trip.adultPrice + childGuests * trip.childPrice).toFixed(2)}
+          </Typography>
         </Box>
 
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>

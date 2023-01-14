@@ -58,7 +58,12 @@ export const OperatorBooking: React.FC<Props> = ({ id }) => {
                 <Typography color="text.secondary"><strong>Name</strong>: {booking.name}</Typography>
                 <Typography color="text.secondary"><strong>Email</strong>: {booking.email}</Typography>
                 <Typography color="text.secondary"><strong>Date</strong>: {booking.date}</Typography>
-                <Typography color="text.secondary"><strong>Guests</strong>: {booking.guests}</Typography>
+                <Typography color="text.secondary"><strong>Adults</strong>: {booking.adultGuests}</Typography>
+                <Typography color="text.secondary"><strong>Children</strong>: {booking.childGuests}</Typography>
+                <Typography color="text.secondary">
+                  <strong>Price</strong>: €
+                  {(booking.adultGuests * booking.trip.adultPrice + booking.childGuests * booking.trip.childPrice).toFixed(2)}      
+                </Typography>
 
                 {booking.status === 'confirmed' && <Typography>You have confirmed this booking</Typography>}
                 {booking.status === 'rejected' && <Typography>You have rejected this booking</Typography>}

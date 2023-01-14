@@ -31,6 +31,8 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
   const [startTime, setStartTime] = useState(trip.startTime);
   const [description, setDescription] = useState(trip.description);
   const [photos, setPhotos] = useState(trip.photos);
+  const [adultPrice, setAdultPrice] = useState(String(trip.adultPrice ?? 0));
+  const [childPrice, setChildPrice] = useState(String(trip.childPrice ?? 0));
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
@@ -93,6 +95,20 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
         rows={4}
       />
 
+      <TextField
+        placeholder='Adult Price'
+        value={adultPrice}
+        onChange={e => setAdultPrice(e.target.value)}
+        disabled={isFetching}
+      />
+
+      <TextField
+        placeholder='Child Price'
+        value={childPrice}
+        onChange={e => setChildPrice(e.target.value)}
+        disabled={isFetching}
+      />
+
       <Typography variant="h6">Photos</Typography>
       <ImageDropzone multiple onReceiveUrls={setPhotos}>
         <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
@@ -118,6 +134,8 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
             startTime,
             description,
             photos,
+            adultPrice: parseFloat(adultPrice),
+            childPrice: parseFloat(childPrice),
             operator: operatorId as any
           })}
         >
