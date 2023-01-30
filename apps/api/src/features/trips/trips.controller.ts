@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Patch, Delete, Query, UseGuards, NotFoundException } from "@nestjs/common";
 import { TripDto, TripNoId } from "dtos";
-import { AuthGuard } from "../auth/auth.guard";
-import { Roles } from "../auth/roles.decorator";
+import { AuthGuard } from "../../auth/auth.guard";
+import { Roles } from "../../auth/roles.decorator";
 import { TripsService } from "./trips.service";
 
 @Controller('trips')

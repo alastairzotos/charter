@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Patch, Delete, Body, UseGuards, Param } from "@nestjs/common";
 import { OperatorDto, OperatorNoId } from "dtos";
-import { AuthGuard } from "../auth/auth.guard";
-import { Roles } from "../auth/roles.decorator";
+import { AuthGuard } from "../../auth/auth.guard";
+import { Roles } from "../../auth/roles.decorator";
 import { OperatorsService } from "./operators.service";
 
 @Controller('operators')

@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
 import { BookingDto, BookingStatus, UserDetails } from "dtos";
-import { AuthGuard } from "../auth/auth.guard";
-import { Roles } from "../auth/roles.decorator";
-import { Principal } from "../users/principal.decorator";
+import { AuthGuard } from "../../auth/auth.guard";
+import { Roles } from "../../auth/roles.decorator";
+import { Principal } from "../../auth/principal.decorator";
 import { BookingsService } from "./bookings.service";
 
 @Controller('bookings')
