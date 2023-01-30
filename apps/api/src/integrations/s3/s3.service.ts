@@ -5,7 +5,7 @@ import {
   S3Client as S3ClientAWS,
   S3ClientConfig,
 } from '@aws-sdk/client-s3';
-import { EnvService } from "../../features/environment/environment.service";
+import { EnvService } from "../../environment/environment.service";
 
 @Injectable()
 export class S3Service {

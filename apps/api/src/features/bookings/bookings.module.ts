@@ -4,7 +4,7 @@ import { Booking, BookingSchema } from "../../schemas/booking.schema";
 import { Operator, OperatorSchema } from "../../schemas/operator.schema";
 import { Trip, TripSchema } from "../../schemas/trip.schema";
 import { EmailModule } from "../email/email.module";
-import { EnvModule } from "../environment/environment.module";
+import { EnvModule } from "../../environment/environment.module";
 import { OperatorsModule } from "../operators/operators.module";
 import { TripsModule } from "../trips/trips.module";
 import { UsersModule } from "../users/users.module";

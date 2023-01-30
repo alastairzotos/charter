@@ -1,7 +1,7 @@
 import { LoginResponse, UserDetails, RegisterDetails, LoginDetails } from "dtos";
 import { Injectable } from "@nestjs/common";
 import { UsersRepository } from "./users.repository";
-import { EnvService } from "../environment/environment.service";
+import { EnvService } from "../../environment/environment.service";
 import * as jwt from 'jsonwebtoken';
 import * as  bcrypt from 'bcrypt';
 import { User } from "../../schemas/user.schema";

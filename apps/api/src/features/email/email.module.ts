@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { EnvModule } from "../environment/environment.module";
+import { EnvModule } from "../../environment/environment.module";
 import { EmailService } from "./email.service";
 
 @Module({
