@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { OperatorDto, TripDto } from 'dtos';
-import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import React, { useEffect } from 'react';
+import { BookingNoId, OperatorDto, TripDto } from 'dtos';
+import { Box, Button, TextField as MuiTextField, Typography } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { useUserState } from '../../state/user';
-import { createBookingsState, useBookingsState } from '../../state/bookings';
+import { useBookingsState } from '../../state/bookings';
 import { useRouter } from 'next/router';
 import { urls } from '../../urls';
+import * as yup from 'yup';
+import { FormBox } from '../form-box';
+import { Formik, Field } from 'formik';
+import { TextField } from 'formik-mui';
 
 const bookingModalStyle = {
   position: 'absolute' as 'absolute',
@@ -29,17 +32,29 @@ interface Props {
   onClose: () => void;
 }
 
+const validationSchema: yup.SchemaOf<Omit<BookingNoId, 'operator' | 'status' | 'trip'>> = yup.object().shape({
+  name: yup.string().required('Enter your name'),
+  email: yup.string().required('Enter your email').email('Enter a valid email address'),
+  date: yup.string().required('Enter your departure date'),
+  adultGuests: yup.number().min(1, 'Minimum of one adult required').max(10, 'Maximum of 10 adults allowed').required('Enter number of adults'),
+  childGuests: yup.number().max(10, 'Maximum of 10 children allowed').required('Enter number of children'),
+})
+
 export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
   const router = useRouter();
 
+  const loggedinUser = useUserState(s => s.loggedInUser);
   const [createBookingStatus, createBooking, bookingId, clearBooking] = useBookingsState(s => [s.createBookingStatus, s.createBooking, s.bookingId, s.clearBooking]);
 
-  const loggedinUser = useUserState(s => s.loggedInUser);
-  const [name, setName] = useState(loggedinUser?.givenName || '');
-  const [email, setEmail] = useState(loggedinUser?.email || '');
-  const [date, setDate] = useState<Dayjs | null>(dayjs());
-  const [adultGuests, setAdultGuests] = useState(1);
-  const [childGuests, setChildGuests] = useState(0);
+  const initialValues: Omit<BookingNoId, 'status'> = {
+    operator,
+    trip,
+    name: loggedinUser?.givenName || '',
+    email: loggedinUser?.email || '',
+    date: dayjs().add(1, 'day').format('DD MMM YYYY'),
+    adultGuests: 1,
+    childGuests: 0,
+  }
 
   useEffect(() => {
     if (!!bookingId) {
@@ -48,104 +63,87 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
     }
   }, [bookingId]);
 
-  const isValid = name.trim().length && email.trim().length && adultGuests > 0 && !!date && date.isValid();
-
-  const handleBookClick = () => {
-    createBooking({
-      operator,
-      trip,
-      name,
-      email,
-      date: date!.format('DD MMM YYYY'),
-      adultGuests,
-      childGuests,
-      status: 'confirmed'
-    })
-  }
+  const isSubmitting = createBookingStatus === 'fetching';
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Box sx={bookingModalStyle}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="h6">Book {trip.name} by {operator.name}</Typography>
-
-          <IconButton onClick={onClose}>
-            <CloseIcon />
-          </IconButton>
-        </Box>
-
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 2,
-            mt: 3,
-            mb: 3,
-          }}
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={values => createBooking({
+            ...values,
+            status: 'confirmed'
+          })}
         >
-          <TextField
-            label="Your name"
-            value={name}
-            onChange={e => setName(e.target.value)}
-          />
+          {({ isValid, values, setValues }) => (
+            <FormBox title={`Book ${trip.name} by ${operator.name}`} onClose={onClose}>
+              <Field
+                component={TextField}
+                name="name"
+                label="Your name"
+              />
 
-          <TextField
-            label="Your email address"
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
+              <Field
+                component={TextField}
+                name="email"
+                label="Your email address"
+                type="email"
+              />
 
-          <MobileDatePicker
-            label="Date"
-            inputFormat="DD/MM/YYYY"
-            minDate={dayjs().add(1, 'day')}
-            value={date}
-            onChange={setDate}
-            renderInput={(params) => <TextField {...params} />}
-          />
+              <MobileDatePicker
+                label="Date"
+                inputFormat="DD/MM/YYYY"
+                disabled={isSubmitting}
+                minDate={dayjs().add(1, 'day')}
+                value={values.date}
+                onChange={date => setValues({ ...values, date: date!.format('DD MMM YYYY') })}
+                renderInput={(params) => <MuiTextField {...params} disabled={isSubmitting} />}
+              />
 
-          <TextField
-            type="number"
-            InputProps={{
-              inputProps: {
-                max: 10, min: 1
-              }
-            }}
-            label="Number of adults"
-            value={adultGuests}
-            onChange={e => setAdultGuests(parseInt(e.target.value, 10))}
-          />
+              <Field
+                component={TextField}
+                name="adultGuests"
+                label="Number of adults"
+                type="number"
+                InputProps={{
+                  inputProps: {
+                    max: 10, min: 1
+                  }
+                }}
+              />
 
-          <TextField
-            type="number"
-            InputProps={{
-              inputProps: {
-                max: 10, min: 1
-              }
-            }}
-            label="Number of children"
-            value={childGuests}
-            onChange={e => setChildGuests(parseInt(e.target.value, 10))}
-          />
+              <Field
+                component={TextField}
+                name="childGuests"
+                label="Number of children"
+                type="number"
+                InputProps={{
+                  inputProps: {
+                    max: 10, min: 0
+                  }
+                }}
+              />
 
-          <Typography>
-            Total price: €{(adultGuests * trip.adultPrice + childGuests * trip.childPrice).toFixed(2)}
-          </Typography>
-        </Box>
+              <Typography>
+                <strong>Total price:</strong> €{(values.adultGuests * trip.adultPrice + values.childGuests * trip.childPrice).toFixed(2)}
+              </Typography>
 
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Button
-            color="success"
-            variant="contained"
-            disabled={!isValid || createBookingStatus === 'fetching'}
-            onClick={handleBookClick}
-          >
-            Book now
-          </Button>
-        </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Button
+                  color="success"
+                  type="submit"
+                  variant="contained"
+                  disabled={!isValid || isSubmitting}
+                >
+                  Book now
+                </Button>
+              </Box>
 
-        {createBookingStatus === 'error' && <Typography>There was an error creating your booking. Please try again later.</Typography>}
+              {createBookingStatus === 'error' && <Typography>There was an error creating your booking. Please try again later.</Typography>}
+            </FormBox>
+          )}
+        </Formik>
       </Box>
     </LocalizationProvider>
   )

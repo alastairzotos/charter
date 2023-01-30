@@ -5,10 +5,9 @@ import { FetchStatus } from '../../models';
 import { useRouter } from 'next/router';
 import { urls } from '../../urls';
 import { ImageDropzone } from '../image-dropzone';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import { TextField } from 'formik-mui';
 import * as yup from 'yup';
-import { Titled } from '../titled';
 import { FormBox } from '../form-box';
 import { SaveAndDelete } from '../save-delete';
 

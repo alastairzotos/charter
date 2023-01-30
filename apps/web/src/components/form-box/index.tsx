@@ -5,10 +5,11 @@ import { Titled } from '../titled';
 
 interface Props {
   title: string;
+  onClose?: () => void;
 }
 
-export const FormBox: React.FC<React.PropsWithChildren<Props>> = ({ title, children }) => (
-  <Titled title={title}>
+export const FormBox: React.FC<React.PropsWithChildren<Props>> = ({ title, onClose, children }) => (
+  <Titled title={title} onClose={onClose}>
     <Form>
       <Box
         sx={{
