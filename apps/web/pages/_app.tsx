@@ -5,8 +5,9 @@ import { AdminLayout } from '../src/components/admin-layout';
 import { useUserState } from '../src/state/user';
 import { UserLayout } from '../src/components/user-layout';
 import { OperatorsLayout } from '../src/components/operators-layout';
+import { PageWrapper } from '../src/components/page-wrapper';
 
-function AppPage({ Component, pageProps, router }: AppProps) {
+function Inner({ Component, pageProps, router }: AppProps) {
   const [initLocalStorage, initialised] = useUserState(s => [s.initLocalStorage, s.initialised]);
 
   React.useEffect(() => {
@@ -35,6 +36,14 @@ function AppPage({ Component, pageProps, router }: AppProps) {
     <UserLayout>
       {initialised && <Component {...pageProps} />}
     </UserLayout>
+  )
+}
+
+function AppPage(props: AppProps) {
+  return (
+    <PageWrapper>
+      <Inner {...props} />
+    </PageWrapper>
   )
 }
 
