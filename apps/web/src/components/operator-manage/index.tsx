@@ -49,65 +49,61 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, operator, onSave, s
       onSubmit={onSave}
     >
       {({ isValid, values, setValues }) => (
-        <Titled title={title}>
-          <Form>
-            <FormBox>
-              <Field
-                component={TextField}
-                name="name"
-                label="Operator name"
-              />
+        <FormBox title={title}>
+          <Field
+            component={TextField}
+            name="name"
+            label="Operator name"
+          />
 
-              <Field
-                component={TextField}
-                name="email"
-                type="email"
-                label="Email"
-              />
+          <Field
+            component={TextField}
+            name="email"
+            type="email"
+            label="Email"
+          />
 
-              <Field
-                component={TextField}
-                name="phoneNumber"
-                label="Phone number"
-              />
+          <Field
+            component={TextField}
+            name="phoneNumber"
+            label="Phone number"
+          />
 
-              <Field
-                component={TextField}
-                name="address"
-                label="Address"
-                multiline
-                rows={4}
-              />
+          <Field
+            component={TextField}
+            name="address"
+            label="Address"
+            multiline
+            rows={4}
+          />
 
-              <Field
-                component={TextField}
-                name="description"
-                label="Description"
-                multiline
-                rows={4}
-              />
+          <Field
+            component={TextField}
+            name="description"
+            label="Description"
+            multiline
+            rows={4}
+          />
 
-              <ImageDropzone
-                multiple={false}
-                onReceiveUrls={urls => setValues({ ...values, photo: urls[0] })}
-              >
-                <Avatar src={values.photo} sx={{ width: 128, height: 128 }} />
-              </ImageDropzone>
-              <ErrorMessage name="photo" />
+          <ImageDropzone
+            multiple={false}
+            onReceiveUrls={urls => setValues({ ...values, photo: urls[0] })}
+          >
+            <Avatar src={values.photo} sx={{ width: 128, height: 128 }} />
+          </ImageDropzone>
+          <ErrorMessage name="photo" />
 
-              <SaveAndDelete
-                isValid={isValid}
-                saveStatus={saveStatus}
-                onDelete={handleDeleteOperator}
-                deleteStatus={deleteStatus}
-                deleteModalTitle="Delete operator?"
-                deleteModalText="Are you sure you want to delete this operator?"
-              />
+          <SaveAndDelete
+            isValid={isValid}
+            saveStatus={saveStatus}
+            onDelete={handleDeleteOperator}
+            deleteStatus={deleteStatus}
+            deleteModalTitle="Delete operator?"
+            deleteModalText="Are you sure you want to delete this operator?"
+          />
 
-              {saveStatus === 'error' && <Typography>There was an error saving the operator data</Typography>}
-            </FormBox>
-          </Form>
-        </Titled>
+          {saveStatus === 'error' && <Typography>There was an error saving the operator data</Typography>}
+        </FormBox>
       )}
     </Formik>
   )

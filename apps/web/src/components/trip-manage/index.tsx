@@ -7,10 +7,9 @@ import { FetchStatus } from '../../models';
 import { useRouter } from 'next/router';
 import { urls } from '../../urls';
 import { ImageDropzone } from '../image-dropzone';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Formik } from 'formik';
 import { TextField } from 'formik-mui';
 import * as yup from 'yup';
-import { Titled } from '../titled';
 import { FormBox } from '../form-box';
 import { SaveAndDelete } from '../save-delete';
 
@@ -54,80 +53,76 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, trip, onSav
       onSubmit={values => onSave({ ...values, operator: operatorId as any })}
     >
       {({ isValid, values, setValues }) => (
-        <Titled title={title}>
-          <Form>
-            <FormBox>
-              <Field
-                component={TextField}
-                name="name"
-                label="Trip name"
-              />
+        <FormBox title={title}>
+          <Field
+            component={TextField}
+            name="name"
+            label="Trip name"
+          />
 
-              <Field
-                component={TextField}
-                name="duration"
-                label="Trip duration"
-              />
+          <Field
+            component={TextField}
+            name="duration"
+            label="Trip duration"
+          />
 
-              <Field
-                component={TextField}
-                name="startLocation"
-                label="Starting location"
-              />
+          <Field
+            component={TextField}
+            name="startLocation"
+            label="Starting location"
+          />
 
-              <Field
-                component={TextField}
-                name="startTime"
-                label="Start time"
-              />
+          <Field
+            component={TextField}
+            name="startTime"
+            label="Start time"
+          />
 
-              <Field
-                component={TextField}
-                name="description"
-                label="Description"
-                multiline
-                rows={4}
-              />
+          <Field
+            component={TextField}
+            name="description"
+            label="Description"
+            multiline
+            rows={4}
+          />
 
-              <Field
-                component={TextField}
-                name="adultPrice"
-                label="Adult price"
-              />
+          <Field
+            component={TextField}
+            name="adultPrice"
+            label="Adult price"
+          />
 
-              <Field
-                component={TextField}
-                name="childPrice"
-                label="Child price"
-              />
+          <Field
+            component={TextField}
+            name="childPrice"
+            label="Child price"
+          />
 
-              <ImageDropzone
-                multiple
-                onReceiveUrls={photos => setValues({ ...values, photos })}
-              >
-                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-                  {values.photos.map(photo => (
-                    <ImageListItem key={photo}>
-                      <img src={`${photo}?w=164&h=164&fit=crop&auto=format`} loading="lazy" />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-              </ImageDropzone>
-              <ErrorMessage name="photos" />
+          <ImageDropzone
+            multiple
+            onReceiveUrls={photos => setValues({ ...values, photos })}
+          >
+            <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+              {values.photos.map(photo => (
+                <ImageListItem key={photo}>
+                  <img src={`${photo}?w=164&h=164&fit=crop&auto=format`} loading="lazy" />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </ImageDropzone>
+          <ErrorMessage name="photos" />
 
-              <SaveAndDelete
-                isValid={isValid}
-                saveStatus={saveStatus}
-                onDelete={handleDeleteTrip}
-                deleteStatus={deleteStatus}
-                deleteModalTitle="Delete trip?"
-                deleteModalText="Are you sure you want to delete this trip?"
-              />
+          <SaveAndDelete
+            isValid={isValid}
+            saveStatus={saveStatus}
+            onDelete={handleDeleteTrip}
+            deleteStatus={deleteStatus}
+            deleteModalTitle="Delete trip?"
+            deleteModalText="Are you sure you want to delete this trip?"
+          />
 
-              {saveStatus === 'error' && <Typography>There was an error saving the trip data</Typography>}
-            </FormBox>
-          </Form>
-        </Titled>
+          {saveStatus === 'error' && <Typography>There was an error saving the trip data</Typography>}
+        </FormBox>
       )}
     </Formik>
   )
