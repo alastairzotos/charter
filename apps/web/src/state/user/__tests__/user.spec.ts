@@ -3,8 +3,6 @@ import { ACCESS_TOKEN_LOCALSTORAGE_KEY, createUserState, UserState } from ".."
 import { LocalStorageService } from "../../../services/localstorage.service";
 import { UserService } from "../../../services/user.service";
 
-export { }
-
 describe('User state', () => {
   const mockUserService: Pick<UserService, keyof UserService> = {
     loginUser: jest.fn(async (email: string) => new Promise(resolve => resolve({ accessToken: '123' }))),
