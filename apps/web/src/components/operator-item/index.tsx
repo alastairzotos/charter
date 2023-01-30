@@ -6,6 +6,7 @@ import { urls } from '../../urls';
 import { Fetchable } from '../fetchable';
 import { TripList } from '../trip-list';
 import { Titled } from '../titled';
+import { OperatorSummary } from '../operator-summary';
 
 interface Props {
   id: string;
@@ -27,23 +28,7 @@ export const OperatorItem: React.FC<Props> = ({ id }) => {
         fetching={<CircularProgress />}
         error={<Typography>There was an error loading the operator</Typography>}
         success={
-          <>
-            {!!operator && (
-              <Titled title={operator.name}>
-                <Typography variant="subtitle2">{operator.email}</Typography>
-                <Typography variant="subtitle2">{operator.address}</Typography>
-                <Typography variant="subtitle2">{operator.phoneNumber}</Typography>
-                <Button
-                  href={urls.admin.operatorEdit(id)}
-                  LinkComponent={Link}
-                  variant="outlined"
-                  sx={{ mt: 3, mb: 3 }}
-                >
-                  Edit
-                </Button>
-              </Titled>
-            )}
-          </>
+          !!operator && <OperatorSummary operator={operator} />
         }
       />
       
