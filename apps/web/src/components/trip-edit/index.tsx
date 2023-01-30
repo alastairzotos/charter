@@ -23,24 +23,18 @@ export const TripEdit: React.FC<Props> = ({ id, operatorId }) => {
   return (
     <Fetchable
       status={loadTripStatus}
-      fetching={<CircularProgress />}
       error={<Typography>There was an error loading the trip</Typography>}
-      success={(
-        <>
-          {!!trip && (
-            <ManageTripForm
-              title="Edit trip"
-              operatorId={operatorId}
-              trip={trip}
-              onSave={newTrip => updateTrip(id, newTrip)}
-              saveStatus={updateTripStatus}
+    >
+      <ManageTripForm
+        title="Edit trip"
+        operatorId={operatorId}
+        trip={trip!}
+        onSave={newTrip => updateTrip(id, newTrip)}
+        saveStatus={updateTripStatus}
 
-              onDelete={() => deleteTrip(id)}
-              deleteStatus={deleteTripStatus}
-            />
-          )}
-        </>
-      )}
-    />
+        onDelete={() => deleteTrip(id)}
+        deleteStatus={deleteTripStatus}
+      />
+    </Fetchable>
   )
 }
