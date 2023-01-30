@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-import { CircularProgress, Typography, Paper } from '@mui/material';
-import { Fetchable } from '../fetchable';
+import React from 'react';
 import { useTripsState } from '../../state/trips';
 import { ManageTripForm } from '../trip-manage';
 import { useRouter } from 'next/router';

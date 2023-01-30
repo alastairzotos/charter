@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import { Button, Divider, Typography, CircularProgress } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { useOperatorsState } from '../../state/operators';
-import Link from 'next/link';
-import { urls } from '../../urls';
 import { Fetchable } from '../fetchable';
 import { TripList } from '../trip-list';
 import { Titled } from '../titled';
@@ -25,12 +23,10 @@ export const OperatorItem: React.FC<Props> = ({ id }) => {
     <>
       <Fetchable
         status={loadOperatorStatus}
-        fetching={<CircularProgress />}
         error={<Typography>There was an error loading the operator</Typography>}
-        success={
-          !!operator && <OperatorSummary operator={operator} />
-        }
-      />
+      >
+        <OperatorSummary operator={operator!} />
+      </Fetchable>
       
       <Divider sx={{ mb: 3, mt: 3 }} />
 

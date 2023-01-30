@@ -22,23 +22,17 @@ export const OperatorEdit: React.FC<Props> = ({ id }) => {
   return (
     <Fetchable
       status={loadOperatorStatus}
-      fetching={<CircularProgress />}
       error={<Typography>There was an error loading the operator</Typography>}
-      success={(
-        <>
-          {!!operator && (
-            <ManageOperatorForm
-              title="Edit operator"
-              operator={operator}
-              onSave={newOperator => updateOperator(id, newOperator)}
-              saveStatus={updateOperatorStatus}
+    >
+      <ManageOperatorForm
+        title="Edit operator"
+        operator={operator!}
+        onSave={newOperator => updateOperator(id, newOperator)}
+        saveStatus={updateOperatorStatus}
 
-              onDelete={() => deleteOperator(id)}
-              deleteStatus={deleteOperatorStatus}
-            />
-          )}
-        </>
-      )}
-    />
+        onDelete={() => deleteOperator(id)}
+        deleteStatus={deleteOperatorStatus}
+      />
+    </Fetchable>
   )
 }

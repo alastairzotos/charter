@@ -20,28 +20,24 @@ export const OperatorsList: React.FC = () => {
   return (
     <Fetchable
       status={loadOperatorsStatus}
-      fetching={<CircularProgress />}
       error={<Typography>There was an error loading the operators</Typography>}
-      success={
-        <>
-          <List sx={{ width: '100%' }}>
-            {
-              operators.map(operator => (
-                <OperatorListItem key={operator._id} operator={operator} />
-              ))
-            }
-          </List>
+    >
+      <List sx={{ width: '100%' }}>
+        {
+          operators.map(operator => (
+            <OperatorListItem key={operator._id} operator={operator} />
+          ))
+        }
+      </List>
 
-          <Button
-            variant="contained"
-            component={Link}
-            href={urls.admin.operatorsCreate()}
-            sx={{ mt: 3 }}
-          >
-            Create
-          </Button>
-        </>
-      }
-    />
+      <Button
+        variant="contained"
+        component={Link}
+        href={urls.admin.operatorsCreate()}
+        sx={{ mt: 3 }}
+      >
+        Create
+      </Button>
+    </Fetchable>
   )
 }

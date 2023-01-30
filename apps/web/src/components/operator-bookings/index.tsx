@@ -20,15 +20,11 @@ export const OperatorBookings: React.FC = () => {
   return (
     <Fetchable
       status={getBookingsForUserStatus}
-      fetching={<CircularProgress />}
       error={<Typography>There was an error loading the bookings. Please try again later.</Typography>}
-      success={(
-        <>
-          {/* <OperatorBookingList title="Pending bookings" bookings={pendingBookings} /> */}
-          <OperatorBookingList title="Confirmed bookings" bookings={confirmedBookings} />
-          {/* <OperatorBookingList title="Rejected bookings" bookings={rejectedBookings} /> */}
-        </>
-      )}
-    />
+    >
+      {/* <OperatorBookingList title="Pending bookings" bookings={pendingBookings} /> */}
+      <OperatorBookingList title="Confirmed bookings" bookings={confirmedBookings} />
+      {/* <OperatorBookingList title="Rejected bookings" bookings={rejectedBookings} /> */}
+    </Fetchable>
   )
 }

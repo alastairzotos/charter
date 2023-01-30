@@ -22,32 +22,28 @@ export const TripList: React.FC<Props> = ({ operatorId }) => {
   return (
     <Fetchable
       status={loadTripsStatus}
-      fetching={<CircularProgress />}
       error={<Typography>There was an error loading the operator&apos;s trips</Typography>}
-      success={
-        <>
-          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-            {
-              trips.map(trip => (
-                <TripListItem
-                  key={trip._id}
-                  operatorId={operatorId}
-                  trip={trip}
-                />
-              ))
-            }
-          </List>
+    >
+      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        {
+          trips.map(trip => (
+            <TripListItem
+              key={trip._id}
+              operatorId={operatorId}
+              trip={trip}
+            />
+          ))
+        }
+      </List>
 
-          <Button
-            variant="contained"
-            component={Link}
-            href={urls.admin.tripsCreate(operatorId)}
-            sx={{ mt: 3 }}
-          >
-            Add trip
-          </Button>
-        </>
-      }
-    />
+      <Button
+        variant="contained"
+        component={Link}
+        href={urls.admin.tripsCreate(operatorId)}
+        sx={{ mt: 3 }}
+      >
+        Add trip
+      </Button>
+    </Fetchable>
   )
 }
