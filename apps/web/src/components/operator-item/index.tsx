@@ -47,9 +47,9 @@ export const OperatorItem: React.FC<Props> = ({ id }) => {
         }
       />
       
-      <Divider sx={{ mb: 3 }} />
+      <Divider sx={{ mb: 3, mt: 3 }} />
 
-      <Titled title="Available Trips">
+      <Titled title="Trips">
         <TripList operatorId={id} />
       </Titled>
     </>
