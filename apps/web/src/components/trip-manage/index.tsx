@@ -1,6 +1,6 @@
 import { TripNoId } from 'dtos';
 import React, { useState } from 'react';
-import { Button, CircularProgress, Paper, TextField, Typography, Box } from '@mui/material';
+import { Button, CircularProgress, TextField, Typography, Box } from '@mui/material';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { FetchStatus } from '../../models';
@@ -48,7 +48,7 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
   }
 
   return (
-    <Paper
+    <Box
       sx={{
         p: 3,
         display: 'flex',
@@ -163,6 +163,6 @@ export const ManageTripForm: React.FC<Props> = ({ operatorId, title, id, trip, o
         onDelete={handleDeleteTrip}
         deleteStatus={deleteStatus}
       />
-    </Paper>
+    </Box>
   )
 }

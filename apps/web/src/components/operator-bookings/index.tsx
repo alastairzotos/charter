@@ -1,8 +1,6 @@
-import { Box, CircularProgress, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
-import Link from 'next/link';
+import { CircularProgress, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useBookingsState } from '../../state/bookings';
-import { urls } from '../../urls';
 import { Fetchable } from '../fetchable';
 import { OperatorBookingList } from '../operator-booking-list';
 
@@ -26,9 +24,9 @@ export const OperatorBookings: React.FC = () => {
       error={<Typography>There was an error loading the bookings. Please try again later.</Typography>}
       success={(
         <>
-          <OperatorBookingList title="Pending bookings" bookings={pendingBookings} />
+          {/* <OperatorBookingList title="Pending bookings" bookings={pendingBookings} /> */}
           <OperatorBookingList title="Confirmed bookings" bookings={confirmedBookings} />
-          <OperatorBookingList title="Rejected bookings" bookings={rejectedBookings} />
+          {/* <OperatorBookingList title="Rejected bookings" bookings={rejectedBookings} /> */}
         </>
       )}
     />

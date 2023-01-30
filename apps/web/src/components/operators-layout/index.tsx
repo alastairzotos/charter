@@ -8,7 +8,7 @@ export const OperatorsLayout: React.FC<React.PropsWithChildren> = ({ children })
     <>
       <SeoHead subtitle='Operator Admin' description="Manage your bookings" />
       <OperatorsAppBar />
-      <Container>
+      <Container maxWidth="lg">
         <Paper sx={{ p: 4, mt: 2 }}>
           {children}
         </Paper>

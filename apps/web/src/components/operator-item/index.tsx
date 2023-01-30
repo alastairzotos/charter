@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { Paper, Button, Divider, Typography, CircularProgress } from '@mui/material';
+import { Button, Divider, Typography, CircularProgress } from '@mui/material';
 import { useOperatorsState } from '../../state/operators';
 import Link from 'next/link';
 import { urls } from '../../urls';
 import { Fetchable } from '../fetchable';
 import { TripList } from '../trip-list';
+import { Titled } from '../titled';
 
 interface Props {
   id: string;
@@ -20,7 +21,7 @@ export const OperatorItem: React.FC<Props> = ({ id }) => {
   }, [id]);
 
   return (
-    <Paper sx={{ p: 3 }}>
+    <>
       <Fetchable
         status={loadOperatorStatus}
         fetching={<CircularProgress />}
@@ -28,8 +29,7 @@ export const OperatorItem: React.FC<Props> = ({ id }) => {
         success={
           <>
             {!!operator && (
-              <>
-                <Typography variant="h6">{operator.name}</Typography>
+              <Titled title={operator.name}>
                 <Typography variant="subtitle2">{operator.email}</Typography>
                 <Typography variant="subtitle2">{operator.address}</Typography>
                 <Typography variant="subtitle2">{operator.phoneNumber}</Typography>
@@ -41,7 +41,7 @@ export const OperatorItem: React.FC<Props> = ({ id }) => {
                 >
                   Edit
                 </Button>
-              </>
+              </Titled>
             )}
           </>
         }
@@ -49,8 +49,9 @@ export const OperatorItem: React.FC<Props> = ({ id }) => {
       
       <Divider sx={{ mb: 3 }} />
 
-      <Typography variant="h6">Available trips</Typography>
-      <TripList operatorId={id} />
-    </Paper>
+      <Titled title="Available Trips">
+        <TripList operatorId={id} />
+      </Titled>
+    </>
   )
 }

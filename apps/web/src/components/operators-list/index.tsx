@@ -24,7 +24,7 @@ export const OperatorsList: React.FC = () => {
       error={<Typography>There was an error loading the operators</Typography>}
       success={
         <>
-          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+          <List sx={{ width: '100%' }}>
             {
               operators.map(operator => (
                 <OperatorListItem key={operator._id} operator={operator} />

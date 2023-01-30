@@ -1,6 +1,6 @@
 import { OperatorNoId } from 'dtos';
 import React, { useState } from 'react';
-import { Button, CircularProgress, Paper, TextField, Typography, Box, Avatar } from '@mui/material';
+import { Button, CircularProgress, TextField, Typography, Box, Avatar } from '@mui/material';
 import { FetchStatus } from '../../models';
 import { useRouter } from 'next/router';
 import { urls } from '../../urls';
@@ -43,7 +43,7 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
   }
 
   return (
-    <Paper
+    <Box
       sx={{
         p: 3,
         display: 'flex',
@@ -142,6 +142,6 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
         onDelete={handleDeleteOperator}
         deleteStatus={deleteStatus}
       />
-    </Paper>
+    </Box>
   )
 }

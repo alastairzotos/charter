@@ -5,6 +5,7 @@ import { OperatorsService } from '../../src/services/operators.service';
 import { UserOperatorsList } from '../../src/components/user-operators-list';
 import { Typography } from '@mui/material';
 import { SeoHead } from '../../src/components/seo/head';
+import { Titled } from '../../src/components/titled';
 
 interface Props {
   operators: OperatorDto[];
@@ -14,8 +15,10 @@ const OperatorsPage: NextPage<Props> = ({ operators }) => {
   return (
     <>
       <SeoHead subtitle="Operators" description="View list of available operators" />
-      <Typography variant="h6">Tour operators</Typography>
-      <UserOperatorsList operators={operators} />
+
+      <Titled title="Tour operators">
+        <UserOperatorsList operators={operators} />
+      </Titled>
     </>
   )
 }

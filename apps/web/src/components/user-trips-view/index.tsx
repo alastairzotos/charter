@@ -1,6 +1,7 @@
-import { List, Typography } from '@mui/material';
+import { List } from '@mui/material';
 import { TripDto } from 'dtos';
 import React from 'react';
+import { Titled } from '../titled';
 import { UserTripListItem } from '../user-trip-list-item';
 
 interface Props {
@@ -9,15 +10,14 @@ interface Props {
 
 export const UserTripsView: React.FC<Props> = ({ trips }) => {
   return (
-    <>
-      <Typography variant="h6">Trips</Typography>
-      <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+    <Titled title="Trips">
+      <List sx={{ width: '100%' }}>
         {
           trips.map(trip => (
             <UserTripListItem key={trip._id} trip={trip} />
           ))
         }
       </List>
-    </>
+    </Titled>
   )
 }

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useRouter } from 'next/router'
-import Container from '@mui/material/Container';
 import { AdminRoute } from '../../../../src/components/admin-route';
 import { OperatorCreate } from '../../../../src/components/operator-create';
 import { Breadcrumbs } from '../../../../src/components/breadcrumbs';
@@ -12,14 +11,12 @@ const CreateOperatorPage: React.FC = () => {
 
   return (
     <AdminRoute>
-      <Container maxWidth="lg" sx={{ mt: 3 }}>
-        <Breadcrumbs
-          list={[{ href: urls.home(), title: 'Home' }, { href: urls.admin.home(), title: 'Admin' }, { href: urls.admin.operators(), title: 'Operators' }]}
-          current="Create operator"
-        />
+      <Breadcrumbs
+        list={[{ href: urls.home(), title: 'Home' }, { href: urls.admin.home(), title: 'Admin' }, { href: urls.admin.operators(), title: 'Operators' }]}
+        current="Create operator"
+      />
 
-        <OperatorCreate />
-      </Container>
+      <OperatorCreate />
     </AdminRoute>
   )
 }
