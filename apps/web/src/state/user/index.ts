@@ -6,7 +6,7 @@ import { FetchStatus } from '../../models';
 import { UserService } from '../../services/user.service';
 import { LocalStorageService } from '../../services/localstorage.service';
 
-const ACCESS_TOKEN_LOCALSTORAGE_KEY = 'boatrental:auth-token';
+export const ACCESS_TOKEN_LOCALSTORAGE_KEY = 'boatrental:auth-token';
 
 export interface UserStateValues {
   initialised: boolean;
