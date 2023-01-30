@@ -1,11 +1,16 @@
 import { OperatorNoId } from 'dtos';
-import React, { useState } from 'react';
-import { Button, CircularProgress, TextField, Typography, Box, Avatar } from '@mui/material';
+import React from 'react';
+import { Typography, Avatar } from '@mui/material';
 import { FetchStatus } from '../../models';
 import { useRouter } from 'next/router';
 import { urls } from '../../urls';
 import { ImageDropzone } from '../image-dropzone';
-import { DeleteConfirmModal } from '../modals/delete-confirm';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { TextField } from 'formik-mui';
+import * as yup from 'yup';
+import { Titled } from '../titled';
+import { FormBox } from '../form-box';
+import { SaveAndDelete } from '../save-delete';
 
 interface Props {
   title: string;
@@ -19,129 +24,92 @@ interface Props {
   deleteStatus?: FetchStatus;
 }
 
-export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSave, saveStatus, onDelete, deleteStatus }) => {
+const validationSchema: yup.SchemaOf<OperatorNoId> = yup.object().shape({
+  name: yup.string().required('Name is required'),
+  address: yup.string().required('Address is required'),
+  email: yup.string().required('Email is required').email('Enter a valid email'),
+  phoneNumber: yup.string().required('Phone number is required'),
+  description: yup.string().required('Description is required'),
+  photo: yup.string().required('Photo is required')
+})
+
+export const ManageOperatorForm: React.FC<Props> = ({ title, operator, onSave, saveStatus, onDelete, deleteStatus }) => {
   const router = useRouter();
 
-  const [name, setName] = useState(operator.name);
-  const [email, setEmail] = useState(operator.email);
-  const [phoneNumber, setPhoneNumber] = useState(operator.phoneNumber);
-  const [address, setAddress] = useState(operator.address);
-  const [description, setDescription] = useState(operator.description);
-  const [photo, setPhoto] = useState(operator.photo);
-
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-
-  const isValid = name.trim().length > 0 && email.trim().length > 0 && phoneNumber.trim().length > 0 && address.trim().length > 0;
-
-  const isFetching = saveStatus === 'fetching' || deleteStatus === 'fetching';
-
-  const handleDeleteOperator = async () => {
+  const handleDeleteOperator = onDelete && (async () => {
     if (!!onDelete) {
       await onDelete();
       router.push(urls.admin.operators());
     }
-  }
+  })
 
   return (
-    <Box
-      sx={{
-        p: 3,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2
-      }}
+    <Formik
+      initialValues={operator}
+      validationSchema={validationSchema}
+      onSubmit={onSave}
     >
-      <Typography variant="h4">{title}</Typography>
+      {({ isValid, values, setValues }) => (
+        <Titled title={title}>
+          <Form>
+            <FormBox>
+              <Field
+                component={TextField}
+                name="name"
+                label="Operator name"
+              />
 
-      <TextField
-        placeholder='Operator name'
-        value={name}
-        onChange={e => setName(e.target.value)}
-        disabled={isFetching}
-      />
+              <Field
+                component={TextField}
+                name="email"
+                type="email"
+                label="Email"
+              />
 
-      <TextField
-        placeholder='Email'
-        type="email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        disabled={isFetching}
-      />
+              <Field
+                component={TextField}
+                name="phoneNumber"
+                label="Phone number"
+              />
 
-      <TextField
-        placeholder='Phone'
-        value={phoneNumber}
-        onChange={e => setPhoneNumber(e.target.value)}
-        disabled={isFetching}
-      />
+              <Field
+                component={TextField}
+                name="address"
+                label="Address"
+                multiline
+                rows={4}
+              />
 
-      <TextField
-        placeholder='Address'
-        value={address}
-        onChange={e => setAddress(e.target.value)}
-        disabled={isFetching}
-        multiline
-        rows={4}
-      />
+              <Field
+                component={TextField}
+                name="description"
+                label="Description"
+                multiline
+                rows={4}
+              />
 
-      <TextField
-        placeholder='Description'
-        value={description}
-        onChange={e => setDescription(e.target.value)}
-        disabled={isFetching}
-        multiline
-        rows={4}
-      />
+              <ImageDropzone
+                multiple={false}
+                onReceiveUrls={urls => setValues({ ...values, photo: urls[0] })}
+              >
+                <Avatar src={values.photo} sx={{ width: 128, height: 128 }} />
+              </ImageDropzone>
+              <ErrorMessage name="photo" />
 
-      <ImageDropzone
-        multiple={false}
-        onReceiveUrls={urls => {
-          setPhoto(urls[0])
-        }}
-      >
-        <Avatar src={photo} sx={{ width: 128, height: 128 }} />
-      </ImageDropzone>
+              <SaveAndDelete
+                isValid={isValid}
+                saveStatus={saveStatus}
+                onDelete={handleDeleteOperator}
+                deleteStatus={deleteStatus}
+                deleteModalTitle="Delete operator?"
+                deleteModalText="Are you sure you want to delete this operator?"
+              />
 
-      <Box
-        sx={{ display: 'flex', justifyContent: 'space-between' }}
-      >
-        <Button
-          variant="contained"
-          disabled={!isValid || isFetching}
-          sx={{ maxWidth: '20%' }}
-          onClick={() => onSave({
-            name,
-            email,
-            phoneNumber,
-            address,
-            description,
-            photo,
-          })}
-        >
-          {saveStatus === 'fetching' ? <CircularProgress size={20} /> : 'Save'}
-        </Button>
-
-        {!!onDelete && (
-          <Button
-            disabled={isFetching}
-            color="warning"
-            onClick={() => setDeleteModalOpen(true)}
-          >
-            Delete
-          </Button>
-        )}
-      </Box>
-
-      {saveStatus === 'error' && <Typography>There was an error saving the operator data</Typography>}
-
-      <DeleteConfirmModal
-        title="Delete operator?"
-        content="Are you sure you want to delete this operator?"
-        open={deleteModalOpen}
-        onClose={() => setDeleteModalOpen(false)}
-        onDelete={handleDeleteOperator}
-        deleteStatus={deleteStatus}
-      />
-    </Box>
+              {saveStatus === 'error' && <Typography>There was an error saving the operator data</Typography>}
+            </FormBox>
+          </Form>
+        </Titled>
+      )}
+    </Formik>
   )
 }
