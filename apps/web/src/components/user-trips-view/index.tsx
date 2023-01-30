@@ -11,7 +11,7 @@ export const UserTripsView: React.FC<Props> = ({ trips }) => {
   return (
     <>
       <Typography variant="h6">Trips</Typography>
-      <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
         {
           trips.map(trip => (
             <UserTripListItem key={trip._id} trip={trip} />

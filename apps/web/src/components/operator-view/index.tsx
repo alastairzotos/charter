@@ -44,6 +44,9 @@ export const OperatorView: React.FC<Props> = ({ operator }) => {
         </Typography>
       </Stack>
 
+      <Box sx={{ mt: 4, ml: 1 }}>
+        <Typography variant="subtitle2">{operator.description}</Typography>
+      </Box>
     </>
   )
 }

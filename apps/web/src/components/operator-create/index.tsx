@@ -22,6 +22,7 @@ export const OperatorCreate: React.FC = () => {
         email: '',
         phoneNumber: '',
         address: '',
+        description: '',
         photo: ''
       }}
 

@@ -9,7 +9,7 @@ interface Props {
 
 export const UserOperatorsList: React.FC<Props> = ({ operators }) => {
   return (
-    <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+    <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
       {
         operators.map(operator => (
           <UserOperatorListItem key={operator._id} operator={operator} />

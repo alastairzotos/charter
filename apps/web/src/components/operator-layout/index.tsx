@@ -10,11 +10,11 @@ interface Props {
 export const OperatorLayout: React.FC<React.PropsWithChildren<Props>> = ({ operator, children }) => {
   return (
     <Grid container>
-      <Grid item xs={4}>
+      <Grid item xs={4} sx={{ p: 2 }}>
         <OperatorView operator={operator} />
       </Grid>
 
-      <Grid item xs={8}>
+      <Grid item xs={8} sx={{ p: 2 }}>
         {children}
       </Grid>
     </Grid>

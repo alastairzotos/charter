@@ -5,6 +5,7 @@ export interface OperatorDto {
   phoneNumber: string;
   address: string;
   photo: string;
+  description: string;
 }
 
 export type OperatorNoId = Omit<OperatorDto, '_id'>;

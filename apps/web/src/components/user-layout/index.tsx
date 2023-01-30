@@ -8,7 +8,7 @@ export const UserLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
     <>
       <SeoHead description="Book a boat in Corfu with ease" />
       <UserAppBar />
-      <Container>
+      <Container maxWidth="xl">
         <Paper sx={{ p: 4, mt: 2 }}>
           {children}
         </Paper>

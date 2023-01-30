@@ -26,6 +26,7 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
   const [email, setEmail] = useState(operator.email);
   const [phoneNumber, setPhoneNumber] = useState(operator.phoneNumber);
   const [address, setAddress] = useState(operator.address);
+  const [description, setDescription] = useState(operator.description);
   const [photo, setPhoto] = useState(operator.photo);
 
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -83,6 +84,15 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
         rows={4}
       />
 
+      <TextField
+        placeholder='Description'
+        value={description}
+        onChange={e => setDescription(e.target.value)}
+        disabled={isFetching}
+        multiline
+        rows={4}
+      />
+
       <ImageDropzone
         multiple={false}
         onReceiveUrls={urls => {
@@ -104,6 +114,7 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, id, operator, onSav
             email,
             phoneNumber,
             address,
+            description,
             photo,
           })}
         >

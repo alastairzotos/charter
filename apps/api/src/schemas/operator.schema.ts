@@ -22,6 +22,9 @@ export class Operator implements OperatorDto {
 
   @Prop()
   photo: string;
+
+  @Prop()
+  description: string;
 }
 
 export const OperatorSchema = SchemaFactory.createForClass(Operator);

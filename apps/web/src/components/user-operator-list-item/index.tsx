@@ -26,7 +26,7 @@ export const UserOperatorListItem: React.FC<Props> = ({ operator }) => {
         primary={operator.name}
         secondary={
           <>
-            {operator.address}
+            {operator.description}
           </>
         }
       />
