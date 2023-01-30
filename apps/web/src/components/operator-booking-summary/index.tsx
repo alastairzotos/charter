@@ -5,7 +5,9 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useBookingsState } from '../../state/bookings';
 import { urls } from '../../urls';
+import { KeyValue } from '../key-value';
 import { DeleteConfirmModal } from '../modals/delete-confirm';
+import { Titled } from '../titled';
 
 interface Props {
   booking: BookingDto;
@@ -29,18 +31,14 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
   }
 
   return (
-    <>
-      <Typography><strong>Trip</strong>: {booking.trip.name}</Typography>
-      <Typography color="text.secondary"><strong>Name</strong>: {booking.name}</Typography>
-      <Typography color="text.secondary"><strong>Email</strong>: {booking.email}</Typography>
-      <Typography color="text.secondary"><strong>Date</strong>: {booking.date}</Typography>
-      <Typography color="text.secondary"><strong>Adults</strong>: {booking.adultGuests}</Typography>
-      <Typography color="text.secondary"><strong>Children</strong>: {booking.childGuests}</Typography>
-      <Typography color="text.secondary">
-        <strong>Price</strong>: €
-        {(booking.adultGuests * booking.trip.adultPrice + booking.childGuests * booking.trip.childPrice).toFixed(2)}
-      </Typography>
-      
+    <Titled title={booking.trip.name}>
+      <KeyValue label="Name" value={booking.name} secondary />
+      <KeyValue label="Email" value={booking.email} secondary />
+      <KeyValue label="Date" value={booking.date} secondary />
+      <KeyValue label="Adults" value={booking.adultGuests} secondary />
+      <KeyValue label="Children" value={booking.childGuests} secondary />
+      <KeyValue label="Price" value={`€${(booking.adultGuests * booking.trip.adultPrice + booking.childGuests * booking.trip.childPrice).toFixed(2)}`} secondary />
+
       <Box sx={{ mt: 3 }}>
         {booking.status === 'confirmed' && <Typography>This booking has been confirmed</Typography>}
         {booking.status === 'rejected' && <Typography>You have rejected this booking</Typography>}
@@ -78,6 +76,6 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
         deleteStatus={setBookingStatusStatus}
         onDelete={rejectBooking}
       />
-    </>
+    </Titled>
   )
 }
