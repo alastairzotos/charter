@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { BookingDto } from 'dtos';
 import React from 'react';
+import { KeyValue } from '../key-value';
 
 interface Props {
   booking: BookingDto;
@@ -11,16 +12,12 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
     <>
       <Typography variant="h4">Your booking with {booking.operator.name}</Typography>
       <Box sx={{ p: 2 }}>
-        <Typography color="text.secondary"><strong>Name</strong>: {booking.name}</Typography>
-        <Typography color="text.secondary"><strong>Email</strong>: {booking.email}</Typography>
-        <Typography color="text.secondary"><strong>Date</strong>: {booking.date}</Typography>
-        <Typography color="text.secondary"><strong>Adults</strong>: {booking.adultGuests}</Typography>
-        <Typography color="text.secondary"><strong>Children</strong>: {booking.childGuests}</Typography>
-        <Typography color="text.secondary">
-          <strong>Price</strong>
-          : €
-          {(booking.adultGuests * booking.trip.adultPrice + booking.childGuests * booking.trip.childPrice).toFixed(2)}
-        </Typography>
+        <KeyValue label="Name" value={booking.name} />
+        <KeyValue label="Email" value={booking.email} />
+        <KeyValue label="Date" value={booking.date} />
+        <KeyValue label="Adults" value={booking.adultGuests} />
+        <KeyValue label="Children" value={booking.childGuests} />
+        <KeyValue label="Price" value={`€${(booking.adultGuests * booking.trip.adultPrice + booking.childGuests * booking.trip.childPrice).toFixed(2)}`} />
 
         <Box sx={{ mt: 2 }}>
           {booking.status === 'pending' && <Typography>Your booking is pending. Check back here for status updates. We will also email you when the status changes.</Typography>}

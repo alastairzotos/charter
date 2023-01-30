@@ -13,6 +13,7 @@ import * as yup from 'yup';
 import { FormBox } from '../form-box';
 import { Formik, Field } from 'formik';
 import { TextField } from 'formik-mui';
+import { KeyValue } from '../key-value';
 
 const bookingModalStyle = {
   position: 'absolute' as 'absolute',
@@ -125,9 +126,7 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
                 }}
               />
 
-              <Typography>
-                <strong>Total price:</strong> €{(values.adultGuests * trip.adultPrice + values.childGuests * trip.childPrice).toFixed(2)}
-              </Typography>
+              <KeyValue label="Total Price" value={`€${(values.adultGuests * trip.adultPrice + values.childGuests * trip.childPrice).toFixed(2)}`} />
 
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
