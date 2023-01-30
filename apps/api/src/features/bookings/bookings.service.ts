@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { BookingNoId, BookingStatus, UserDetails } from "dtos";
 import { emailContent } from "../../content/email";
-import { EmailService } from "../email/email.service";
+import { EmailService } from "../../integrations/email/email.service";
 import { EnvService } from "../../environment/environment.service";
 import { OperatorsService } from "../operators/operators.service";
 import { BookingsRepository } from "./bookings.repository";

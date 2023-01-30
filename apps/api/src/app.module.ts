@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BookingsModule } from './features/bookings/bookings.module';
-import { EmailModule } from './features/email/email.module';
+import { EmailModule } from './integrations/email/email.module';
 import { EnvModule } from './environment/environment.module';
 import { EnvService } from './environment/environment.service';
 import { HealthModule } from './features/health/health.module';

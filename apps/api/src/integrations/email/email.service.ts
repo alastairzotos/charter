@@ -5,7 +5,7 @@ import { EnvService } from "../../environment/environment.service";
 
 @Injectable()
 export class EmailService {
-  constructor(private readonly envService: EnvService) {
+  constructor(envService: EnvService) {
     sgMail.setApiKey(envService.get().sendGridApiKey!);
   }
 
