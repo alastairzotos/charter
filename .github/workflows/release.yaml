@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Test
+        run: npm run test
+
       - name: Docker login
         run: docker login -u bitmetro -p ${{ secrets.DOCKER_PASSWORD }} docker.io
 
