@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { TripDto, TripNoId } from "dtos";
 import { Model } from 'mongoose';
-import { Trip } from "../schemas/trip.schema";
+import { Trip } from "../../schemas/trip.schema";
 
 @Injectable()
 export class TripsRepository {

@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
-import { EnvModule } from "src/environment/environment.module";
-import { UsersModule } from "src/users/users.module";
+import { EnvModule } from "../environment/environment.module";
+import { UsersModule } from "../users/users.module";
 import { AuthGuard } from "./auth.guard";
 
 @Module({

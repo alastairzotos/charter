@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { BookingNoId, BookingStatus, OperatorDto } from "dtos";
 import { Model } from "mongoose";
-import { Booking } from "../schemas/booking.schema";
+import { Booking } from "../../schemas/booking.schema";
 
 @Injectable()
 export class BookingsRepository {

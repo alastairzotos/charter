@@ -1,6 +1,5 @@
 import { Module } from "@nestjs/common";
-import { EnvModule } from "src/environment/environment.module";
-import { EnvService } from "src/environment/environment.service";
+import { EnvModule } from "../../features/environment/environment.module";
 import { S3Service } from "./s3.service";
 
 @Module({

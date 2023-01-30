@@ -1,18 +1,18 @@
 import { Injectable } from "@nestjs/common";
-import { EnvService } from "src/environment/environment.service";
 import {
   PutObjectCommand,
   DeleteObjectCommand,
   S3Client as S3ClientAWS,
   S3ClientConfig,
 } from '@aws-sdk/client-s3';
+import { EnvService } from "../../features/environment/environment.service";
 
 @Injectable()
 export class S3Service {
   private readonly s3Client: S3ClientAWS;
   private readonly bucketName: string;
   
-  constructor(private readonly env: EnvService) {
+  constructor(env: EnvService) {
     this.bucketName = env.get().awsS3BucketName;
 
     const s3Config: S3ClientConfig = {

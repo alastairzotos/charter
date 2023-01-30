@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { v4 as uuidv4 } from 'uuid';
+import { S3Service } from "../../integrations/s3/s3.service";
 import { EnvService } from "../environment/environment.service";
-import { S3Service } from "../s3/s3.service";
 
 @Injectable()
 export class ImagesService {

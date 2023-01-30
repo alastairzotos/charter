@@ -1,6 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Body, UseGuards, Param, UseInterceptors, UploadedFile} from "@nestjs/common";
-import { FileInterceptor } from "@nestjs/platform-express";
-import { Express } from 'express';
+import { Controller, Get, Post, Patch, Delete, Body, UseGuards, Param } from "@nestjs/common";
 import { OperatorDto, OperatorNoId } from "dtos";
 import { AuthGuard } from "../auth/auth.guard";
 import { Roles } from "../auth/roles.decorator";
