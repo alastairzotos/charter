@@ -82,7 +82,7 @@ describe('BookingService', () => {
     })
 
     it('should send emails', () => {
-      expect(emailServiceMock.sendEmail).toHaveBeenCalledTimes(3)
+      expect(emailServiceMock.sendEmail).toHaveBeenCalledTimes(2)
     })
   })
 })
