@@ -12,10 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install
+        run: yarn
+
       - name: Test
-        run: |
-          npm ci
-          npm run test
+        run: yarn test
 
       - name: Docker login
         run: docker login -u bitmetro -p ${{ secrets.DOCKER_PASSWORD }} docker.io
