@@ -15,7 +15,6 @@ import { SaveAndDelete } from '../save-delete';
 interface Props {
   title: string;
 
-  id?: string;
   operator: OperatorNoId;
   onSave: (operator: OperatorNoId) => void;
   saveStatus?: FetchStatus;

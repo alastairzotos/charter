@@ -31,7 +31,6 @@ export const TripEdit: React.FC<Props> = ({ id, operatorId }) => {
             <ManageTripForm
               title="Edit trip"
               operatorId={operatorId}
-              id={id}
               trip={trip}
               onSave={newTrip => updateTrip(id, newTrip)}
               saveStatus={updateTripStatus}

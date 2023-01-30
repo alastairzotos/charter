@@ -18,7 +18,6 @@ interface Props {
   operatorId: string;
   title: string;
 
-  id?: string;
   trip: TripNoId;
   onSave: (trip: TripNoId) => void;
   saveStatus?: FetchStatus;
