@@ -1,10 +1,11 @@
-import create from 'zustand';
-import { FetchStatus } from '../../models';
-import { ImagesService } from '../../services/images.service';
+import create from "zustand";
+
+import { FetchStatus } from "src/models";
+import { ImagesService } from "src/services/images.service";
 
 export interface ImagesStateValues {
   uploadStatus?: FetchStatus;
-  uploadState?: { [key: string]: { status?: FetchStatus, url?: string } };
+  uploadState?: { [key: string]: { status?: FetchStatus; url?: string } };
 }
 
 export interface ImagesStateActions {
@@ -13,12 +14,15 @@ export interface ImagesStateActions {
 
 export type ImagesState = ImagesStateValues & ImagesStateActions;
 
-export const createImagesState = (initialValues: ImagesStateValues, imagesService: Pick<ImagesService, keyof ImagesService>) =>
+export const createImagesState = (
+  initialValues: ImagesStateValues,
+  imagesService: Pick<ImagesService, keyof ImagesService>
+) =>
   create<ImagesState>((set, self) => ({
     ...initialValues,
 
     uploadImages: async (files) => {
-      set({ uploadState: {}, uploadStatus: 'fetching' });
+      set({ uploadState: {}, uploadStatus: "fetching" });
 
       for (const file of files) {
         try {
@@ -26,10 +30,10 @@ export const createImagesState = (initialValues: ImagesStateValues, imagesServic
             uploadState: {
               ...self().uploadState,
               [file.name]: {
-                status: 'fetching'
-              }
-            }
-          })
+                status: "fetching",
+              },
+            },
+          });
 
           const url = await imagesService.uploadImage(file);
 
@@ -37,28 +41,25 @@ export const createImagesState = (initialValues: ImagesStateValues, imagesServic
             uploadState: {
               ...self().uploadState,
               [file.name]: {
-                status: 'success',
-                url
-              }
-            }
-          })
+                status: "success",
+                url,
+              },
+            },
+          });
         } catch {
           set({
             uploadState: {
               ...self().uploadState,
               [file.name]: {
-                status: 'error'
-              }
-            }
-          })
+                status: "error",
+              },
+            },
+          });
         }
       }
 
-      set({ uploadStatus: 'success' });
-    }
+      set({ uploadStatus: "success" });
+    },
   }));
 
-export const useImagesState = createImagesState(
-  {},
-  new ImagesService()
-)
+export const useImagesState = createImagesState({}, new ImagesService());

@@ -1,7 +1,8 @@
-import * as React from 'react';
-import Container from '@mui/material/Container';
-import { LoginForm } from '../../src/components/login';
-import { SeoHead } from '../../src/components/seo/head';
+import Container from "@mui/material/Container";
+import * as React from "react";
+
+import { LoginForm } from "src/components/login";
+import { SeoHead } from "src/components/seo/head";
 
 const LoginPage: React.FC = () => {
   return (
@@ -11,7 +12,7 @@ const LoginPage: React.FC = () => {
         <LoginForm />
       </Container>
     </>
-  )
-}
+  );
+};
 
 export default LoginPage;

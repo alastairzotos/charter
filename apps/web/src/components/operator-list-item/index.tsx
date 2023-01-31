@@ -1,11 +1,11 @@
-import { OperatorDto } from 'dtos';
-import React from 'react';
-import ListItem from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Link from 'next/link';
-import { urls } from 'urls';
+import Avatar from "@mui/material/Avatar";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ListItem from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import { OperatorDto } from "dtos";
+import Link from "next/link";
+import React from "react";
+import { urls } from "urls";
 
 interface Props {
   operator: OperatorDto;
@@ -24,12 +24,8 @@ export const OperatorListItem: React.FC<Props> = ({ operator }) => {
 
       <ListItemText
         primary={operator.name}
-        secondary={
-          <>
-            {operator.address}
-          </>
-        }
+        secondary={<>{operator.address}</>}
       />
     </ListItem>
-  )
-}
+  );
+};

@@ -1,1 +1,1 @@
-export type FetchStatus = 'fetching' | 'success' | 'error';
+export type FetchStatus = "fetching" | "success" | "error";

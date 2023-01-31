@@ -1,6 +1,7 @@
-import { CircularProgress } from '@mui/material';
-import React from 'react';
-import { FetchStatus } from '../../models';
+import { CircularProgress } from "@mui/material";
+import React from "react";
+
+import { FetchStatus } from "src/models";
 
 interface Props {
   status?: FetchStatus;
@@ -9,13 +10,19 @@ interface Props {
   error: React.ReactNode;
 }
 
-export const Fetchable: React.FC<React.PropsWithChildren<Props>> = ({ status, none, fetching, error, children }) => {
+export const Fetchable: React.FC<React.PropsWithChildren<Props>> = ({
+  status,
+  none,
+  fetching,
+  error,
+  children,
+}) => {
   return (
     <>
       {status == undefined && none}
-      {status === 'fetching' && (fetching || <CircularProgress />)}
-      {status === 'error' && error}
-      {status === 'success' && <>{children}</>}
+      {status === "fetching" && (fetching || <CircularProgress />)}
+      {status === "error" && error}
+      {status === "success" && <>{children}</>}
     </>
-  )
-}
+  );
+};

@@ -1,9 +1,9 @@
-import { TripDto } from 'dtos';
-import React from 'react';
-import ListItem from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Link from 'next/link';
-import { urls } from 'urls';
+import ListItem from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import { TripDto } from "dtos";
+import Link from "next/link";
+import React from "react";
+import { urls } from "urls";
 
 interface Props {
   operatorId: string;
@@ -26,5 +26,5 @@ export const TripListItem: React.FC<Props> = ({ operatorId, trip }) => {
         }
       />
     </ListItem>
-  )
-}
+  );
+};

@@ -1,7 +1,8 @@
-import { TripDto } from 'dtos';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { TripDto } from 'dtos';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Operator } from './operator.schema';
+
+import { Operator } from 'src/schemas/operator.schema';
 
 export type TripDocument = Trip & Document;
 
@@ -11,7 +12,7 @@ export class Trip implements TripDto {
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Operator.name })
   operator: Operator;
-  
+
   @Prop()
   name: string;
 

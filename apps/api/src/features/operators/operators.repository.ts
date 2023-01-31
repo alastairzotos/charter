@@ -1,13 +1,15 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from 'mongoose';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { OperatorDto, OperatorNoId } from 'dtos';
-import { Operator } from "../../schemas/operator.schema";
+import { Model } from 'mongoose';
+
+import { Operator } from 'src/schemas/operator.schema';
 
 @Injectable()
 export class OperatorsRepository {
   constructor(
-    @InjectModel(Operator.name) private readonly operatorsModel: Model<Operator>
+    @InjectModel(Operator.name)
+    private readonly operatorsModel: Model<Operator>,
   ) {}
 
   async getOperators() {

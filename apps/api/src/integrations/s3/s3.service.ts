@@ -1,17 +1,18 @@
-import { Injectable } from "@nestjs/common";
 import {
   PutObjectCommand,
   DeleteObjectCommand,
   S3Client as S3ClientAWS,
   S3ClientConfig,
 } from '@aws-sdk/client-s3';
-import { EnvService } from "../../environment/environment.service";
+import { Injectable } from '@nestjs/common';
+
+import { EnvService } from 'src/environment/environment.service';
 
 @Injectable()
 export class S3Service {
   private readonly s3Client: S3ClientAWS;
   private readonly bucketName: string;
-  
+
   constructor(env: EnvService) {
     this.bucketName = env.get().awsS3BucketName;
 
@@ -31,7 +32,7 @@ export class S3Service {
       new PutObjectCommand({
         Bucket: this.bucketName,
         Key: key,
-        Body: body
+        Body: body,
       }),
     );
   }
@@ -40,8 +41,8 @@ export class S3Service {
     await this.s3Client.send(
       new DeleteObjectCommand({
         Bucket: this.bucketName,
-        Key: key
-      })
-    )
+        Key: key,
+      }),
+    );
   }
 }

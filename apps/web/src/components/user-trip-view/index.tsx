@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { OperatorDto, TripDto } from 'dtos';
-import Link from 'next/link';
-import { urls } from 'urls';
-import { Box, Button, Typography, Modal } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBackIos';
-import ImageGallery from 'react-image-gallery';
-import { BookingForm } from '../booking-form';
-import { Titled } from '../titled';
-import { KeyValue } from '../key-value';
+import ArrowBackIcon from "@mui/icons-material/ArrowBackIos";
+import { Box, Button, Modal, Typography } from "@mui/material";
+import { OperatorDto, TripDto } from "dtos";
+import Link from "next/link";
+import React, { useState } from "react";
+import ImageGallery from "react-image-gallery";
+import { urls } from "urls";
+
+import { BookingForm } from "src/components/booking-form";
+import { KeyValue } from "src/components/key-value";
+import { Titled } from "src/components/titled";
 
 interface Props {
   bookingView?: boolean;
@@ -15,7 +16,11 @@ interface Props {
   operator: OperatorDto;
 }
 
-export const UserTripView: React.FC<Props> = ({ bookingView = false, trip, operator }) => {
+export const UserTripView: React.FC<Props> = ({
+  bookingView = false,
+  trip,
+  operator,
+}) => {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
 
   return (
@@ -37,13 +42,17 @@ export const UserTripView: React.FC<Props> = ({ bookingView = false, trip, opera
         <KeyValue label="Start location" value={trip.startLocation} />
         <KeyValue label="Start time" value={trip.startTime} />
         <KeyValue label="Duration" value={trip.duration} />
-        <KeyValue label="Adult Price" value={'€' + trip.adultPrice.toFixed(2)} />
-        <KeyValue label="Child Price" value={'€' + trip.childPrice.toFixed(2)} />
+        <KeyValue
+          label="Adult Price"
+          value={"€" + trip.adultPrice.toFixed(2)}
+        />
+        <KeyValue
+          label="Child Price"
+          value={"€" + trip.childPrice.toFixed(2)}
+        />
 
         {!bookingView && (
-          <Box
-            sx={{ display: 'flex', justifyContent: 'center' }}
-          >
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Button
               variant="contained"
               color="success"
@@ -55,25 +64,27 @@ export const UserTripView: React.FC<Props> = ({ bookingView = false, trip, opera
           </Box>
         )}
 
-        {(trip.photos && trip.photos.length > 0) && (
+        {trip.photos && trip.photos.length > 0 && (
           <Box sx={{ mt: 3 }}>
             <ImageGallery
-              items={
-                trip.photos.map(photo => ({
-                  original: photo,
-                  thumbnail: photo,
-                  thumbnailHeight: 100,
-                  originalHeight: 500
-                }))
-              }
+              items={trip.photos.map((photo) => ({
+                original: photo,
+                thumbnail: photo,
+                thumbnailHeight: 100,
+                originalHeight: 500,
+              }))}
             />
           </Box>
         )}
       </Titled>
 
       <Modal open={bookingModalOpen} onClose={() => setBookingModalOpen(false)}>
-        <BookingForm operator={operator} trip={trip} onClose={() => setBookingModalOpen(false)} />
+        <BookingForm
+          operator={operator}
+          trip={trip}
+          onClose={() => setBookingModalOpen(false)}
+        />
       </Modal>
     </>
-  )
-}
+  );
+};

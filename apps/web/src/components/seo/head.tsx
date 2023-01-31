@@ -1,6 +1,7 @@
-import Head from 'next/head';
-import React from 'react';
-import { APP_NAME } from '../../util/misc';
+import Head from "next/head";
+import React from "react";
+
+import { APP_NAME } from "src/util/misc";
 
 interface Props {
   subtitle?: string;
@@ -8,7 +9,7 @@ interface Props {
 }
 
 export const SeoHead: React.FC<Props> = ({ subtitle, description }) => {
-  const title = `${APP_NAME} ${subtitle ? ` | ${subtitle}` : ''}`;
+  const title = `${APP_NAME} ${subtitle ? ` | ${subtitle}` : ""}`;
 
   return (
     <Head>
@@ -19,5 +20,5 @@ export const SeoHead: React.FC<Props> = ({ subtitle, description }) => {
       <meta name="og:title" content={title} />
       <meta name="og:description" content={description} />
     </Head>
-  )
-}
+  );
+};

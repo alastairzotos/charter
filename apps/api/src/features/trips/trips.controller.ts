@@ -1,8 +1,20 @@
-import { Body, Controller, Get, Param, Post, Patch, Delete, Query, UseGuards, NotFoundException } from "@nestjs/common";
-import { TripDto, TripNoId } from "dtos";
-import { AuthGuard } from "../../auth/auth.guard";
-import { Roles } from "../../auth/roles.decorator";
-import { TripsService } from "./trips.service";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Patch,
+  Delete,
+  Query,
+  UseGuards,
+  NotFoundException,
+} from '@nestjs/common';
+import { TripDto, TripNoId } from 'dtos';
+
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { TripsService } from 'src/features/trips/trips.service';
 
 @Controller('trips')
 @UseGuards(AuthGuard)
@@ -11,9 +23,7 @@ export class TripsController {
 
   @Get()
   @Roles('all')
-  async getTripsForOperator(
-    @Query('operatorId') operatorId: string
-  ) {
+  async getTripsForOperator(@Query('operatorId') operatorId: string) {
     return await this.tripsService.getTripsForOperator(operatorId);
   }
 
@@ -34,23 +44,19 @@ export class TripsController {
   }
 
   @Post()
-  async createTrip(
-    @Body() trip: TripNoId
-  ) {
+  async createTrip(@Body() trip: TripNoId) {
     return await this.tripsService.createTrip(trip);
   }
 
   @Patch()
   async updateTrip(
-    @Body() { id, newTrip }: { id: string, newTrip: Partial<TripDto> }
+    @Body() { id, newTrip }: { id: string; newTrip: Partial<TripDto> },
   ) {
     return await this.tripsService.updateTrip(id, newTrip);
   }
 
   @Delete()
-  async deleteTrip(
-    @Body() { id }: { id: string }
-  ) {
+  async deleteTrip(@Body() { id }: { id: string }) {
     return await this.tripsService.deleteTrip(id);
   }
 }

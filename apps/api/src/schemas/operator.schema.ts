@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
 import { OperatorDto } from 'dtos';
+import { Document } from 'mongoose';
 
 export type OperatorDocument = Operator & Document;
 
@@ -10,9 +10,9 @@ export class Operator implements OperatorDto {
 
   @Prop()
   name: string;
-  
+
   @Prop()
-  email: string
+  email: string;
 
   @Prop()
   phoneNumber: string;

@@ -1,12 +1,15 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { BookingNoId, BookingStatus, OperatorDto } from "dtos";
-import { Model } from "mongoose";
-import { Booking } from "../../schemas/booking.schema";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { BookingNoId, BookingStatus, OperatorDto } from 'dtos';
+import { Model } from 'mongoose';
+
+import { Booking } from 'src/schemas/booking.schema';
 
 @Injectable()
 export class BookingsRepository {
-  constructor(@InjectModel(Booking.name) private readonly bookingsModel: Model<Booking>) {}
+  constructor(
+    @InjectModel(Booking.name) private readonly bookingsModel: Model<Booking>,
+  ) {}
 
   async createBooking(booking: BookingNoId) {
     return await this.bookingsModel.create(booking);

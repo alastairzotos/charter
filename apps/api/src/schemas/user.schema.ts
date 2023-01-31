@@ -1,5 +1,5 @@
-import { LoggedInUserDetails } from 'dtos';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { LoggedInUserDetails } from 'dtos';
 import { Document } from 'mongoose';
 
 export type UserDocument = User & Document;
@@ -7,7 +7,7 @@ export type UserDocument = User & Document;
 @Schema({ collection: 'users' })
 export class User implements LoggedInUserDetails {
   _id: string;
-  
+
   @Prop()
   email: string;
 

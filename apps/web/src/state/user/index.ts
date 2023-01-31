@@ -1,12 +1,12 @@
-import { UserDetails } from 'dtos';
-import create from 'zustand';
-import * as jwt from 'jsonwebtoken';
+import { UserDetails } from "dtos";
+import * as jwt from "jsonwebtoken";
+import create from "zustand";
 
-import { FetchStatus } from '../../models';
-import { UserService } from '../../services/user.service';
-import { LocalStorageService } from '../../services/localstorage.service';
+import { FetchStatus } from "src/models";
+import { LocalStorageService } from "src/services/localstorage.service";
+import { UserService } from "src/services/user.service";
 
-export const ACCESS_TOKEN_LOCALSTORAGE_KEY = 'boatrental:auth-token';
+export const ACCESS_TOKEN_LOCALSTORAGE_KEY = "boatrental:auth-token";
 
 export interface UserStateValues {
   initialised: boolean;
@@ -19,7 +19,11 @@ export interface UserStateValues {
 export interface UserStateActions {
   initLocalStorage: () => void;
 
-  registerUser: (givenName: string, email: string, password: string) => Promise<void>;
+  registerUser: (
+    givenName: string,
+    email: string,
+    password: string
+  ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -29,7 +33,7 @@ export type UserState = UserStateValues & UserStateActions;
 export const createUserState = (
   initialState: UserStateValues,
   userService: Pick<UserService, keyof UserService>,
-  localStorage: Pick<LocalStorageService, keyof LocalStorageService>,
+  localStorage: Pick<LocalStorageService, keyof LocalStorageService>
 ) =>
   create<UserState>((set) => ({
     ...initialState,
@@ -49,31 +53,31 @@ export const createUserState = (
 
     registerUser: async (givenName, email, password) => {
       try {
-        set({ registerStatus: 'fetching' });
+        set({ registerStatus: "fetching" });
 
         await userService.registerUser(givenName, email, password);
 
-        set({ registerStatus: 'success' });
+        set({ registerStatus: "success" });
       } catch {
-        set({ registerStatus: 'error' });
+        set({ registerStatus: "error" });
       }
     },
 
     login: async (email, password) => {
       try {
-        set({ loginStatus: 'fetching' });
+        set({ loginStatus: "fetching" });
 
         const { accessToken } = await userService.loginUser(email, password);
 
         localStorage.set(ACCESS_TOKEN_LOCALSTORAGE_KEY, accessToken);
-        
+
         set({
-          loginStatus: 'success',
+          loginStatus: "success",
           accessToken,
-          loggedInUser: jwt.decode(accessToken) as UserDetails
+          loggedInUser: jwt.decode(accessToken) as UserDetails,
         });
       } catch {
-        set({ loginStatus: 'error' });
+        set({ loginStatus: "error" });
       }
     },
 
@@ -82,16 +86,16 @@ export const createUserState = (
         loginStatus: undefined,
         accessToken: undefined,
         loggedInUser: undefined,
-      })
+      });
 
       localStorage.remove(ACCESS_TOKEN_LOCALSTORAGE_KEY);
-    }
-  }))
+    },
+  }));
 
 export const useUserState = createUserState(
   {
     initialised: false,
   },
   new UserService(),
-  new LocalStorageService(),
+  new LocalStorageService()
 );

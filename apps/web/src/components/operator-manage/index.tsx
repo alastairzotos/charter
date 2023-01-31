@@ -1,15 +1,16 @@
-import { OperatorNoId } from 'dtos';
-import React from 'react';
-import { Typography, Avatar } from '@mui/material';
-import { FetchStatus } from '../../models';
-import { useRouter } from 'next/router';
-import { urls } from 'urls';
-import { ImageDropzone } from '../image-dropzone';
-import { Formik, Field, ErrorMessage } from 'formik';
-import { TextField } from 'formik-mui';
-import * as yup from 'yup';
-import { FormBox } from '../form-box';
-import { SaveAndDelete } from '../save-delete';
+import { Avatar, Typography } from "@mui/material";
+import { OperatorNoId } from "dtos";
+import { ErrorMessage, Field, Formik } from "formik";
+import { TextField } from "formik-mui";
+import { useRouter } from "next/router";
+import React from "react";
+import { urls } from "urls";
+import * as yup from "yup";
+
+import { FormBox } from "src/components/form-box";
+import { ImageDropzone } from "src/components/image-dropzone";
+import { SaveAndDelete } from "src/components/save-delete";
+import { FetchStatus } from "src/models";
 
 interface Props {
   title: string;
@@ -23,23 +24,35 @@ interface Props {
 }
 
 const validationSchema: yup.SchemaOf<OperatorNoId> = yup.object().shape({
-  name: yup.string().required('Name is required'),
-  address: yup.string().required('Address is required'),
-  email: yup.string().required('Email is required').email('Enter a valid email'),
-  phoneNumber: yup.string().required('Phone number is required'),
-  description: yup.string().required('Description is required'),
-  photo: yup.string().required('Photo is required')
-})
+  name: yup.string().required("Name is required"),
+  address: yup.string().required("Address is required"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Enter a valid email"),
+  phoneNumber: yup.string().required("Phone number is required"),
+  description: yup.string().required("Description is required"),
+  photo: yup.string().required("Photo is required"),
+});
 
-export const ManageOperatorForm: React.FC<Props> = ({ title, operator, onSave, saveStatus, onDelete, deleteStatus }) => {
+export const ManageOperatorForm: React.FC<Props> = ({
+  title,
+  operator,
+  onSave,
+  saveStatus,
+  onDelete,
+  deleteStatus,
+}) => {
   const router = useRouter();
 
-  const handleDeleteOperator = onDelete && (async () => {
-    if (!!onDelete) {
-      await onDelete();
-      router.push(urls.admin.operators());
-    }
-  })
+  const handleDeleteOperator =
+    onDelete &&
+    (async () => {
+      if (!!onDelete) {
+        await onDelete();
+        router.push(urls.admin.operators());
+      }
+    });
 
   return (
     <Formik
@@ -49,11 +62,7 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, operator, onSave, s
     >
       {({ isValid, values, setValues }) => (
         <FormBox title={title}>
-          <Field
-            component={TextField}
-            name="name"
-            label="Operator name"
-          />
+          <Field component={TextField} name="name" label="Operator name" />
 
           <Field
             component={TextField}
@@ -86,7 +95,7 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, operator, onSave, s
 
           <ImageDropzone
             multiple={false}
-            onReceiveUrls={urls => setValues({ ...values, photo: urls[0] })}
+            onReceiveUrls={(urls) => setValues({ ...values, photo: urls[0] })}
           >
             <Avatar src={values.photo} sx={{ width: 128, height: 128 }} />
           </ImageDropzone>
@@ -101,9 +110,11 @@ export const ManageOperatorForm: React.FC<Props> = ({ title, operator, onSave, s
             deleteModalText="Are you sure you want to delete this operator?"
           />
 
-          {saveStatus === 'error' && <Typography>There was an error saving the operator data</Typography>}
+          {saveStatus === "error" && (
+            <Typography>There was an error saving the operator data</Typography>
+          )}
         </FormBox>
       )}
     </Formik>
-  )
-}
+  );
+};

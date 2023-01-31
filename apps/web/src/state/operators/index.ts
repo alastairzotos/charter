@@ -1,7 +1,8 @@
-import { OperatorDto, OperatorNoId } from 'dtos';
-import create from 'zustand';
-import { FetchStatus } from '../../models';
-import { OperatorsService } from '../../services/operators.service';
+import { OperatorDto, OperatorNoId } from "dtos";
+import create from "zustand";
+
+import { FetchStatus } from "src/models";
+import { OperatorsService } from "src/services/operators.service";
 
 export interface OperatorsStateValues {
   loadOperatorsStatus?: FetchStatus;
@@ -18,7 +19,10 @@ export interface OperatorsStateValues {
 export interface OperatorsStateActions {
   loadOperators: () => Promise<void>;
   loadOperator: (id: string) => Promise<void>;
-  updateOperator: (id: string, newOperator: Partial<OperatorDto>) => Promise<void>;
+  updateOperator: (
+    id: string,
+    newOperator: Partial<OperatorDto>
+  ) => Promise<void>;
   createOperator: (operator: OperatorNoId) => Promise<void>;
   deleteOperator: (id: string) => Promise<void>;
 }
@@ -27,78 +31,78 @@ export type OperatorsState = OperatorsStateValues & OperatorsStateActions;
 
 export const createOperatorsState = (
   initialValues: OperatorsStateValues,
-  operatorsService: Pick<OperatorsService, keyof OperatorsService>,
+  operatorsService: Pick<OperatorsService, keyof OperatorsService>
 ) =>
   create<OperatorsState>((set, self) => ({
     ...initialValues,
 
     loadOperators: async () => {
       try {
-        set({ loadOperatorsStatus: 'fetching' });
+        set({ loadOperatorsStatus: "fetching" });
 
         const operators = await operatorsService.getOperators();
 
-        set({ loadOperatorsStatus: 'success', operators });
+        set({ loadOperatorsStatus: "success", operators });
       } catch {
-        set({ loadOperatorsStatus: 'error' });
+        set({ loadOperatorsStatus: "error" });
       }
     },
 
     loadOperator: async (id) => {
       try {
-        set({ loadOperatorStatus: 'fetching' });
+        set({ loadOperatorStatus: "fetching" });
 
         const operator = await operatorsService.getOperator(id);
 
-        set({ loadOperatorStatus: 'success', operator });
+        set({ loadOperatorStatus: "success", operator });
       } catch {
-        set({ loadOperatorStatus: 'error' });
+        set({ loadOperatorStatus: "error" });
       }
     },
 
     updateOperator: async (id, newOperator) => {
       try {
-        set({ updateOperatorStatus: 'fetching' });
+        set({ updateOperatorStatus: "fetching" });
 
         await operatorsService.updateOperator(id, newOperator);
 
-        set({ updateOperatorStatus: 'success' });
+        set({ updateOperatorStatus: "success" });
         await self().loadOperators();
       } catch {
-        set({ updateOperatorStatus: 'error' });
+        set({ updateOperatorStatus: "error" });
       }
     },
 
     createOperator: async (operator) => {
       try {
-        set({ createOperatorStatus: 'fetching' });
+        set({ createOperatorStatus: "fetching" });
 
         await operatorsService.createOperator(operator);
 
-        set({ createOperatorStatus: 'success' });
+        set({ createOperatorStatus: "success" });
         await self().loadOperators();
       } catch {
-        set({ createOperatorStatus: 'error' });
+        set({ createOperatorStatus: "error" });
       }
     },
 
     deleteOperator: async (id) => {
       try {
-        set({ deleteOperatorStatus: 'fetching' });
+        set({ deleteOperatorStatus: "fetching" });
 
         await operatorsService.deleteOperator(id);
 
-        set({ deleteOperatorStatus: 'success' });
+        set({ deleteOperatorStatus: "success" });
         await self().loadOperators();
       } catch {
-        set({ deleteOperatorStatus: 'error' });
+        set({ deleteOperatorStatus: "error" });
       }
     },
-  }))
+  }));
 
 export const useOperatorsState = createOperatorsState(
   {
-    operators: []
+    operators: [],
   },
   new OperatorsService()
-)
+);

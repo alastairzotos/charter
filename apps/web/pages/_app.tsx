@@ -1,42 +1,40 @@
-import '../styles/globals.css'
-import * as React from 'react';
-import type { AppProps } from 'next/app'
-import { AdminLayout } from '../src/components/admin-layout';
-import { useUserState } from '../src/state/user';
-import { UserLayout } from '../src/components/user-layout';
-import { OperatorsLayout } from '../src/components/operators-layout';
-import { PageWrapper } from '../src/components/page-wrapper';
+import "styles/globals.css";
+import type { AppProps } from "next/app";
+import * as React from "react";
+
+import { AdminLayout } from "src/components/admin-layout";
+import { OperatorsLayout } from "src/components/operators-layout";
+import { PageWrapper } from "src/components/page-wrapper";
+import { UserLayout } from "src/components/user-layout";
+import { useUserState } from "src/state/user";
 
 function Inner({ Component, pageProps, router }: AppProps) {
-  const [initLocalStorage, initialised] = useUserState(s => [s.initLocalStorage, s.initialised]);
+  const [initLocalStorage, initialised] = useUserState((s) => [
+    s.initLocalStorage,
+    s.initialised,
+  ]);
 
   React.useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       initLocalStorage();
     }
   }, [initialised]);
-  
-  if (router.route.startsWith('/admin')) {
+
+  if (router.route.startsWith("/admin")) {
     return (
-      <AdminLayout>
-        {initialised && <Component {...pageProps} />}
-      </AdminLayout>
-    )
+      <AdminLayout>{initialised && <Component {...pageProps} />}</AdminLayout>
+    );
   }
 
-  if (router.route.startsWith('/operator-admin')) {
+  if (router.route.startsWith("/operator-admin")) {
     return (
       <OperatorsLayout>
         {initialised && <Component {...pageProps} />}
       </OperatorsLayout>
-    )
+    );
   }
 
-  return (
-    <UserLayout>
-      {initialised && <Component {...pageProps} />}
-    </UserLayout>
-  )
+  return <UserLayout>{initialised && <Component {...pageProps} />}</UserLayout>;
 }
 
 function AppPage(props: AppProps) {
@@ -44,7 +42,7 @@ function AppPage(props: AppProps) {
     <PageWrapper>
       <Inner {...props} />
     </PageWrapper>
-  )
+  );
 }
 
 export default AppPage;

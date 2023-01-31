@@ -1,12 +1,13 @@
-import { Module } from "@nestjs/common";
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Operator, OperatorSchema } from "../../schemas/operator.schema";
-import { EnvModule } from "../../environment/environment.module";
-import { TripsModule } from "../trips/trips.module";
-import { UsersModule } from "../users/users.module";
-import { OperatorsController } from "./operators.controller";
-import { OperatorsRepository } from "./operators.repository";
-import { OperatorsService } from "./operators.service";
+
+import { EnvModule } from 'src/environment/environment.module';
+import { OperatorsController } from 'src/features/operators/operators.controller';
+import { OperatorsRepository } from 'src/features/operators/operators.repository';
+import { OperatorsService } from 'src/features/operators/operators.service';
+import { TripsModule } from 'src/features/trips/trips.module';
+import { UsersModule } from 'src/features/users/users.module';
+import { Operator, OperatorSchema } from 'src/schemas/operator.schema';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { OperatorsService } from "./operators.service";
     EnvModule,
     TripsModule,
     MongooseModule.forFeature([
-      { name: Operator.name, schema: OperatorSchema }
+      { name: Operator.name, schema: OperatorSchema },
     ]),
   ],
   controllers: [OperatorsController],

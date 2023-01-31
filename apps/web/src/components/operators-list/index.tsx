@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
-import { CircularProgress, Button } from '@mui/material';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Link from 'next/link';
-import { useOperatorsState } from '../../state/operators';
-import { OperatorListItem } from '../operator-list-item';
-import { urls } from 'urls';
-import { Fetchable } from '../fetchable';
+import { Button } from "@mui/material";
+import List from "@mui/material/List";
+import Typography from "@mui/material/Typography";
+import Link from "next/link";
+import React, { useEffect } from "react";
+import { urls } from "urls";
+
+import { Fetchable } from "src/components/fetchable";
+import { OperatorListItem } from "src/components/operator-list-item";
+import { useOperatorsState } from "src/state/operators";
 
 export const OperatorsList: React.FC = () => {
-  const [loadOperatorsStatus, loadOperators, operators] = useOperatorsState(s => [s.loadOperatorsStatus, s.loadOperators, s.operators]);
+  const [loadOperatorsStatus, loadOperators, operators] = useOperatorsState(
+    (s) => [s.loadOperatorsStatus, s.loadOperators, s.operators]
+  );
 
   useEffect(() => {
     if (!loadOperatorsStatus) {
@@ -22,12 +25,10 @@ export const OperatorsList: React.FC = () => {
       status={loadOperatorsStatus}
       error={<Typography>There was an error loading the operators</Typography>}
     >
-      <List sx={{ width: '100%' }}>
-        {
-          operators.map(operator => (
-            <OperatorListItem key={operator._id} operator={operator} />
-          ))
-        }
+      <List sx={{ width: "100%" }}>
+        {operators.map((operator) => (
+          <OperatorListItem key={operator._id} operator={operator} />
+        ))}
       </List>
 
       <Button
@@ -39,5 +40,5 @@ export const OperatorsList: React.FC = () => {
         Create
       </Button>
     </Fetchable>
-  )
-}
+  );
+};

@@ -1,11 +1,12 @@
 import { Box } from "@mui/material";
 import { BookingDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
-import { OperatorLayout } from "../../src/components/operator-layout";
-import { SeoHead } from "../../src/components/seo/head";
-import { UserBookingView } from "../../src/components/user-booking-view";
-import { UserTripView } from "../../src/components/user-trip-view";
-import { BookingsService } from "../../src/services/bookings.service";
+
+import { OperatorLayout } from "src/components/operator-layout";
+import { SeoHead } from "src/components/seo/head";
+import { UserBookingView } from "src/components/user-booking-view";
+import { UserTripView } from "src/components/user-trip-view";
+import { BookingsService } from "src/services/bookings.service";
 
 interface Props {
   booking: BookingDto;
@@ -14,26 +15,35 @@ interface Props {
 const BookingPage: NextPage<Props> = ({ booking }) => {
   return (
     <>
-      <SeoHead subtitle="Your Booking" description={`Your booking for ${booking.trip.name} by ${booking.operator.name}`} />
+      <SeoHead
+        subtitle="Your Booking"
+        description={`Your booking for ${booking.trip.name} by ${booking.operator.name}`}
+      />
 
       <UserBookingView booking={booking} />
 
       <Box sx={{ mt: 3 }}>
         <OperatorLayout operator={booking.operator}>
-          <UserTripView bookingView operator={booking.operator} trip={booking.trip} />
+          <UserTripView
+            bookingView
+            operator={booking.operator}
+            trip={booking.trip}
+          />
         </OperatorLayout>
       </Box>
     </>
-  )
-}
+  );
+};
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  params,
+}) => {
   const id = params?.id as string;
 
   if (!id) {
     return {
-      notFound: true
-    }
+      notFound: true,
+    };
   }
 
   const bookingsService = new BookingsService();
@@ -41,14 +51,14 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
   try {
     return {
       props: {
-        booking: await bookingsService.getBookingWithOperatorAndTrip(id)
-      }
-    }
+        booking: await bookingsService.getBookingWithOperatorAndTrip(id),
+      },
+    };
   } catch {
     return {
-      notFound: true
-    }
+      notFound: true,
+    };
   }
-}
+};
 
 export default BookingPage;

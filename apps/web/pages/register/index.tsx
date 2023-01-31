@@ -1,7 +1,8 @@
-import * as React from 'react';
-import Container from '@mui/material/Container';
-import { RegisterForm } from '../../src/components/register';
-import { SeoHead } from '../../src/components/seo/head';
+import Container from "@mui/material/Container";
+import * as React from "react";
+
+import { RegisterForm } from "src/components/register";
+import { SeoHead } from "src/components/seo/head";
 
 const RegisterPage: React.FC = () => {
   return (
@@ -11,7 +12,7 @@ const RegisterPage: React.FC = () => {
         <RegisterForm />
       </Container>
     </>
-  )
-}
+  );
+};
 
 export default RegisterPage;

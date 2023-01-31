@@ -1,8 +1,9 @@
-import { BookingDto, BookingStatus, OperatorDto } from 'dtos';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { BookingDto, BookingStatus, OperatorDto } from 'dtos';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Trip } from './trip.schema';
-import { Operator } from './operator.schema';
+
+import { Operator } from 'src/schemas/operator.schema';
+import { Trip } from 'src/schemas/trip.schema';
 
 export type BookingDocument = Booking & Document;
 
@@ -15,7 +16,7 @@ export class Booking implements BookingDto {
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Operator.name })
   operator: OperatorDto;
-  
+
   @Prop()
   name: string;
 

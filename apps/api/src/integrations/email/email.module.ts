@@ -1,11 +1,10 @@
-import { Module } from "@nestjs/common";
-import { EnvModule } from "../../environment/environment.module";
-import { EmailService } from "./email.service";
+import { Module } from '@nestjs/common';
+
+import { EnvModule } from 'src/environment/environment.module';
+import { EmailService } from 'src/integrations/email/email.service';
 
 @Module({
-  imports: [
-    EnvModule
-  ],
+  imports: [EnvModule],
   providers: [EmailService],
   exports: [EmailService],
 })

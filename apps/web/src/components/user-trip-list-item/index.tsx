@@ -1,10 +1,10 @@
-import { TripDto } from 'dtos';
-import React from 'react';
-import ListItem from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Link from 'next/link';
-import { urls } from 'urls';
-import { Avatar, ListItemAvatar } from '@mui/material';
+import { Avatar, ListItemAvatar } from "@mui/material";
+import ListItem from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import { TripDto } from "dtos";
+import Link from "next/link";
+import React from "react";
+import { urls } from "urls";
 
 interface Props {
   trip: TripDto;
@@ -13,7 +13,10 @@ interface Props {
 const DESC_LENGTH = 250;
 
 export const UserTripListItem: React.FC<Props> = ({ trip }) => {
-  const desc = trip.description.length > DESC_LENGTH ? trip.description.substring(0, DESC_LENGTH - 3) + '...' : trip.description;
+  const desc =
+    trip.description.length > DESC_LENGTH
+      ? trip.description.substring(0, DESC_LENGTH - 3) + "..."
+      : trip.description;
 
   return (
     <ListItem
@@ -30,5 +33,5 @@ export const UserTripListItem: React.FC<Props> = ({ trip }) => {
         secondary={desc}
       />
     </ListItem>
-  )
-}
+  );
+};

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 
-
 @Injectable()
 export class EnvService {
   private readonly env_vars = {

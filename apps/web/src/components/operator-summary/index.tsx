@@ -1,9 +1,10 @@
-import { Button, Typography } from '@mui/material';
-import { OperatorDto } from 'dtos';
-import React from 'react';
-import Link from 'next/link';
-import { urls } from 'urls';
-import { Titled } from '../titled';
+import { Button, Typography } from "@mui/material";
+import { OperatorDto } from "dtos";
+import Link from "next/link";
+import React from "react";
+import { urls } from "urls";
+
+import { Titled } from "src/components/titled";
 
 interface Props {
   operator: OperatorDto;
@@ -24,5 +25,5 @@ export const OperatorSummary: React.FC<Props> = ({ operator }) => {
         Edit
       </Button>
     </Titled>
-  )
-}
+  );
+};

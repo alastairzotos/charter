@@ -1,13 +1,14 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { TripDto, TripNoId } from "dtos";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { TripDto, TripNoId } from 'dtos';
 import { Model } from 'mongoose';
-import { Trip } from "../../schemas/trip.schema";
+
+import { Trip } from 'src/schemas/trip.schema';
 
 @Injectable()
 export class TripsRepository {
   constructor(
-    @InjectModel(Trip.name) private readonly tripsModel: Model<Trip>
+    @InjectModel(Trip.name) private readonly tripsModel: Model<Trip>,
   ) {}
 
   async getTripsForOperator(operatorId: string) {

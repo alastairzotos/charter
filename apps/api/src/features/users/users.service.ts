@@ -1,20 +1,26 @@
-import { LoginResponse, UserDetails, RegisterDetails, LoginDetails } from "dtos";
-import { Injectable } from "@nestjs/common";
-import { UsersRepository } from "./users.repository";
-import { EnvService } from "../../environment/environment.service";
+import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import {
+  LoginResponse,
+  UserDetails,
+  RegisterDetails,
+  LoginDetails,
+} from 'dtos';
 import * as jwt from 'jsonwebtoken';
-import * as  bcrypt from 'bcrypt';
-import { User } from "../../schemas/user.schema";
+
+import { EnvService } from 'src/environment/environment.service';
+import { UsersRepository } from 'src/features/users/users.repository';
+import { User } from 'src/schemas/user.schema';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly env: EnvService,
     private readonly usersRepository: UsersRepository,
-  ) { }
+  ) {}
 
   async getUsers() {
-    return await this.usersRepository.getUsers()
+    return await this.usersRepository.getUsers();
   }
 
   async getUserByEmail(email: string) {
@@ -29,22 +35,29 @@ export class UsersService {
     await this.usersRepository.deleteUser(id);
   }
 
-  async registerUser({ givenName, email, password }: RegisterDetails): Promise<LoginResponse> {
+  async registerUser({
+    givenName,
+    email,
+    password,
+  }: RegisterDetails): Promise<LoginResponse> {
     const user = await this.usersRepository.registerUser(
       {
         givenName,
         email,
         role: 'user',
       },
-      await bcrypt.hash(password, 10)
+      await bcrypt.hash(password, 10),
     );
 
     return {
       accessToken: this.generateAccessToken(user),
-    }
+    };
   }
 
-  async loginUser({ email, password }: LoginDetails): Promise<LoginResponse | null> {
+  async loginUser({
+    email,
+    password,
+  }: LoginDetails): Promise<LoginResponse | null> {
     const user = await this.usersRepository.getUserByEmailWithPassword(email);
 
     if (!user) {
@@ -58,11 +71,14 @@ export class UsersService {
     }
 
     return {
-      accessToken: this.generateAccessToken(user)
-    }
+      accessToken: this.generateAccessToken(user),
+    };
   }
 
   private generateAccessToken({ _id, email, givenName, role }: User) {
-    return jwt.sign({ _id, email, givenName, role }, this.env.get().jwtSigningKey);
+    return jwt.sign(
+      { _id, email, givenName, role },
+      this.env.get().jwtSigningKey,
+    );
   }
 }

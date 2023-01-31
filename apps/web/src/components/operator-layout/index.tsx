@@ -1,13 +1,17 @@
-import React from 'react';
-import { Grid } from '@mui/material';
-import { OperatorDto } from 'dtos';
-import { OperatorView } from '../operator-view';
+import { Grid } from "@mui/material";
+import { OperatorDto } from "dtos";
+import React from "react";
+
+import { OperatorView } from "src/components/operator-view";
 
 interface Props {
   operator: OperatorDto;
 }
 
-export const OperatorLayout: React.FC<React.PropsWithChildren<Props>> = ({ operator, children }) => {
+export const OperatorLayout: React.FC<React.PropsWithChildren<Props>> = ({
+  operator,
+  children,
+}) => {
   return (
     <Grid container>
       <Grid item sm={12} md={4} sx={{ p: 2 }}>
@@ -18,5 +22,5 @@ export const OperatorLayout: React.FC<React.PropsWithChildren<Props>> = ({ opera
         {children}
       </Grid>
     </Grid>
-  )
-}
+  );
+};

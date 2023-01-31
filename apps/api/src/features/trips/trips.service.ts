@@ -1,14 +1,15 @@
-import { forwardRef, Inject, Injectable } from "@nestjs/common";
-import { TripDto, TripNoId } from "dtos";
-import { OperatorsService } from "../operators/operators.service";
-import { TripsRepository } from "./trips.repository";
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { TripDto, TripNoId } from 'dtos';
+
+import { OperatorsService } from 'src/features/operators/operators.service';
+import { TripsRepository } from 'src/features/trips/trips.repository';
 
 @Injectable()
 export class TripsService {
   constructor(
     @Inject(forwardRef(() => OperatorsService))
     private readonly operatorsService: OperatorsService,
-    private readonly tripsRepository: TripsRepository
+    private readonly tripsRepository: TripsRepository,
   ) {}
 
   async getTripsForOperator(operatorId: string) {
@@ -24,14 +25,16 @@ export class TripsService {
 
     return {
       trip,
-      operator: await this.operatorsService.getOperatorById(trip.operator as unknown as string)
-    }
+      operator: await this.operatorsService.getOperatorById(
+        trip.operator as unknown as string,
+      ),
+    };
   }
 
   async createTrip(trip: TripNoId) {
     return await this.tripsRepository.createTrip(trip);
   }
-  
+
   async updateTrip(id: string, newTrip: Partial<TripDto>) {
     return await this.tripsRepository.updateTrip(id, newTrip);
   }

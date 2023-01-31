@@ -1,7 +1,8 @@
-import { TripDto, TripNoId } from 'dtos';
-import create from 'zustand';
-import { FetchStatus } from '../../models';
-import { TripsService } from '../../services/trips.service';
+import { TripDto, TripNoId } from "dtos";
+import create from "zustand";
+
+import { FetchStatus } from "src/models";
+import { TripsService } from "src/services/trips.service";
 
 export interface TripsStateValues {
   currentOperatorId?: string;
@@ -27,7 +28,10 @@ export interface TripsStateActions {
 
 export type TripsState = TripsStateValues & TripsStateActions;
 
-export const createTripsState = (initialValues: TripsStateValues, tripsService: Pick<TripsService, keyof TripsService>) =>
+export const createTripsState = (
+  initialValues: TripsStateValues,
+  tripsService: Pick<TripsService, keyof TripsService>
+) =>
   create<TripsState>((set, self) => ({
     ...initialValues,
 
@@ -35,73 +39,73 @@ export const createTripsState = (initialValues: TripsStateValues, tripsService: 
       set({ currentOperatorId: operatorId });
 
       try {
-        set({ loadTripsStatus: 'fetching' });
+        set({ loadTripsStatus: "fetching" });
 
         const trips = await tripsService.getTripsForOperator(operatorId);
 
-        set({ loadTripsStatus: 'success', trips });
+        set({ loadTripsStatus: "success", trips });
       } catch {
-        set({ loadTripsStatus: 'error' });
+        set({ loadTripsStatus: "error" });
       }
     },
 
     loadTrip: async (id) => {
       try {
-        set({ loadTripStatus: 'fetching' });
-        
+        set({ loadTripStatus: "fetching" });
+
         const trip = await tripsService.getTrip(id);
 
-        set({ loadTripStatus: 'success', trip });
+        set({ loadTripStatus: "success", trip });
       } catch {
-        set({ loadTripStatus: 'error' });
+        set({ loadTripStatus: "error" });
       }
     },
 
     updateTrip: async (id, newTrip) => {
       try {
-        set({ updateTripStatus: 'fetching' });
+        set({ updateTripStatus: "fetching" });
 
         await tripsService.updateTrip(id, newTrip);
 
-        set({ updateTripStatus: 'success' });
+        set({ updateTripStatus: "success" });
 
         self().loadTripsForOperator(self().currentOperatorId!);
       } catch {
-        set({ updateTripStatus: 'error' });
+        set({ updateTripStatus: "error" });
       }
     },
 
     deleteTrip: async (id) => {
       try {
-        set({ deleteTripStatus: 'fetching' });
+        set({ deleteTripStatus: "fetching" });
 
         await tripsService.deleteTrip(id);
 
-        set({ deleteTripStatus: 'success' });
+        set({ deleteTripStatus: "success" });
 
         self().loadTripsForOperator(self().currentOperatorId!);
       } catch {
-        set({ deleteTripStatus: 'error' });
+        set({ deleteTripStatus: "error" });
       }
     },
 
     createTrip: async (trip) => {
       try {
-        set({ createTripStatus: 'fetching' });
+        set({ createTripStatus: "fetching" });
 
         await tripsService.createTrip(trip);
 
-        set({ createTripStatus: 'success' });
+        set({ createTripStatus: "success" });
         self().loadTripsForOperator(self().currentOperatorId!);
       } catch {
-        set({ createTripStatus: 'error' });
+        set({ createTripStatus: "error" });
       }
-    }
-  }))
+    },
+  }));
 
 export const useTripsState = createTripsState(
   {
-    trips: []
+    trips: [],
   },
   new TripsService()
-)
+);

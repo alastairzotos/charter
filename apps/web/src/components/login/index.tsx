@@ -1,24 +1,25 @@
-import * as React from 'react';
-import { useRouter } from 'next/router'
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useUserState } from '../../state/user';
-import { urls } from 'urls';
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useRouter } from "next/router";
+import * as React from "react";
+import { urls } from "urls";
+
+import { useUserState } from "src/state/user";
 
 export const LoginForm: React.FC = () => {
   const router = useRouter();
 
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
-  const [loginStatus, login] = useUserState(s => [s.loginStatus, s.login]);
+  const [loginStatus, login] = useUserState((s) => [s.loginStatus, s.login]);
 
   React.useEffect(() => {
-    if (loginStatus === 'success') {
+    if (loginStatus === "success") {
       router.push(urls.home());
     }
   }, [loginStatus]);
@@ -28,46 +29,53 @@ export const LoginForm: React.FC = () => {
       <Box
         component="form"
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 2
+          display: "flex",
+          flexDirection: "column",
+          gap: 2,
         }}
       >
-        <Typography variant="h4" sx={{ textAlign: 'center' }}>Login</Typography>
+        <Typography variant="h4" sx={{ textAlign: "center" }}>
+          Login
+        </Typography>
 
         <TextField
           placeholder="Email address"
           variant="standard"
           type="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
-
-          disabled={loginStatus === 'fetching'}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={loginStatus === "fetching"}
         />
-        
+
         <TextField
           placeholder="Password"
           variant="standard"
           type="password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
-
-          disabled={loginStatus === 'fetching'}
+          onChange={(e) => setPassword(e.target.value)}
+          disabled={loginStatus === "fetching"}
         />
 
         <Button
           variant="contained"
           sx={{ mt: 3 }}
-          disabled={loginStatus === 'fetching'}
+          disabled={loginStatus === "fetching"}
           onClick={() => login(email, password)}
         >
-          {
-            loginStatus === 'fetching' ? <CircularProgress size={20} /> : 'Login'
-          }
+          {loginStatus === "fetching" ? (
+            <CircularProgress size={20} />
+          ) : (
+            "Login"
+          )}
         </Button>
 
-        {loginStatus === 'error' && <Typography>There was an error logging you in. Please ensure you have the correct email and password</Typography>}
+        {loginStatus === "error" && (
+          <Typography>
+            There was an error logging you in. Please ensure you have the
+            correct email and password
+          </Typography>
+        )}
       </Box>
     </Paper>
-  )
-}
+  );
+};

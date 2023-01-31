@@ -1,8 +1,9 @@
-import { Button, CircularProgress } from '@mui/material';
-import { Box } from '@mui/system';
-import React, { useState } from 'react';
-import { FetchStatus } from '../../models';
-import { DeleteConfirmModal } from '../modals/delete-confirm';
+import { Button, CircularProgress } from "@mui/material";
+import { Box } from "@mui/system";
+import React, { useState } from "react";
+
+import { DeleteConfirmModal } from "src/components/modals/delete-confirm";
+import { FetchStatus } from "src/models";
 
 interface Props {
   isValid: boolean;
@@ -13,21 +14,28 @@ interface Props {
   deleteModalText: string;
 }
 
-export const SaveAndDelete: React.FC<Props> = ({ isValid, saveStatus, onDelete, deleteStatus, deleteModalTitle, deleteModalText }) => {
+export const SaveAndDelete: React.FC<Props> = ({
+  isValid,
+  saveStatus,
+  onDelete,
+  deleteStatus,
+  deleteModalTitle,
+  deleteModalText,
+}) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
-  const isSubmitting = saveStatus === 'fetching';
+  const isSubmitting = saveStatus === "fetching";
 
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button
           type="submit"
           variant="contained"
           disabled={!isValid || isSubmitting}
-          sx={{ maxWidth: '20%' }}
+          sx={{ maxWidth: "20%" }}
         >
-          {isSubmitting ? <CircularProgress size={20} /> : 'Save'}
+          {isSubmitting ? <CircularProgress size={20} /> : "Save"}
         </Button>
 
         {!!onDelete && (
@@ -50,5 +58,5 @@ export const SaveAndDelete: React.FC<Props> = ({ isValid, saveStatus, onDelete, 
         deleteStatus={deleteStatus}
       />
     </>
-  )
-}
+  );
+};

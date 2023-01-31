@@ -1,9 +1,14 @@
-import { BookingDto, BookingNoId, BookingStatus, OperatorDto, TripDto } from "dtos";
-import { HttpService } from "./http.service";
+import { BookingDto, BookingNoId, BookingStatus } from "dtos";
+
+import { HttpService } from "src/services/http.service";
 
 export class BookingsService extends HttpService {
   async createBooking(booking: BookingNoId): Promise<string> {
-    const { data } = await this.httpClient.post<any, { data: string }, BookingNoId>('/bookings', booking);
+    const { data } = await this.httpClient.post<
+      any,
+      { data: string },
+      BookingNoId
+    >("/bookings", booking);
 
     return data;
   }
@@ -15,18 +20,26 @@ export class BookingsService extends HttpService {
   }
 
   async getBookingWithOperatorAndTrip(id: string) {
-    const { data } = await this.httpClient.get<BookingDto>(`/bookings/with-details/${id}`);
+    const { data } = await this.httpClient.get<BookingDto>(
+      `/bookings/with-details/${id}`
+    );
 
     return data;
   }
 
   async getBookingsForUser() {
-    const { data } = await this.httpClient.get<BookingDto[]>(`/bookings/for-user`);
+    const { data } = await this.httpClient.get<BookingDto[]>(
+      `/bookings/for-user`
+    );
 
     return data;
   }
 
   async setBookingStatus(id: string, status: BookingStatus) {
-    await this.httpClient.patch<any, {}, { id: string, status: BookingStatus }>('/bookings', { id, status });
+    await this.httpClient.patch<
+      any,
+      unknown,
+      { id: string; status: BookingStatus }
+    >("/bookings", { id, status });
   }
 }

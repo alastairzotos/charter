@@ -1,8 +1,9 @@
-import { UserDetails } from "dtos";
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { UserDetails } from 'dtos';
 import { Model } from 'mongoose';
-import { User } from "src/schemas/user.schema";
+
+import { User } from 'src/schemas/user.schema';
 
 @Injectable()
 export class UsersRepository {
@@ -11,7 +12,7 @@ export class UsersRepository {
   ) {}
 
   async getUsers() {
-    return await this.userModel.find(); 
+    return await this.userModel.find();
   }
 
   async getUserByEmail(email: string) {
@@ -33,7 +34,7 @@ export class UsersRepository {
   async registerUser(details: UserDetails, hashedPassword: string) {
     return await this.userModel.create({
       ...details,
-      hashedPassword
+      hashedPassword,
     });
   }
 }
