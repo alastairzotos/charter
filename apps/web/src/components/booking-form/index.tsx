@@ -14,6 +14,7 @@ import { FormBox } from '../form-box';
 import { Formik, Field } from 'formik';
 import { TextField } from 'formik-mui';
 import { KeyValue } from '../key-value';
+import { createPriceString } from 'utils';
 
 const bookingModalStyle = {
   position: 'absolute' as 'absolute',
@@ -126,7 +127,7 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
                 }}
               />
 
-              <KeyValue label="Total Price" value={`€${(values.adultGuests * trip.adultPrice + values.childGuests * trip.childPrice).toFixed(2)}`} />
+              <KeyValue label="Total Price" value={createPriceString(values, trip)} />
 
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button

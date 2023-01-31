@@ -1,6 +1,7 @@
 import { BookingDto } from "dtos";
 import * as dedent from 'dedent';
 import { paramCase } from 'change-case';
+import { createPriceString } from 'utils';
 import { EnvService } from "../environment/environment.service";
 
 export interface EmailData {
@@ -20,7 +21,7 @@ export const emailContent = (env: EnvService) => ({
         <li><strong>Guest email</strong>: ${booking.email}</li>
         <li><strong>Number of adults</strong>: ${booking.adultGuests}</li>
         <li><strong>Number of children</strong>: ${booking.childGuests}</li>
-        <li><strong>Price</strong>: €${(booking.adultGuests * booking.trip.adultPrice + booking.childGuests * booking.trip.childPrice).toFixed(2)}</li>
+        <li><strong>Price</strong>: ${createPriceString(booking, booking.trip)}</li>
         <li><strong>Date</strong>: ${booking.date}</li>
       </ul>
 

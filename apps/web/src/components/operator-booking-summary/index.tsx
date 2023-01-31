@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import { BookingDto } from 'dtos';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { createPriceString } from 'utils';
 import { useBookingsState } from '../../state/bookings';
 import { urls } from '../../urls';
 import { KeyValue } from '../key-value';
@@ -37,7 +38,7 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
       <KeyValue label="Date" value={booking.date} secondary />
       <KeyValue label="Adults" value={booking.adultGuests} secondary />
       <KeyValue label="Children" value={booking.childGuests} secondary />
-      <KeyValue label="Price" value={`€${(booking.adultGuests * booking.trip.adultPrice + booking.childGuests * booking.trip.childPrice).toFixed(2)}`} secondary />
+      <KeyValue label="Price" value={createPriceString(booking, booking.trip)} secondary />
 
       <Box sx={{ mt: 3 }}>
         {booking.status === 'confirmed' && <Typography>This booking has been confirmed</Typography>}

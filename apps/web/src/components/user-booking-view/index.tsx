@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { BookingDto } from 'dtos';
 import React from 'react';
+import { createPriceString } from 'utils';
 import { KeyValue } from '../key-value';
 
 interface Props {
@@ -17,7 +18,7 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
         <KeyValue label="Date" value={booking.date} />
         <KeyValue label="Adults" value={booking.adultGuests} />
         <KeyValue label="Children" value={booking.childGuests} />
-        <KeyValue label="Price" value={`€${(booking.adultGuests * booking.trip.adultPrice + booking.childGuests * booking.trip.childPrice).toFixed(2)}`} />
+        <KeyValue label="Price" value={createPriceString(booking, booking.trip)} />
 
         <Box sx={{ mt: 2 }}>
           {booking.status === 'pending' && <Typography>Your booking is pending. Check back here for status updates. We will also email you when the status changes.</Typography>}
