@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useRouter } from 'next/router'
 import { AdminRoute } from '../../../../../../src/components/admin-route';
-import { urls } from '../../../../../../src/urls';
+import { urls } from 'urls';
 import { Breadcrumbs } from '../../../../../../src/components/breadcrumbs';
 import { TripCreate } from '../../../../../../src/components/trip-create';
 

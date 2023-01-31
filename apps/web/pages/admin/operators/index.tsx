@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AdminRoute } from '../../../src/components/admin-route';
 import { OperatorsList } from '../../../src/components/operators-list';
 import { Breadcrumbs } from '../../../src/components/breadcrumbs';
-import { urls } from '../../../src/urls';
+import { urls } from 'urls';
 
 const OperatorsPage: React.FC = () => {
   return (

@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import Link from 'next/link';
 import { SeoHead } from '../src/components/seo/head';
 import { useUserState } from "../src/state/user";
-import { urls } from '../src/urls';
+import { urls } from 'urls';
 
 export default function Web() {
   const user = useUserState(s => s.loggedInUser);

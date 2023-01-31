@@ -5,7 +5,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { FetchStatus } from '../../models';
 import { useRouter } from 'next/router';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import { ImageDropzone } from '../image-dropzone';
 import { ErrorMessage, Field, Formik } from 'formik';
 import { TextField } from 'formik-mui';

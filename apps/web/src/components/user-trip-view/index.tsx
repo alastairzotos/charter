@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { OperatorDto, TripDto } from 'dtos';
 import Link from 'next/link';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import { Box, Button, Typography, Modal } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBackIos';
 import ImageGallery from 'react-image-gallery';

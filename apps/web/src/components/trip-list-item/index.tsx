@@ -3,7 +3,7 @@ import React from 'react';
 import ListItem from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Link from 'next/link';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 
 interface Props {
   operatorId: string;

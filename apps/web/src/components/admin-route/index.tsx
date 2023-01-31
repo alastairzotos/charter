@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { useUserState } from '../../state/user';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 
 export const AdminRoute: React.FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();

@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 import { useUserState } from '../../state/user';
 import { useBookingsState } from '../../state/bookings';
 import { useRouter } from 'next/router';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import * as yup from 'yup';
 import { FormBox } from '../form-box';
 import { Formik, Field } from 'formik';

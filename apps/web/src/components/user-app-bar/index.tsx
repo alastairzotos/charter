@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { AppBarLoginLogout } from '../app-bar-login-logout';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import Link from 'next/link';
 import Image from 'next/image';
 import { APP_NAME } from '../../util/misc';

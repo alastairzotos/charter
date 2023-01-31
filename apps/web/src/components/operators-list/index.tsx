@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import Link from 'next/link';
 import { useOperatorsState } from '../../state/operators';
 import { OperatorListItem } from '../operator-list-item';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import { Fetchable } from '../fetchable';
 
 export const OperatorsList: React.FC = () => {

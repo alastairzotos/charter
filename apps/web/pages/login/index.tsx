@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Container from '@mui/material/Container';
-import { RegisterForm } from '../../src/components/register';
 import { LoginForm } from '../../src/components/login';
 import { SeoHead } from '../../src/components/seo/head';
 

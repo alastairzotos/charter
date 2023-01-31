@@ -2,7 +2,7 @@ import { Button, Typography } from '@mui/material';
 import { OperatorDto } from 'dtos';
 import React from 'react';
 import Link from 'next/link';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import { Titled } from '../titled';
 
 interface Props {

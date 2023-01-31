@@ -3,7 +3,7 @@ import { Button, CircularProgress, List, Typography } from '@mui/material';
 import Link from 'next/link';
 import { useTripsState } from '../../state/trips';
 import { Fetchable } from '../fetchable';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import { TripListItem } from '../trip-list-item';
 
 interface Props {

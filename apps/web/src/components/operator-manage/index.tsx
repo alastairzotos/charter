@@ -3,7 +3,7 @@ import React from 'react';
 import { Typography, Avatar } from '@mui/material';
 import { FetchStatus } from '../../models';
 import { useRouter } from 'next/router';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import { ImageDropzone } from '../image-dropzone';
 import { Formik, Field, ErrorMessage } from 'formik';
 import { TextField } from 'formik-mui';

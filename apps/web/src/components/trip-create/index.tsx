@@ -3,7 +3,7 @@ import { useTripsState } from '../../state/trips';
 import { ManageTripForm } from '../trip-manage';
 import { useRouter } from 'next/router';
 import { TripNoId } from 'dtos';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 
 interface Props {
   operatorId: string;

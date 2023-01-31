@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { createPriceString } from 'utils';
 import { useBookingsState } from '../../state/bookings';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import { KeyValue } from '../key-value';
 import { DeleteConfirmModal } from '../modals/delete-confirm';
 import { Titled } from '../titled';

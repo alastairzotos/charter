@@ -1,8 +1,7 @@
-import { Box, Typography } from "@mui/material";
-import { BookingDto, OperatorDto, TripDto } from "dtos";
+import { Box } from "@mui/material";
+import { BookingDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import { OperatorLayout } from "../../src/components/operator-layout";
-import { OperatorView } from "../../src/components/operator-view";
 import { SeoHead } from "../../src/components/seo/head";
 import { UserBookingView } from "../../src/components/user-booking-view";
 import { UserTripView } from "../../src/components/user-trip-view";

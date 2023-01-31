@@ -2,7 +2,7 @@ import { OperatorNoId } from 'dtos';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useOperatorsState } from '../../state/operators';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import { ManageOperatorForm } from '../operator-manage';
 
 export const OperatorCreate: React.FC = () => {

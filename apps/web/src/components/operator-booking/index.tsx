@@ -4,7 +4,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBackIos';
 import { useBookingsState } from '../../state/bookings';
 import { Fetchable } from '../fetchable';
 import Link from 'next/link';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import { DeleteConfirmModal } from '../modals/delete-confirm';
 import { useRouter } from 'next/router';
 import { OperatorBookingSummary } from '../operator-booking-summary';

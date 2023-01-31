@@ -5,7 +5,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Link from 'next/link';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 
 interface Props {
   operator: OperatorDto;

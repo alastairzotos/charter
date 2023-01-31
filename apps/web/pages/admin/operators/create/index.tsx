@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { AdminRoute } from '../../../../src/components/admin-route';
 import { OperatorCreate } from '../../../../src/components/operator-create';
 import { Breadcrumbs } from '../../../../src/components/breadcrumbs';
-import { urls } from '../../../../src/urls';
+import { urls } from 'urls';
 
 const CreateOperatorPage: React.FC = () => {
   const router = useRouter()

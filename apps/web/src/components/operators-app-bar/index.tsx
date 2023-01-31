@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { AppBarLoginLogout } from '../app-bar-login-logout';
 import Link from 'next/link';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import Image from 'next/image';
 import { APP_NAME } from '../../util/misc';
 

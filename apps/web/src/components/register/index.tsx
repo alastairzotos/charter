@@ -7,7 +7,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useUserState } from '../../state/user';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 
 export const RegisterForm: React.FC = () => {
   const router = useRouter();

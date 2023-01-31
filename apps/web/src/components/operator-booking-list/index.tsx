@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { BookingDto } from 'dtos';
 import Link from 'next/link';
-import { urls } from '../../urls';
+import { urls } from 'urls';
 import { pluralize } from '../../util/misc';
 import { Titled } from '../titled';
 
