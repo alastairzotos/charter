@@ -1,6 +1,12 @@
 import kebabCase from 'just-kebab-case';
 import { OperatorDto, TripDto } from "dtos";
 
+type UrlFn = (...args: any[]) => string;
+
+interface Urls {
+  [key: string]: UrlFn | Urls;
+}
+
 export const urls = {
   home: () => '/',
   login: () => '/login',
@@ -24,4 +30,4 @@ export const urls = {
     home: () => '/operator-admin',
     booking: (id: string) => `/operator-admin/booking/${id}`
   }
-}
+} satisfies Urls;
