@@ -8,8 +8,8 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { DropzoneDialog } from "react-mui-dropzone";
-import { FileUploadItem } from "src/components/file-upload/item";
 
+import { FileUploadItem } from "src/components/file-upload/item";
 import { Titled } from "src/components/titled";
 import { useImagesState } from "src/state/images";
 import { pluralize } from "src/util/misc";

@@ -101,8 +101,15 @@ export const ManageTripForm: React.FC<Props> = ({
             acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
             disabled={isSubmitting}
             value={values.photos}
-            onChange={(photos) => setValues({ ...values, photos: [...values.photos, ...photos] })}
-            onDelete={item => setValues({ ...values, photos: values.photos.filter(photo => photo !== item) })}
+            onChange={(photos) =>
+              setValues({ ...values, photos: [...values.photos, ...photos] })
+            }
+            onDelete={(item) =>
+              setValues({
+                ...values,
+                photos: values.photos.filter((photo) => photo !== item),
+              })
+            }
           />
           <ErrorMessage name="photos" />
 

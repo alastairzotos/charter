@@ -1,23 +1,23 @@
-import { IconButton, ImageListItem } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { styled } from '@mui/system';
-import React, { useState } from 'react';
+import CloseIcon from "@mui/icons-material/Close";
+import { IconButton, ImageListItem } from "@mui/material";
+import { styled } from "@mui/system";
+import React, { useState } from "react";
 
 interface Props {
   onDelete?: () => void;
 }
 
-const Overlay = styled('div')(() => ({
-  position: 'absolute',
+const Overlay = styled("div")(() => ({
+  position: "absolute",
   top: 0,
   right: 0,
   bottom: 0,
   left: 0,
-}))
+}));
 
 export const FileUploadItem: React.FC<React.PropsWithChildren<Props>> = ({
   onDelete,
-  children
+  children,
 }) => {
   const [hover, setHover] = useState(false);
 
@@ -35,5 +35,5 @@ export const FileUploadItem: React.FC<React.PropsWithChildren<Props>> = ({
         </Overlay>
       )}
     </ImageListItem>
-  )
-}
+  );
+};
