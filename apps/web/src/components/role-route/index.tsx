@@ -1,15 +1,18 @@
+import { UserRole } from "dtos";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect } from "react";
 import { urls } from "urls";
 
 import { useUserState } from "src/state/user";
-import { UserRole } from "dtos";
 
 interface Props {
   role: UserRole;
 }
 
-export const RoleRoute: React.FC<PropsWithChildren<Props>> = ({ children, role }) => {
+export const RoleRoute: React.FC<PropsWithChildren<Props>> = ({
+  children,
+  role,
+}) => {
   const router = useRouter();
   const user = useUserState((s) => s.loggedInUser);
 
