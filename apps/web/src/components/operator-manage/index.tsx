@@ -60,8 +60,8 @@ export const ManageOperatorForm: React.FC<Props> = ({
       validationSchema={validationSchema}
       onSubmit={onSave}
     >
-      {({ isValid, isSubmitting, values, setValues }) => (
-        <FormBox title={title}>
+      {({ isValid, isSubmitting, values, setValues, dirty }) => (
+        <FormBox title={title} dirty={dirty}>
           <Field component={TextField} name="name" label="Operator name" />
 
           <Field
@@ -104,6 +104,7 @@ export const ManageOperatorForm: React.FC<Props> = ({
           <ErrorMessage name="photo" />
 
           <SaveAndDelete
+            dirty={dirty}
             isValid={isValid}
             saveStatus={saveStatus}
             onDelete={handleDeleteOperator}
