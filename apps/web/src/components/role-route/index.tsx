@@ -24,9 +24,5 @@ export const RoleRoute: React.FC<PropsWithChildren<Props>> = ({
     }
   }, [user?.role]);
 
-  if (user?.role !== role) {
-    return null;
-  }
-
   return <>{children}</>;
 };
