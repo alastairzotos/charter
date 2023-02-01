@@ -37,6 +37,8 @@ COPY apps/${SCOPE}/package.json apps/${SCOPE}/package.json
 
 # Add libs here
 COPY libs/dtos/package.json libs/dtos/package.json
+COPY libs/urls/package.json libs/urls/package.json
+COPY libs/utils/package.json libs/utils/package.json
 
 RUN yarn --frozen-lockfile
 
