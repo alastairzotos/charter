@@ -3,7 +3,6 @@ import { Box } from "@mui/system";
 import { OperatorDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 import { SeoHead } from "src/components/seo/head";
 import { Titled } from "src/components/titled";
