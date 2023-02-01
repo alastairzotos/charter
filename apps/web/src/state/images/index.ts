@@ -10,7 +10,7 @@ export interface ImagesStateValues {
 export interface ImagesStateActions {
   uploadImages: (
     files: File[],
-    onDone: (urls: string[]) => void,
+    onDone: (urls: string[]) => void
   ) => Promise<void>;
 }
 
