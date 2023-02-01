@@ -6,9 +6,9 @@ import React, { useState } from "react";
 import { urls } from "urls";
 
 import { BookingForm } from "src/components/booking-form";
+import { ImageGallery } from "src/components/image-gallery";
 import { KeyValue } from "src/components/key-value";
 import { Titled } from "src/components/titled";
-import { ImageGallery } from "src/components/image-gallery";
 
 interface Props {
   bookingView?: boolean;
