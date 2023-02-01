@@ -8,7 +8,7 @@ import { APP_NAME } from "src/util/misc";
 
 export const Footer: React.FC = () => {
   return (
-    <Box sx={{ bgcolor: blueGrey[100], p: 10, mt: 6 }}>
+    <Box sx={{ bgcolor: blueGrey[100], p: 10 }}>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Image
           src="/logo.png"

@@ -22,7 +22,7 @@ export const ImageGalleryNavBase: React.FC<React.PropsWithChildren<Props>> = ({
       left: position === "left" ? 0 : undefined,
       right: position === "right" ? 0 : undefined,
       top: "50%",
-      zIndex: 10000,
+      zIndex: 100,
       color: "white",
       transform: "translateY(-50%)",
     }}

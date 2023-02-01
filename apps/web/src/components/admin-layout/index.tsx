@@ -14,7 +14,7 @@ export const AdminLayout: React.FC<React.PropsWithChildren> = ({
       <SeoHead subtitle="Admin" description="Manage operators and bookings" />
       <AdminAppBar />
       <Container maxWidth="xl">
-        <Paper sx={{ p: 3, mt: 3 }}>{children}</Paper>
+        <Paper sx={{ p: 3, mt: 3, mb: 6 }}>{children}</Paper>
       </Container>
     </RoleRoute>
   );
