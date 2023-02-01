@@ -3,12 +3,12 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 import { OperatorDto, TripDto } from "dtos";
 import Link from "next/link";
 import React, { useState } from "react";
-import ImageGallery from "react-image-gallery";
 import { urls } from "urls";
 
 import { BookingForm } from "src/components/booking-form";
 import { KeyValue } from "src/components/key-value";
 import { Titled } from "src/components/titled";
+import { ImageGallery } from "src/components/image-gallery";
 
 interface Props {
   bookingView?: boolean;
@@ -65,16 +65,7 @@ export const UserTripView: React.FC<Props> = ({
         )}
 
         {trip.photos && trip.photos.length > 0 && (
-          <Box sx={{ mt: 3 }}>
-            <ImageGallery
-              items={trip.photos.map((photo) => ({
-                original: photo,
-                thumbnail: photo,
-                thumbnailHeight: 100,
-                originalHeight: 500,
-              }))}
-            />
-          </Box>
+          <ImageGallery items={trip.photos} />
         )}
       </Titled>
 
