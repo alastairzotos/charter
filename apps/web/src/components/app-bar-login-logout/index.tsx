@@ -4,9 +4,10 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { useUserState } from "src/state/user";
+import { AppBarLoggedInButton } from "src/components/app-bar-logged-in-button";
 
 export const AppBarLoginLogout: React.FC = () => {
-  const [accessToken, logout] = useUserState((s) => [s.accessToken, s.logout]);
+  const [accessToken] = useUserState((s) => [s.accessToken]);
 
   return (
     <>
@@ -17,9 +18,7 @@ export const AppBarLoginLogout: React.FC = () => {
       )}
 
       {!!accessToken && (
-        <Button color="inherit" onClick={logout}>
-          Logout
-        </Button>
+        <AppBarLoggedInButton />
       )}
     </>
   );
