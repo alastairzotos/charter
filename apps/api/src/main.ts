@@ -2,7 +2,7 @@ import { RequestMethod } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { urlencoded, json } from 'express';
 
-import { AppModule } from 'src/app.module';
+import { AppModule } from 'app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

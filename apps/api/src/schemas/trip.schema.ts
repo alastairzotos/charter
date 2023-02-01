@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { TripDto } from 'dtos';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
-import { Operator } from 'src/schemas/operator.schema';
+import { Operator } from 'schemas/operator.schema';
 
 export type TripDocument = Trip & Document;
 

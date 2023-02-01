@@ -8,9 +8,9 @@ import {
 } from 'dtos';
 import * as jwt from 'jsonwebtoken';
 
-import { EnvService } from 'src/environment/environment.service';
-import { UsersRepository } from 'src/features/users/users.repository';
-import { User } from 'src/schemas/user.schema';
+import { EnvService } from 'environment/environment.service';
+import { UsersRepository } from 'features/users/users.repository';
+import { User } from 'schemas/user.schema';
 
 @Injectable()
 export class UsersService {

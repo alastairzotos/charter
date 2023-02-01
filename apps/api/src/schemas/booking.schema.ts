@@ -2,8 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { BookingDto, BookingStatus, OperatorDto } from 'dtos';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
-import { Operator } from 'src/schemas/operator.schema';
-import { Trip } from 'src/schemas/trip.schema';
+import { Operator } from 'schemas/operator.schema';
+import { Trip } from 'schemas/trip.schema';
 
 export type BookingDocument = Booking & Document;
 

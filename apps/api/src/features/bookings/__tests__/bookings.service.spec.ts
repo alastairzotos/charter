@@ -1,11 +1,11 @@
 import { Test } from '@nestjs/testing';
 import { BookingNoId, OperatorDto, TripDto } from 'dtos';
 
-import { EnvService } from 'src/environment/environment.service';
-import { BookingsRepository } from 'src/features/bookings/bookings.repository';
-import { BookingsService } from 'src/features/bookings/bookings.service';
-import { OperatorsService } from 'src/features/operators/operators.service';
-import { EmailService } from 'src/integrations/email/email.service';
+import { EnvService } from 'environment/environment.service';
+import { BookingsRepository } from 'features/bookings/bookings.repository';
+import { BookingsService } from 'features/bookings/bookings.service';
+import { OperatorsService } from 'features/operators/operators.service';
+import { EmailService } from 'integrations/email/email.service';
 
 const mockOperator: OperatorDto = {
   _id: '123',

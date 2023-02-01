@@ -15,7 +15,7 @@ import {
   LoginDetails,
 } from 'dtos';
 
-import { UsersService } from 'src/features/users/users.service';
+import { UsersService } from 'features/users/users.service';
 
 @Controller('users')
 export class UsersController {

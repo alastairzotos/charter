@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { EnvModule } from 'src/environment/environment.module';
-import { EmailService } from 'src/integrations/email/email.service';
+import { EnvModule } from 'environment/environment.module';
+import { EmailService } from 'integrations/email/email.service';
 
 @Module({
   imports: [EnvModule],

@@ -12,9 +12,9 @@ import {
 } from '@nestjs/common';
 import { TripDto, TripNoId } from 'dtos';
 
-import { AuthGuard } from 'src/auth/auth.guard';
-import { Roles } from 'src/auth/roles.decorator';
-import { TripsService } from 'src/features/trips/trips.service';
+import { AuthGuard } from 'auth/auth.guard';
+import { Roles } from 'auth/roles.decorator';
+import { TripsService } from 'features/trips/trips.service';
 
 @Controller('trips')
 @UseGuards(AuthGuard)

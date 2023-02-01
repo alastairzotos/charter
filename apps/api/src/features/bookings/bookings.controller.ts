@@ -9,10 +9,10 @@ import {
 } from '@nestjs/common';
 import { BookingDto, BookingStatus, UserDetails } from 'dtos';
 
-import { AuthGuard } from 'src/auth/auth.guard';
-import { Principal } from 'src/auth/principal.decorator';
-import { Roles } from 'src/auth/roles.decorator';
-import { BookingsService } from 'src/features/bookings/bookings.service';
+import { AuthGuard } from 'auth/auth.guard';
+import { Principal } from 'auth/principal.decorator';
+import { Roles } from 'auth/roles.decorator';
+import { BookingsService } from 'features/bookings/bookings.service';
 
 @Controller('bookings')
 @UseGuards(AuthGuard)

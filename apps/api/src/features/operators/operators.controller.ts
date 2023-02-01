@@ -10,9 +10,9 @@ import {
 } from '@nestjs/common';
 import { OperatorDto, OperatorNoId } from 'dtos';
 
-import { AuthGuard } from 'src/auth/auth.guard';
-import { Roles } from 'src/auth/roles.decorator';
-import { OperatorsService } from 'src/features/operators/operators.service';
+import { AuthGuard } from 'auth/auth.guard';
+import { Roles } from 'auth/roles.decorator';
+import { OperatorsService } from 'features/operators/operators.service';
 
 @Controller('operators')
 @UseGuards(AuthGuard)

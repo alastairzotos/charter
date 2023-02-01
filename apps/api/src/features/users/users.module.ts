@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { EnvModule } from 'src/environment/environment.module';
-import { UsersController } from 'src/features/users/users.controller';
-import { UsersRepository } from 'src/features/users/users.repository';
-import { UsersService } from 'src/features/users/users.service';
-import { User, UserSchema } from 'src/schemas/user.schema';
+import { EnvModule } from 'environment/environment.module';
+import { UsersController } from 'features/users/users.controller';
+import { UsersRepository } from 'features/users/users.repository';
+import { UsersService } from 'features/users/users.service';
+import { User, UserSchema } from 'schemas/user.schema';
 
 @Module({
   imports: [

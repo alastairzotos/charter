@@ -1,13 +1,13 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { EnvModule } from 'src/environment/environment.module';
-import { OperatorsModule } from 'src/features/operators/operators.module';
-import { TripsController } from 'src/features/trips/trips.controller';
-import { TripsRepository } from 'src/features/trips/trips.repository';
-import { TripsService } from 'src/features/trips/trips.service';
-import { UsersModule } from 'src/features/users/users.module';
-import { Trip, TripSchema } from 'src/schemas/trip.schema';
+import { EnvModule } from 'environment/environment.module';
+import { OperatorsModule } from 'features/operators/operators.module';
+import { TripsController } from 'features/trips/trips.controller';
+import { TripsRepository } from 'features/trips/trips.repository';
+import { TripsService } from 'features/trips/trips.service';
+import { UsersModule } from 'features/users/users.module';
+import { Trip, TripSchema } from 'schemas/trip.schema';
 
 @Module({
   imports: [

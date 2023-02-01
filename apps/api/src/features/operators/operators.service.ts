@@ -1,8 +1,8 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { OperatorDto, OperatorNoId } from 'dtos';
 
-import { OperatorsRepository } from 'src/features/operators/operators.repository';
-import { TripsService } from 'src/features/trips/trips.service';
+import { OperatorsRepository } from 'features/operators/operators.repository';
+import { TripsService } from 'features/trips/trips.service';
 
 @Injectable()
 export class OperatorsService {

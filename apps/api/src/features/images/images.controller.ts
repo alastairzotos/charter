@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { ImagesService } from 'src/features/images/images.service';
+import { ImagesService } from 'features/images/images.service';
 
 @Controller('images')
 export class ImagesController {

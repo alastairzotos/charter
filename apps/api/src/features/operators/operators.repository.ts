@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { OperatorDto, OperatorNoId } from 'dtos';
 import { Model } from 'mongoose';
 
-import { Operator } from 'src/schemas/operator.schema';
+import { Operator } from 'schemas/operator.schema';
 
 @Injectable()
 export class OperatorsRepository {

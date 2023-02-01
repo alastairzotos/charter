@@ -2,16 +2,16 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { EnvModule } from 'src/environment/environment.module';
-import { EnvService } from 'src/environment/environment.service';
-import { BookingsModule } from 'src/features/bookings/bookings.module';
-import { HealthModule } from 'src/features/health/health.module';
-import { ImagesModule } from 'src/features/images/images.module';
-import { OperatorsModule } from 'src/features/operators/operators.module';
-import { TripsModule } from 'src/features/trips/trips.module';
-import { UsersModule } from 'src/features/users/users.module';
-import { EmailModule } from 'src/integrations/email/email.module';
-import { S3Module } from 'src/integrations/s3/s3.module';
+import { EnvModule } from 'environment/environment.module';
+import { EnvService } from 'environment/environment.service';
+import { BookingsModule } from 'features/bookings/bookings.module';
+import { HealthModule } from 'features/health/health.module';
+import { ImagesModule } from 'features/images/images.module';
+import { OperatorsModule } from 'features/operators/operators.module';
+import { TripsModule } from 'features/trips/trips.module';
+import { UsersModule } from 'features/users/users.module';
+import { EmailModule } from 'integrations/email/email.module';
+import { S3Module } from 'integrations/s3/s3.module';
 
 @Module({
   imports: [

@@ -13,5 +13,9 @@ module.exports = {
     "**/*.(t|j)s"
   ],
   coverageDirectory: "../coverage",
-  testEnvironment: "node"
+  testEnvironment: "node",
+  moduleDirectories: ['node_modules', '<rootDir>'],
+  moduleNameMapper: {
+    // 'src/(.*)': '<rootDir>/src/$1',
+  }
 }

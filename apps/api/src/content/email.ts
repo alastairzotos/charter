@@ -3,7 +3,7 @@ import { BookingDto } from 'dtos';
 import { urls } from 'urls';
 import { createPriceString } from 'utils';
 
-import { EnvService } from 'src/environment/environment.service';
+import { EnvService } from 'environment/environment.service';
 
 export interface EmailData {
   subject: string;
