@@ -4,10 +4,11 @@ import Link from "next/link";
 import { urls } from "urls";
 
 import { SeoHead } from "src/components/seo/head";
+import { UserLayoutContainer } from "src/components/user-layout/container";
 
 export default function Page404() {
   return (
-    <div>
+    <UserLayoutContainer>
       <SeoHead
         subtitle="Page not found"
         description="The page you're looking for can't be found"
@@ -23,6 +24,6 @@ export default function Page404() {
           <Button>Return home</Button>
         </Link>
       </Box>
-    </div>
+    </UserLayoutContainer>
   );
 }

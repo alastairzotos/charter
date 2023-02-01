@@ -5,6 +5,7 @@ import { GetServerSideProps, NextPage } from "next";
 import { OperatorLayout } from "src/components/operator-layout";
 import { SeoHead } from "src/components/seo/head";
 import { UserBookingView } from "src/components/user-booking-view";
+import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserTripView } from "src/components/user-trip-view";
 import { BookingsService } from "src/services/bookings.service";
 
@@ -14,7 +15,7 @@ interface Props {
 
 const BookingPage: NextPage<Props> = ({ booking }) => {
   return (
-    <>
+    <UserLayoutContainer>
       <SeoHead
         subtitle="Your Booking"
         description={`Your booking for ${booking.trip.name} by ${booking.operator.name}`}
@@ -31,7 +32,7 @@ const BookingPage: NextPage<Props> = ({ booking }) => {
           />
         </OperatorLayout>
       </Box>
-    </>
+    </UserLayoutContainer>
   );
 };
 

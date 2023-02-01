@@ -4,6 +4,7 @@ import React from "react";
 
 import { SeoHead } from "src/components/seo/head";
 import { Titled } from "src/components/titled";
+import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserOperatorsList } from "src/components/user-operators-list";
 import { OperatorsService } from "src/services/operators.service";
 
@@ -13,7 +14,7 @@ interface Props {
 
 const OperatorsPage: NextPage<Props> = ({ operators }) => {
   return (
-    <>
+    <UserLayoutContainer>
       <SeoHead
         subtitle="Operators"
         description="View list of available operators"
@@ -22,7 +23,7 @@ const OperatorsPage: NextPage<Props> = ({ operators }) => {
       <Titled title="Tour operators">
         <UserOperatorsList operators={operators} />
       </Titled>
-    </>
+    </UserLayoutContainer>
   );
 };
 

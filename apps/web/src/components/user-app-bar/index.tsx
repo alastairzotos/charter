@@ -17,7 +17,7 @@ export const UserAppBar: React.FC = () => {
   ]);
 
   return (
-    <Box sx={{ flexGrow: 1, pb: 4 }}>
+    <Box sx={{ flexGrow: 1 }}>
       <MuiAppBar position="fixed">
         <Toolbar>
           <Link href={urls.home()}>
