@@ -11,7 +11,6 @@ export const UserLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
       <UserAppBar />
       <Toolbar />
       {children}
-
     </>
   );
 };
