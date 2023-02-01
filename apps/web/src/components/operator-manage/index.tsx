@@ -1,4 +1,4 @@
-import { Avatar, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { OperatorNoId } from "dtos";
 import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
@@ -8,9 +8,9 @@ import { urls } from "urls";
 import * as yup from "yup";
 
 import { FormBox } from "src/components/form-box";
-import { ImageDropzone } from "src/components/image-dropzone";
 import { SaveAndDelete } from "src/components/save-delete";
 import { FetchStatus } from "src/models";
+import { FileUpload } from "src/components/file-upload";
 
 interface Props {
   title: string;
@@ -60,7 +60,7 @@ export const ManageOperatorForm: React.FC<Props> = ({
       validationSchema={validationSchema}
       onSubmit={onSave}
     >
-      {({ isValid, values, setValues }) => (
+      {({ isValid, isSubmitting, values, setValues }) => (
         <FormBox title={title}>
           <Field component={TextField} name="name" label="Operator name" />
 
@@ -93,12 +93,15 @@ export const ManageOperatorForm: React.FC<Props> = ({
             rows={4}
           />
 
-          <ImageDropzone
-            multiple={false}
-            onReceiveUrls={(urls) => setValues({ ...values, photo: urls[0] })}
-          >
-            <Avatar src={values.photo} sx={{ width: 128, height: 128 }} />
-          </ImageDropzone>
+          <FileUpload
+            title="Avatar"
+            filesLimit={100}
+            acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+
+            disabled={isSubmitting}
+            value={[values.photo].filter(i => !!i)}
+            onChange={(urls) => setValues({ ...values, photo: urls[0] })}
+          />
           <ErrorMessage name="photo" />
 
           <SaveAndDelete

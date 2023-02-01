@@ -1,8 +1,6 @@
 import { Typography } from "@mui/material";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
 import { TripNoId } from "dtos";
-import { ErrorMessage, Field, Formik } from "formik";
+import { ErrorMessage, Field, Formik, validateYupSchema } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
@@ -10,9 +8,9 @@ import { urls } from "urls";
 import * as yup from "yup";
 
 import { FormBox } from "src/components/form-box";
-import { ImageDropzone } from "src/components/image-dropzone";
 import { SaveAndDelete } from "src/components/save-delete";
 import { FetchStatus } from "src/models";
+import { FileUpload } from "src/components/file-upload";
 
 interface Props {
   operatorId: string;
@@ -71,7 +69,7 @@ export const ManageTripForm: React.FC<Props> = ({
       validationSchema={validationSchema}
       onSubmit={(values) => onSave({ ...values, operator: operatorId as any })}
     >
-      {({ isValid, values, setValues }) => (
+      {({ isValid, isSubmitting, values, setValues }) => (
         <FormBox title={title}>
           <Field component={TextField} name="name" label="Trip name" />
 
@@ -97,25 +95,15 @@ export const ManageTripForm: React.FC<Props> = ({
 
           <Field component={TextField} name="childPrice" label="Child price" />
 
-          <ImageDropzone
-            multiple
-            onReceiveUrls={(photos) => setValues({ ...values, photos })}
-          >
-            <ImageList
-              sx={{ width: 500, height: 450 }}
-              cols={3}
-              rowHeight={164}
-            >
-              {values.photos.map((photo) => (
-                <ImageListItem key={photo}>
-                  <img
-                    src={`${photo}?w=164&h=164&fit=crop&auto=format`}
-                    loading="lazy"
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
-          </ImageDropzone>
+          <FileUpload
+            title="Photos"
+            filesLimit={100}
+            acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+
+            disabled={isSubmitting}
+            value={values.photos}
+            onChange={photos => setValues({ ...values, photos: [...values.photos, ...photos] })}
+          />
           <ErrorMessage name="photos" />
 
           <SaveAndDelete
