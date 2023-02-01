@@ -6,7 +6,7 @@ import {
   SxProps,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { DropzoneDialog } from "react-mui-dropzone";
 
 import { FileUploadItem } from "src/components/file-upload/item";
@@ -39,21 +39,10 @@ export const FileUpload: React.FC<Props> = ({
 }) => {
   const [open, setOpen] = useState(false);
 
-  const [uploadState, uploadImages, uploadStatus] = useImagesState((s) => [
-    s.uploadState,
+  const [uploadImages, uploadStatus] = useImagesState((s) => [
     s.uploadImages,
     s.uploadStatus,
   ]);
-
-  const urls = Object.values(uploadState || {})
-    .map((s) => s.url)
-    .filter((i) => !!i) as string[];
-
-  useEffect(() => {
-    if (urls.length > 0) {
-      onChange(urls);
-    }
-  }, [urls.length]);
 
   return (
     <Paper sx={{ ...sx, p: 2 }}>
@@ -91,7 +80,7 @@ export const FileUpload: React.FC<Props> = ({
           filesLimit={filesLimit}
           onSave={(files) => {
             setOpen(false);
-            uploadImages(files);
+            uploadImages(files, onChange);
           }}
         />
       </Titled>

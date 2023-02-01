@@ -5,11 +5,13 @@ import { ImagesService } from "src/services/images.service";
 
 export interface ImagesStateValues {
   uploadStatus?: FetchStatus;
-  uploadState?: { [key: string]: { status?: FetchStatus; url?: string } };
 }
 
 export interface ImagesStateActions {
-  uploadImages: (files: File[]) => Promise<void>;
+  uploadImages: (
+    files: File[],
+    onDone: (urls: string[]) => void,
+  ) => Promise<void>;
 }
 
 export type ImagesState = ImagesStateValues & ImagesStateActions;
@@ -18,47 +20,19 @@ export const createImagesState = (
   initialValues: ImagesStateValues,
   imagesService: Pick<ImagesService, keyof ImagesService>
 ) =>
-  create<ImagesState>((set, self) => ({
+  create<ImagesState>((set) => ({
     ...initialValues,
 
-    uploadImages: async (files) => {
-      set({ uploadState: {}, uploadStatus: "fetching" });
+    uploadImages: async (files, onDone) => {
+      set({ uploadStatus: "fetching" });
+      const urls: string[] = [];
 
       for (const file of files) {
-        try {
-          set({
-            uploadState: {
-              ...self().uploadState,
-              [file.name]: {
-                status: "fetching",
-              },
-            },
-          });
-
-          const url = await imagesService.uploadImage(file);
-
-          set({
-            uploadState: {
-              ...self().uploadState,
-              [file.name]: {
-                status: "success",
-                url,
-              },
-            },
-          });
-        } catch {
-          set({
-            uploadState: {
-              ...self().uploadState,
-              [file.name]: {
-                status: "error",
-              },
-            },
-          });
-        }
+        urls.push(await imagesService.uploadImage(file));
       }
 
       set({ uploadStatus: "success" });
+      onDone(urls);
     },
   }));
 
