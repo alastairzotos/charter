@@ -1,9 +1,18 @@
-import { Button, CircularProgress, ImageList, ImageListItem, Paper, SxProps, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { DropzoneDialog } from 'react-mui-dropzone'
-import { Titled } from 'src/components/titled';
-import { useImagesState } from 'src/state/images';
-import { pluralize } from 'src/util/misc';
+import {
+  Button,
+  CircularProgress,
+  ImageList,
+  Paper,
+  SxProps,
+  Typography,
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { DropzoneDialog } from "react-mui-dropzone";
+import { FileUploadItem } from "src/components/file-upload/item";
+
+import { Titled } from "src/components/titled";
+import { useImagesState } from "src/state/images";
+import { pluralize } from "src/util/misc";
 
 interface Props {
   sx?: SxProps;
@@ -14,6 +23,7 @@ interface Props {
   filesLimit?: number;
   value: string[];
   onChange: (urls: string[]) => void;
+  onDelete?: (item: string) => void;
 }
 
 export const FileUpload: React.FC<Props> = ({
@@ -25,6 +35,7 @@ export const FileUpload: React.FC<Props> = ({
   filesLimit = 1,
   value,
   onChange,
+  onDelete,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -47,34 +58,28 @@ export const FileUpload: React.FC<Props> = ({
   return (
     <Paper sx={{ ...sx, p: 2 }}>
       <Titled title={title}>
-        {uploadStatus === 'fetching' && <CircularProgress />}
+        {uploadStatus === "fetching" && <CircularProgress />}
 
         {value.length > 0 && (
-          <ImageList
-            sx={{ width: 500 }}
-            cols={3}
-            rowHeight={164}
-          >
+          <ImageList sx={{ width: 500 }} cols={3} rowHeight={164}>
             {value.map((item) => (
-              <ImageListItem key={item}>
+              <FileUploadItem
+                key={item}
+                onDelete={!!onDelete ? () => onDelete(item) : undefined}
+              >
                 <img
                   src={`${item}?w=164&h=164&fit=crop&auto=format`}
                   loading="lazy"
                 />
-              </ImageListItem>
+              </FileUploadItem>
             ))}
           </ImageList>
         )}
 
-        {value.length === 0 && (
-          <Typography>No files uploaded</Typography>
-        )}
+        {value.length === 0 && <Typography>No files uploaded</Typography>}
 
-        <Button
-          disabled={disabled}
-          onClick={() => setOpen(true)}
-        >
-          {pluralize(filesLimit, 'Upload file')}
+        <Button disabled={disabled} onClick={() => setOpen(true)}>
+          {pluralize(filesLimit, "Upload file")}
         </Button>
 
         <DropzoneDialog
@@ -84,13 +89,12 @@ export const FileUpload: React.FC<Props> = ({
           showPreviews={true}
           maxFileSize={maxFileSize}
           filesLimit={filesLimit}
-
-          onSave={files => {
+          onSave={(files) => {
             setOpen(false);
             uploadImages(files);
           }}
         />
       </Titled>
     </Paper>
-  )
-}
+  );
+};

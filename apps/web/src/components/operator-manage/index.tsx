@@ -7,10 +7,10 @@ import React from "react";
 import { urls } from "urls";
 import * as yup from "yup";
 
+import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
 import { SaveAndDelete } from "src/components/save-delete";
 import { FetchStatus } from "src/models";
-import { FileUpload } from "src/components/file-upload";
 
 interface Props {
   title: string;
@@ -96,10 +96,9 @@ export const ManageOperatorForm: React.FC<Props> = ({
           <FileUpload
             title="Avatar"
             filesLimit={100}
-            acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-
+            acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
             disabled={isSubmitting}
-            value={[values.photo].filter(i => !!i)}
+            value={[values.photo].filter((i) => !!i)}
             onChange={(urls) => setValues({ ...values, photo: urls[0] })}
           />
           <ErrorMessage name="photo" />

@@ -1,16 +1,16 @@
 import { Typography } from "@mui/material";
 import { TripNoId } from "dtos";
-import { ErrorMessage, Field, Formik, validateYupSchema } from "formik";
+import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
 import * as yup from "yup";
 
+import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
 import { SaveAndDelete } from "src/components/save-delete";
 import { FetchStatus } from "src/models";
-import { FileUpload } from "src/components/file-upload";
 
 interface Props {
   operatorId: string;
@@ -98,11 +98,11 @@ export const ManageTripForm: React.FC<Props> = ({
           <FileUpload
             title="Photos"
             filesLimit={100}
-            acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-
+            acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
             disabled={isSubmitting}
             value={values.photos}
-            onChange={photos => setValues({ ...values, photos: [...values.photos, ...photos] })}
+            onChange={(photos) => setValues({ ...values, photos: [...values.photos, ...photos] })}
+            onDelete={item => setValues({ ...values, photos: values.photos.filter(photo => photo !== item) })}
           />
           <ErrorMessage name="photos" />
 
