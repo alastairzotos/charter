@@ -69,8 +69,8 @@ export const ManageTripForm: React.FC<Props> = ({
       validationSchema={validationSchema}
       onSubmit={(values) => onSave({ ...values, operator: operatorId as any })}
     >
-      {({ isValid, isSubmitting, values, setValues, dirty }) => (
-        <FormBox title={title} dirty={dirty}>
+      {({ isValid, isSubmitting, values, setValues }) => (
+        <FormBox title={title}>
           <Field component={TextField} name="name" label="Trip name" />
 
           <Field component={TextField} name="duration" label="Trip duration" />
@@ -114,7 +114,6 @@ export const ManageTripForm: React.FC<Props> = ({
           <ErrorMessage name="photos" />
 
           <SaveAndDelete
-            dirty={dirty}
             isValid={isValid}
             saveStatus={saveStatus}
             onDelete={handleDeleteTrip}

@@ -6,7 +6,6 @@ import { DeleteConfirmModal } from "src/components/modals/delete-confirm";
 import { FetchStatus } from "src/models";
 
 interface Props {
-  dirty?: boolean;
   isValid: boolean;
   saveStatus?: FetchStatus;
   onDelete?: () => void;
@@ -16,7 +15,6 @@ interface Props {
 }
 
 export const SaveAndDelete: React.FC<Props> = ({
-  dirty,
   isValid,
   saveStatus,
   onDelete,
@@ -38,7 +36,6 @@ export const SaveAndDelete: React.FC<Props> = ({
           sx={{ maxWidth: "20%" }}
         >
           {isSubmitting ? <CircularProgress size={20} /> : "Save"}
-          {dirty && <>&nbsp;*</>}
         </Button>
 
         {!!onDelete && (
