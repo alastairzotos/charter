@@ -15,18 +15,18 @@ const useWarnIfDirty = (dirty: boolean, callback: () => boolean) => {
   useEffect(() => {
     if (dirty) {
       const routeChangeStart = () => {
-        const ok = callback()
+        const ok = callback();
         if (!ok) {
-          Router.events.emit("routeChangeError")
-          throw "Abort route change. Please ignore this error."
+          Router.events.emit("routeChangeError");
+          throw "Abort route change. Please ignore this error.";
         }
-      }
-      Router.events.on("routeChangeStart", routeChangeStart)
+      };
+      Router.events.on("routeChangeStart", routeChangeStart);
 
-      return () => Router.events.off("routeChangeStart", routeChangeStart)
+      return () => Router.events.off("routeChangeStart", routeChangeStart);
     }
-  }, [dirty])
-}
+  }, [dirty]);
+};
 
 export const FormBox: React.FC<React.PropsWithChildren<Props>> = ({
   dirty,
@@ -34,7 +34,9 @@ export const FormBox: React.FC<React.PropsWithChildren<Props>> = ({
   onClose,
   children,
 }) => {
-  useWarnIfDirty(!!dirty, () => confirm('You have unsaved changes. Are you sure you want to leave?'))
+  useWarnIfDirty(!!dirty, () =>
+    confirm("You have unsaved changes. Are you sure you want to leave?")
+  );
 
   return (
     <Titled title={title} onClose={onClose}>
@@ -52,5 +54,5 @@ export const FormBox: React.FC<React.PropsWithChildren<Props>> = ({
         </Box>
       </Form>
     </Titled>
-  )
+  );
 };
