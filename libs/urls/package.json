@@ -9,8 +9,8 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "dtos": "*",
-    "just-kebab-case": "^4.2.0"
+    "change-case": "^4.1.2",
+    "dtos": "*"
   },
   "author": "",
   "license": "ISC",

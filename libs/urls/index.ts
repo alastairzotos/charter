@@ -1,4 +1,4 @@
-import kebabCase from 'just-kebab-case';
+import { paramCase } from 'change-case';
 import { OperatorDto, TripDto } from "dtos";
 
 type UrlFn = (...args: any[]) => string;
@@ -22,7 +22,7 @@ export const urls = {
   },
   user: {
     operators: () => '/operators',
-    operator: ({ _id, name }: OperatorDto) => `/operator/${kebabCase(name)}-${_id}`,
+    operator: ({ _id, name }: OperatorDto) => `/operator/${paramCase(name)}-${_id}`,
     trip: (trip: TripDto) => `/trip/${trip._id}`,
     booking: (id: string) => `/booking/${id}`
   },
