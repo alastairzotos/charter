@@ -1,9 +1,11 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Button, Menu, MenuItem } from "@mui/material";
+import Link from "next/link";
 import React, { useState } from "react";
 
 import { useUserState } from "src/state/user";
+import { urls } from "urls";
 
 export const AppBarLoggedInButton: React.FC = () => {
   const [logout, loggedInUser] = useUserState((s) => [
@@ -39,6 +41,16 @@ export const AppBarLoggedInButton: React.FC = () => {
       </Button>
 
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        {loggedInUser.role === 'admin' && (
+          <MenuItem>
+            <Link href={urls.admin.home()} style={{ textDecoration: 'none' }}>Admin</Link>
+          </MenuItem>  
+        )}
+        {loggedInUser.role === 'operator' && (
+          <MenuItem>
+            <Link href={urls.operators.home()} style={{ textDecoration: 'none' }}>Bookings</Link>
+          </MenuItem>  
+        )}
         <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
       </Menu>
     </>
