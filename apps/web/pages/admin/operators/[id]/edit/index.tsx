@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
 
-import { AdminRoute } from "src/components/admin-route";
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { OperatorEdit } from "src/components/operator-edit";
 
@@ -11,7 +10,7 @@ const OperatorPage: React.FC = () => {
   const id = router.query.id as string;
 
   return (
-    <AdminRoute>
+    <>
       <Breadcrumbs
         list={[
           { href: urls.home(), title: "Home" },
@@ -23,7 +22,7 @@ const OperatorPage: React.FC = () => {
       />
 
       <OperatorEdit id={id} />
-    </AdminRoute>
+    </>
   );
 };
 

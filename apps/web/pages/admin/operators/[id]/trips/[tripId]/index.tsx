@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
 
-import { AdminRoute } from "src/components/admin-route";
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { TripEdit } from "src/components/trip-edit";
 
@@ -12,7 +11,7 @@ const EditTripPage: React.FC = () => {
   const tripId = router.query.tripId as string;
 
   return (
-    <AdminRoute>
+    <>
       <Breadcrumbs
         list={[
           { href: urls.home(), title: "Home" },
@@ -24,7 +23,7 @@ const EditTripPage: React.FC = () => {
       />
 
       <TripEdit id={tripId} operatorId={operatorId} />
-    </AdminRoute>
+    </>
   );
 };
 

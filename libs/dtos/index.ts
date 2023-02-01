@@ -45,10 +45,12 @@ export interface LoginResponse {
   accessToken: string;
 }
 
+export type UserRole = 'user' | 'admin' | 'operator';
+
 export interface UserDetails {
   email: string;
   givenName: string;
-  role?: 'user' | 'admin' | 'operator';
+  role?: UserRole;
 }
 
 export interface RegisterDetails extends UserDetails {

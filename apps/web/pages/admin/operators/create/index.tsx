@@ -1,13 +1,12 @@
 import * as React from "react";
 import { urls } from "urls";
 
-import { AdminRoute } from "src/components/admin-route";
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { OperatorCreate } from "src/components/operator-create";
 
 const CreateOperatorPage: React.FC = () => {
   return (
-    <AdminRoute>
+    <>
       <Breadcrumbs
         list={[
           { href: urls.home(), title: "Home" },
@@ -18,7 +17,7 @@ const CreateOperatorPage: React.FC = () => {
       />
 
       <OperatorCreate />
-    </AdminRoute>
+    </>
   );
 };
 
