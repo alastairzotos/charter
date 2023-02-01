@@ -1,16 +1,16 @@
 import { Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-
-import { SeoHead } from "src/components/seo/head";
-import Image from "next/image";
-import { APP_NAME } from "src/util/misc";
-import { Titled } from "src/components/titled";
-import { UserOperatorsList } from "src/components/user-operators-list";
 import { OperatorDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
-import { OperatorsService } from "src/services/operators.service";
-import { UserLayoutContainer } from "src/components/user-layout/container";
+import Image from "next/image";
 import { useEffect, useState } from "react";
+
+import { SeoHead } from "src/components/seo/head";
+import { Titled } from "src/components/titled";
+import { UserLayoutContainer } from "src/components/user-layout/container";
+import { UserOperatorsList } from "src/components/user-operators-list";
+import { OperatorsService } from "src/services/operators.service";
+import { APP_NAME } from "src/util/misc";
 
 interface Props {
   operators: OperatorDto[];
@@ -27,9 +27,9 @@ const Home: NextPage<Props> = ({ operators }) => {
       <Box
         sx={{
           background: " linear-gradient(to right, #003366, #00aaff)",
-          backgroundBlendMode: 'color',
-          backgroundSize: 'cover',
-          backgroundPosition: 'middle',
+          backgroundBlendMode: "color",
+          backgroundSize: "cover",
+          backgroundPosition: "middle",
           width: "100%",
           minHeight: 300,
           p: {
@@ -37,13 +37,13 @@ const Home: NextPage<Props> = ({ operators }) => {
             sm: 6,
             md: 10,
             lg: 10,
-            xl: 10
+            xl: 10,
           },
           pb: 14,
-          color: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column'
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
         }}
       >
         <Image
@@ -54,7 +54,9 @@ const Home: NextPage<Props> = ({ operators }) => {
         />
 
         <Typography variant="h3">The best way to explore Corfu</Typography>
-        <Typography variant="h5" sx={{ pt: 1 }}>Easily book the perfect boat trip for you and your family</Typography>
+        <Typography variant="h5" sx={{ pt: 1 }}>
+          Easily book the perfect boat trip for you and your family
+        </Typography>
       </Box>
 
       <UserLayoutContainer>
@@ -64,9 +66,11 @@ const Home: NextPage<Props> = ({ operators }) => {
       </UserLayoutContainer>
 
       <UserLayoutContainer alternative>
-        <Typography variant="h3" sx={{ mt: 4, textAlign: 'center' }}>How it works</Typography>
+        <Typography variant="h3" sx={{ mt: 4, textAlign: "center" }}>
+          How it works
+        </Typography>
 
-        <Box sx={{ mt: 3, p: 6, display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ mt: 3, p: 6, display: "flex", justifyContent: "center" }}>
           <Stepper activeStep={3} orientation="vertical">
             <Step>
               <StepLabel>Find an operator near you</StepLabel>
@@ -82,7 +86,7 @@ const Home: NextPage<Props> = ({ operators }) => {
       </UserLayoutContainer>
     </>
   );
-}
+};
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   const svc = new OperatorsService();

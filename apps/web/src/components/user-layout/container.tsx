@@ -11,12 +11,12 @@ export const UserLayoutContainer: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   if (alternative) {
     return (
-      <Box sx={{ bgcolor: 'Background' }}>
+      <Box sx={{ bgcolor: "Background" }}>
         <Container maxWidth="xl">
           <Box sx={{ p: 4 }}>{children}</Box>
         </Container>
       </Box>
-    )
+    );
   }
 
   return (
