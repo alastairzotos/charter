@@ -10,6 +10,7 @@ module.exports = {
   coveragePathIgnorePatterns: [
     "node_modules"
   ],
+  moduleDirectories: ['node_modules', '<rootDir>'],
   moduleNameMapper: {
     "\\.(css|less)$": "identity-obj-proxy",
     '^axios$': require.resolve('axios'),
