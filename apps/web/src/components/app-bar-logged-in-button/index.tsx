@@ -1,11 +1,15 @@
-import { Button, Menu, MenuItem } from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import React, { useState } from 'react';
-import { useUserState } from 'src/state/user';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Button, Menu, MenuItem } from "@mui/material";
+import React, { useState } from "react";
+
+import { useUserState } from "src/state/user";
 
 export const AppBarLoggedInButton: React.FC = () => {
-  const [logout, loggedInUser] = useUserState((s) => [s.logout, s.loggedInUser]);
+  const [logout, loggedInUser] = useUserState((s) => [
+    s.logout,
+    s.loggedInUser,
+  ]);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -14,7 +18,7 @@ export const AppBarLoggedInButton: React.FC = () => {
   const handleLogoutClick = () => {
     handleClose();
     logout();
-  }
+  };
 
   if (!loggedInUser) {
     return null;
@@ -26,22 +30,17 @@ export const AppBarLoggedInButton: React.FC = () => {
         color="inherit"
         variant="outlined"
         sx={{ borderRadius: 100000 }}
-        onClick={e => setAnchorEl(e.currentTarget)}
+        onClick={(e) => setAnchorEl(e.currentTarget)}
       >
         <AccountCircleIcon />
-        &nbsp;
-        Hello {loggedInUser.givenName}
+        &nbsp; Hello {loggedInUser.givenName}
         &nbsp;
         <KeyboardArrowDownIcon />
       </Button>
 
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
         <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
       </Menu>
     </>
-  )
-}
+  );
+};

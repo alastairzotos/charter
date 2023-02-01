@@ -3,8 +3,8 @@ import Link from "next/link";
 import * as React from "react";
 import { urls } from "urls";
 
-import { useUserState } from "src/state/user";
 import { AppBarLoggedInButton } from "src/components/app-bar-logged-in-button";
+import { useUserState } from "src/state/user";
 
 export const AppBarLoginLogout: React.FC = () => {
   const [accessToken] = useUserState((s) => [s.accessToken]);
@@ -17,9 +17,7 @@ export const AppBarLoginLogout: React.FC = () => {
         </Button>
       )}
 
-      {!!accessToken && (
-        <AppBarLoggedInButton />
-      )}
+      {!!accessToken && <AppBarLoggedInButton />}
     </>
   );
 };

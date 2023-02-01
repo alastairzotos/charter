@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,13 +9,12 @@ import { urls } from "urls";
 
 import { AppBarLoginLogout } from "src/components/app-bar-login-logout";
 import { APP_NAME } from "src/util/misc";
-import { Button } from "@mui/material";
 
 export const UserAppBar: React.FC = () => {
   const pages = new Map<string, string>([
-    [urls.home(), 'Home'],
-    [urls.user.operators(), 'Operators']
-  ])
+    [urls.home(), "Home"],
+    [urls.user.operators(), "Operators"],
+  ]);
 
   return (
     <Box sx={{ flexGrow: 1, pb: 4 }}>
@@ -29,10 +29,10 @@ export const UserAppBar: React.FC = () => {
             />
           </Link>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {Array.from(pages.keys()).map((url) => (
-              <Link key={url} href={url} style={{ textDecoration: 'none' }}>
-                <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+              <Link key={url} href={url} style={{ textDecoration: "none" }}>
+                <Button sx={{ my: 2, color: "white", display: "block" }}>
                   {pages.get(url)}
                 </Button>
               </Link>
