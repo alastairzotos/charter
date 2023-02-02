@@ -1,4 +1,4 @@
-import { Box, Container, SxProps } from "@mui/system";
+import { Box, SxProps } from "@mui/system";
 import React from "react";
 
 interface Props {
