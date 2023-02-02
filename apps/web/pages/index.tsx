@@ -31,31 +31,33 @@ const Home: NextPage<Props> = ({ operators }) => {
           backgroundPosition: "middle",
           width: "100%",
           minHeight: 300,
-          p: {
-            xs: 2,
-            sm: 6,
-            md: 10,
-            lg: 10,
-            xl: 10,
-          },
+          pt: 6,
           pb: 14,
           color: "white",
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
         }}
       >
-        <Image
-          src="/logo.png"
-          alt={`${APP_NAME} logo`}
-          width={200}
-          height={200}
-        />
+        <Box
+          sx={{
+            ml: 6,
+            mr: 6,
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            textAlign: "center",
+          }}
+        >
+          <Image
+            src="/logo.png"
+            alt={`${APP_NAME} logo`}
+            width={200}
+            height={200}
+          />
 
-        <Typography variant="h3">The best way to explore Corfu</Typography>
-        <Typography variant="h5" sx={{ pt: 1 }}>
-          Easily book the perfect boat trip for you and your family
-        </Typography>
+          <Typography variant="h3">The best way to explore Corfu</Typography>
+          <Typography variant="h5" sx={{ pt: 1 }}>
+            Easily book the perfect boat trip for you and your family
+          </Typography>
+        </Box>
       </Box>
 
       <UserLayoutContainer>
