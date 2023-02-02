@@ -1,4 +1,3 @@
-import { Toolbar } from "@mui/material";
 import * as React from "react";
 
 import { SeoHead } from "src/components/seo/head";
@@ -9,7 +8,6 @@ export const UserLayout: React.FC<React.PropsWithChildren> = ({ children }) => {
     <>
       <SeoHead description="Book a boat in Corfu with ease" />
       <UserAppBar />
-      <Toolbar />
       {children}
     </>
   );

@@ -14,11 +14,11 @@ export const OperatorLayout: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   return (
     <Grid container>
-      <Grid item sm={12} md={4} sx={{ p: 2 }}>
+      <Grid item xs={12} lg={4} sx={{ p: 2 }}>
         <OperatorView operator={operator} />
       </Grid>
 
-      <Grid item sm={12} md={8} sx={{ p: 2 }}>
+      <Grid item xs={12} lg={8} sx={{ p: 2 }}>
         {children}
       </Grid>
     </Grid>

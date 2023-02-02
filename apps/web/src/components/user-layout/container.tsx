@@ -1,27 +1,41 @@
-import { Box, Container } from "@mui/system";
+import { Box, Container, SxProps } from "@mui/system";
 import React from "react";
 
 interface Props {
   alternative?: boolean;
 }
 
+const padding: SxProps = {
+  pt: {
+    xs: 1,
+    md: 3,
+  },
+  pb: {
+    xs: 1,
+    md: 3,
+  },
+  pl: {
+    xs: 1,
+    md: 12,
+  },
+  pr: {
+    xs: 1,
+    md: 12,
+  },
+};
+
 export const UserLayoutContainer: React.FC<React.PropsWithChildren<Props>> = ({
   alternative,
   children,
 }) => {
-  if (alternative) {
-    return (
-      <Box sx={{ bgcolor: "Background" }}>
-        <Container maxWidth="xl">
-          <Box sx={{ p: 4 }}>{children}</Box>
-        </Container>
-      </Box>
-    );
-  }
-
   return (
-    <Container maxWidth="xl">
-      <Box sx={{ p: 4 }}>{children}</Box>
-    </Container>
+    <Box
+      sx={{
+        ...padding,
+        bgcolor: alternative ? "Background" : undefined,
+      }}
+    >
+      {children}
+    </Box>
   );
 };
