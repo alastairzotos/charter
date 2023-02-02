@@ -1,4 +1,4 @@
-import { Container, Paper } from "@mui/material";
+import { Box, Container, Paper } from "@mui/material";
 import * as React from "react";
 
 import { OperatorsAppBar } from "src/components/operators-app-bar";
@@ -12,9 +12,15 @@ export const OperatorsLayout: React.FC<React.PropsWithChildren> = ({
     <RoleRoute role="operator">
       <SeoHead subtitle="Operator Admin" description="Manage your bookings" />
       <OperatorsAppBar />
-      <Container maxWidth="lg">
-        <Paper sx={{ p: 4, mt: 2 }}>{children}</Paper>
-      </Container>
+
+      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+        <Container maxWidth="xl">
+          <Paper sx={{ p: 4, mt: 2 }}>{children}</Paper>
+        </Container>
+      </Box>
+      <Box sx={{ display: { xs: 'block', md: 'none' }, height: '100%', backgroundColor: 'white', p: 3 }}>
+        {children}
+      </Box>
     </RoleRoute>
   );
 };
