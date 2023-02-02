@@ -50,7 +50,7 @@ export const FileUpload: React.FC<Props> = ({
         {uploadStatus === "fetching" && <CircularProgress />}
 
         {value.length > 0 && (
-          <ImageList sx={{ width: 500 }} cols={3} rowHeight={164}>
+          <ImageList sx={{ maxWidth: 500 }} cols={3} rowHeight={164}>
             {value.map((item) => (
               <FileUploadItem
                 key={item}

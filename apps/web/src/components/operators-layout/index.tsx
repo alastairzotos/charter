@@ -13,12 +13,19 @@ export const OperatorsLayout: React.FC<React.PropsWithChildren> = ({
       <SeoHead subtitle="Operator Admin" description="Manage your bookings" />
       <OperatorsAppBar />
 
-      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+      <Box sx={{ display: { xs: "none", md: "block" } }}>
         <Container maxWidth="xl">
           <Paper sx={{ p: 4, mt: 2 }}>{children}</Paper>
         </Container>
       </Box>
-      <Box sx={{ display: { xs: 'block', md: 'none' }, height: '100%', backgroundColor: 'white', p: 3 }}>
+      <Box
+        sx={{
+          display: { xs: "block", md: "none" },
+          height: "100%",
+          backgroundColor: "white",
+          p: 3,
+        }}
+      >
         {children}
       </Box>
     </RoleRoute>
