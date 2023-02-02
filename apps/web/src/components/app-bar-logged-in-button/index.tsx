@@ -1,6 +1,6 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Button, Menu, MenuItem } from "@mui/material";
+import { Box, Button, Menu, MenuItem } from "@mui/material";
 import Link from "next/link";
 import React, { useState } from "react";
 import { urls } from "urls";
@@ -35,7 +35,11 @@ export const AppBarLoggedInButton: React.FC = () => {
         onClick={(e) => setAnchorEl(e.currentTarget)}
       >
         <AccountCircleIcon />
-        &nbsp; Hello {loggedInUser.givenName}
+        &nbsp;
+        <Box sx={{ display: { xs: "none", md: "block" } }}>
+          Hello {loggedInUser.givenName}
+        </Box>
+        <Box sx={{ display: { xs: "block", md: "none" } }}>Account</Box>
         &nbsp;
         <KeyboardArrowDownIcon />
       </Button>
