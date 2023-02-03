@@ -34,7 +34,6 @@ jobs:
             PORT=3000
             NEXT_PUBLIC_API_URL=https://booking-api.bitmetro.io
 
-
       - name: Build and push api
         uses: docker/build-push-action@v2
         with:
