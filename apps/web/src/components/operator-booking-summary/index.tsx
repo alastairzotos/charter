@@ -9,7 +9,7 @@ import { createPriceString } from "utils";
 import { KeyValue } from "src/components/key-value";
 import { DeleteConfirmModal } from "src/components/modals/delete-confirm";
 import { Titled } from "src/components/titled";
-import { useBookingsState } from "src/state/bookings";
+import { useSetBookingStatus } from "src/state/bookings";
 
 interface Props {
   booking: BookingDto;
@@ -20,10 +20,9 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
 
   const [rejectModalOpen, setRejectModalOpen] = useState(false);
 
-  const [setBookingStatusStatus, setBookingStatus] = useBookingsState((s) => [
-    s.setBookingStatusStatus,
-    s.setBookingStatus,
-  ]);
+  const [setBookingStatusStatus, setBookingStatus] = useSetBookingStatus(
+    (s) => [s.status, s.request]
+  );
 
   const rejectBooking = async () => {
     await setBookingStatus(booking._id, "rejected");

@@ -19,7 +19,7 @@ import * as yup from "yup";
 
 import { FormBox } from "src/components/form-box";
 import { KeyValue } from "src/components/key-value";
-import { useBookingsState } from "src/state/bookings";
+import { useCreateBooking } from "src/state/bookings";
 import { useUserState } from "src/state/user";
 
 const bookingModalStyle = {
@@ -68,13 +68,12 @@ export const BookingForm: React.FC<Props> = ({
   const router = useRouter();
 
   const loggedinUser = useUserState((s) => s.loggedInUser);
-  const [createBookingStatus, createBooking, bookingId, clearBooking] =
-    useBookingsState((s) => [
-      s.createBookingStatus,
-      s.createBooking,
-      s.bookingId,
-      s.clearBooking,
-    ]);
+
+  const [createBookingStatus, createBooking, bookingId] = useCreateBooking(
+    (s) => [s.status, s.request, s.value]
+  );
+  const clearBooking = () =>
+    useCreateBooking.setState({ value: null, status: undefined });
 
   const initialValues: Omit<BookingNoId, "status"> = {
     operator,

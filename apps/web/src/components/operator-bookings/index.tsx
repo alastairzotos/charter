@@ -3,15 +3,11 @@ import React, { useEffect } from "react";
 
 import { Fetchable } from "src/components/fetchable";
 import { OperatorBookingList } from "src/components/operator-booking-list";
-import { useBookingsState } from "src/state/bookings";
+import { useLoadBookingsForUser } from "src/state/bookings";
 
 export const OperatorBookings: React.FC = () => {
   const [getBookingsForUserStatus, getBookingsForUser, userBookings] =
-    useBookingsState((s) => [
-      s.getBookingsForUserStatus,
-      s.getBookingsForUser,
-      s.userBookings,
-    ]);
+    useLoadBookingsForUser((s) => [s.status, s.request, s.value]);
 
   useEffect(() => {
     if (!userBookings) {

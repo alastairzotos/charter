@@ -6,17 +6,17 @@ import { urls } from "urls";
 
 import { Fetchable } from "src/components/fetchable";
 import { OperatorBookingSummary } from "src/components/operator-booking-summary";
-import { useBookingsState } from "src/state/bookings";
+import { useLoadBooking } from "src/state/bookings";
 
 interface Props {
   id: string;
 }
 
 export const OperatorBooking: React.FC<Props> = ({ id }) => {
-  const [getBookingStatus, getBooking, booking] = useBookingsState((s) => [
-    s.getBookingStatus,
-    s.getBooking,
-    s.booking,
+  const [getBookingStatus, getBooking, booking] = useLoadBooking((s) => [
+    s.status,
+    s.request,
+    s.value,
   ]);
 
   useEffect(() => {
