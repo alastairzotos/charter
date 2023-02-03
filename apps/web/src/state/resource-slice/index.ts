@@ -1,4 +1,4 @@
-import create, { Mutate, StoreApi } from "zustand";
+import create from "zustand";
 
 export type FetchStatus = "fetching" | "success" | "error";
 
