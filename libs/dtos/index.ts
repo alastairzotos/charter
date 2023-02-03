@@ -10,14 +10,15 @@ export interface OperatorDto {
 
 export type OperatorNoId = Omit<OperatorDto, '_id'>;
 
-export const serviceTypes = ['none', 'boat', 'sunbed'] as const;
+export const serviceTypes = ['none', 'boat-trip', 'boat-rental', 'sunbed'] as const;
 
 export type ServiceType = typeof serviceTypes[number];
 
 export const getServiceTypeLabel = (serviceType: ServiceType): string => ({
-  none: 'None',
-  boat: 'Boat trip',
-  sunbed: 'Sun bed'
+  'none': 'None',
+  'boat-trip': 'Boat trip',
+  'boat-rental': 'Boat rental',
+  'sunbed': 'Sun bed'
 } as Record<ServiceType, string>)[serviceType]
 
 export type ServiceSchemaFieldType = 'string' | 'time' | 'timeframe' | 'photos';

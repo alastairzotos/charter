@@ -1,6 +1,6 @@
 import { ServiceSchemaDto, ServiceType } from 'dtos';
 
-export const BoatSchema: ServiceSchemaDto = {
+export const BoatTripSchema: ServiceSchemaDto = {
   fields: [
     { 
       field: 'duration',
@@ -11,6 +11,31 @@ export const BoatSchema: ServiceSchemaDto = {
       field: 'startLocation',
       type: 'string',
       label: 'Starting location',
+    },
+    {
+      field: 'startTime',
+      type: 'time',
+      label: 'Start time',
+    },
+    {
+      field: 'photos',
+      type: 'photos',
+      label: 'Photos'
+    },
+  ]
+}
+
+export const BoatRentalSchema: ServiceSchemaDto = {
+  fields: [
+    { 
+      field: 'duration',
+      type: 'timeframe',
+      label: 'Duration',
+    },
+    {
+      field: 'location',
+      type: 'string',
+      label: 'Location',
     },
     {
       field: 'startTime',
@@ -47,6 +72,7 @@ export const SunbedSchema: ServiceSchemaDto = {
 
 export const getSchemaForServiceType = (serviceType: ServiceType): ServiceSchemaDto | null => ({
   'none': null,
-  'boat': BoatSchema,
+  'boat-trip': BoatTripSchema,
+  'boat-rental': BoatRentalSchema,
   'sunbed': SunbedSchema,
 } as Record<ServiceType, ServiceSchemaDto | null>)[serviceType]
