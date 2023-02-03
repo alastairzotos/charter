@@ -5,20 +5,13 @@ describe("createSlice", () => {
     const requestMock = jest.fn(async (id: string) =>
       Promise.resolve(`Received: ${id}`)
     );
-    const beforeRequest = jest.fn();
-    const afterRequest = jest.fn();
 
     let response: string | null;
     let responseStatus: FetchStatus | undefined;
 
     beforeAll(async () => {
-      const useSlice = createSlice<string, [id: string]>(
-        null,
-        async (id) => requestMock(id),
-        {
-          beforeRequest,
-          afterRequest,
-        }
+      const useSlice = createSlice<string, [id: string]>(null, async (id) =>
+        requestMock(id)
       );
 
       await useSlice.getState().request("foo");
@@ -34,11 +27,6 @@ describe("createSlice", () => {
 
     it("should call request method", () => {
       expect(requestMock).toHaveBeenCalledWith("foo");
-    });
-
-    it("should call hooks", () => {
-      expect(beforeRequest).toHaveBeenCalled();
-      expect(afterRequest).toHaveBeenCalled();
     });
   });
 
