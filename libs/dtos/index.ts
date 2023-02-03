@@ -35,7 +35,7 @@ export const getDefaultValueForServiceSchemaFieldType = (schemaFieldType: Servic
   switch (schemaFieldType) {
     case 'string': return '';
     case 'time': return '9am';
-    case 'timeframe': return '1 Hour';
+    case 'timeframe': return '1 Hours';
   }
 }
 
