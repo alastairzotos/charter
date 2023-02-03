@@ -10,7 +10,7 @@ import * as yup from "yup";
 import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
 import { SaveAndDelete } from "src/components/save-delete";
-import { FetchStatus } from "src/state/resource-slice";
+import { FetchStatus } from "src/state/slice";
 
 interface Props {
   title: string;

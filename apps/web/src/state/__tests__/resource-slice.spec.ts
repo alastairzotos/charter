@@ -1,4 +1,4 @@
-import { createSlice, FetchStatus } from "src/state/resource-slice";
+import { createSlice, FetchStatus } from "src/state/slice";
 
 describe("createSlice", () => {
   describe("Happy path", () => {

@@ -1,7 +1,7 @@
 import { BookingDto, BookingNoId, BookingStatus } from "dtos";
 
 import { BookingsService } from "src/services/bookings.service";
-import { createSlice } from "src/state/resource-slice";
+import { createSlice } from "src/state/slice";
 
 const svc = new BookingsService();
 

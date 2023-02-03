@@ -1,5 +1,5 @@
 import { ImagesService } from "src/services/images.service";
-import { createSlice } from "src/state/resource-slice";
+import { createSlice } from "src/state/slice";
 
 const svc = new ImagesService();
 

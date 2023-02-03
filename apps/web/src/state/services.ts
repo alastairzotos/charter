@@ -1,7 +1,7 @@
 import { ServiceDto, ServiceNoId } from "dtos";
 
 import { ServicesService } from "src/services/services.service";
-import { createSlice } from "src/state/resource-slice";
+import { createSlice } from "src/state/slice";
 
 const svc = new ServicesService();
 

@@ -1,7 +1,7 @@
 import { OperatorDto, OperatorNoId } from "dtos";
 
 import { OperatorsService } from "src/services/operators.service";
-import { createSlice } from "src/state/resource-slice";
+import { createSlice } from "src/state/slice";
 
 const svc = new OperatorsService();
 

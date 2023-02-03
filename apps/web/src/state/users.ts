@@ -4,7 +4,7 @@ import create from "zustand";
 
 import { LocalStorageService } from "src/services/localstorage.service";
 import { UserService } from "src/services/user.service";
-import { FetchStatus } from "src/state/resource-slice";
+import { FetchStatus } from "src/state/slice";
 
 export const ACCESS_TOKEN_LOCALSTORAGE_KEY = "boatrental:auth-token";
 

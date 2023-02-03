@@ -14,7 +14,7 @@ import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
 import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceFormFields } from "src/components/service-form-fields";
-import { FetchStatus } from "src/state/resource-slice";
+import { FetchStatus } from "src/state/slice";
 
 interface Props {
   operatorId: string;
