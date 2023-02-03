@@ -24,7 +24,9 @@ export const urls = {
     operators: () => '/operators',
     operator: ({ _id, name }: OperatorDto) => `/operator/${paramCase(name)}-${_id}`,
     service: (service: ServiceDto) => `/service/${service._id}`,
-    booking: (id: string) => `/booking/${id}`
+    booking: (id: string) => `/booking/${id}`,
+    services: () => '/services',
+    serviceType: (type: ServiceType) => `service-type/${type}`,
   },
   operators: {
     home: () => '/operator-admin',

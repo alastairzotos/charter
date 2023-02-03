@@ -19,6 +19,10 @@ export class ServicesRepository {
     return await this.servicesModel.findById(id);
   }
 
+  async getServicesWithOperatorsByType(type: string) {
+    return await this.servicesModel.find({ type }).populate('operator');
+  }
+
   async createService(service: ServiceNoId) {
     const { _id } = await this.servicesModel.create(service);
 

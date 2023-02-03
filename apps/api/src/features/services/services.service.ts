@@ -1,5 +1,5 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { ServiceDto, ServiceNoId } from 'dtos';
+import { ServiceDto, ServiceNoId, ServiceType } from 'dtos';
 
 import { OperatorsService } from 'features/operators/operators.service';
 import { ServicesRepository } from 'features/services/services.repository';
@@ -29,6 +29,10 @@ export class ServicesService {
         service.operator as unknown as string,
       ),
     };
+  }
+
+  async getServicesWithOperatorsByType(type: ServiceType) {
+    return await this.servicesRepository.getServicesWithOperatorsByType(type);
   }
 
   async createService(service: ServiceNoId) {

@@ -8,6 +8,7 @@ import { SeoHead } from "src/components/seo/head";
 import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserOperatorsList } from "src/components/user-operators-list";
+import { ServiceTypes } from "src/components/user-service-types";
 import { OperatorsService } from "src/services/operators.service";
 import { APP_NAME, pluralize } from "src/util/misc";
 
@@ -67,12 +68,16 @@ const Home: NextPage<Props> = ({ operators }) => {
       </Box>
 
       <UserLayoutContainer>
-        <Titled title="Operators">
+        <ServiceTypes />
+      </UserLayoutContainer>
+
+      <UserLayoutContainer alternative>
+        <Titled title="Operators" center>
           <UserOperatorsList operators={operators} />
         </Titled>
       </UserLayoutContainer>
 
-      <UserLayoutContainer alternative>
+      <UserLayoutContainer>
         <Typography variant="h3" sx={{ mt: 4, textAlign: "center" }}>
           How it works
         </Typography>

@@ -28,6 +28,14 @@ export class ServicesService extends HttpService {
     return data;
   }
 
+  async getServicesWithOperatorsByType(type: string): Promise<ServiceDto[]> {
+    const { data } = await this.httpClient.get<ServiceDto[]>(
+      `/services/by-type/${type}`
+    );
+
+    return data;
+  }
+
   async updateService(
     id: string,
     newService: Partial<ServiceNoId>

@@ -10,7 +10,7 @@ import {
   UseGuards,
   NotFoundException,
 } from '@nestjs/common';
-import { ServiceDto, ServiceNoId } from 'dtos';
+import { ServiceDto, ServiceNoId, ServiceType } from 'dtos';
 
 import { AuthGuard } from 'auth/auth.guard';
 import { Roles } from 'auth/roles.decorator';
@@ -41,6 +41,12 @@ export class ServicesController {
     } catch {
       throw new NotFoundException();
     }
+  }
+
+  @Get('by-type/:type')
+  @Roles('all')
+  async getServicesWithOperatorsByType(@Param('type') type: ServiceType) {
+    return await this.servicesService.getServicesWithOperatorsByType(type);
   }
 
   @Post()
