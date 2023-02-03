@@ -3,7 +3,7 @@ import { BookingDto, BookingStatus, OperatorDto } from 'dtos';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
 import { Operator } from 'schemas/operator.schema';
-import { Trip } from 'schemas/trip.schema';
+import { Service } from 'schemas/service.schema';
 
 export type BookingDocument = Booking & Document;
 
@@ -11,8 +11,8 @@ export type BookingDocument = Booking & Document;
 export class Booking implements BookingDto {
   _id: string;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Trip.name })
-  trip: Trip;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Service.name })
+  service: Service;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Operator.name })
   operator: OperatorDto;

@@ -5,7 +5,7 @@ import { EnvModule } from 'environment/environment.module';
 import { OperatorsController } from 'features/operators/operators.controller';
 import { OperatorsRepository } from 'features/operators/operators.repository';
 import { OperatorsService } from 'features/operators/operators.service';
-import { TripsModule } from 'features/trips/trips.module';
+import { ServicesModule } from 'features/services/services.module';
 import { UsersModule } from 'features/users/users.module';
 import { Operator, OperatorSchema } from 'schemas/operator.schema';
 
@@ -13,7 +13,7 @@ import { Operator, OperatorSchema } from 'schemas/operator.schema';
   imports: [
     UsersModule,
     EnvModule,
-    TripsModule,
+    ServicesModule,
     MongooseModule.forFeature([
       { name: Operator.name, schema: OperatorSchema },
     ]),

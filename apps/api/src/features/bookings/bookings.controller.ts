@@ -38,8 +38,8 @@ export class BookingsController {
 
   @Get('with-details/:id')
   @Roles('all')
-  async getBookingWithOperatorAndTrip(@Param('id') id: string) {
-    return await this.bookingsService.getBookingWithOperatorAndTrip(id);
+  async getBookingWithOperatorAndService(@Param('id') id: string) {
+    return await this.bookingsService.getBookingWithOperatorAndService(id);
   }
 
   @Patch()

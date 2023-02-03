@@ -1,4 +1,4 @@
-export const APP_NAME = "BoatBooking";
+export const APP_NAME = "CorfuBooking";
 
 export const pluralize = (
   num: number,

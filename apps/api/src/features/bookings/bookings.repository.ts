@@ -16,15 +16,15 @@ export class BookingsRepository {
   }
 
   async getBookingById(id: string) {
-    return await this.bookingsModel.findById(id).populate('trip');
+    return await this.bookingsModel.findById(id).populate('service');
   }
 
-  async getBookingWithOperatorAndTrip(id: string) {
-    return await this.bookingsModel.findById(id).populate(['operator', 'trip']);
+  async getBookingWithOperatorAndService(id: string) {
+    return await this.bookingsModel.findById(id).populate(['operator', 'service']);
   }
 
   async getBookingsByOperator(operator: OperatorDto) {
-    return await this.bookingsModel.find({ operator }).populate('trip');
+    return await this.bookingsModel.find({ operator }).populate('service');
   }
 
   async setBookingStatus(id: string, status: BookingStatus) {

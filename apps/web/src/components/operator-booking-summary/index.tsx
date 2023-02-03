@@ -36,7 +36,7 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
   };
 
   return (
-    <Titled title={booking.trip.name}>
+    <Titled title={booking.service.name}>
       <KeyValue label="Name" value={booking.name} secondary />
       <KeyValue label="Email" value={booking.email} secondary />
       <KeyValue label="Date" value={booking.date} secondary />
@@ -44,7 +44,7 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
       <KeyValue label="Children" value={booking.childGuests} secondary />
       <KeyValue
         label="Price"
-        value={createPriceString(booking, booking.trip)}
+        value={createPriceString(booking, booking.service)}
         secondary
       />
 

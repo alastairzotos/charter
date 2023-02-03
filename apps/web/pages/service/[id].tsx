@@ -5,23 +5,23 @@ import React from "react";
 import { OperatorLayout } from "src/components/operator-layout";
 import { SeoHead } from "src/components/seo/head";
 import { UserLayoutContainer } from "src/components/user-layout/container";
-import { UserServicesView } from "src/components/user-services-view";
-import { OperatorsService } from "src/services/operators.service";
+import { UserServiceView } from "src/components/user-service-view";
+import { ServicesService } from "src/services/services.service";
 
 interface Props {
+  service: ServiceDto;
   operator: OperatorDto;
-  services: ServiceDto[];
 }
 
-const OperatorPage: NextPage<Props> = ({ operator, services }) => {
+const ServicePage: NextPage<Props> = ({ service, operator }) => {
   return (
     <UserLayoutContainer>
       <SeoHead
-        subtitle={operator.name}
-        description={`View details and services offered by ${operator.name}`}
+        subtitle={`${service.name} by ${operator.name}`}
+        description={service.description}
       />
       <OperatorLayout operator={operator}>
-        <UserServicesView services={services} />
+        <UserServiceView service={service} operator={operator} />
       </OperatorLayout>
     </UserLayoutContainer>
   );
@@ -30,27 +30,23 @@ const OperatorPage: NextPage<Props> = ({ operator, services }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   params,
 }) => {
-  const slug = params?.slug as string;
+  const id = params?.id as string;
 
-  if (!slug) {
+  if (!id) {
     return {
       notFound: true,
     };
   }
 
-  const operatorId = slug.split("-").pop()!;
-
-  const operatorsService = new OperatorsService();
+  const servicesService = new ServicesService();
 
   try {
-    const { operator, services } = await operatorsService.getOperatorWithServicesById(
-      operatorId
-    );
+    const { service, operator } = await servicesService.getServiceByIdWithOperator(id);
 
     return {
       props: {
+        service,
         operator,
-        services,
       },
     };
   } catch {
@@ -60,4 +56,4 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   }
 };
 
-export default OperatorPage;
+export default ServicePage;

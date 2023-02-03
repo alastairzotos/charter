@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Fetchable } from "src/components/fetchable";
 import { OperatorSummary } from "src/components/operator-summary";
 import { Titled } from "src/components/titled";
-import { TripList } from "src/components/trip-list";
+import { ServiceList } from "src/components/service-list";
 import { useOperatorsState } from "src/state/operators";
 
 interface Props {
@@ -33,8 +33,8 @@ export const OperatorItem: React.FC<Props> = ({ id }) => {
 
       <Divider sx={{ mb: 3, mt: 3 }} />
 
-      <Titled title="Trips">
-        <TripList operatorId={id} />
+      <Titled title="Services">
+        <ServiceList operatorId={id} />
       </Titled>
     </>
   );

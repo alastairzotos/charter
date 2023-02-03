@@ -31,10 +31,10 @@ export class OperatorsController {
     return await this.operatorsService.getOperatorById(id);
   }
 
-  @Get('with-trips/:id')
+  @Get('with-services/:id')
   @Roles('all')
-  async getOperatorWithTripsById(@Param('id') id: string) {
-    return await this.operatorsService.getOperatorWithTripsById(id);
+  async getOperatorWithServicesById(@Param('id') id: string) {
+    return await this.operatorsService.getOperatorWithServicesById(id);
   }
 
   @Post()

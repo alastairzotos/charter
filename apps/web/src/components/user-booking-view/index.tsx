@@ -23,7 +23,7 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
         <KeyValue label="Children" value={booking.childGuests} />
         <KeyValue
           label="Price"
-          value={createPriceString(booking, booking.trip)}
+          value={createPriceString(booking, booking.service)}
         />
 
         <Box sx={{ mt: 2 }}>
@@ -41,7 +41,7 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
           {booking.status === "confirmed" && (
             <Typography>
               Your booking has been confirmed. Get ready to enjoy{" "}
-              <strong>{booking.trip.name}</strong>!
+              <strong>{booking.service.name}</strong>!
             </Typography>
           )}
         </Box>

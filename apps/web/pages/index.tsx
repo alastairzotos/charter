@@ -19,8 +19,8 @@ const Home: NextPage<Props> = ({ operators }) => {
   return (
     <>
       <SeoHead
-        subtitle="Book a boat trip with ease"
-        description="Book a boat trip in Corfu with ease"
+        subtitle="Book boat trips, sun beds, and others in Corfu"
+        description="Easily book boat trips, sun beds, and other services in Corfu"
       />
 
       <Box
@@ -55,7 +55,7 @@ const Home: NextPage<Props> = ({ operators }) => {
 
           <Typography variant="h3">The best way to explore Corfu</Typography>
           <Typography variant="h5" sx={{ pt: 1 }}>
-            Easily book the perfect boat trip for you and your family
+            Easily book boat trips, sun beds, and other services for you and your family
           </Typography>
         </Box>
       </Box>
@@ -77,10 +77,10 @@ const Home: NextPage<Props> = ({ operators }) => {
               <StepLabel>Find an operator near you</StepLabel>
             </Step>
             <Step>
-              <StepLabel>Find a tour you like</StepLabel>
+              <StepLabel>Find a boat trip, sun bed, or other service that you like</StepLabel>
             </Step>
             <Step>
-              <StepLabel>Book the tour!</StepLabel>
+              <StepLabel>Book the service!</StepLabel>
             </Step>
           </Stepper>
         </Box>

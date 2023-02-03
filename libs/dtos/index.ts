@@ -10,7 +10,7 @@ export interface OperatorDto {
 
 export type OperatorNoId = Omit<OperatorDto, '_id'>;
 
-export interface TripDto {
+export interface ServiceDto {
   _id: string;
   operator: OperatorDto;
   name: string;
@@ -23,13 +23,13 @@ export interface TripDto {
   childPrice: number;
 }
 
-export type TripNoId = Omit<TripDto, '_id'>;
+export type ServiceNoId = Omit<ServiceDto, '_id'>;
 
 export type BookingStatus = 'pending' | 'confirmed' | 'rejected';
 
 export interface BookingDto {
   _id: string;
-  trip: TripDto;
+  service: ServiceDto;
   operator: OperatorDto;
   name: string;
   email: string;

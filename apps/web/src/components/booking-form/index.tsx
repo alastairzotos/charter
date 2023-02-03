@@ -8,7 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
-import { BookingNoId, OperatorDto, TripDto } from "dtos";
+import { BookingNoId, OperatorDto, ServiceDto } from "dtos";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
@@ -35,13 +35,13 @@ const bookingModalStyle = {
 
 interface Props {
   operator: OperatorDto;
-  trip: TripDto;
+  service: ServiceDto;
 
   onClose: () => void;
 }
 
 const validationSchema: yup.SchemaOf<
-  Omit<BookingNoId, "operator" | "status" | "trip">
+  Omit<BookingNoId, "operator" | "status" | "service">
 > = yup.object().shape({
   name: yup.string().required("Enter your name"),
   email: yup
@@ -60,7 +60,7 @@ const validationSchema: yup.SchemaOf<
     .required("Enter number of children"),
 });
 
-export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
+export const BookingForm: React.FC<Props> = ({ operator, service, onClose }) => {
   const router = useRouter();
 
   const loggedinUser = useUserState((s) => s.loggedInUser);
@@ -74,7 +74,7 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
 
   const initialValues: Omit<BookingNoId, "status"> = {
     operator,
-    trip,
+    service,
     name: loggedinUser?.givenName || "",
     email: loggedinUser?.email || "",
     date: dayjs().add(1, "day").format("DD MMM YYYY"),
@@ -106,7 +106,7 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
         >
           {({ isValid, values, setValues }) => (
             <FormBox
-              title={`Book ${trip.name} by ${operator.name}`}
+              title={`Book ${service.name} by ${operator.name}`}
               onClose={onClose}
             >
               <Field component={TextField} name="name" label="Your name" />
@@ -160,7 +160,7 @@ export const BookingForm: React.FC<Props> = ({ operator, trip, onClose }) => {
 
               <KeyValue
                 label="Total Price"
-                value={createPriceString(values, trip)}
+                value={createPriceString(values, service)}
               />
 
               <Box sx={{ display: "flex", justifyContent: "center" }}>

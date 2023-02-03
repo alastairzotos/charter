@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { BookingNoId, OperatorDto, TripDto } from 'dtos';
+import { BookingNoId, OperatorDto, ServiceDto } from 'dtos';
 
 import { EnvService } from 'environment/environment.service';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
@@ -17,7 +17,7 @@ const mockOperator: OperatorDto = {
   photo: '',
 };
 
-const mockTrip: TripDto = {
+const mockService: ServiceDto = {
   _id: '',
   adultPrice: 10,
   childPrice: 5,
@@ -38,7 +38,7 @@ const mockBooking: BookingNoId = {
   date: '12 January 2023',
   status: 'confirmed',
   operator: mockOperator,
-  trip: mockTrip,
+  service: mockService,
 };
 
 const envServiceMock: Pick<EnvService, keyof EnvService> = {
@@ -69,7 +69,7 @@ const bookingsRepoMock: Partial<
   createBooking: jest.fn(
     async () => new Promise((resolve) => resolve({ _id: '123' } as any)),
   ),
-  getBookingWithOperatorAndTrip: jest.fn(
+  getBookingWithOperatorAndService: jest.fn(
     async () =>
       new Promise((resolve) =>
         resolve({

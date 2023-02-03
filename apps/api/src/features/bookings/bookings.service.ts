@@ -19,7 +19,7 @@ export class BookingsService {
   async createBooking(booking: BookingNoId) {
     const { _id } = await this.bookingsRepository.createBooking(booking);
     const createdBooking =
-      await this.bookingsRepository.getBookingWithOperatorAndTrip(_id);
+      await this.bookingsRepository.getBookingWithOperatorAndService(_id);
 
     await Promise.all([
       this.emailService.sendEmail(
@@ -35,8 +35,8 @@ export class BookingsService {
     return _id;
   }
 
-  async getBookingWithOperatorAndTrip(id: string) {
-    return await this.bookingsRepository.getBookingWithOperatorAndTrip(id);
+  async getBookingWithOperatorAndService(id: string) {
+    return await this.bookingsRepository.getBookingWithOperatorAndService(id);
   }
 
   async getBookingById(id: string) {
@@ -54,7 +54,7 @@ export class BookingsService {
 
   async setBookingStatus(id: string, status: BookingStatus) {
     await this.bookingsRepository.setBookingStatus(id, status);
-    const booking = await this.bookingsRepository.getBookingWithOperatorAndTrip(
+    const booking = await this.bookingsRepository.getBookingWithOperatorAndService(
       id,
     );
 

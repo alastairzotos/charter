@@ -19,7 +19,7 @@ export class BookingsService extends HttpService {
     return data;
   }
 
-  async getBookingWithOperatorAndTrip(id: string) {
+  async getBookingWithOperatorAndService(id: string) {
     const { data } = await this.httpClient.get<BookingDto>(
       `/bookings/with-details/${id}`
     );

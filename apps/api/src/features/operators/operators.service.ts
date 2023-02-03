@@ -2,13 +2,13 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { OperatorDto, OperatorNoId } from 'dtos';
 
 import { OperatorsRepository } from 'features/operators/operators.repository';
-import { TripsService } from 'features/trips/trips.service';
+import { ServicesService } from 'features/services/services.service';
 
 @Injectable()
 export class OperatorsService {
   constructor(
-    @Inject(forwardRef(() => TripsService))
-    private readonly tripsService: TripsService,
+    @Inject(forwardRef(() => ServicesService))
+    private readonly servicesService: ServicesService,
     private readonly operatorsRepo: OperatorsRepository,
   ) {}
 
@@ -24,13 +24,13 @@ export class OperatorsService {
     return await this.operatorsRepo.getOperatorByEmail(email);
   }
 
-  async getOperatorWithTripsById(id: string) {
+  async getOperatorWithServicesById(id: string) {
     const operator = await this.getOperatorById(id);
-    const trips = await this.tripsService.getTripsForOperator(id);
+    const services = await this.servicesService.getServicesForOperator(id);
 
     return {
       operator,
-      trips,
+      services,
     };
   }
 

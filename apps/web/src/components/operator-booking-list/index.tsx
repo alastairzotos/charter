@@ -32,7 +32,7 @@ export const OperatorBookingList: React.FC<Props> = ({ title, bookings }) => {
                   href={urls.operators.booking(booking._id)}
                 >
                   <ListItemText
-                    primary={booking.trip.name}
+                    primary={booking.service.name}
                     secondary={`${booking.name} - ${booking.date} - ${
                       booking.adultGuests
                     } ${pluralize(booking.adultGuests, "adult")} - ${

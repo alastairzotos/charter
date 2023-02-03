@@ -6,7 +6,7 @@ import { OperatorLayout } from "src/components/operator-layout";
 import { SeoHead } from "src/components/seo/head";
 import { UserBookingView } from "src/components/user-booking-view";
 import { UserLayoutContainer } from "src/components/user-layout/container";
-import { UserTripView } from "src/components/user-trip-view";
+import { UserServiceView } from "src/components/user-service-view";
 import { BookingsService } from "src/services/bookings.service";
 
 interface Props {
@@ -18,17 +18,17 @@ const BookingPage: NextPage<Props> = ({ booking }) => {
     <UserLayoutContainer>
       <SeoHead
         subtitle="Your Booking"
-        description={`Your booking for ${booking.trip.name} by ${booking.operator.name}`}
+        description={`Your booking for ${booking.service.name} by ${booking.operator.name}`}
       />
 
       <UserBookingView booking={booking} />
 
       <Box sx={{ mt: 3 }}>
         <OperatorLayout operator={booking.operator}>
-          <UserTripView
+          <UserServiceView
             bookingView
             operator={booking.operator}
-            trip={booking.trip}
+            service={booking.service}
           />
         </OperatorLayout>
       </Box>
@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   try {
     return {
       props: {
-        booking: await bookingsService.getBookingWithOperatorAndTrip(id),
+        booking: await bookingsService.getBookingWithOperatorAndService(id),
       },
     };
   } catch {

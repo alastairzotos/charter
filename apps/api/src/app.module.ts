@@ -8,7 +8,7 @@ import { BookingsModule } from 'features/bookings/bookings.module';
 import { HealthModule } from 'features/health/health.module';
 import { ImagesModule } from 'features/images/images.module';
 import { OperatorsModule } from 'features/operators/operators.module';
-import { TripsModule } from 'features/trips/trips.module';
+import { ServicesModule } from 'features/services/services.module';
 import { UsersModule } from 'features/users/users.module';
 import { EmailModule } from 'integrations/email/email.module';
 import { S3Module } from 'integrations/s3/s3.module';
@@ -20,7 +20,7 @@ import { S3Module } from 'integrations/s3/s3.module';
     HealthModule,
     UsersModule,
     OperatorsModule,
-    TripsModule,
+    ServicesModule,
     S3Module,
     ImagesModule,
     BookingsModule,

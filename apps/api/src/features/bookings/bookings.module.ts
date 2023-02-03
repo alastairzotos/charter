@@ -6,24 +6,24 @@ import { BookingsController } from 'features/bookings/bookings.controller';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { BookingsService } from 'features/bookings/bookings.service';
 import { OperatorsModule } from 'features/operators/operators.module';
-import { TripsModule } from 'features/trips/trips.module';
+import { ServicesModule } from 'features/services/services.module';
 import { UsersModule } from 'features/users/users.module';
 import { EmailModule } from 'integrations/email/email.module';
 import { Booking, BookingSchema } from 'schemas/booking.schema';
 import { Operator, OperatorSchema } from 'schemas/operator.schema';
-import { Trip, TripSchema } from 'schemas/trip.schema';
+import { Service, ServiceSchema } from 'schemas/service.schema';
 
 @Module({
   imports: [
     EnvModule,
     OperatorsModule,
-    TripsModule,
+    ServicesModule,
     UsersModule,
     EmailModule,
     MongooseModule.forFeature([
       { name: Booking.name, schema: BookingSchema },
       { name: Operator.name, schema: OperatorSchema },
-      { name: Trip.name, schema: TripSchema },
+      { name: Service.name, schema: ServiceSchema },
     ]),
   ],
   controllers: [BookingsController],

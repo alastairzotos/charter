@@ -12,11 +12,11 @@ export interface EmailData {
 
 export const emailContent = (env: EnvService) => ({
   bookingMadeOperator: (booking: BookingDto): EmailData => ({
-    subject: `New booking for ${booking.trip.name} on ${booking.date}`,
+    subject: `New booking for ${booking.service.name} on ${booking.date}`,
     content: dedent`
       <h3>Hello ${booking.operator.name}</h3>
       <p>You have a new booking for <strong>${
-        booking.trip.name
+        booking.service.name
       }</strong> on <strong>${booking.date}</strong></p>
       <p>Here are the details:</p>
       <ul>
@@ -26,7 +26,7 @@ export const emailContent = (env: EnvService) => ({
         <li><strong>Number of children</strong>: ${booking.childGuests}</li>
         <li><strong>Price</strong>: ${createPriceString(
           booking,
-          booking.trip,
+          booking.service,
         )}</li>
         <li><strong>Date</strong>: ${booking.date}</li>
       </ul>
@@ -46,8 +46,8 @@ export const emailContent = (env: EnvService) => ({
       booking.operator,
     )}">${booking.operator.name}</a>
         for
-        <a href="${env.get().frontendUrl}${urls.user.trip(booking.trip)}">${
-      booking.trip.name
+        <a href="${env.get().frontendUrl}${urls.user.service(booking.service)}">${
+      booking.service.name
     }</a>
       </p>
       <p>You can view <a href="${env.get().frontendUrl}${urls.user.booking(
@@ -57,12 +57,12 @@ export const emailContent = (env: EnvService) => ({
   }),
 
   bookingConfirmedUser: (booking: BookingDto): EmailData => ({
-    subject: `Your booking for ${booking.trip.name} as been confirmed!`,
+    subject: `Your booking for ${booking.service.name} as been confirmed!`,
     content: `
       <p>Get ready ${booking.name}, your booking for <a href="${
       env.get().frontendUrl
-    }${urls.user.trip(booking.trip)}">${
-      booking.trip.name
+    }${urls.user.service(booking.service)}">${
+      booking.service.name
     }</a> has been confirmed!</p>
       <p>You can view your booking details <a href="${
         env.get().frontendUrl
@@ -71,15 +71,15 @@ export const emailContent = (env: EnvService) => ({
   }),
 
   bookingRejectedUser: (booking: BookingDto): EmailData => ({
-    subject: `Your booking for ${booking.trip.name} as been rejected`,
+    subject: `Your booking for ${booking.service.name} as been rejected`,
     content: `
       <p>Hello ${booking.name}</p>
       <p>Unfortunately the operstor has rejected your booking for <a href="${
         env.get().frontendUrl
-      }${urls.user.trip(booking.trip)}">${booking.trip.name}</a></p>
+      }${urls.user.service(booking.service)}">${booking.service.name}</a></p>
       <p>But don't worry, you can always visit <a href="${
         env.get().frontendUrl
-      }">our website</a> to see many more trips that you can take!</p>
+      }">our website</a> to see many more services that you can book!</p>
     `,
   }),
 });
