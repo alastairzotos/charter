@@ -17,7 +17,7 @@ export const createSlice = <T, A extends any[] = []>(
   initialValue: T | null,
   request: (...args: A) => Promise<T>
 ) =>
-  create<SliceState<T, A>>((set, self) => ({
+  create<SliceState<T, A>>((set) => ({
     value: initialValue,
 
     request: async (...args) => {
