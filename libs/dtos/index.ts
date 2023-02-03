@@ -21,7 +21,7 @@ export const getServiceTypeLabel = (serviceType: ServiceType): string => ({
   'sunbed': 'Sun bed'
 } as Record<ServiceType, string>)[serviceType]
 
-export type ServiceSchemaFieldType = 'string' | 'time' | 'timeframe' | 'photos';
+export type ServiceSchemaFieldType = 'string' | 'time' | 'timeframe';
 
 export interface ServiceSchemaFieldDto {
   field: string;
@@ -40,7 +40,6 @@ export const getDefaultValueForServiceSchemaFieldType = (schemaFieldType: Servic
     case 'string': return '';
     case 'time': return '9am';
     case 'timeframe': return '1 hour';
-    case 'photos': return [];
   }
 }
 
@@ -61,6 +60,7 @@ export interface ServiceDto {
   description: string;
   adultPrice: number;
   childPrice: number;
+  photos: string[];
   data: Record<string, ServiceFieldValue>;
 }
 

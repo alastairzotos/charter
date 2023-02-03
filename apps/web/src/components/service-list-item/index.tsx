@@ -6,6 +6,7 @@ import React from "react";
 import { urls } from "urls";
 
 import { shortenText } from "src/util/misc";
+import { Avatar, ListItemAvatar } from "@mui/material";
 
 interface Props {
   operatorId: string;
@@ -19,6 +20,12 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
       component={Link}
       href={urls.admin.service(operatorId, service._id)}
     >
+      {service.photos && service.photos.length > 0 && (
+        <ListItemAvatar>
+          <Avatar alt={service.name} src={service.photos[0]} />
+        </ListItemAvatar>
+      )}
+
       <ListItemText
         primary={
           <>

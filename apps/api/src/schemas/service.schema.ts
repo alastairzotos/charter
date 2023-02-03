@@ -27,6 +27,9 @@ export class Service implements ServiceDto {
   childPrice: number;
 
   @Prop({ type: Array })
+  photos: string[];
+
+  @Prop({ type: Object })
   data: Record<string, ServiceFieldValue>;
 }
 

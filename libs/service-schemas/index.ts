@@ -17,11 +17,6 @@ export const BoatTripSchema: ServiceSchemaDto = {
       type: 'time',
       label: 'Start time',
     },
-    {
-      field: 'photos',
-      type: 'photos',
-      label: 'Photos'
-    },
   ]
 }
 
@@ -42,11 +37,6 @@ export const BoatRentalSchema: ServiceSchemaDto = {
       type: 'time',
       label: 'Start time',
     },
-    {
-      field: 'photos',
-      type: 'photos',
-      label: 'Photos'
-    },
   ]
 }
 
@@ -62,12 +52,7 @@ export const SunbedSchema: ServiceSchemaDto = {
       type: 'time',
       label: 'Start time',
     },
-    {
-      field: 'photos',
-      type: 'photos',
-      label: 'Photos'
-    },
-  ]
+  ],
 }
 
 export const getSchemaForServiceType = (serviceType: ServiceType): ServiceSchemaDto | null => ({

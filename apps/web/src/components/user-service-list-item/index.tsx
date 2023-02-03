@@ -1,3 +1,4 @@
+import { Avatar, ListItemAvatar } from "@mui/material";
 import ListItem from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { ServiceDto } from "dtos";
@@ -23,9 +24,11 @@ export const UserServiceListItem: React.FC<Props> = ({ service }) => {
       component={Link}
       href={urls.user.service(service)}
     >
-      {/* <ListItemAvatar>
-        <Avatar alt={service.name} src={service.photos[0]} />
-      </ListItemAvatar> */}
+      {service.photos && service.photos.length > 0 && (
+        <ListItemAvatar>
+          <Avatar alt={service.name} src={service.photos[0]} />
+        </ListItemAvatar>
+      )}
 
       <ListItemText
         primary={`${service.name} - From €${service.adultPrice.toFixed(

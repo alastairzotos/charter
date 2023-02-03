@@ -1,7 +1,6 @@
 import { ServiceSchemaDto, ServiceSchemaFieldDto } from "dtos";
 import React from "react";
 
-import { PhotosField } from "src/components/service-form-fields/fields/photos-field";
 import { StringField } from "src/components/service-form-fields/fields/string-field";
 import { TimeField } from "src/components/service-form-fields/fields/time-field";
 import { TimeframeField } from "src/components/service-form-fields/fields/timeframe-field";
@@ -19,8 +18,6 @@ const getFieldForm = (field: ServiceSchemaFieldDto) => {
       return TimeField;
     case "timeframe":
       return TimeframeField;
-    case "photos":
-      return PhotosField;
   }
 };
 

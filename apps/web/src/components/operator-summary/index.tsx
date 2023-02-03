@@ -12,7 +12,7 @@ interface Props {
 
 export const OperatorSummary: React.FC<Props> = ({ operator }) => {
   return (
-    <Titled title={operator.name}>
+    <Titled title={operator.name} avatar={operator.photo}>
       <Typography variant="subtitle2">{operator.email}</Typography>
       <Typography variant="subtitle2">{operator.address}</Typography>
       <Typography variant="subtitle2">{operator.phoneNumber}</Typography>

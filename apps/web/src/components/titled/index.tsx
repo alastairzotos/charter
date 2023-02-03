@@ -1,15 +1,17 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { IconButton, Typography } from "@mui/material";
+import { Avatar, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 
 interface Props {
   title: string;
+  avatar?: string;
   onClose?: () => void;
 }
 
 export const Titled: React.FC<React.PropsWithChildren<Props>> = ({
   title,
+  avatar,
   onClose,
   children,
 }) => {
@@ -17,7 +19,10 @@ export const Titled: React.FC<React.PropsWithChildren<Props>> = ({
     return (
       <>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Typography variant="h6">{title}</Typography>
+          <Box sx={{ display: 'flex', verticalAlign: 'middle', gap: 1 }}>
+            {!!avatar && <Avatar src={avatar} />}
+            <Typography variant="h6">{title}</Typography>
+          </Box>
 
           <IconButton onClick={onClose}>
             <CloseIcon />
@@ -31,7 +36,11 @@ export const Titled: React.FC<React.PropsWithChildren<Props>> = ({
 
   return (
     <>
-      <Typography variant="h6">{title}</Typography>
+      <Box sx={{ display: 'flex', verticalAlign: 'middle', gap: 1 }}>
+        {!!avatar && <Avatar src={avatar} />}
+        <Typography variant="h6">{title}</Typography>
+      </Box>
+
       <Box sx={{ mt: 1 }}>{children}</Box>
     </>
   );

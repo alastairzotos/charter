@@ -97,20 +97,12 @@ export const UserServiceView: React.FC<Props> = ({
                   value={service.data[fieldName] as string}
                 />
               );
-            case "photos": {
-              if (
-                !!service.data[fieldName] &&
-                (service.data[fieldName] as string[]).length
-              ) {
-                return (
-                  <ImageGallery items={service.data[fieldName] as string[]} />
-                );
-              }
-
-              return null;
-            }
           }
         })}
+
+        {service.photos && service.photos.length > 0 && (
+          <ImageGallery items={service.photos} />
+        )}
       </Titled>
 
       <Modal open={bookingModalOpen} onClose={() => setBookingModalOpen(false)}>

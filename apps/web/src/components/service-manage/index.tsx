@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { ServiceNoId } from "dtos";
-import { Field, Formik } from "formik";
+import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
@@ -14,6 +14,7 @@ import { FormBox } from "src/components/form-box";
 import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceFormFields } from "src/components/service-form-fields";
 import { FetchStatus } from "src/models";
+import { FileUpload } from "src/components/file-upload";
 
 interface Props {
   operatorId: string;
@@ -102,6 +103,27 @@ export const ManageServiceForm: React.FC<Props> = ({
               values={values}
               setValues={setValues}
             />
+
+            <FileUpload
+              title="Photos"
+              filesLimit={100}
+              acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+              disabled={isSubmitting}
+              value={values.photos || []}
+              onChange={(photos) =>
+                setValues({
+                  ...(values as any),
+                  photos: [...(values.photos || []), ...photos]
+                })
+              }
+              onDelete={(item) =>
+                setValues({
+                  ...(values as any),
+                  photos: values.photos.filter((photo) => photo !== item)
+                })
+              }
+            />
+            <ErrorMessage name="photos" />
 
             <SaveAndDelete
               isValid={isValid}
