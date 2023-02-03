@@ -24,7 +24,7 @@ export const UserServicesView: React.FC<Props> = ({
         ...acc,
         [cur.type]: [...(acc[cur.type] || []), cur],
       }),
-      {} as any
+      {}
     );
 
     return (
