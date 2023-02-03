@@ -3,23 +3,29 @@ import React, { useEffect } from "react";
 
 import { Fetchable } from "src/components/fetchable";
 import { ManageOperatorForm } from "src/components/operator-manage";
-import { useOperatorsState } from "src/state/operators";
+import {
+  useDeleteOperator,
+  useLoadOperator,
+  useUpdateOperator,
+} from "src/state/operators";
 
 interface Props {
   id: string;
 }
 
 export const OperatorEdit: React.FC<Props> = ({ id }) => {
-  const [loadOperatorStatus, loadOperator, operator] = useOperatorsState(
-    (s) => [s.loadOperatorStatus, s.loadOperator, s.operator]
-  );
-  const [updateOperatorStatus, updateOperator] = useOperatorsState((s) => [
-    s.updateOperatorStatus,
-    s.updateOperator,
+  const [loadOperatorStatus, loadOperator, operator] = useLoadOperator((s) => [
+    s.status,
+    s.request,
+    s.value,
   ]);
-  const [deleteOperatorStatus, deleteOperator] = useOperatorsState((s) => [
-    s.deleteOperatorStatus,
-    s.deleteOperator,
+  const [updateOperatorStatus, updateOperator] = useUpdateOperator((s) => [
+    s.status,
+    s.request,
+  ]);
+  const [deleteOperatorStatus, deleteOperator] = useDeleteOperator((s) => [
+    s.status,
+    s.request,
   ]);
 
   useEffect(() => {

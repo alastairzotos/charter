@@ -7,11 +7,11 @@ import { urls } from "urls";
 
 import { Fetchable } from "src/components/fetchable";
 import { OperatorListItem } from "src/components/operator-list-item";
-import { useOperatorsState } from "src/state/operators";
+import { useLoadOperators } from "src/state/operators";
 
 export const OperatorsList: React.FC = () => {
-  const [loadOperatorsStatus, loadOperators, operators] = useOperatorsState(
-    (s) => [s.loadOperatorsStatus, s.loadOperators, s.operators]
+  const [loadOperatorsStatus, loadOperators, operators] = useLoadOperators(
+    (s) => [s.status, s.request, s.value]
   );
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const OperatorsList: React.FC = () => {
       error={<Typography>There was an error loading the operators</Typography>}
     >
       <List sx={{ width: "100%" }}>
-        {operators.map((operator) => (
+        {operators?.map((operator) => (
           <OperatorListItem key={operator._id} operator={operator} />
         ))}
       </List>

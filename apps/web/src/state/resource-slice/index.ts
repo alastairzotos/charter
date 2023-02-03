@@ -20,7 +20,7 @@ type HookFn<T, A extends any[]> = (
   getState: Get<Mutate<StoreApi<SliceState<T, A>>, []>, "getState", never>
 ) => void;
 
-export const createSlice = <T, A extends any[]>(
+export const createSlice = <T, A extends any[] = []>(
   initialValue: T | null,
   request: (...args: A) => Promise<T>,
   opts?: {

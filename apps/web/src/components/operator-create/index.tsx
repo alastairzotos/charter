@@ -4,13 +4,13 @@ import React from "react";
 import { urls } from "urls";
 
 import { ManageOperatorForm } from "src/components/operator-manage";
-import { useOperatorsState } from "src/state/operators";
+import { useCreateOperator } from "src/state/operators";
 
 export const OperatorCreate: React.FC = () => {
   const router = useRouter();
-  const [createOperatorsStatus, createOperator] = useOperatorsState((s) => [
-    s.createOperatorStatus,
-    s.createOperator,
+  const [createOperatorsStatus, createOperator] = useCreateOperator((s) => [
+    s.status,
+    s.request,
   ]);
 
   const handleCreateOperator = async (operator: OperatorNoId) => {

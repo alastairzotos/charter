@@ -5,16 +5,18 @@ import { Fetchable } from "src/components/fetchable";
 import { OperatorSummary } from "src/components/operator-summary";
 import { ServiceList } from "src/components/service-list";
 import { Titled } from "src/components/titled";
-import { useOperatorsState } from "src/state/operators";
+import { useLoadOperator } from "src/state/operators";
 
 interface Props {
   id: string;
 }
 
 export const OperatorItem: React.FC<Props> = ({ id }) => {
-  const [loadOperatorStatus, loadOperator, operator] = useOperatorsState(
-    (s) => [s.loadOperatorStatus, s.loadOperator, s.operator]
-  );
+  const [loadOperatorStatus, loadOperator, operator] = useLoadOperator((s) => [
+    s.status,
+    s.request,
+    s.value,
+  ]);
 
   useEffect(() => {
     if (id) {
