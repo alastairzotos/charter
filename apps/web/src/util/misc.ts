@@ -11,3 +11,6 @@ export const pluralize = (
     : num === 1
     ? item.singular
     : item.plural;
+
+export const shortenText = (text: string, length: number) =>
+  text.length <= length ? text : text.substring(0, length) + "...";

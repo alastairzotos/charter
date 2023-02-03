@@ -5,6 +5,8 @@ import Link from "next/link";
 import React from "react";
 import { urls } from "urls";
 
+import { shortenText } from "src/util/misc";
+
 interface Props {
   operatorId: string;
   service: ServiceDto;
@@ -19,7 +21,7 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
     >
       <ListItemText
         primary={service.name}
-        secondary={<>{service.description}</>}
+        secondary={<>{shortenText(service.description, 150)}</>}
       />
     </ListItem>
   );
