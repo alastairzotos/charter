@@ -16,7 +16,7 @@ export type ServiceType = typeof serviceTypes[number];
 
 export const getServiceTypeLabel = (serviceType: ServiceType): string => ({
   none: 'None',
-  boat: 'Boat',
+  boat: 'Boat trip',
   sunbed: 'Sun bed'
 } as Record<ServiceType, string>)[serviceType]
 

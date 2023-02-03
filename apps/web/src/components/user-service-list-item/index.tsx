@@ -1,4 +1,3 @@
-import { Avatar, ListItemAvatar } from "@mui/material";
 import ListItem from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { ServiceDto } from "dtos";
