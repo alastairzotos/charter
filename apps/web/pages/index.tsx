@@ -16,7 +16,10 @@ interface Props {
 }
 
 const Home: NextPage<Props> = ({ operators }) => {
-  const serviceList = serviceTypes.filter(type => type !== 'none').map(type => pluralize(2, getServiceTypeLabel(type).toLocaleLowerCase())).join(', ');
+  const serviceList = serviceTypes
+    .filter((type) => type !== "none")
+    .map((type) => pluralize(2, getServiceTypeLabel(type).toLocaleLowerCase()))
+    .join(", ");
 
   return (
     <>
@@ -80,9 +83,7 @@ const Home: NextPage<Props> = ({ operators }) => {
               <StepLabel>Find an operator near you</StepLabel>
             </Step>
             <Step>
-              <StepLabel>
-                Find a service that you like
-              </StepLabel>
+              <StepLabel>Find a service that you like</StepLabel>
             </Step>
             <Step>
               <StepLabel>Book the service!</StepLabel>
