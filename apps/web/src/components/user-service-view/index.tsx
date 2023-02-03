@@ -69,10 +69,8 @@ export const UserServiceView: React.FC<Props> = ({
           value={"€" + service.childPrice.toFixed(2)}
         />
 
-        {Object.keys(service.data).map((fieldName) => {
-          const field = schema.fields.find(
-            (schemaField) => schemaField.field === fieldName
-          )!;
+        {schema.fields.map((field) => {
+          const fieldName = field.field;
 
           switch (field.type) {
             case "string":
@@ -101,11 +99,11 @@ export const UserServiceView: React.FC<Props> = ({
               );
             case "photos": {
               if (
-                !!service.data["photos"] &&
-                (service.data["photos"] as string[]).length
+                !!service.data[fieldName] &&
+                (service.data[fieldName] as string[]).length
               ) {
                 return (
-                  <ImageGallery items={service.data["photos"] as string[]} />
+                  <ImageGallery items={service.data[fieldName] as string[]} />
                 );
               }
 

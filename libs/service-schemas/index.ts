@@ -28,9 +28,19 @@ export const BoatSchema: ServiceSchemaDto = {
 export const SunbedSchema: ServiceSchemaDto = {
   fields: [
     {
+      field: 'location',
+      type: 'string',
+      label: 'Location',
+    },
+    {
       field: 'startTime',
       type: 'time',
       label: 'Start time',
+    },
+    {
+      field: 'photos',
+      type: 'photos',
+      label: 'Photos'
     },
   ]
 }
