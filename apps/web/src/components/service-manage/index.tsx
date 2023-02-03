@@ -98,7 +98,7 @@ export const ManageServiceForm: React.FC<Props> = ({
             />
 
             <ServiceFormFields
-              schema={getSchemaForServiceType(service.type)!}
+              schema={getSchemaForServiceType(service.type)}
               isSubmitting={isSubmitting}
               values={values}
               setValues={setValues}

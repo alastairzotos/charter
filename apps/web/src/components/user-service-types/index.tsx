@@ -8,14 +8,13 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { getServiceTypeLabel, serviceTypes } from "dtos";
+import { serviceTypes } from "dtos";
 import Link from "next/link";
 import React from "react";
 import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
 
 import { Titled } from "src/components/titled";
-import { pluralize } from "src/util/misc";
 
 export const ServiceTypes: React.FC = () => {
   return (
@@ -38,11 +37,11 @@ export const ServiceTypes: React.FC = () => {
                   sx={{ height: 180 }}
                 />
                 <CardHeader
-                  title={pluralize(2, getServiceTypeLabel(serviceType))}
+                  title={getSchemaForServiceType(serviceType).pluralLabel}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography variant="body2" color="text.secondary">
-                    {getSchemaForServiceType(serviceType)?.description || ""}
+                    {getSchemaForServiceType(serviceType).description}
                   </Typography>
                 </CardContent>
                 <CardActions>

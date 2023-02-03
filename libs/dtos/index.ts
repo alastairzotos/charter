@@ -14,13 +14,6 @@ export const serviceTypes = ['none', 'boat-trip', 'boat-rental', 'sunbed'] as co
 
 export type ServiceType = typeof serviceTypes[number];
 
-export const getServiceTypeLabel = (serviceType: ServiceType): string => ({
-  'none': 'None',
-  'boat-trip': 'Boat trip',
-  'boat-rental': 'Boat rental',
-  'sunbed': 'Sun bed'
-} as Record<ServiceType, string>)[serviceType]
-
 export type ServiceSchemaFieldType = 'string' | 'time' | 'timeframe';
 
 export interface ServiceSchemaFieldDto {
@@ -30,6 +23,8 @@ export interface ServiceSchemaFieldDto {
 }
 
 export interface ServiceSchemaDto {
+  label: string;
+  pluralLabel: string;
   description: string;
   fields: ServiceSchemaFieldDto[];
 }
@@ -40,7 +35,7 @@ export const getDefaultValueForServiceSchemaFieldType = (schemaFieldType: Servic
   switch (schemaFieldType) {
     case 'string': return '';
     case 'time': return '9am';
-    case 'timeframe': return '1 hour';
+    case 'timeframe': return '1 Hour';
   }
 }
 

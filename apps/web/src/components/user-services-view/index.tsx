@@ -1,11 +1,11 @@
 import { List } from "@mui/material";
 import { Box } from "@mui/system";
-import { getServiceTypeLabel, ServiceDto, ServiceType } from "dtos";
+import { ServiceDto, ServiceType } from "dtos";
 import React from "react";
+import { getSchemaForServiceType } from "service-schemas";
 
 import { Titled } from "src/components/titled";
 import { UserServiceListItem } from "src/components/user-service-list-item";
-import { pluralize } from "src/util/misc";
 
 interface Props {
   groupByType?: boolean;
@@ -32,10 +32,9 @@ export const UserServicesView: React.FC<Props> = ({
         {Object.keys(servicesByCategory).map((serviceType) => (
           <Box key={serviceType} sx={{ mb: 3 }}>
             <Titled
-              title={pluralize(
-                2,
-                getServiceTypeLabel(serviceType as ServiceType)
-              )}
+              title={
+                getSchemaForServiceType(serviceType as ServiceType).pluralLabel
+              }
             >
               {servicesByCategory[serviceType].map((service) => (
                 <UserServiceListItem

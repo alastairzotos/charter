@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { getServiceTypeLabel, ServiceDto, ServiceType } from "dtos";
+import { ServiceDto, ServiceType } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 import { getSchemaForServiceType } from "service-schemas";
@@ -9,7 +9,6 @@ import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserServicesView } from "src/components/user-services-view";
 import { ServicesService } from "src/services/services.service";
-import { pluralize } from "src/util/misc";
 
 interface Props {
   type: ServiceType;
@@ -20,14 +19,14 @@ const ServiceTypePage: NextPage<Props> = ({ type, services }) => {
   return (
     <UserLayoutContainer>
       <SeoHead
-        subtitle={getServiceTypeLabel(type)}
-        description={getSchemaForServiceType(type)?.description || ""}
+        subtitle={getSchemaForServiceType(type).label}
+        description={getSchemaForServiceType(type).description || ""}
       />
 
       <UserLayoutContainer>
-        <Titled title={pluralize(2, getServiceTypeLabel(type))}>
+        <Titled title={getSchemaForServiceType(type).pluralLabel || ""}>
           <Typography>
-            {getSchemaForServiceType(type)?.description || ""}
+            {getSchemaForServiceType(type).description || ""}
           </Typography>
         </Titled>
 

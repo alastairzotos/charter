@@ -1,6 +1,15 @@
 import { ServiceSchemaDto, ServiceType } from 'dtos';
 
+export const NoneSchema: ServiceSchemaDto = {
+  label: 'None',
+  pluralLabel: 'None',
+  description: 'None',
+  fields: []
+}
+
 export const BoatTripSchema: ServiceSchemaDto = {
+  label: 'Boat trip',
+  pluralLabel: 'Boat trips',
   description: 'Take a guided trip on a boat around the island',
   fields: [
     { 
@@ -22,6 +31,8 @@ export const BoatTripSchema: ServiceSchemaDto = {
 }
 
 export const BoatRentalSchema: ServiceSchemaDto = {
+  label: 'Boat rental',
+  pluralLabel: 'Boat rentals',
   description: 'Rent boats at cheap prices to explore the seas at your leisure',
   fields: [
     { 
@@ -43,7 +54,9 @@ export const BoatRentalSchema: ServiceSchemaDto = {
 }
 
 export const SunbedSchema: ServiceSchemaDto = {
-  description: 'Reserve a sunbed and beathe easy knowing you\'ll have one waiting for you',
+  label: 'Sun bed',
+  pluralLabel: 'Sun beds',
+  description: 'Reserve a sun bed and beathe easy knowing you\'ll have one waiting for you',
   fields: [
     {
       field: 'location',
@@ -58,9 +71,9 @@ export const SunbedSchema: ServiceSchemaDto = {
   ],
 }
 
-export const getSchemaForServiceType = (serviceType: ServiceType): ServiceSchemaDto | null => ({
-  'none': null,
+export const getSchemaForServiceType = (serviceType: ServiceType): ServiceSchemaDto => ({
+  'none': NoneSchema,
   'boat-trip': BoatTripSchema,
   'boat-rental': BoatRentalSchema,
   'sunbed': SunbedSchema,
-} as Record<ServiceType, ServiceSchemaDto | null>)[serviceType]
+} as Record<ServiceType, ServiceSchemaDto>)[serviceType]

@@ -1,8 +1,9 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Button, Menu, MenuItem } from "@mui/material";
-import { getServiceTypeLabel, ServiceType, serviceTypes } from "dtos";
+import { ServiceType, serviceTypes } from "dtos";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
 
 interface Props {
@@ -41,7 +42,7 @@ export const ServiceCreateButton: React.FC<Props> = ({ operatorId }) => {
               key={serviceType}
               onClick={() => handleServiceTypeClick(serviceType)}
             >
-              {getServiceTypeLabel(serviceType)}
+              {getSchemaForServiceType(serviceType).label}
             </MenuItem>
           ))}
       </Menu>

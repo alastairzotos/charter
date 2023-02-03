@@ -1,8 +1,9 @@
 import { Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { getServiceTypeLabel, OperatorDto, serviceTypes } from "dtos";
+import { OperatorDto, serviceTypes } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
+import { getSchemaForServiceType } from "service-schemas";
 
 import { SeoHead } from "src/components/seo/head";
 import { Titled } from "src/components/titled";
@@ -10,7 +11,7 @@ import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserOperatorsList } from "src/components/user-operators-list";
 import { ServiceTypes } from "src/components/user-service-types";
 import { OperatorsService } from "src/services/operators.service";
-import { APP_NAME, pluralize } from "src/util/misc";
+import { APP_NAME } from "src/util/misc";
 
 interface Props {
   operators: OperatorDto[];
@@ -19,7 +20,9 @@ interface Props {
 const Home: NextPage<Props> = ({ operators }) => {
   const serviceList = serviceTypes
     .filter((type) => type !== "none")
-    .map((type) => pluralize(2, getServiceTypeLabel(type).toLocaleLowerCase()))
+    .map((type) =>
+      getSchemaForServiceType(type).pluralLabel.toLocaleLowerCase()
+    )
     .join(", ");
 
   return (

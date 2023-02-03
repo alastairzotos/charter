@@ -1,6 +1,6 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBackIos";
 import { Box, Button, Modal, Typography } from "@mui/material";
-import { getServiceTypeLabel, OperatorDto, ServiceDto } from "dtos";
+import { OperatorDto, ServiceDto } from "dtos";
 import Link from "next/link";
 import React, { useState } from "react";
 import { getSchemaForServiceType } from "service-schemas";
@@ -22,7 +22,7 @@ export const UserServiceView: React.FC<Props> = ({
   service,
   operator,
 }) => {
-  const schema = getSchemaForServiceType(service.type)!;
+  const schema = getSchemaForServiceType(service.type);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
 
   return (
@@ -59,7 +59,10 @@ export const UserServiceView: React.FC<Props> = ({
           </Box>
         )}
 
-        <KeyValue label="Type" value={getServiceTypeLabel(service.type)} />
+        <KeyValue
+          label="Type"
+          value={getSchemaForServiceType(service.type).label}
+        />
         <KeyValue
           label="Adult Price"
           value={"€" + service.adultPrice.toFixed(2)}

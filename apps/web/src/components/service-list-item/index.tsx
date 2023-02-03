@@ -1,9 +1,10 @@
 import { Avatar, ListItemAvatar } from "@mui/material";
 import ListItem from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { getServiceTypeLabel, ServiceDto } from "dtos";
+import { ServiceDto } from "dtos";
 import Link from "next/link";
 import React from "react";
+import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
 
 import { shortenText } from "src/util/misc";
@@ -29,7 +30,7 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
       <ListItemText
         primary={
           <>
-            <strong>[{getServiceTypeLabel(service.type)}]</strong>{" "}
+            <strong>[{getSchemaForServiceType(service.type).label}]</strong>{" "}
             {service.name}
           </>
         }

@@ -1,15 +1,17 @@
-import { getServiceTypeLabel, serviceTypes } from "dtos";
+import { serviceTypes } from "dtos";
 import { NextPage } from "next";
+import { getSchemaForServiceType } from "service-schemas";
 
 import { SeoHead } from "src/components/seo/head";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { ServiceTypes } from "src/components/user-service-types";
-import { pluralize } from "src/util/misc";
 
 const ServicesPage: NextPage = () => {
   const serviceList = serviceTypes
     .filter((type) => type !== "none")
-    .map((type) => pluralize(2, getServiceTypeLabel(type).toLocaleLowerCase()));
+    .map((type) =>
+      getSchemaForServiceType(type).pluralLabel.toLocaleLowerCase()
+    );
 
   return (
     <>

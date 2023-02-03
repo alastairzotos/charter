@@ -39,7 +39,7 @@ export const ServiceCreate: React.FC<Props> = ({ operatorId, type }) => {
         adultPrice: 0,
         childPrice: 0,
         photos: [],
-        data: getDefaultValuesForServiceSchema(getSchemaForServiceType(type)!),
+        data: getDefaultValuesForServiceSchema(getSchemaForServiceType(type)),
         operator: operatorId as any, // This will be cast as an ObjectId in the backend
       }}
       onSave={handleCreateService}
