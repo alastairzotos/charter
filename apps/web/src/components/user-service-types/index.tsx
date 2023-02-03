@@ -11,10 +11,9 @@ import {
 import { getServiceTypeLabel, serviceTypes } from "dtos";
 import Link from "next/link";
 import React from "react";
+import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
 
-import { ServiceTypeDescription } from "src/components/service-type-description";
-import { ServiceTypeIcon } from "src/components/service-type-icon";
 import { Titled } from "src/components/titled";
 import { pluralize } from "src/util/misc";
 
@@ -40,11 +39,10 @@ export const ServiceTypes: React.FC = () => {
                 />
                 <CardHeader
                   title={pluralize(2, getServiceTypeLabel(serviceType))}
-                  avatar={<ServiceTypeIcon serviceType={serviceType} />}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography variant="body2" color="text.secondary">
-                    <ServiceTypeDescription serviceType={serviceType} />
+                    {getSchemaForServiceType(serviceType)?.description || ""}
                   </Typography>
                 </CardContent>
                 <CardActions>

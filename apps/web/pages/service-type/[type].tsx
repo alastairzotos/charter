@@ -2,13 +2,9 @@ import { Typography } from "@mui/material";
 import { getServiceTypeLabel, ServiceDto, ServiceType } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
+import { getSchemaForServiceType } from "service-schemas";
 
 import { SeoHead } from "src/components/seo/head";
-import {
-  ServiceTypeDescription,
-  serviceTypeDescription,
-} from "src/components/service-type-description";
-import { ServiceTypeIcon } from "src/components/service-type-icon";
 import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserServicesView } from "src/components/user-services-view";
@@ -25,16 +21,13 @@ const ServiceTypePage: NextPage<Props> = ({ type, services }) => {
     <UserLayoutContainer>
       <SeoHead
         subtitle={getServiceTypeLabel(type)}
-        description={serviceTypeDescription[type]}
+        description={getSchemaForServiceType(type)?.description || ""}
       />
 
       <UserLayoutContainer>
-        <Titled
-          title={pluralize(2, getServiceTypeLabel(type))}
-          avatar={<ServiceTypeIcon serviceType={type} />}
-        >
+        <Titled title={pluralize(2, getServiceTypeLabel(type))}>
           <Typography>
-            <ServiceTypeDescription serviceType={type} />
+            {getSchemaForServiceType(type)?.description || ""}
           </Typography>
         </Titled>
 

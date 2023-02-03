@@ -30,6 +30,7 @@ export interface ServiceSchemaFieldDto {
 }
 
 export interface ServiceSchemaDto {
+  description: string;
   fields: ServiceSchemaFieldDto[];
 }
 
