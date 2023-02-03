@@ -1448,7 +1448,7 @@
   dependencies:
     "@date-io/core" "^2.16.0"
 
-"@date-io/dayjs@^2.15.0":
+"@date-io/dayjs@^2.15.0", "@date-io/dayjs@^2.16.0":
   version "2.16.0"
   resolved "https://registry.yarnpkg.com/@date-io/dayjs/-/dayjs-2.16.0.tgz#0d2c254ad8db1306fdc4b8eda197cb53c9af89dc"
   integrity sha512-y5qKyX2j/HG3zMvIxTobYZRGnd1FUW2olZLS0vTj7bEkBQkjd2RO7/FEwDY03Z1geVGlXKnzIATEVBVaGzV4Iw==
@@ -2028,10 +2028,10 @@
     prop-types "^15.8.1"
     react-is "^18.2.0"
 
-"@mui/x-date-pickers@^5.0.11":
-  version "5.0.12"
-  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-5.0.12.tgz#f80e742aa8045b214f40a72e782fd871fb18ec89"
-  integrity sha512-HpiPE4nkqlklilKAxUQpf3tecJEDaTIBRRVTGk9GMgpkwli7Cv+5OGn6aSxG5ckMZdiQ/NT1L9kOcm0Bi9Gqjw==
+"@mui/x-date-pickers@^5.0.17":
+  version "5.0.17"
+  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-5.0.17.tgz#92a5ba3dec828ea1cdb6e5d3e96c7b0523507bb8"
+  integrity sha512-Rxm2OqSLGXijdwCpt8dzbuDIWNids7bUsuxB/ci66MB4ULfTswhFXZTcVvEm/SKZvtkUmDPQmMemdNg78440iA==
   dependencies:
     "@babel/runtime" "^7.18.9"
     "@date-io/core" "^2.15.0"

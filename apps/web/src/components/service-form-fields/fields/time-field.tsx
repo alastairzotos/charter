@@ -8,5 +8,13 @@ export const TimeField: React.FC<ServiceFieldProps> = ({
   field: { label },
   fullField,
 }) => {
-  return <Field component={TextField} name={fullField} label={label} />;
+  return (
+    <Field
+      component={TextField}
+      name={fullField}
+      label={label}
+      type="time"
+      inputProps={{ step: 300 }}
+    />
+  );
 };

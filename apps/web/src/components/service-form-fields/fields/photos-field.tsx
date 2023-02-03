@@ -25,7 +25,7 @@ export const PhotosField: React.FC<ServiceFieldProps> = ({
             ...(values as any),
             data: {
               ...values.data,
-              photos: [...dataPhotos, ...photos],
+              [field]: [...dataPhotos, ...photos],
             },
           })
         }
@@ -34,7 +34,7 @@ export const PhotosField: React.FC<ServiceFieldProps> = ({
             ...(values as any),
             data: {
               ...values.data,
-              photos: dataPhotos.filter((photo) => photo !== item),
+              [field]: dataPhotos.filter((photo) => photo !== item),
             },
           })
         }

@@ -1,4 +1,6 @@
 import { Typography } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { ServiceNoId } from "dtos";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
@@ -62,48 +64,62 @@ export const ManageServiceForm: React.FC<Props> = ({
     });
 
   return (
-    <Formik
-      initialValues={service}
-      validationSchema={validationSchema}
-      onSubmit={(values) => onSave({ ...values, operator: operatorId as any })}
-    >
-      {({ isValid, isSubmitting, values, setValues }) => (
-        <FormBox title={title}>
-          <Field component={TextField} name="name" label="Service name" />
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Formik
+        initialValues={service}
+        validationSchema={validationSchema}
+        onSubmit={(values) =>
+          onSave({ ...values, operator: operatorId as any })
+        }
+      >
+        {({ isValid, isSubmitting, values, setValues }) => (
+          <FormBox title={title}>
+            <Field component={TextField} name="name" label="Service name" />
 
-          <Field
-            component={TextField}
-            name="description"
-            label="Description"
-            multiline
-            rows={4}
-          />
+            <Field
+              component={TextField}
+              name="description"
+              label="Description"
+              multiline
+              rows={4}
+            />
 
-          <Field component={TextField} name="adultPrice" label="Adult price" />
+            <Field
+              component={TextField}
+              name="adultPrice"
+              label="Adult price"
+            />
 
-          <Field component={TextField} name="childPrice" label="Child price" />
+            <Field
+              component={TextField}
+              name="childPrice"
+              label="Child price"
+            />
 
-          <ServiceFormFields
-            schema={getSchemaForServiceType(service.type)!}
-            isSubmitting={isSubmitting}
-            values={values}
-            setValues={setValues}
-          />
+            <ServiceFormFields
+              schema={getSchemaForServiceType(service.type)!}
+              isSubmitting={isSubmitting}
+              values={values}
+              setValues={setValues}
+            />
 
-          <SaveAndDelete
-            isValid={isValid}
-            saveStatus={saveStatus}
-            onDelete={handleDeleteService}
-            deleteStatus={deleteStatus}
-            deleteModalTitle="Delete service?"
-            deleteModalText="Are you sure you want to delete this service?"
-          />
+            <SaveAndDelete
+              isValid={isValid}
+              saveStatus={saveStatus}
+              onDelete={handleDeleteService}
+              deleteStatus={deleteStatus}
+              deleteModalTitle="Delete service?"
+              deleteModalText="Are you sure you want to delete this service?"
+            />
 
-          {saveStatus === "error" && (
-            <Typography>There was an error saving the service data</Typography>
-          )}
-        </FormBox>
-      )}
-    </Formik>
+            {saveStatus === "error" && (
+              <Typography>
+                There was an error saving the service data
+              </Typography>
+            )}
+          </FormBox>
+        )}
+      </Formik>
+    </LocalizationProvider>
   );
 };
