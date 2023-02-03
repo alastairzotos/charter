@@ -20,7 +20,7 @@ const OperatorsPage: NextPage<Props> = ({ operators }) => {
         description="View list of available operators"
       />
 
-      <Titled title="Tour operators">
+      <Titled title="Operators">
         <UserOperatorsList operators={operators} />
       </Titled>
     </UserLayoutContainer>

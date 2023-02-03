@@ -1,6 +1,6 @@
 import { Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { OperatorDto } from "dtos";
+import { getServiceTypeLabel, OperatorDto, serviceTypes } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 
@@ -9,18 +9,20 @@ import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserOperatorsList } from "src/components/user-operators-list";
 import { OperatorsService } from "src/services/operators.service";
-import { APP_NAME } from "src/util/misc";
+import { APP_NAME, pluralize } from "src/util/misc";
 
 interface Props {
   operators: OperatorDto[];
 }
 
 const Home: NextPage<Props> = ({ operators }) => {
+  const serviceList = serviceTypes.filter(type => type !== 'none').map(type => pluralize(2, getServiceTypeLabel(type).toLocaleLowerCase())).join(', ');
+
   return (
     <>
       <SeoHead
-        subtitle="Book boat trips, sun beds, and other services in Corfu"
-        description="Easily book boat trips, sun beds, and other services in Corfu"
+        subtitle={`${serviceList}, and other services in Corfu`}
+        description={`Easily book ${serviceList}, and other services in Corfu`}
       />
 
       <Box
@@ -53,7 +55,7 @@ const Home: NextPage<Props> = ({ operators }) => {
             height={200}
           />
 
-          <Typography variant="h3">The best way to explore Corfu</Typography>
+          <Typography variant="h3">The best way to enjoy Corfu</Typography>
           <Typography variant="h5" sx={{ pt: 1 }}>
             Easily book boat trips, sun beds, and other services for you and
             your family
@@ -62,7 +64,7 @@ const Home: NextPage<Props> = ({ operators }) => {
       </Box>
 
       <UserLayoutContainer>
-        <Titled title="Tour operators">
+        <Titled title="Operators">
           <UserOperatorsList operators={operators} />
         </Titled>
       </UserLayoutContainer>
@@ -79,7 +81,7 @@ const Home: NextPage<Props> = ({ operators }) => {
             </Step>
             <Step>
               <StepLabel>
-                Find a boat trip, sun bed, or other service that you like
+                Find a service that you like
               </StepLabel>
             </Step>
             <Step>
