@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { Fetchable } from "src/components/fetchable";
 import { ManageOperatorForm } from "src/components/operator-manage";
+import { StatusSwitch } from "src/components/status-switch";
 import {
   useDeleteOperator,
   useLoadOperator,
@@ -35,7 +35,7 @@ export const OperatorEdit: React.FC<Props> = ({ id }) => {
   }, [id]);
 
   return (
-    <Fetchable
+    <StatusSwitch
       status={loadOperatorStatus}
       error={<Typography>There was an error loading the operator</Typography>}
     >
@@ -47,6 +47,6 @@ export const OperatorEdit: React.FC<Props> = ({ id }) => {
         onDelete={() => deleteOperator(id)}
         deleteStatus={deleteOperatorStatus}
       />
-    </Fetchable>
+    </StatusSwitch>
   );
 };

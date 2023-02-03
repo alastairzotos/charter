@@ -1,9 +1,9 @@
 import { List, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { Fetchable } from "src/components/fetchable";
 import { ServiceCreateButton } from "src/components/service-create-button";
 import { ServiceListItem } from "src/components/service-list-item";
+import { StatusSwitch } from "src/components/status-switch";
 import { useLoadServices } from "src/state/services";
 
 interface Props {
@@ -21,7 +21,7 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
   }, [operatorId]);
 
   return (
-    <Fetchable
+    <StatusSwitch
       status={loadServicesStatus}
       error={
         <Typography>
@@ -40,6 +40,6 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
       </List>
 
       <ServiceCreateButton operatorId={operatorId} />
-    </Fetchable>
+    </StatusSwitch>
   );
 };

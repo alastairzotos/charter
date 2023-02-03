@@ -1,9 +1,9 @@
 import { Divider, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { Fetchable } from "src/components/fetchable";
 import { OperatorSummary } from "src/components/operator-summary";
 import { ServiceList } from "src/components/service-list";
+import { StatusSwitch } from "src/components/status-switch";
 import { Titled } from "src/components/titled";
 import { useLoadOperator } from "src/state/operators";
 
@@ -26,12 +26,12 @@ export const OperatorItem: React.FC<Props> = ({ id }) => {
 
   return (
     <>
-      <Fetchable
+      <StatusSwitch
         status={loadOperatorStatus}
         error={<Typography>There was an error loading the operator</Typography>}
       >
         <OperatorSummary operator={operator!} />
-      </Fetchable>
+      </StatusSwitch>
 
       <Divider sx={{ mb: 3, mt: 3 }} />
 

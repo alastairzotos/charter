@@ -5,8 +5,8 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { urls } from "urls";
 
-import { Fetchable } from "src/components/fetchable";
 import { OperatorListItem } from "src/components/operator-list-item";
+import { StatusSwitch } from "src/components/status-switch";
 import { useLoadOperators } from "src/state/operators";
 
 export const OperatorsList: React.FC = () => {
@@ -21,7 +21,7 @@ export const OperatorsList: React.FC = () => {
   }, [loadOperatorsStatus, loadOperators]);
 
   return (
-    <Fetchable
+    <StatusSwitch
       status={loadOperatorsStatus}
       error={<Typography>There was an error loading the operators</Typography>}
     >
@@ -39,6 +39,6 @@ export const OperatorsList: React.FC = () => {
       >
         Create
       </Button>
-    </Fetchable>
+    </StatusSwitch>
   );
 };

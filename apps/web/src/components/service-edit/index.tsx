@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { Fetchable } from "src/components/fetchable";
 import { ManageServiceForm } from "src/components/service-manage";
+import { StatusSwitch } from "src/components/status-switch";
 import {
   useDeleteService,
   useLoadService,
@@ -36,7 +36,7 @@ export const ServiceEdit: React.FC<Props> = ({ id, operatorId }) => {
   }, [id]);
 
   return (
-    <Fetchable
+    <StatusSwitch
       status={loadServiceStatus}
       error={<Typography>There was an error loading the service</Typography>}
     >
@@ -49,6 +49,6 @@ export const ServiceEdit: React.FC<Props> = ({ id, operatorId }) => {
         onDelete={() => deleteService(id)}
         deleteStatus={deleteServiceStatus}
       />
-    </Fetchable>
+    </StatusSwitch>
   );
 };

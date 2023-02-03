@@ -10,7 +10,7 @@ interface Props {
   error: React.ReactNode;
 }
 
-export const Fetchable: React.FC<React.PropsWithChildren<Props>> = ({
+export const StatusSwitch: React.FC<React.PropsWithChildren<Props>> = ({
   status,
   none,
   fetching,

@@ -4,8 +4,8 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { urls } from "urls";
 
-import { Fetchable } from "src/components/fetchable";
 import { OperatorBookingSummary } from "src/components/operator-booking-summary";
+import { StatusSwitch } from "src/components/status-switch";
 import { useLoadBooking } from "src/state/bookings";
 
 interface Props {
@@ -33,7 +33,7 @@ export const OperatorBooking: React.FC<Props> = ({ id }) => {
       </Button>
 
       <Box sx={{ mt: 2 }}>
-        <Fetchable
+        <StatusSwitch
           status={getBookingStatus}
           error={
             <Typography>
@@ -42,7 +42,7 @@ export const OperatorBooking: React.FC<Props> = ({ id }) => {
           }
         >
           <OperatorBookingSummary booking={booking!} />
-        </Fetchable>
+        </StatusSwitch>
       </Box>
     </>
   );

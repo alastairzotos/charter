@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { Fetchable } from "src/components/fetchable";
 import { OperatorBookingList } from "src/components/operator-booking-list";
+import { StatusSwitch } from "src/components/status-switch";
 import { useLoadBookingsForUser } from "src/state/bookings";
 
 export const OperatorBookings: React.FC = () => {
@@ -20,7 +20,7 @@ export const OperatorBookings: React.FC = () => {
     : undefined;
 
   return (
-    <Fetchable
+    <StatusSwitch
       status={getBookingsForUserStatus}
       error={
         <Typography>
@@ -32,6 +32,6 @@ export const OperatorBookings: React.FC = () => {
         title="Confirmed bookings"
         bookings={confirmedBookings}
       />
-    </Fetchable>
+    </StatusSwitch>
   );
 };
