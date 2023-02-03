@@ -6,7 +6,7 @@ import { AdminLayout } from "src/components/admin-layout";
 import { OperatorsLayout } from "src/components/operators-layout";
 import { PageWrapper } from "src/components/page-wrapper";
 import { UserLayout } from "src/components/user-layout";
-import { useUserState } from "src/state/user";
+import { useUserState } from "src/state/users";
 
 function Inner({ Component, pageProps, router }: AppProps) {
   const [initLocalStorage, initialised] = useUserState((s) => [

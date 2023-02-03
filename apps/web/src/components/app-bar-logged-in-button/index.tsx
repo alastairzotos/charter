@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { urls } from "urls";
 
-import { useUserState } from "src/state/user";
+import { useUserState } from "src/state/users";
 
 export const AppBarLoggedInButton: React.FC = () => {
   const [logout, loggedInUser] = useUserState((s) => [

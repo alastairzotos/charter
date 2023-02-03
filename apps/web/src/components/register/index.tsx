@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
 
-import { useUserState } from "src/state/user";
+import { useUserState } from "src/state/users";
 
 export const RegisterForm: React.FC = () => {
   const router = useRouter();

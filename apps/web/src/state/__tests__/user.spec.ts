@@ -6,7 +6,7 @@ import {
   ACCESS_TOKEN_LOCALSTORAGE_KEY,
   UserState,
   createUserState,
-} from "src/state/user";
+} from "src/state/users";
 
 describe("User state", () => {
   const mockUserService: Pick<UserService, keyof UserService> = {

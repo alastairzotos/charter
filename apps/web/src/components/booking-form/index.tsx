@@ -20,7 +20,7 @@ import * as yup from "yup";
 import { FormBox } from "src/components/form-box";
 import { KeyValue } from "src/components/key-value";
 import { useCreateBooking } from "src/state/bookings";
-import { useUserState } from "src/state/user";
+import { useUserState } from "src/state/users";
 
 const bookingModalStyle = {
   position: "absolute" as const,

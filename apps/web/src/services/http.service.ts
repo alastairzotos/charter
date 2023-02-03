@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
-import { useUserState } from "src/state/user";
+import { useUserState } from "src/state/users";
 import { getEnv } from "src/util/env";
 
 export class HttpService {
