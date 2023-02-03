@@ -1,3 +1,4 @@
+import { Avatar, ListItemAvatar } from "@mui/material";
 import ListItem from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { getServiceTypeLabel, ServiceDto } from "dtos";
@@ -6,7 +7,6 @@ import React from "react";
 import { urls } from "urls";
 
 import { shortenText } from "src/util/misc";
-import { Avatar, ListItemAvatar } from "@mui/material";
 
 interface Props {
   operatorId: string;

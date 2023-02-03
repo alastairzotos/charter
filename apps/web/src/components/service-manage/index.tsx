@@ -10,11 +10,11 @@ import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
 import * as yup from "yup";
 
+import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
 import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceFormFields } from "src/components/service-form-fields";
 import { FetchStatus } from "src/models";
-import { FileUpload } from "src/components/file-upload";
 
 interface Props {
   operatorId: string;
@@ -113,13 +113,13 @@ export const ManageServiceForm: React.FC<Props> = ({
               onChange={(photos) =>
                 setValues({
                   ...(values as any),
-                  photos: [...(values.photos || []), ...photos]
+                  photos: [...(values.photos || []), ...photos],
                 })
               }
               onDelete={(item) =>
                 setValues({
                   ...(values as any),
-                  photos: values.photos.filter((photo) => photo !== item)
+                  photos: values.photos.filter((photo) => photo !== item),
                 })
               }
             />

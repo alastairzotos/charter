@@ -19,7 +19,7 @@ export const Titled: React.FC<React.PropsWithChildren<Props>> = ({
     return (
       <>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Box sx={{ display: 'flex', verticalAlign: 'middle', gap: 1 }}>
+          <Box sx={{ display: "flex", verticalAlign: "middle", gap: 1 }}>
             {!!avatar && <Avatar src={avatar} />}
             <Typography variant="h6">{title}</Typography>
           </Box>
@@ -36,7 +36,7 @@ export const Titled: React.FC<React.PropsWithChildren<Props>> = ({
 
   return (
     <>
-      <Box sx={{ display: 'flex', verticalAlign: 'middle', gap: 1 }}>
+      <Box sx={{ display: "flex", verticalAlign: "middle", gap: 1 }}>
         {!!avatar && <Avatar src={avatar} />}
         <Typography variant="h6">{title}</Typography>
       </Box>
