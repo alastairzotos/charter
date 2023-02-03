@@ -21,7 +21,7 @@ const OperatorPage: NextPage<Props> = ({ operator, services }) => {
         description={`View details and services offered by ${operator.name}`}
       />
       <OperatorLayout operator={operator}>
-        <UserServicesView services={services} />
+        <UserServicesView services={services} groupByType />
       </OperatorLayout>
     </UserLayoutContainer>
   );

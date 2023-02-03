@@ -31,7 +31,7 @@ const ServiceTypePage: NextPage<Props> = ({ type, services }) => {
           </Typography>
         </Titled>
 
-        <UserServicesView showTitle={false} showOperator services={services} />
+        <UserServicesView showOperator services={services} />
       </UserLayoutContainer>
     </UserLayoutContainer>
   );

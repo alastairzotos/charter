@@ -11,7 +11,7 @@ interface Props {
   showOperator?: boolean;
 }
 
-const DESC_LENGTH = 250;
+const DESC_LENGTH = 100;
 
 export const UserServiceListItem: React.FC<Props> = ({
   service,
@@ -21,10 +21,6 @@ export const UserServiceListItem: React.FC<Props> = ({
     service.description.length > DESC_LENGTH
       ? service.description.substring(0, DESC_LENGTH - 3) + "..."
       : service.description;
-
-  const primaryText = `${service.name} - From €${service.adultPrice.toFixed(
-    2
-  )} per adult`;
 
   return (
     <ListItem
@@ -41,7 +37,7 @@ export const UserServiceListItem: React.FC<Props> = ({
       <ListItemText
         primary={
           <Typography>
-            {primaryText}
+            {service.name}
             {showOperator && (
               <>
                 <Avatar
