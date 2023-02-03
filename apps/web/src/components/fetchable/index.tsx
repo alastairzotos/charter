@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import React from "react";
 
-import { FetchStatus } from "src/models";
+import { FetchStatus } from "src/state/resource-slice";
 
 interface Props {
   status?: FetchStatus;

@@ -2,9 +2,9 @@ import { UserDetails } from "dtos";
 import * as jwt from "jsonwebtoken";
 import create from "zustand";
 
-import { FetchStatus } from "src/models";
 import { LocalStorageService } from "src/services/localstorage.service";
 import { UserService } from "src/services/user.service";
+import { FetchStatus } from "src/state/resource-slice";
 
 export const ACCESS_TOKEN_LOCALSTORAGE_KEY = "boatrental:auth-token";
 

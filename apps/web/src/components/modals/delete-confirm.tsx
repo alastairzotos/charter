@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 
-import { FetchStatus } from "src/models";
+import { FetchStatus } from "src/state/resource-slice";
 
 const style = {
   position: "absolute" as const,
