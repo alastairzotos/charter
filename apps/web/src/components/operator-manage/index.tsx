@@ -61,7 +61,7 @@ export const ManageOperatorForm: React.FC<Props> = ({
       onSubmit={onSave}
     >
       {({ isValid, isSubmitting, values, setValues }) => (
-        <FormBox title={title}>
+        <FormBox title={title} maxWidth={600}>
           <Field component={TextField} name="name" label="Operator name" />
 
           <Field

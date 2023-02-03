@@ -74,7 +74,7 @@ export const ManageServiceForm: React.FC<Props> = ({
         }
       >
         {({ isValid, isSubmitting, values, setValues }) => (
-          <FormBox title={title}>
+          <FormBox title={title} maxWidth={600}>
             <Field component={TextField} name="name" label="Service name" />
 
             <Field

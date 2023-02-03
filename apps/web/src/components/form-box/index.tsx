@@ -8,6 +8,7 @@ import { Titled } from "src/components/titled";
 interface Props {
   dirty?: boolean;
   title: string;
+  maxWidth?: number;
   onClose?: () => void;
 }
 
@@ -31,6 +32,7 @@ const useWarnIfDirty = (dirty: boolean, callback: () => boolean) => {
 export const FormBox: React.FC<React.PropsWithChildren<Props>> = ({
   dirty,
   title,
+  maxWidth,
   onClose,
   children,
 }) => {
@@ -48,7 +50,7 @@ export const FormBox: React.FC<React.PropsWithChildren<Props>> = ({
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            maxWidth: 600,
+            maxWidth,
           }}
         >
           {children}
