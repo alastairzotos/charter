@@ -11,7 +11,7 @@ import { DropzoneDialog } from "react-mui-dropzone";
 
 import { FileUploadItem } from "src/components/file-upload/item";
 import { Titled } from "src/components/titled";
-import { useImagesState } from "src/state/images";
+import { useUploadImages } from "src/state/images";
 import { pluralize } from "src/util/misc";
 
 interface Props {
@@ -39,9 +39,9 @@ export const FileUpload: React.FC<Props> = ({
 }) => {
   const [open, setOpen] = useState(false);
 
-  const [uploadImages, uploadStatus] = useImagesState((s) => [
-    s.uploadImages,
-    s.uploadStatus,
+  const [uploadStatus, uploadImages] = useUploadImages((s) => [
+    s.status,
+    s.request,
   ]);
 
   return (

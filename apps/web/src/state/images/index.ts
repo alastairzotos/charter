@@ -1,39 +1,17 @@
-import create from "zustand";
-
-import { FetchStatus } from "src/models";
 import { ImagesService } from "src/services/images.service";
+import { createSlice } from "src/state/resource-slice";
 
-export interface ImagesStateValues {
-  uploadStatus?: FetchStatus;
-}
+const svc = new ImagesService();
 
-export interface ImagesStateActions {
-  uploadImages: (
-    files: File[],
-    onDone: (urls: string[]) => void
-  ) => Promise<void>;
-}
+export const useUploadImages = createSlice<
+  void,
+  [file: File[], onDone: (urls: string[]) => void]
+>(null, async (files, onDone) => {
+  const urls: string[] = [];
 
-export type ImagesState = ImagesStateValues & ImagesStateActions;
+  for (const file of files) {
+    urls.push(await svc.uploadImage(file));
+  }
 
-export const createImagesState = (
-  initialValues: ImagesStateValues,
-  imagesService: Pick<ImagesService, keyof ImagesService>
-) =>
-  create<ImagesState>((set) => ({
-    ...initialValues,
-
-    uploadImages: async (files, onDone) => {
-      set({ uploadStatus: "fetching" });
-      const urls: string[] = [];
-
-      for (const file of files) {
-        urls.push(await imagesService.uploadImage(file));
-      }
-
-      set({ uploadStatus: "success" });
-      onDone(urls);
-    },
-  }));
-
-export const useImagesState = createImagesState({}, new ImagesService());
+  onDone(urls);
+});
