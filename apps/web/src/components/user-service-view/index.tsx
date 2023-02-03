@@ -39,7 +39,11 @@ export const UserServiceView: React.FC<Props> = ({
       )}
 
       <Titled title={service.name}>
-        <Typography sx={{ mt: 2, mb: 2 }}>{service.description}</Typography>
+        {service.description.split("\n").map((line, index) => (
+          <Typography key={index} sx={{ mt: 2, mb: 2 }}>
+            {line}
+          </Typography>
+        ))}
 
         {!bookingView && (
           <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>

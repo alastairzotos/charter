@@ -37,11 +37,17 @@ export const OperatorView: React.FC<Props> = ({ operator }) => {
 
       <Stack direction="row" alignItems="center" gap={1} sx={{ mt: 2, ml: 1 }}>
         <HomeIcon />
-        <Typography variant="subtitle2">{operator.address}</Typography>
+        <Typography variant="subtitle2">
+          {operator.address.split("\n").join(", ")}
+        </Typography>
       </Stack>
 
       <Box sx={{ mt: 4, ml: 1 }}>
-        <Typography variant="subtitle2">{operator.description}</Typography>
+        {operator.description.split("\n").map((line, index) => (
+          <Typography key={index} variant="subtitle2">
+            {line}
+          </Typography>
+        ))}
       </Box>
     </>
   );
