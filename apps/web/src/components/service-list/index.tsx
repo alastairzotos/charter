@@ -12,11 +12,12 @@ interface Props {
 }
 
 export const ServiceList: React.FC<Props> = ({ operatorId }) => {
-  const [loadServicesStatus, loadServicesForOperator, services] = useServicesState((s) => [
-    s.loadServicesStatus,
-    s.loadServicesForOperator,
-    s.services,
-  ]);
+  const [loadServicesStatus, loadServicesForOperator, services] =
+    useServicesState((s) => [
+      s.loadServicesStatus,
+      s.loadServicesForOperator,
+      s.services,
+    ]);
 
   useEffect(() => {
     if (operatorId) {
@@ -35,7 +36,11 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
     >
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         {services.map((service) => (
-          <ServiceListItem key={service._id} operatorId={operatorId} service={service} />
+          <ServiceListItem
+            key={service._id}
+            operatorId={operatorId}
+            service={service}
+          />
         ))}
       </List>
 

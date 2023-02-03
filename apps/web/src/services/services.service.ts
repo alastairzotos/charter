@@ -28,7 +28,10 @@ export class ServicesService extends HttpService {
     return data;
   }
 
-  async updateService(id: string, newService: Partial<ServiceNoId>): Promise<void> {
+  async updateService(
+    id: string,
+    newService: Partial<ServiceNoId>
+  ): Promise<void> {
     await this.httpClient.patch<
       any,
       unknown,

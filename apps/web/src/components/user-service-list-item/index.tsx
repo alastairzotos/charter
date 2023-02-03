@@ -29,7 +29,9 @@ export const UserServiceListItem: React.FC<Props> = ({ service }) => {
       </ListItemAvatar>
 
       <ListItemText
-        primary={`${service.name} - From €${service.adultPrice.toFixed(2)} per adult`}
+        primary={`${service.name} - From €${service.adultPrice.toFixed(
+          2
+        )} per adult`}
         secondary={desc}
       />
     </ListItem>

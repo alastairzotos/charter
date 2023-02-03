@@ -55,7 +55,8 @@ const Home: NextPage<Props> = ({ operators }) => {
 
           <Typography variant="h3">The best way to explore Corfu</Typography>
           <Typography variant="h5" sx={{ pt: 1 }}>
-            Easily book boat trips, sun beds, and other services for you and your family
+            Easily book boat trips, sun beds, and other services for you and
+            your family
           </Typography>
         </Box>
       </Box>
@@ -77,7 +78,9 @@ const Home: NextPage<Props> = ({ operators }) => {
               <StepLabel>Find an operator near you</StepLabel>
             </Step>
             <Step>
-              <StepLabel>Find a boat trip, sun bed, or other service that you like</StepLabel>
+              <StepLabel>
+                Find a boat trip, sun bed, or other service that you like
+              </StepLabel>
             </Step>
             <Step>
               <StepLabel>Book the service!</StepLabel>

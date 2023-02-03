@@ -21,7 +21,10 @@ export interface ServicesStateValues {
 export interface ServicesStateActions {
   loadServicesForOperator: (operatorId: string) => Promise<void>;
   loadService: (id: string) => Promise<void>;
-  updateService: (id: string, newService: Partial<ServiceNoId>) => Promise<void>;
+  updateService: (
+    id: string,
+    newService: Partial<ServiceNoId>
+  ) => Promise<void>;
   deleteService: (id: string) => Promise<void>;
   createService: (service: ServiceNoId) => Promise<void>;
 }
@@ -41,7 +44,9 @@ export const createServicesState = (
       try {
         set({ loadServicesStatus: "fetching" });
 
-        const services = await servicesService.getServicesForOperator(operatorId);
+        const services = await servicesService.getServicesForOperator(
+          operatorId
+        );
 
         set({ loadServicesStatus: "success", services });
       } catch {

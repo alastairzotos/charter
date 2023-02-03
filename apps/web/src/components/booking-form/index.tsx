@@ -60,7 +60,11 @@ const validationSchema: yup.SchemaOf<
     .required("Enter number of children"),
 });
 
-export const BookingForm: React.FC<Props> = ({ operator, service, onClose }) => {
+export const BookingForm: React.FC<Props> = ({
+  operator,
+  service,
+  onClose,
+}) => {
   const router = useRouter();
 
   const loggedinUser = useUserState((s) => s.loggedInUser);

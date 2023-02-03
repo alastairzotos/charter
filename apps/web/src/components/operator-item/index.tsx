@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 
 import { Fetchable } from "src/components/fetchable";
 import { OperatorSummary } from "src/components/operator-summary";
-import { Titled } from "src/components/titled";
 import { ServiceList } from "src/components/service-list";
+import { Titled } from "src/components/titled";
 import { useOperatorsState } from "src/state/operators";
 
 interface Props {

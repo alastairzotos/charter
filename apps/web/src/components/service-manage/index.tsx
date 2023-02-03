@@ -73,7 +73,11 @@ export const ManageServiceForm: React.FC<Props> = ({
         <FormBox title={title}>
           <Field component={TextField} name="name" label="Service name" />
 
-          <Field component={TextField} name="duration" label="Service duration" />
+          <Field
+            component={TextField}
+            name="duration"
+            label="Service duration"
+          />
 
           <Field
             component={TextField}

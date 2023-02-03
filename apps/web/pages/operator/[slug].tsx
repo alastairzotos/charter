@@ -43,9 +43,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   const operatorsService = new OperatorsService();
 
   try {
-    const { operator, services } = await operatorsService.getOperatorWithServicesById(
-      operatorId
-    );
+    const { operator, services } =
+      await operatorsService.getOperatorWithServicesById(operatorId);
 
     return {
       props: {
