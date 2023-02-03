@@ -48,7 +48,7 @@ export const FormBox: React.FC<React.PropsWithChildren<Props>> = ({
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            width: "50%",
+            maxWidth: 600
           }}
         >
           {children}
