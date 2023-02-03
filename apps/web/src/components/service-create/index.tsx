@@ -9,7 +9,7 @@ import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
 
 import { ManageServiceForm } from "src/components/service-manage";
-import { useServicesState } from "src/state/services";
+import { useCreateService } from "src/state/services";
 
 interface Props {
   operatorId: string;
@@ -18,9 +18,10 @@ interface Props {
 
 export const ServiceCreate: React.FC<Props> = ({ operatorId, type }) => {
   const router = useRouter();
-  const [createServiceStatus, createService] = useServicesState((s) => [
-    s.createServiceStatus,
-    s.createService,
+
+  const [createServiceStatus, createService] = useCreateService((s) => [
+    s.status,
+    s.request,
   ]);
 
   const handleCreateService = async (service: ServiceNoId) => {

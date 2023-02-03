@@ -3,7 +3,11 @@ import React, { useEffect } from "react";
 
 import { Fetchable } from "src/components/fetchable";
 import { ManageServiceForm } from "src/components/service-manage";
-import { useServicesState } from "src/state/services";
+import {
+  useDeleteService,
+  useLoadService,
+  useUpdateService,
+} from "src/state/services";
 
 interface Props {
   id: string;
@@ -11,18 +15,18 @@ interface Props {
 }
 
 export const ServiceEdit: React.FC<Props> = ({ id, operatorId }) => {
-  const [loadServiceStatus, loadService, service] = useServicesState((s) => [
-    s.loadServiceStatus,
-    s.loadService,
-    s.service,
+  const [loadServiceStatus, loadService, service] = useLoadService((s) => [
+    s.status,
+    s.request,
+    s.value,
   ]);
-  const [updateServiceStatus, updateService] = useServicesState((s) => [
-    s.updateServiceStatus,
-    s.updateService,
+  const [updateServiceStatus, updateService] = useUpdateService((s) => [
+    s.status,
+    s.request,
   ]);
-  const [deleteServiceStatus, deleteService] = useServicesState((s) => [
-    s.deleteServiceStatus,
-    s.deleteService,
+  const [deleteServiceStatus, deleteService] = useDeleteService((s) => [
+    s.status,
+    s.request,
   ]);
 
   useEffect(() => {

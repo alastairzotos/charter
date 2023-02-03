@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Fetchable } from "src/components/fetchable";
 import { ServiceCreateButton } from "src/components/service-create-button";
 import { ServiceListItem } from "src/components/service-list-item";
-import { useServicesState } from "src/state/services";
+import { useLoadServices } from "src/state/services";
 
 interface Props {
   operatorId: string;
@@ -12,11 +12,7 @@ interface Props {
 
 export const ServiceList: React.FC<Props> = ({ operatorId }) => {
   const [loadServicesStatus, loadServicesForOperator, services] =
-    useServicesState((s) => [
-      s.loadServicesStatus,
-      s.loadServicesForOperator,
-      s.services,
-    ]);
+    useLoadServices((s) => [s.status, s.request, s.value]);
 
   useEffect(() => {
     if (operatorId) {
@@ -34,7 +30,7 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
       }
     >
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {services.map((service) => (
+        {services!.map((service) => (
           <ServiceListItem
             key={service._id}
             operatorId={operatorId}

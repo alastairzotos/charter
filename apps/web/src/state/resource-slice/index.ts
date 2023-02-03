@@ -1,14 +1,6 @@
-// import { BookingsService } from "src/services/bookings.service";
-// import { BookingDto, BookingNoId } from "dtos";
-
 import create, { Mutate, StoreApi } from "zustand";
 
-/*
-Sample code:
-  Possible better way to handle state in a reusable way.
-*/
-
-export type FetchStatus = 'fetching' | 'success' | 'error';;
+export type FetchStatus = "fetching" | "success" | "error";
 
 export interface SliceValues<T> {
   status?: FetchStatus;
@@ -16,7 +8,7 @@ export interface SliceValues<T> {
 }
 
 export interface SliceActions<A extends any[]> {
-  load: (...args: A) => Promise<void>;
+  request: (...args: A) => Promise<void>;
 }
 
 export type SliceState<T, A extends any[]> = SliceValues<T> & SliceActions<A>;
@@ -24,49 +16,36 @@ export type SliceState<T, A extends any[]> = SliceValues<T> & SliceActions<A>;
 type Get<T, K, F> = K extends keyof T ? T[K] : F;
 
 type HookFn<T, A extends any[]> = (
-  setState: Get<Mutate<StoreApi<SliceState<T, A>>, []>, 'setState', never>,
-  getState: Get<Mutate<StoreApi<SliceState<T, A>>, []>, 'getState', never>
+  setState: Get<Mutate<StoreApi<SliceState<T, A>>, []>, "setState", never>,
+  getState: Get<Mutate<StoreApi<SliceState<T, A>>, []>, "getState", never>
 ) => void;
 
 export const createSlice = <T, A extends any[]>(
   initialValue: T | null,
-  load: (...args: A) => Promise<T>,
+  request: (...args: A) => Promise<T>,
   opts?: {
-    beforeLoad?: HookFn<T, A>;
-    afterLoad?: HookFn<T, A>;
+    beforeRequest?: HookFn<T, A>;
+    afterRequest?: HookFn<T, A>;
   }
 ) =>
   create<SliceState<T, A>>((set, self) => ({
     value: initialValue,
 
-    load: async (...args) => {
-      const beforeLoad = opts?.beforeLoad || (() => {});
-      const afterLoad = opts?.afterLoad || (() => {});
+    request: async (...args) => {
+      const beforeRequest = opts?.beforeRequest;
+      const afterRequest = opts?.afterRequest;
 
       try {
-        beforeLoad(set, self);
-        set({ status: 'fetching' });
+        beforeRequest?.(set, self);
+        set({ status: "fetching" });
 
-        const value = await load(...args);
+        const value = await request(...args);
 
-        set({ status: 'success', value });
+        set({ status: "success", value });
 
-        afterLoad(set, self);
+        afterRequest?.(set, self);
       } catch {
-        set({ status: 'error' });
+        set({ status: "error" });
       }
-    }
+    },
   }));
-
-// const svc = new BookingsService();
-// const useBookingState = createSlice<BookingDto, [string]>(null, async (id: string) => await svc.getBookingById(id));
-// const useBookingsState = createSlice<BookingDto[], []>([], async () => await svc.getBookingsForUser());
-// const useCreateBookingsState = createSlice<string, [BookingNoId]>(
-//   null,
-//   async (booking) => await svc.createBooking(booking),
-//   {
-//     postLoad: () => useBookingsState.getState().load()
-//   }
-// );
-
-// const [status, value, load] = useBookingState(s => [s.status, s.value, s.load]);
