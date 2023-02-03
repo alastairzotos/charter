@@ -19,12 +19,13 @@ const mockOperator: OperatorDto = {
 
 const mockService: ServiceDto = {
   _id: '',
-  type: 'boat',
+  type: 'boat-trip',
   adultPrice: 10,
   childPrice: 5,
   description: '',
   name: '',
   operator: mockOperator,
+  photos: [],
   data: { fields: [] }
 };
 
