@@ -48,6 +48,7 @@ export const getDefaultValuesForServiceSchema = (serviceSchema: ServiceSchemaDto
     {}
   )
 }
+
 export interface ServiceDto {
   _id: string;
   operator: OperatorDto;
