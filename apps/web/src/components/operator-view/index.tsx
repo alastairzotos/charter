@@ -1,29 +1,42 @@
 import EmailIcon from "@mui/icons-material/Email";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HomeIcon from "@mui/icons-material/Home";
 import PhoneIcon from "@mui/icons-material/Phone";
-import { Avatar, Box, Typography } from "@mui/material";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Avatar,
+  Box,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { Stack } from "@mui/system";
 import { OperatorDto } from "dtos";
-import React from "react";
+import React, { useState } from "react";
 
 interface Props {
   operator: OperatorDto;
 }
 
-export const OperatorView: React.FC<Props> = ({ operator }) => {
+interface InnerProps extends Props {
+  showTitle: boolean;
+}
+
+const OperatorViewTitle: React.FC<Props> = ({ operator }) => (
+  <Box sx={{ display: "flex" }}>
+    <Avatar alt={operator.name + " logo"} src={operator.photo} sx={{ mr: 2 }} />
+
+    <Typography variant="h5" sx={{ mt: 0.5 }}>
+      {operator.name}
+    </Typography>
+  </Box>
+);
+
+const OperatorViewInner: React.FC<InnerProps> = ({ operator, showTitle }) => {
   return (
     <>
-      <Box sx={{ display: "flex" }}>
-        <Avatar
-          alt={operator.name + " logo"}
-          src={operator.photo}
-          sx={{ mr: 2 }}
-        />
-
-        <Typography variant="h5" sx={{ mt: 0.5 }}>
-          {operator.name}
-        </Typography>
-      </Box>
+      {showTitle && <OperatorViewTitle operator={operator} />}
 
       <Stack direction="row" alignItems="center" gap={1} sx={{ mt: 2, ml: 1 }}>
         <EmailIcon />
@@ -48,6 +61,37 @@ export const OperatorView: React.FC<Props> = ({ operator }) => {
             {line}
           </Typography>
         ))}
+      </Box>
+    </>
+  );
+};
+
+export const OperatorViewMobile: React.FC<Props> = (props) => {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+        <OperatorViewTitle {...props} />
+      </AccordionSummary>
+      <AccordionDetails>
+        <OperatorViewInner showTitle={false} {...props} />
+      </AccordionDetails>
+    </Accordion>
+  );
+};
+
+export const OperatorView: React.FC<Props> = (props) => {
+  return (
+    <>
+      <Box sx={{ display: { xs: "block", lg: "none" } }}>
+        <OperatorViewMobile {...props} />
+      </Box>
+
+      <Box sx={{ display: { xs: "none", lg: "block" } }}>
+        <Paper sx={{ p: 3 }}>
+          <OperatorViewInner showTitle {...props} />
+        </Paper>
       </Box>
     </>
   );
