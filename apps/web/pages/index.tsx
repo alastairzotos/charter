@@ -19,7 +19,7 @@ const Home: NextPage<Props> = ({ operators }) => {
   return (
     <>
       <SeoHead
-        subtitle="Book boat trips, sun beds, and others in Corfu"
+        subtitle="Book boat trips, sun beds, and other services in Corfu"
         description="Easily book boat trips, sun beds, and other services in Corfu"
       />
 
