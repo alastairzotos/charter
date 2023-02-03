@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { urls } from "urls";
 
 import { Fetchable } from "src/components/fetchable";
+import { ServiceCreateButton } from "src/components/service-create-button";
 import { ServiceListItem } from "src/components/service-list-item";
 import { useServicesState } from "src/state/services";
 
@@ -44,14 +45,7 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
         ))}
       </List>
 
-      <Button
-        variant="contained"
-        component={Link}
-        href={urls.admin.servicesCreate(operatorId)}
-        sx={{ mt: 3 }}
-      >
-        Add service
-      </Button>
+      <ServiceCreateButton operatorId={operatorId} />
     </Fetchable>
   );
 };

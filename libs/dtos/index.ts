@@ -10,17 +10,57 @@ export interface OperatorDto {
 
 export type OperatorNoId = Omit<OperatorDto, '_id'>;
 
+export const serviceTypes = ['none', 'boat', 'sunbed'] as const;
+
+export type ServiceType = typeof serviceTypes[number];
+
+export const getServiceTypeLabel = (serviceType: ServiceType): string => ({
+  none: 'None',
+  boat: 'Boat',
+  sunbed: 'Sun bed'
+} as Record<ServiceType, string>)[serviceType]
+
+export type ServiceSchemaFieldType = 'string' | 'time' | 'timeframe' | 'photos';
+
+export interface ServiceSchemaFieldDto {
+  field: string;
+  type: ServiceSchemaFieldType;
+  label: string;
+}
+
+export interface ServiceSchemaDto {
+  fields: ServiceSchemaFieldDto[];
+}
+
+export type ServiceFieldValue = string | string[];
+
+export const getDefaultValueForServiceSchemaFieldType = (schemaFieldType: ServiceSchemaFieldType): ServiceFieldValue => {
+  switch (schemaFieldType) {
+    case 'string': return '';
+    case 'time': return '9am';
+    case 'timeframe': return '1 hour';
+    case 'photos': return [];
+  }
+}
+
+export const getDefaultValuesForServiceSchema = (serviceSchema: ServiceSchemaDto): Record<string, ServiceFieldValue> => {
+  return serviceSchema.fields.reduce<Record<string, ServiceFieldValue>>(
+    (acc, cur) => ({
+      ...acc,
+      [cur.field]: getDefaultValueForServiceSchemaFieldType(cur.type)
+    }),
+    {}
+  )
+}
 export interface ServiceDto {
   _id: string;
   operator: OperatorDto;
+  type: ServiceType;
   name: string;
-  duration: string;
-  startLocation: string;
-  startTime: string;
   description: string;
-  photos: string[];
   adultPrice: number;
   childPrice: number;
+  data: Record<string, ServiceFieldValue>;
 }
 
 export type ServiceNoId = Omit<ServiceDto, '_id'>;

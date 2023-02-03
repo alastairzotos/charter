@@ -39,9 +39,9 @@ export const UserServiceView: React.FC<Props> = ({
       <Titled title={service.name}>
         <Typography sx={{ mt: 2, mb: 2 }}>{service.description}</Typography>
 
-        <KeyValue label="Start location" value={service.startLocation} />
+        {/* <KeyValue label="Start location" value={service.startLocation} />
         <KeyValue label="Start time" value={service.startTime} />
-        <KeyValue label="Duration" value={service.duration} />
+        <KeyValue label="Duration" value={service.duration} /> */}
         <KeyValue
           label="Adult Price"
           value={"€" + service.adultPrice.toFixed(2)}
@@ -65,9 +65,9 @@ export const UserServiceView: React.FC<Props> = ({
           </Box>
         )}
 
-        {service.photos && service.photos.length > 0 && (
+        {/* {service.photos && service.photos.length > 0 && (
           <ImageGallery items={service.photos} />
-        )}
+        )} */}
       </Titled>
 
       <Modal open={bookingModalOpen} onClose={() => setBookingModalOpen(false)}>

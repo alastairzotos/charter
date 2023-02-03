@@ -1,15 +1,16 @@
 import { Typography } from "@mui/material";
 import { ServiceNoId } from "dtos";
-import { ErrorMessage, Field, Formik } from "formik";
+import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
+import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
 import * as yup from "yup";
 
-import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
 import { SaveAndDelete } from "src/components/save-delete";
+import { ServiceFormFields } from "src/components/service-form-fields";
 import { FetchStatus } from "src/models";
 
 interface Props {
@@ -23,25 +24,6 @@ interface Props {
   onDelete?: () => Promise<void>;
   deleteStatus?: FetchStatus;
 }
-
-const validationSchema: yup.SchemaOf<Omit<ServiceNoId, "operator">> = yup
-  .object()
-  .shape({
-    name: yup.string().required("Name is required"),
-    description: yup.string().required("Description is required"),
-    startTime: yup.string().required("Start time is required"),
-    duration: yup.string().required("Duration is required"),
-    startLocation: yup.string().required("Start location is required"),
-    adultPrice: yup
-      .number()
-      .required("Adult price is required")
-      .typeError("Price must be a number"),
-    childPrice: yup
-      .number()
-      .required("Child price is required")
-      .typeError("Price must be a number"),
-    photos: yup.array().of(yup.string().required("Photo is required")),
-  });
 
 export const ManageServiceForm: React.FC<Props> = ({
   operatorId,
@@ -63,6 +45,22 @@ export const ManageServiceForm: React.FC<Props> = ({
       }
     });
 
+  const validationSchema: yup.SchemaOf<Omit<ServiceNoId, "type" | "operator">> =
+    yup.object().shape({
+      name: yup.string().required("Name is required"),
+      description: yup.string().required("Description is required"),
+      adultPrice: yup
+        .number()
+        .required("Adult price is required")
+        .typeError("Price must be a number"),
+      childPrice: yup
+        .number()
+        .required("Child price is required")
+        .typeError("Price must be a number"),
+      photos: yup.array().of(yup.string().required("Photo is required")),
+      data: yup.object(),
+    });
+
   return (
     <Formik
       initialValues={service}
@@ -72,20 +70,6 @@ export const ManageServiceForm: React.FC<Props> = ({
       {({ isValid, isSubmitting, values, setValues }) => (
         <FormBox title={title}>
           <Field component={TextField} name="name" label="Service name" />
-
-          <Field
-            component={TextField}
-            name="duration"
-            label="Service duration"
-          />
-
-          <Field
-            component={TextField}
-            name="startLocation"
-            label="Starting location"
-          />
-
-          <Field component={TextField} name="startTime" label="Start time" />
 
           <Field
             component={TextField}
@@ -99,23 +83,12 @@ export const ManageServiceForm: React.FC<Props> = ({
 
           <Field component={TextField} name="childPrice" label="Child price" />
 
-          <FileUpload
-            title="Photos"
-            filesLimit={100}
-            acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-            disabled={isSubmitting}
-            value={values.photos}
-            onChange={(photos) =>
-              setValues({ ...values, photos: [...values.photos, ...photos] })
-            }
-            onDelete={(item) =>
-              setValues({
-                ...values,
-                photos: values.photos.filter((photo) => photo !== item),
-              })
-            }
+          <ServiceFormFields
+            schema={getSchemaForServiceType(service.type)!}
+            isSubmitting={isSubmitting}
+            values={values}
+            setValues={setValues}
           />
-          <ErrorMessage name="photos" />
 
           <SaveAndDelete
             isValid={isValid}

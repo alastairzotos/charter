@@ -1,3 +1,4 @@
+import { ServiceType } from "dtos";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
@@ -8,6 +9,7 @@ import { ServiceCreate } from "src/components/service-create";
 const CreateServicePage: React.FC = () => {
   const router = useRouter();
   const operatorId = router.query.id as string;
+  const type = router.query.type as ServiceType;
 
   return (
     <>
@@ -21,7 +23,7 @@ const CreateServicePage: React.FC = () => {
         current="Create service"
       />
 
-      <ServiceCreate operatorId={operatorId} />
+      <ServiceCreate operatorId={operatorId} type={type} />
     </>
   );
 };

@@ -19,11 +19,7 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
     >
       <ListItemText
         primary={service.name}
-        secondary={
-          <>
-            {service.startLocation} - {service.startTime}
-          </>
-        }
+        secondary={<>{service.description}</>}
       />
     </ListItem>
   );

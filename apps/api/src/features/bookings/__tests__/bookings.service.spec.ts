@@ -19,15 +19,13 @@ const mockOperator: OperatorDto = {
 
 const mockService: ServiceDto = {
   _id: '',
+  type: 'boat',
   adultPrice: 10,
   childPrice: 5,
   description: '',
-  duration: '',
   name: '',
   operator: mockOperator,
-  photos: [],
-  startLocation: '',
-  startTime: '',
+  data: { fields: [] }
 };
 
 const mockBooking: BookingNoId = {

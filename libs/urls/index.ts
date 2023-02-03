@@ -1,5 +1,5 @@
 import { paramCase } from 'change-case';
-import { OperatorDto, ServiceDto } from "dtos";
+import { OperatorDto, ServiceDto, ServiceType } from "dtos";
 
 type UrlFn = (...args: any[]) => string;
 
@@ -17,7 +17,7 @@ export const urls = {
     operatorsCreate: () => '/admin/operators/create',
     operator: (id: string) => `/admin/operators/${id}`,
     operatorEdit: (id: string) => `/admin/operators/${id}/edit`,
-    servicesCreate: (operatorId: string) => `/admin/operators/${operatorId}/services/create`,
+    servicesCreate: (operatorId: string, type: ServiceType) => `/admin/operators/${operatorId}/services/create?type=${type}`,
     service: (operatorId: string, id: string) => `/admin/operators/${operatorId}/services/${id}`
   },
   user: {

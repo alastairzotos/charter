@@ -24,9 +24,9 @@ export const UserServiceListItem: React.FC<Props> = ({ service }) => {
       component={Link}
       href={urls.user.service(service)}
     >
-      <ListItemAvatar>
+      {/* <ListItemAvatar>
         <Avatar alt={service.name} src={service.photos[0]} />
-      </ListItemAvatar>
+      </ListItemAvatar> */}
 
       <ListItemText
         primary={`${service.name} - From €${service.adultPrice.toFixed(

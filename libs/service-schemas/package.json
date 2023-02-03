@@ -1,5 +1,5 @@
 {
-  "name": "dtos",
+  "name": "service-schemas",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
@@ -7,6 +7,9 @@
     "test": "echo \"No tests specified\"",
     "build": "tsc",
     "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "dtos": "*"
   },
   "author": "",
   "license": "ISC",

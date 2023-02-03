@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ServiceDto } from 'dtos';
+import { ServiceDto, ServiceFieldValue, ServiceSchemaDto, ServiceType } from 'dtos';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
 import { Operator } from 'schemas/operator.schema';
 
-@Schema({ collection: 'trips' })
+@Schema({ collection: 'services' })
 export class Service implements ServiceDto {
   _id: string;
 
@@ -12,28 +12,22 @@ export class Service implements ServiceDto {
   operator: Operator;
 
   @Prop()
+  type: ServiceType;
+
+  @Prop()
   name: string;
 
   @Prop()
-  duration: string;
-
-  @Prop()
-  startLocation: string;
-
-  @Prop()
-  startTime: string;
-
-  @Prop()
   description: string;
-
-  @Prop([String])
-  photos: string[];
 
   @Prop()
   adultPrice: number;
 
   @Prop()
   childPrice: number;
+
+  @Prop({ type: Array })
+  data: Record<string, ServiceFieldValue>;
 }
 
 export const ServiceSchema = SchemaFactory.createForClass(Service);
