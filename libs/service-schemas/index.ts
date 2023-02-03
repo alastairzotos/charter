@@ -1,4 +1,4 @@
-import { ServiceNoId, ServiceSchemaDto, ServiceSchemaFieldDto, ServiceSchemaFieldType, ServiceType } from 'dtos';
+import { ServiceSchemaDto, ServiceType } from 'dtos';
 
 export const BoatSchema: ServiceSchemaDto = {
   fields: [
