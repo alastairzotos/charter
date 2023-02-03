@@ -10,17 +10,17 @@ export const useLoadOperators = createSlice<OperatorDto[]>(
   async () => await svc.getOperators()
 );
 
-export const useLoadOperator = createSlice<OperatorDto, [string]>(
+export const useLoadOperator = createSlice<OperatorDto, [id: string]>(
   null,
   async (id) => await svc.getOperator(id)
 );
 
 export const useUpdateOperator = createSlice<
   void,
-  [string, Partial<OperatorDto>]
+  [id: string, newOperator: Partial<OperatorDto>]
 >(null, async (id, newOperator) => await svc.updateOperator(id, newOperator));
 
-export const useCreateOperator = createSlice<string, [OperatorNoId]>(
+export const useCreateOperator = createSlice<string, [operator: OperatorNoId]>(
   null,
   async (operator) => {
     const id = await svc.createOperator(operator);
@@ -29,7 +29,7 @@ export const useCreateOperator = createSlice<string, [OperatorNoId]>(
   }
 );
 
-export const useDeleteOperator = createSlice<void, [string]>(
+export const useDeleteOperator = createSlice<void, [id: string]>(
   null,
   async (id) => {
     await svc.deleteOperator(id);

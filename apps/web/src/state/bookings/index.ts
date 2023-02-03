@@ -10,20 +10,20 @@ export const useLoadBookingsForUser = createSlice<BookingDto[]>(
   async () => await svc.getBookingsForUser()
 );
 
-export const useLoadBooking = createSlice<BookingDto, [string]>(
+export const useLoadBooking = createSlice<BookingDto, [id: string]>(
   null,
   async (id) => svc.getBookingById(id)
 );
 
-export const useCreateBooking = createSlice<string, [BookingNoId]>(
+export const useCreateBooking = createSlice<string, [booking: BookingNoId]>(
   null,
   async (booking) => await svc.createBooking(booking)
 );
 
-export const useSetBookingStatus = createSlice<void, [string, BookingStatus]>(
-  null,
-  async (id, status) => {
-    await svc.setBookingStatus(id, status);
-    useLoadBookingsForUser.getState().request();
-  }
-);
+export const useSetBookingStatus = createSlice<
+  void,
+  [id: string, status: BookingStatus]
+>(null, async (id, status) => {
+  await svc.setBookingStatus(id, status);
+  useLoadBookingsForUser.getState().request();
+});
