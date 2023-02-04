@@ -4,16 +4,14 @@ import {
   Checkbox,
   TextField,
 } from "@mui/material";
-import { Field } from "formik";
 import React from "react";
-// import { TextField } from "formik-mui";
 
 interface Props {
   checkboxLabel: string;
   label: string;
   defaultValue: number;
-  value?: number;
-  setValue: (value?: number) => void;
+  value: number | null;
+  setValue: (value: number | null) => void;
 }
 
 export const MinMaxPeopleSelector: React.FC<Props> = ({
@@ -24,24 +22,24 @@ export const MinMaxPeopleSelector: React.FC<Props> = ({
   setValue,
 }) => {
   return (
-    <FormGroup>
+    <FormGroup sx={{ width: "100%" }}>
       <FormControlLabel
         label={checkboxLabel}
         control={
           <Checkbox
-            checked={value !== undefined}
+            checked={value !== null}
             onChange={(e) => {
               if (e.currentTarget.checked) {
                 setValue(defaultValue);
               } else {
-                setValue(undefined);
+                setValue(null);
               }
             }}
           />
         }
       />
 
-      {value !== undefined && (
+      {value !== null && (
         <TextField
           label={label}
           type="number"

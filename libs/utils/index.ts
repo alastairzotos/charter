@@ -45,3 +45,32 @@ export const getReadableBookingDetails = (booking: BookingNoId): Record<string, 
       }
   }
 }
+
+export const calculateBookingTotalPeople = (booking: BookingNoId): number | undefined => {
+  const schema = getSchemaForServiceType(booking.service.type);
+
+  switch (schema.pricingStrategy) {
+    case 'fixed': return undefined;
+    case 'perPerson': return booking.priceDetails.perPerson?.numberOfPeople;
+    case 'perAdultAndChild':
+        return (booking.priceDetails.perAdultAndChild?.adultGuests || 0) + (booking.priceDetails.perAdultAndChild?.childGuests || 0);
+  }
+}
+
+export const bookingSatisfiesPeoplePolicy = (booking: BookingNoId, service: ServiceNoId): 'unknown' | 'too-many' | 'too-few' | 'okay' => {
+  const totalPeople = calculateBookingTotalPeople(booking);
+
+  if (totalPeople === undefined) {
+    return 'unknown';
+  }
+
+  if (service.maxPeople !== null && totalPeople > service.maxPeople) {
+    return 'too-many';
+  }
+
+  if (service.minPeople !== null && totalPeople < service.minPeople) {
+    return 'too-few';
+  }
+
+  return 'okay';
+}

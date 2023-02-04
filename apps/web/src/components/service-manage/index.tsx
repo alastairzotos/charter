@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { ServiceNoId } from "dtos";
@@ -84,21 +85,23 @@ export const ManageServiceForm: React.FC<Props> = ({
               setValues={setValues}
             />
 
-            <MinMaxPeopleSelector
-              label="Maximum people"
-              checkboxLabel="Set maximum people"
-              defaultValue={10}
-              value={values.maxPeople}
-              setValue={(maxPeople) => setValues({ ...values, maxPeople })}
-            />
+            <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
+              <MinMaxPeopleSelector
+                label="Minimum people"
+                checkboxLabel="Set minimum people"
+                defaultValue={1}
+                value={values.minPeople}
+                setValue={(minPeople) => setValues({ ...values, minPeople })}
+              />
 
-            <MinMaxPeopleSelector
-              label="Minimum people"
-              checkboxLabel="Set minimum people"
-              defaultValue={1}
-              value={values.minPeople}
-              setValue={(minPeople) => setValues({ ...values, minPeople })}
-            />
+              <MinMaxPeopleSelector
+                label="Maximum people"
+                checkboxLabel="Set maximum people"
+                defaultValue={10}
+                value={values.maxPeople}
+                setValue={(maxPeople) => setValues({ ...values, maxPeople })}
+              />
+            </Box>
 
             <FileUpload
               title="Photos"

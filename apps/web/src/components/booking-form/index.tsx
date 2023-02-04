@@ -17,11 +17,12 @@ import {
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
 import { calculateBookingPrice, createPriceString } from "utils";
 
+import { BookingPeoplePolicyFeedback } from "src/components/booking-people-policy-feedback";
 import { BookingPriceDetails } from "src/components/booking-price-forms";
 import { FormBox } from "src/components/form-box";
 import { KeyValues } from "src/components/key-values";
@@ -54,11 +55,14 @@ export const BookingForm: React.FC<Props> = ({
 }) => {
   const router = useRouter();
 
+  const [isNumberOfPeopleInvalid, setIsNumberOfPeopleInvalid] = useState(false);
+
   const loggedinUser = useUserState((s) => s.loggedInUser);
 
   const [createBookingStatus, createBooking, bookingId] = useCreateBooking(
     (s) => [s.status, s.request, s.value]
   );
+
   const clearBooking = () =>
     useCreateBooking.setState({ value: null, status: undefined });
 
@@ -129,6 +133,12 @@ export const BookingForm: React.FC<Props> = ({
                 }
               />
 
+              <BookingPeoplePolicyFeedback
+                booking={values}
+                service={service}
+                setError={setIsNumberOfPeopleInvalid}
+              />
+
               <KeyValues
                 sx={{ maxWidth: 300 }}
                 kv={{
@@ -143,7 +153,7 @@ export const BookingForm: React.FC<Props> = ({
                   color="success"
                   type="submit"
                   variant="contained"
-                  disabled={!isValid || isSubmitting}
+                  disabled={!isValid || isSubmitting || isNumberOfPeopleInvalid}
                 >
                   Book now
                 </Button>

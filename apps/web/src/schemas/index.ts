@@ -31,13 +31,11 @@ export const priceValidationSchema: yup.SchemaOf<ServicePricingDto> = yup
   });
 
 export const serviceValidationSchema: yup.SchemaOf<
-  Omit<ServiceNoId, "type" | "operator">
+  Omit<ServiceNoId, "type" | "operator" | "minPeople" | "maxPeople">
 > = yup.object().shape({
   name: yup.string().required("Name is required"),
   description: yup.string().required("Description is required"),
   price: yup.object(), // TODO: Use this. It won't let me save when creating a service -> priceValidationSchema,
-  maxPeople: yup.number().optional(),
-  minPeople: yup.number().optional(),
   photos: yup.array().of(yup.string().required("Photo is required")),
   data: yup.object(),
 });

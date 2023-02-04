@@ -24,10 +24,10 @@ export class Service implements ServiceDto {
   price: ServicePricingDto;
 
   @Prop({ type: Number })
-  maxPeople?: number;
+  maxPeople: number | null;
 
   @Prop({ type: Number })
-  minPeople?: number;
+  minPeople: number | null;
 
   @Prop({ type: Array })
   photos: string[];
