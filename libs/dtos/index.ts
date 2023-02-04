@@ -74,6 +74,8 @@ export interface ServiceDto {
   name: string;
   description: string;
   price: ServicePricingDto;
+  maxPeople?: number;
+  minPeople?: number;
   photos: string[];
   data: Record<string, ServiceFieldValue>;
 }

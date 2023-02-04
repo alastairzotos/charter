@@ -14,19 +14,20 @@ export const RoleRoute: React.FC<PropsWithChildren<Props>> = ({
   role,
 }) => {
   const router = useRouter();
-  const user = useUserState((s) => s.loggedInUser);
-
-  const shouldRedirect = !user || user?.role !== role;
+  const [initialised, user] = useUserState((s) => [
+    s.initialised,
+    s.loggedInUser,
+  ]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      if (shouldRedirect) {
+      if (initialised && (!user || user?.role !== role)) {
         router.push(urls.home());
       }
     }
   }, [user?.role]);
 
-  if (shouldRedirect) {
+  if (initialised && (!user || user?.role !== role)) {
     return null;
   }
 

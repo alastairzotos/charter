@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ServiceDto, ServiceFieldValue, ServicePricingDto, ServiceSchemaDto, ServiceType } from 'dtos';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { ServiceDto, ServiceFieldValue, ServicePricingDto, ServiceType } from 'dtos';
+import { Schema as MongooseSchema } from 'mongoose';
 
 import { Operator } from 'schemas/operator.schema';
 
@@ -22,6 +22,12 @@ export class Service implements ServiceDto {
 
   @Prop({ type: Object })
   price: ServicePricingDto;
+
+  @Prop({ type: Number })
+  maxPeople?: number;
+
+  @Prop({ type: Number })
+  minPeople?: number;
 
   @Prop({ type: Array })
   photos: string[];

@@ -11,6 +11,7 @@ import { urls } from "urls";
 
 import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
+import { MinMaxPeopleSelector } from "src/components/min-max-people-selector";
 import { PriceForm } from "src/components/price-forms";
 import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceFormFields } from "src/components/service-form-fields";
@@ -81,6 +82,22 @@ export const ManageServiceForm: React.FC<Props> = ({
               isSubmitting={isSubmitting}
               values={values}
               setValues={setValues}
+            />
+
+            <MinMaxPeopleSelector
+              label="Maximum people"
+              checkboxLabel="Set maximum people"
+              defaultValue={10}
+              value={values.maxPeople}
+              setValue={(maxPeople) => setValues({ ...values, maxPeople })}
+            />
+
+            <MinMaxPeopleSelector
+              label="Minimum people"
+              checkboxLabel="Set minimum people"
+              defaultValue={1}
+              value={values.minPeople}
+              setValue={(minPeople) => setValues({ ...values, minPeople })}
             />
 
             <FileUpload
