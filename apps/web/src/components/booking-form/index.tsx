@@ -24,7 +24,7 @@ import { calculateBookingPrice, createPriceString } from "utils";
 
 import { BookingPriceDetails } from "src/components/booking-price-forms";
 import { FormBox } from "src/components/form-box";
-import { KeyValue } from "src/components/key-value";
+import { KeyValues } from "src/components/key-values";
 import { bookingValidationSchema } from "src/schemas";
 import { useCreateBooking } from "src/state/bookings";
 import { useUserState } from "src/state/users";
@@ -129,11 +129,13 @@ export const BookingForm: React.FC<Props> = ({
                 }
               />
 
-              <KeyValue
-                label="Total Price"
-                value={createPriceString(
-                  calculateBookingPrice(values.priceDetails, service)
-                )}
+              <KeyValues
+                sx={{ maxWidth: 300 }}
+                kv={{
+                  "Total Price": createPriceString(
+                    calculateBookingPrice(values.priceDetails, service)
+                  ),
+                }}
               />
 
               <Box sx={{ display: "flex", justifyContent: "center" }}>

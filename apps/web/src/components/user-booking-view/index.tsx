@@ -7,7 +7,7 @@ import {
   getReadableBookingDetails,
 } from "utils";
 
-import { KeyValue } from "src/components/key-value";
+import { KeyValues } from "src/components/key-values";
 
 interface Props {
   booking: BookingDto;
@@ -22,18 +22,17 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
         Your booking with {booking.operator.name}
       </Typography>
       <Box sx={{ p: 2 }}>
-        <KeyValue label="Name" value={booking.name} />
-        <KeyValue label="Email" value={booking.email} />
-        <KeyValue label="Date" value={booking.date} />
-        {Object.keys(bookingDetails).map((key) => (
-          <KeyValue key={key} label={key} value={bookingDetails[key]} />
-        ))}
-
-        <KeyValue
-          label="Price"
-          value={createPriceString(
-            calculateBookingPrice(booking.priceDetails, booking.service)
-          )}
+        <KeyValues
+          sx={{ maxWidth: 600 }}
+          kv={{
+            Name: booking.name,
+            Email: booking.email,
+            Date: booking.date,
+            ...bookingDetails,
+            Price: createPriceString(
+              calculateBookingPrice(booking.priceDetails, booking.service)
+            ),
+          }}
         />
 
         <Box sx={{ mt: 2 }}>

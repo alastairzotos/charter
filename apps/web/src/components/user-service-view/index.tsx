@@ -9,7 +9,7 @@ import { getReadablePricingStringsForService } from "utils";
 
 import { BookingForm } from "src/components/booking-form";
 import { ImageGallery } from "src/components/image-gallery";
-import { KeyValue } from "src/components/key-value";
+import { KeyValues } from "src/components/key-values";
 import { Titled } from "src/components/titled";
 
 interface Props {
@@ -62,15 +62,22 @@ export const UserServiceView: React.FC<Props> = ({
           </Box>
         )}
 
-        <KeyValue
-          label="Type"
-          value={getSchemaForServiceType(service.type).label}
+        <KeyValues
+          sx={{ maxWidth: 600 }}
+          kv={{
+            Type: getSchemaForServiceType(service.type).label,
+            ...priceDetails,
+            ...schema.fields.reduce(
+              (acc, field) => ({
+                ...acc,
+                [field.label]: service.data[field.field],
+              }),
+              {}
+            ),
+          }}
         />
-        {Object.keys(priceDetails).map((key) => (
-          <KeyValue key={key} label={key} value={priceDetails[key]} />
-        ))}
 
-        {schema.fields.map((field) => {
+        {/* {schema.fields.map((field) => {
           const fieldName = field.field;
 
           switch (field.type) {
@@ -99,7 +106,7 @@ export const UserServiceView: React.FC<Props> = ({
                 />
               );
           }
-        })}
+        })} */}
 
         {service.photos && service.photos.length > 0 && (
           <ImageGallery items={service.photos} />

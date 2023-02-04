@@ -10,7 +10,7 @@ import {
   getReadableBookingDetails,
 } from "utils";
 
-import { KeyValue } from "src/components/key-value";
+import { KeyValues } from "src/components/key-values";
 import { DeleteConfirmModal } from "src/components/modals/delete-confirm";
 import { Titled } from "src/components/titled";
 import { useSetBookingStatus } from "src/state/bookings";
@@ -42,19 +42,17 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
 
   return (
     <Titled title={booking.service.name}>
-      <KeyValue label="Name" value={booking.name} secondary />
-      <KeyValue label="Email" value={booking.email} secondary />
-      <KeyValue label="Date" value={booking.date} secondary />
-      {Object.keys(bookingDetails).map((key) => (
-        <KeyValue key={key} label={key} value={bookingDetails[key]} secondary />
-      ))}
-
-      <KeyValue
-        label="Price"
-        value={createPriceString(
-          calculateBookingPrice(booking.priceDetails, booking.service)
-        )}
-        secondary
+      <KeyValues
+        sx={{ maxWidth: 600 }}
+        kv={{
+          Name: booking.name,
+          Email: booking.email,
+          Date: booking.date,
+          ...bookingDetails,
+          Price: createPriceString(
+            calculateBookingPrice(booking.priceDetails, booking.service)
+          ),
+        }}
       />
 
       <Box sx={{ mt: 3 }}>
