@@ -8,17 +8,24 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
-import { BookingNoId, OperatorDto, ServiceDto } from "dtos";
+import {
+  BookingNoId,
+  getDefaultBookingPriceDetails,
+  OperatorDto,
+  ServiceDto,
+} from "dtos";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
-import { createPriceString } from "utils";
-import * as yup from "yup";
+import { calculateBookingPrice, createPriceString } from "utils";
 
+import { BookingPriceDetails } from "src/components/booking-price-forms";
 import { FormBox } from "src/components/form-box";
 import { KeyValue } from "src/components/key-value";
+import { bookingValidationSchema } from "src/schemas";
 import { useCreateBooking } from "src/state/bookings";
 import { useUserState } from "src/state/users";
 
@@ -39,26 +46,6 @@ interface Props {
 
   onClose: () => void;
 }
-
-const validationSchema: yup.SchemaOf<
-  Omit<BookingNoId, "operator" | "status" | "service">
-> = yup.object().shape({
-  name: yup.string().required("Enter your name"),
-  email: yup
-    .string()
-    .required("Enter your email")
-    .email("Enter a valid email address"),
-  date: yup.string().required("Enter your departure date"),
-  adultGuests: yup
-    .number()
-    .min(1, "Minimum of one adult required")
-    .max(10, "Maximum of 10 adults allowed")
-    .required("Enter number of adults"),
-  childGuests: yup
-    .number()
-    .max(10, "Maximum of 10 children allowed")
-    .required("Enter number of children"),
-});
 
 export const BookingForm: React.FC<Props> = ({
   operator,
@@ -81,8 +68,9 @@ export const BookingForm: React.FC<Props> = ({
     name: loggedinUser?.givenName || "",
     email: loggedinUser?.email || "",
     date: dayjs().add(1, "day").format("DD MMM YYYY"),
-    adultGuests: 1,
-    childGuests: 0,
+    priceDetails: getDefaultBookingPriceDetails(
+      getSchemaForServiceType(service.type)
+    ),
   };
 
   useEffect(() => {
@@ -99,7 +87,7 @@ export const BookingForm: React.FC<Props> = ({
       <Box sx={bookingModalStyle}>
         <Formik
           initialValues={initialValues}
-          validationSchema={validationSchema}
+          validationSchema={bookingValidationSchema}
           onSubmit={(values) =>
             createBooking({
               ...values,
@@ -135,35 +123,17 @@ export const BookingForm: React.FC<Props> = ({
                 )}
               />
 
-              <Field
-                component={TextField}
-                name="adultGuests"
-                label="Number of adults"
-                type="number"
-                InputProps={{
-                  inputProps: {
-                    max: 10,
-                    min: 1,
-                  },
-                }}
-              />
-
-              <Field
-                component={TextField}
-                name="childGuests"
-                label="Number of children"
-                type="number"
-                InputProps={{
-                  inputProps: {
-                    max: 10,
-                    min: 0,
-                  },
-                }}
+              <BookingPriceDetails
+                pricingStrategy={
+                  getSchemaForServiceType(service.type).pricingStrategy
+                }
               />
 
               <KeyValue
                 label="Total Price"
-                value={createPriceString(values, service)}
+                value={createPriceString(
+                  calculateBookingPrice(values.priceDetails, service)
+                )}
               />
 
               <Box sx={{ display: "flex", justifyContent: "center" }}>

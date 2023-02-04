@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
+import { getReadablePricingStringsForService } from "utils";
 
 import { BookingForm } from "src/components/booking-form";
 import { ImageGallery } from "src/components/image-gallery";
@@ -24,6 +25,8 @@ export const UserServiceView: React.FC<Props> = ({
 }) => {
   const schema = getSchemaForServiceType(service.type);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
+
+  const priceDetails = getReadablePricingStringsForService(service);
 
   return (
     <>
@@ -63,14 +66,9 @@ export const UserServiceView: React.FC<Props> = ({
           label="Type"
           value={getSchemaForServiceType(service.type).label}
         />
-        <KeyValue
-          label="Adult Price"
-          value={"€" + service.adultPrice.toFixed(2)}
-        />
-        <KeyValue
-          label="Child Price"
-          value={"€" + service.childPrice.toFixed(2)}
-        />
+        {Object.keys(priceDetails).map((key) => (
+          <KeyValue key={key} label={key} value={priceDetails[key]} />
+        ))}
 
         {schema.fields.map((field) => {
           const fieldName = field.field;

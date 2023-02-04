@@ -1,7 +1,11 @@
 import { Box, Typography } from "@mui/material";
 import { BookingDto } from "dtos";
 import React from "react";
-import { createPriceString } from "utils";
+import {
+  calculateBookingPrice,
+  createPriceString,
+  getReadableBookingDetails,
+} from "utils";
 
 import { KeyValue } from "src/components/key-value";
 
@@ -10,6 +14,8 @@ interface Props {
 }
 
 export const UserBookingView: React.FC<Props> = ({ booking }) => {
+  const bookingDetails = getReadableBookingDetails(booking);
+
   return (
     <>
       <Typography variant="h4">
@@ -19,11 +25,15 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
         <KeyValue label="Name" value={booking.name} />
         <KeyValue label="Email" value={booking.email} />
         <KeyValue label="Date" value={booking.date} />
-        <KeyValue label="Adults" value={booking.adultGuests} />
-        <KeyValue label="Children" value={booking.childGuests} />
+        {Object.keys(bookingDetails).map((key) => (
+          <KeyValue key={key} label={key} value={bookingDetails[key]} />
+        ))}
+
         <KeyValue
           label="Price"
-          value={createPriceString(booking, booking.service)}
+          value={createPriceString(
+            calculateBookingPrice(booking.priceDetails, booking.service)
+          )}
         />
 
         <Box sx={{ mt: 2 }}>

@@ -22,10 +22,28 @@ export interface ServiceSchemaFieldDto {
   label: string;
 }
 
+export interface PriceDto {
+  price: number;
+}
+
+export interface PerAdultAndChildPriceDto {
+  adultPrice: number;
+  childPrice: number;
+}
+
+export type ServicePricingDto = Partial<{
+  fixed: PriceDto;
+  perPerson: PriceDto;
+  perAdultAndChild: PerAdultAndChildPriceDto;
+}>
+
+export type PricingStrategyType = keyof ServicePricingDto;
+
 export interface ServiceSchemaDto {
   label: string;
   pluralLabel: string;
   description: string;
+  pricingStrategy: PricingStrategyType;
   fields: ServiceSchemaFieldDto[];
 }
 
@@ -55,8 +73,7 @@ export interface ServiceDto {
   type: ServiceType;
   name: string;
   description: string;
-  adultPrice: number;
-  childPrice: number;
+  price: ServicePricingDto;
   photos: string[];
   data: Record<string, ServiceFieldValue>;
 }
@@ -65,6 +82,30 @@ export type ServiceNoId = Omit<ServiceDto, '_id'>;
 
 export type BookingStatus = 'pending' | 'confirmed' | 'rejected';
 
+export interface PerPersonBookingPriceDetails {
+  numberOfPeople: number;
+}
+
+export interface PerAdultAndChildBookingPriceDetails {
+  adultGuests: number;
+  childGuests: number;
+}
+
+export type BookingPriceDetails = Partial<{
+  perPerson: PerPersonBookingPriceDetails;
+  perAdultAndChild: PerAdultAndChildBookingPriceDetails;
+}>;
+
+export const getDefaultBookingPriceDetails = (schema: ServiceSchemaDto): BookingPriceDetails => ({
+  perPerson: {
+    numberOfPeople: 1,
+  },
+  perAdultAndChild: {
+    adultGuests: 1,
+    childGuests: 0,
+  }
+})
+
 export interface BookingDto {
   _id: string;
   service: ServiceDto;
@@ -72,8 +113,7 @@ export interface BookingDto {
   name: string;
   email: string;
   date: string;
-  adultGuests: number;
-  childGuests: number;
+  priceDetails: BookingPriceDetails;
   status: BookingStatus;
 }
 

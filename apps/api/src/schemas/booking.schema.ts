@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { BookingDto, BookingStatus, OperatorDto } from 'dtos';
+import { BookingDto, BookingPriceDetails, BookingStatus, OperatorDto } from 'dtos';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
 import { Operator } from 'schemas/operator.schema';
@@ -26,11 +26,8 @@ export class Booking implements BookingDto {
   @Prop()
   date: string;
 
-  @Prop()
-  adultGuests: number;
-
-  @Prop()
-  childGuests: number;
+  @Prop({ type: Object })
+  priceDetails: BookingPriceDetails;
 
   @Prop(String)
   status: BookingStatus;

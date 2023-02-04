@@ -37,9 +37,8 @@ export const ServiceCreate: React.FC<Props> = ({ operatorId, type }) => {
         type,
         name: "",
         description: "",
-        adultPrice: 0,
-        childPrice: 0,
         photos: [],
+        price: {},
         data: getDefaultValuesForServiceSchema(getSchemaForServiceType(type)),
         operator: operatorId as any, // This will be cast as an ObjectId in the backend
       }}

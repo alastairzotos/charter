@@ -20,8 +20,7 @@ const mockOperator: OperatorDto = {
 const mockService: ServiceDto = {
   _id: '',
   type: 'boat-trip',
-  adultPrice: 10,
-  childPrice: 5,
+  price: {},
   description: '',
   name: '',
   operator: mockOperator,
@@ -32,8 +31,7 @@ const mockService: ServiceDto = {
 const mockBooking: BookingNoId = {
   name: 'Joe Bloggs',
   email: 'foo@bar.com',
-  adultGuests: 1,
-  childGuests: 2,
+  priceDetails: {},
   date: '12 January 2023',
   status: 'confirmed',
   operator: mockOperator,

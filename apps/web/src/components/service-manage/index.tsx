@@ -8,12 +8,13 @@ import { useRouter } from "next/router";
 import React from "react";
 import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
-import * as yup from "yup";
 
 import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
+import { PriceForm } from "src/components/price-forms";
 import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceFormFields } from "src/components/service-form-fields";
+import { serviceValidationSchema } from "src/schemas";
 import { FetchStatus } from "src/state/slice";
 
 interface Props {
@@ -48,27 +49,11 @@ export const ManageServiceForm: React.FC<Props> = ({
       }
     });
 
-  const validationSchema: yup.SchemaOf<Omit<ServiceNoId, "type" | "operator">> =
-    yup.object().shape({
-      name: yup.string().required("Name is required"),
-      description: yup.string().required("Description is required"),
-      adultPrice: yup
-        .number()
-        .required("Adult price is required")
-        .typeError("Price must be a number"),
-      childPrice: yup
-        .number()
-        .required("Child price is required")
-        .typeError("Price must be a number"),
-      photos: yup.array().of(yup.string().required("Photo is required")),
-      data: yup.object(),
-    });
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Formik
         initialValues={service}
-        validationSchema={validationSchema}
+        validationSchema={serviceValidationSchema}
         onSubmit={(values) =>
           onSave({ ...values, operator: operatorId as any })
         }
@@ -85,16 +70,10 @@ export const ManageServiceForm: React.FC<Props> = ({
               rows={4}
             />
 
-            <Field
-              component={TextField}
-              name="adultPrice"
-              label="Adult price"
-            />
-
-            <Field
-              component={TextField}
-              name="childPrice"
-              label="Child price"
+            <PriceForm
+              pricingStrategyType={
+                getSchemaForServiceType(service.type).pricingStrategy
+              }
             />
 
             <ServiceFormFields

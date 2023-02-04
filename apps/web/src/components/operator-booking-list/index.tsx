@@ -12,7 +12,6 @@ import React from "react";
 import { urls } from "urls";
 
 import { Titled } from "src/components/titled";
-import { pluralize } from "src/util/misc";
 
 interface Props {
   title: string;
@@ -31,17 +30,7 @@ export const OperatorBookingList: React.FC<Props> = ({ title, bookings }) => {
                   component={Link}
                   href={urls.operators.booking(booking._id)}
                 >
-                  <ListItemText
-                    primary={booking.service.name}
-                    secondary={`${booking.name} - ${booking.date} - ${
-                      booking.adultGuests
-                    } ${pluralize(booking.adultGuests, "adult")} - ${
-                      booking.childGuests
-                    } ${pluralize(booking.childGuests, {
-                      singular: "child",
-                      plural: "children",
-                    })}`}
-                  />
+                  <ListItemText primary={booking.service.name} />
                 </ListItemButton>
               </ListItem>
             ))}
