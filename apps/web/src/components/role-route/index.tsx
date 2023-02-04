@@ -18,7 +18,7 @@ export const RoleRoute: React.FC<PropsWithChildren<Props>> = ({
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      if (user && user?.role !== role) {
+      if (!user || user?.role !== role) {
         router.push(urls.home());
       }
     }
