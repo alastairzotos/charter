@@ -25,6 +25,8 @@ const mockService: ServiceDto = {
   name: '',
   operator: mockOperator,
   photos: [],
+  minPeople: null,
+  maxPeople: null,
   data: { fields: [] }
 };
 
