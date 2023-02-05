@@ -6,7 +6,7 @@ import { Stripe } from 'stripe';
 export class StripeService {
   private readonly stripe: Stripe;
 
-  constructor(private readonly env: EnvService) {
+  constructor(env: EnvService) {
     this.stripe = new Stripe(env.get().stripeSecretKey, {
       apiVersion: '2022-11-15'
     })
