@@ -8,10 +8,12 @@ import { BookingsModule } from 'features/bookings/bookings.module';
 import { HealthModule } from 'features/health/health.module';
 import { ImagesModule } from 'features/images/images.module';
 import { OperatorsModule } from 'features/operators/operators.module';
+import { PaymentsModule } from 'features/payments/payments.module';
 import { ServicesModule } from 'features/services/services.module';
 import { UsersModule } from 'features/users/users.module';
 import { EmailModule } from 'integrations/email/email.module';
 import { S3Module } from 'integrations/s3/s3.module';
+import { StripeModule } from 'integrations/stripe/stripe.module';
 
 @Module({
   imports: [
@@ -25,6 +27,8 @@ import { S3Module } from 'integrations/s3/s3.module';
     ImagesModule,
     BookingsModule,
     EmailModule,
+    PaymentsModule,
+    StripeModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],

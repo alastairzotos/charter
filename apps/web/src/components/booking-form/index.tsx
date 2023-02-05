@@ -1,9 +1,4 @@
-import {
-  Box,
-  Button,
-  TextField as MuiTextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, TextField as MuiTextField } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
@@ -16,30 +11,20 @@ import {
 } from "dtos";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { getSchemaForServiceType } from "service-schemas";
-import { urls } from "urls";
 import { calculateBookingPrice, createPriceString } from "utils";
 
+import { BookingModal } from "src/components/booking-modal";
+import { BookingPaymentForm } from "src/components/booking-payment-form";
 import { BookingPeoplePolicyFeedback } from "src/components/booking-people-policy-feedback";
 import { BookingPriceDetails } from "src/components/booking-price-forms";
 import { FormBox } from "src/components/form-box";
 import { KeyValues } from "src/components/key-values";
 import { bookingValidationSchema } from "src/schemas";
 import { useCreateBooking } from "src/state/bookings";
+import { useCreatePaymentIntent } from "src/state/payments";
 import { useUserState } from "src/state/users";
-
-const bookingModalStyle = {
-  position: "absolute" as const,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "85%",
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-};
 
 interface Props {
   operator: OperatorDto;
@@ -53,8 +38,6 @@ export const BookingForm: React.FC<Props> = ({
   service,
   onClose,
 }) => {
-  const router = useRouter();
-
   const [isNumberOfPeopleInvalid, setIsNumberOfPeopleInvalid] = useState(false);
 
   const loggedinUser = useUserState((s) => s.loggedInUser);
@@ -63,8 +46,8 @@ export const BookingForm: React.FC<Props> = ({
     (s) => [s.status, s.request, s.value]
   );
 
-  const clearBooking = () =>
-    useCreateBooking.setState({ value: null, status: undefined });
+  const [paymentIntentCreateStatus, createPaymentIntent, clientSecret] =
+    useCreatePaymentIntent((s) => [s.status, s.request, s.value]);
 
   const initialValues: Omit<BookingNoId, "status"> = {
     operator,
@@ -77,27 +60,35 @@ export const BookingForm: React.FC<Props> = ({
     ),
   };
 
-  useEffect(() => {
-    if (!!bookingId) {
-      clearBooking();
-      router.push(urls.user.booking(bookingId));
-    }
-  }, [bookingId]);
+  const isSubmitting =
+    createBookingStatus === "fetching" ||
+    paymentIntentCreateStatus === "fetching";
 
-  const isSubmitting = createBookingStatus === "fetching";
+  const handleSubmit = async (booking: Omit<BookingNoId, "status">) => {
+    await createBooking({ ...booking, status: "confirmed" });
+    await createPaymentIntent(
+      calculateBookingPrice(booking.priceDetails, service),
+      "EUR"
+    );
+  };
+
+  if (!!bookingId && !!clientSecret) {
+    return (
+      <BookingPaymentForm
+        paymentIntentCreateStatus={paymentIntentCreateStatus}
+        clientSecret={clientSecret}
+        bookingId={bookingId}
+      />
+    );
+  }
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box sx={bookingModalStyle}>
+      <BookingModal>
         <Formik
           initialValues={initialValues}
           validationSchema={bookingValidationSchema}
-          onSubmit={(values) =>
-            createBooking({
-              ...values,
-              status: "confirmed",
-            })
-          }
+          onSubmit={handleSubmit}
         >
           {({ isValid, values, setValues }) => (
             <FormBox
@@ -155,20 +146,13 @@ export const BookingForm: React.FC<Props> = ({
                   variant="contained"
                   disabled={!isValid || isSubmitting || isNumberOfPeopleInvalid}
                 >
-                  Book now
+                  Proceed to payment
                 </Button>
               </Box>
-
-              {createBookingStatus === "error" && (
-                <Typography>
-                  There was an error creating your booking. Please try again
-                  later.
-                </Typography>
-              )}
             </FormBox>
           )}
         </Formik>
-      </Box>
+      </BookingModal>
     </LocalizationProvider>
   );
 };

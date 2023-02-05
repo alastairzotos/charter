@@ -29,7 +29,7 @@ export class BookingsService extends HttpService {
 
   async getBookingsForUser() {
     const { data } = await this.httpClient.get<BookingDto[]>(
-      `/bookings/for-user`
+      "/bookings/for-user"
     );
 
     return data;

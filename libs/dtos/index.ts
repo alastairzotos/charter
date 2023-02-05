@@ -145,3 +145,8 @@ export interface LoginDetails {
 export interface LoggedInUserDetails extends UserDetails {
   _id: string;
 }
+
+export interface CreatePaymentIntentDto {
+  amount: number;
+  currency: string;
+}

@@ -5,6 +5,11 @@ import { createSlice } from "src/state/slice";
 
 const svc = new BookingsService();
 
+export const useCreateBooking = createSlice<string, [booking: BookingNoId]>(
+  null,
+  async (booking) => await svc.createBooking(booking)
+);
+
 export const useLoadBookingsForUser = createSlice<BookingDto[]>(
   null,
   async () => await svc.getBookingsForUser()
@@ -13,11 +18,6 @@ export const useLoadBookingsForUser = createSlice<BookingDto[]>(
 export const useLoadBooking = createSlice<BookingDto, [id: string]>(
   null,
   async (id) => svc.getBookingById(id)
-);
-
-export const useCreateBooking = createSlice<string, [booking: BookingNoId]>(
-  null,
-  async (booking) => await svc.createBooking(booking)
 );
 
 export const useSetBookingStatus = createSlice<

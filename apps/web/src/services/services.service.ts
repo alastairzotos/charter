@@ -44,7 +44,7 @@ export class ServicesService extends HttpService {
       any,
       unknown,
       { id: string; newService: Partial<ServiceNoId> }
-    >(`/services`, { id, newService });
+    >("/services", { id, newService });
   }
 
   async deleteService(id: string): Promise<void> {

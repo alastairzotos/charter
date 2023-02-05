@@ -16,7 +16,7 @@ const ServicesPage: NextPage = () => {
   return (
     <>
       <SeoHead
-        subtitle={`Available services`}
+        subtitle={"Available services"}
         description={`Easily book ${serviceList.join(
           ", "
         )}, and other services in Corfu`}
