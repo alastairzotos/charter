@@ -24,10 +24,17 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
       <Box sx={{ p: 2 }}>
         <Box sx={{ mt: 2 }}>
           {booking.paymentStatus === "pending" && (
-            <Typography>
-              We&apos;re waiting for your payment to go through. Refresh this
-              page to check updates.
-            </Typography>
+            <>
+              <Typography>
+                We&apos;re waiting for your payment to go through. Refresh this
+                page to check updates.
+              </Typography>
+              <Typography>
+                You will receive a confirmation email to{" "}
+                <strong>{booking.email}</strong> when your payment has
+                succeeded.
+              </Typography>
+            </>
           )}
 
           {booking.paymentStatus === "failed" && (
