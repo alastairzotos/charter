@@ -22,7 +22,7 @@ export const BoatTripSchema: ServiceSchemaDto = {
     {
       field: 'startLocation',
       type: 'string',
-      label: 'Starting location',
+      label: 'Pickup point',
     },
     {
       field: 'startTime',
@@ -59,7 +59,7 @@ export const BoatRentalSchema: ServiceSchemaDto = {
 export const SunbedSchema: ServiceSchemaDto = {
   label: 'Sun bed',
   pluralLabel: 'Sun beds',
-  description: 'Reserve a sun bed and beathe easy knowing you\'ll have one waiting for you',
+  description: 'Reserve a sun bed and breathe easy knowing you\'ll have one waiting for you',
   pricingStrategy: 'fixed',
   fields: [
     {
