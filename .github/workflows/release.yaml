@@ -32,6 +32,7 @@ jobs:
           build-args: |
             SCOPE=web
             PORT=3000
+            NEXT_PUBLIC_APP_URL=https://booking.bitmetro.io
             NEXT_PUBLIC_API_URL=https://booking-api.bitmetro.io
 
       - name: Build and push api

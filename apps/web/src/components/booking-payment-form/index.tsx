@@ -3,19 +3,16 @@ import {
   useStripe,
   useElements,
   Elements,
-  CardElement,
+  PaymentElement,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { urls } from "urls";
 
 import { BookingModal } from "src/components/booking-modal";
 import { StatusSwitch } from "src/components/status-switch";
 import { FetchStatus } from "src/state/slice";
 import { getEnv } from "src/util/env";
-
-const stripePromise = loadStripe(getEnv().stripePublishableKey);
 
 interface Props {
   paymentIntentCreateStatus?: FetchStatus;
@@ -26,9 +23,8 @@ interface Props {
 const InnerForm: React.FC<Props> = ({ bookingId, clientSecret }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const router = useRouter();
 
-  const [message, setMessage] = useState<string | null | undefined>(null);
+  const [error, setError] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,34 +36,15 @@ const InnerForm: React.FC<Props> = ({ bookingId, clientSecret }) => {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement)!,
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${getEnv().appUrl}${urls.user.booking(bookingId!)}`,
       },
     });
 
     if (error) {
-      setMessage(error.message);
-    } else {
-      const { paymentIntent } = await stripe.retrievePaymentIntent(
-        clientSecret
-      );
-
-      switch (paymentIntent?.status) {
-        case "succeeded":
-          setMessage("Payment succeeded!");
-          router.push(urls.user.booking(bookingId!));
-          break;
-        case "processing":
-          setMessage("Your payment is processing.");
-          break;
-        case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
-          break;
-        default:
-          setMessage("Something went wrong.");
-          break;
-      }
+      setError(error.message);
     }
 
     setIsLoading(false);
@@ -87,7 +64,12 @@ const InnerForm: React.FC<Props> = ({ bookingId, clientSecret }) => {
           Payment
         </Typography>
 
-        <CardElement />
+        <PaymentElement
+          options={{
+            readOnly: isLoading,
+          }}
+        />
+
         <Button
           sx={{ mt: 2 }}
           type="submit"
@@ -99,14 +81,16 @@ const InnerForm: React.FC<Props> = ({ bookingId, clientSecret }) => {
         </Button>
       </Box>
 
-      {message && (
+      {error && (
         <div>
-          <Typography variant="caption">{message}</Typography>
+          <Typography variant="caption">{error}</Typography>
         </div>
       )}
     </form>
   );
 };
+
+const stripePromise = loadStripe(getEnv().stripePublishableKey);
 
 export const BookingPaymentForm: React.FC<Props> = ({
   paymentIntentCreateStatus,
@@ -119,7 +103,7 @@ export const BookingPaymentForm: React.FC<Props> = ({
         status={paymentIntentCreateStatus}
         error={<Typography>There was an error setting up payments</Typography>}
       >
-        <Elements stripe={stripePromise}>
+        <Elements options={{ clientSecret }} stripe={stripePromise}>
           <InnerForm bookingId={bookingId} clientSecret={clientSecret} />
         </Elements>
       </StatusSwitch>
