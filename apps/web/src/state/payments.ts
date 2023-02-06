@@ -3,10 +3,7 @@ import { createSlice } from "src/state/slice";
 
 const svc = new PaymentsService();
 
-export const useCreatePaymentIntent = createSlice<
-  string,
-  [amount: number, currency: string]
->(
+export const useCreatePaymentIntent = createSlice<string, [bookingId: string]>(
   null,
-  async (amount, currency) => await svc.createPaymentIntent(amount, currency)
+  async (bookingId) => await svc.createPaymentIntent(bookingId)
 );

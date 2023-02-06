@@ -83,6 +83,7 @@ export interface ServiceDto {
 export type ServiceNoId = Omit<ServiceDto, '_id'>;
 
 export type BookingStatus = 'pending' | 'confirmed' | 'rejected';
+export type BookingPaymentStatus = 'pending' | 'succeeded' | 'failed' | 'cancelled';
 
 export interface PerPersonBookingPriceDetails {
   numberOfPeople: number;
@@ -115,7 +116,10 @@ export interface BookingDto {
   name: string;
   email: string;
   date: string;
+  bookingDate?: Date;
   priceDetails: BookingPriceDetails;
+  paymentIntentId?: string;
+  paymentStatus?: BookingPaymentStatus;
   status: BookingStatus;
 }
 
@@ -147,6 +151,5 @@ export interface LoggedInUserDetails extends UserDetails {
 }
 
 export interface CreatePaymentIntentDto {
-  amount: number;
-  currency: string;
+  bookingId: string;
 }

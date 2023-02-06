@@ -6,7 +6,7 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { urls } from "urls";
 
 import { BookingModal } from "src/components/booking-modal";
@@ -14,13 +14,11 @@ import { StatusSwitch } from "src/components/status-switch";
 import { FetchStatus } from "src/state/slice";
 import { getEnv } from "src/util/env";
 
-interface Props {
-  paymentIntentCreateStatus?: FetchStatus;
-  clientSecret: string;
+interface InnerFormProps {
   bookingId: string;
 }
 
-const InnerForm: React.FC<Props> = ({ bookingId, clientSecret }) => {
+const InnerForm: React.FC<InnerFormProps> = ({ bookingId }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -92,7 +90,13 @@ const InnerForm: React.FC<Props> = ({ bookingId, clientSecret }) => {
 
 const stripePromise = loadStripe(getEnv().stripePublishableKey);
 
-export const BookingPaymentForm: React.FC<Props> = ({
+interface BookingPaymentFormProps {
+  paymentIntentCreateStatus?: FetchStatus;
+  clientSecret: string;
+  bookingId: string;
+}
+
+export const BookingPaymentForm: React.FC<BookingPaymentFormProps> = ({
   paymentIntentCreateStatus,
   bookingId,
   clientSecret,
@@ -104,7 +108,7 @@ export const BookingPaymentForm: React.FC<Props> = ({
         error={<Typography>There was an error setting up payments</Typography>}
       >
         <Elements options={{ clientSecret }} stripe={stripePromise}>
-          <InnerForm bookingId={bookingId} clientSecret={clientSecret} />
+          <InnerForm bookingId={bookingId} />
         </Elements>
       </StatusSwitch>
     </BookingModal>

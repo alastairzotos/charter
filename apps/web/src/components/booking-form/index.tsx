@@ -11,7 +11,7 @@ import {
 } from "dtos";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getSchemaForServiceType } from "service-schemas";
 import { calculateBookingPrice, createPriceString } from "utils";
 
@@ -49,6 +49,16 @@ export const BookingForm: React.FC<Props> = ({
   const [paymentIntentCreateStatus, createPaymentIntent, clientSecret] =
     useCreatePaymentIntent((s) => [s.status, s.request, s.value]);
 
+  useEffect(() => {
+    if (!!bookingId) {
+      createPaymentIntent(bookingId);
+    }
+  }, [bookingId]);
+
+  const handleSubmit = async (booking: Omit<BookingNoId, "status">) => {
+    await createBooking({ ...booking, status: "confirmed" });
+  };
+
   const initialValues: Omit<BookingNoId, "status"> = {
     operator,
     service,
@@ -63,14 +73,6 @@ export const BookingForm: React.FC<Props> = ({
   const isSubmitting =
     createBookingStatus === "fetching" ||
     paymentIntentCreateStatus === "fetching";
-
-  const handleSubmit = async (booking: Omit<BookingNoId, "status">) => {
-    await createBooking({ ...booking, status: "confirmed" });
-    await createPaymentIntent(
-      calculateBookingPrice(booking.priceDetails, service),
-      "EUR"
-    );
-  };
 
   if (!!bookingId && !!clientSecret) {
     return (

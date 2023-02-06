@@ -34,6 +34,7 @@ jobs:
             PORT=3000
             NEXT_PUBLIC_APP_URL=https://booking.bitmetro.io
             NEXT_PUBLIC_API_URL=https://booking-api.bitmetro.io
+            NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}
 
       - name: Build and push api
         uses: docker/build-push-action@v2
@@ -53,3 +54,4 @@ jobs:
             AWS_S3_REGION=eu-west-1
             AWS_CLOUDFRONT_DOMAIN=https://d3tr1qr2feu6jb.cloudfront.net/
             SENDGRID_API_KEY=${{ secrets.SENDGRID_API_KEY }}
+            STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}

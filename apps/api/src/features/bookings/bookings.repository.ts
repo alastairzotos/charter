@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { BookingNoId, BookingStatus, OperatorDto } from 'dtos';
+import { BookingNoId, BookingPaymentStatus, BookingStatus, OperatorDto } from 'dtos';
 import { Model } from 'mongoose';
 
 import { Booking } from 'schemas/booking.schema';
@@ -12,11 +12,23 @@ export class BookingsRepository {
   ) {}
 
   async createBooking(booking: BookingNoId) {
-    return await this.bookingsModel.create(booking);
+    return await this.bookingsModel.create({ ...booking, paymentStatus: 'pending', bookingDate: Date.now() });
+  }
+
+  async setBookingPaymentIntentId(id: string, paymentIntentId: string) {
+    await this.bookingsModel.findOneAndUpdate({ _id: id }, { paymentIntentId });
+  }
+
+  async setBookingPaymentStatus(id: string, paymentStatus: BookingPaymentStatus) {
+    await this.bookingsModel.findOneAndUpdate({ _id: id }, { paymentStatus });
   }
 
   async getBookingById(id: string) {
     return await this.bookingsModel.findById(id).populate('service');
+  }
+
+  async getBookingByPaymentIntentId(paymentIntentId: string) {
+    return await this.bookingsModel.findOne({ paymentIntentId });
   }
 
   async getBookingWithOperatorAndService(id: string) {

@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, Headers } from "@nestjs/common";
 import { CreatePaymentIntentDto } from "dtos";
 import { PaymentsService } from "features/payments/payments.service";
 
@@ -8,8 +8,16 @@ export class PaymentsController {
 
   @Post('payment-intent')
   async createPaymentIntent(
-    @Body() { amount, currency }: CreatePaymentIntentDto
+    @Body() { bookingId }: CreatePaymentIntentDto
   ) {
-    return await this.paymentsService.createPaymentIntent(amount, currency);
+    return await this.paymentsService.createPaymentIntent(bookingId);
+  }
+
+  @Post('webhook')
+  async webhook(
+    @Body() body: any,
+    @Headers() headers: Record<string, string>
+  ) {
+    await this.paymentsService.handleWebhook(body, headers['stripe-signature']);
   }
 }

@@ -22,38 +22,46 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
         Your booking with {booking.operator.name}
       </Typography>
       <Box sx={{ p: 2 }}>
-        <KeyValues
-          sx={{ maxWidth: 600 }}
-          kv={{
-            Name: booking.name,
-            Email: booking.email,
-            Date: booking.date,
-            ...bookingDetails,
-            Price: createPriceString(
-              calculateBookingPrice(booking.priceDetails, booking.service)
-            ),
-          }}
-        />
-
         <Box sx={{ mt: 2 }}>
-          {booking.status === "pending" && (
+          {booking.paymentStatus === "pending" && (
             <Typography>
-              Your booking is pending. Check back here for status updates. We
-              will also email you when the status changes.
+              We&apos;re waiting for your payment to go through. Refresh this
+              page to check updates.
             </Typography>
           )}
-          {booking.status === "rejected" && (
+
+          {booking.paymentStatus === "failed" && (
             <Typography>
-              Unfortunately the tour operator has decided to reject your booking
+              Unfortunately your payment failed to go through. Please try again.
             </Typography>
           )}
-          {booking.status === "confirmed" && (
+
+          {booking.paymentStatus === "cancelled" && (
+            <Typography>It looks like you cancelled your payment.</Typography>
+          )}
+
+          {booking.paymentStatus === "succeeded" && (
             <Typography>
-              Your booking has been confirmed. Get ready to enjoy{" "}
-              <strong>{booking.service.name}</strong>!
+              Your payment has succeeded! Get ready to enjoy{" "}
+              <strong>{booking.service.name}!</strong>
             </Typography>
           )}
         </Box>
+
+        {booking.paymentStatus === "succeeded" && (
+          <KeyValues
+            sx={{ maxWidth: 600, mt: 3 }}
+            kv={{
+              Name: booking.name,
+              Email: booking.email,
+              Date: booking.date,
+              ...bookingDetails,
+              Price: createPriceString(
+                calculateBookingPrice(booking.priceDetails, booking.service)
+              ),
+            }}
+          />
+        )}
       </Box>
     </>
   );

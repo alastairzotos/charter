@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BookingNoId, BookingStatus, UserDetails } from 'dtos';
+import { BookingNoId, BookingPaymentStatus, BookingStatus, UserDetails } from 'dtos';
 
 import { emailContent } from 'content/email';
 import { EnvService } from 'environment/environment.service';
@@ -14,25 +14,35 @@ export class BookingsService {
     private readonly operatorsService: OperatorsService,
     private readonly emailService: EmailService,
     private readonly bookingsRepository: BookingsRepository,
-  ) {}
+  ) { }
 
   async createBooking(booking: BookingNoId) {
     const { _id } = await this.bookingsRepository.createBooking(booking);
-    const createdBooking =
-      await this.bookingsRepository.getBookingWithOperatorAndService(_id);
-
-    await Promise.all([
-      this.emailService.sendEmail(
-        booking.operator.email,
-        emailContent(this.envService).bookingMadeOperator(createdBooking),
-      ),
-      this.emailService.sendEmail(
-        booking.email,
-        emailContent(this.envService).bookingMadeUser(createdBooking),
-      ),
-    ]);
-
     return _id;
+  }
+
+  async setBookingPaymentIntentId(bookingId: string, paymentIntentId: string) {
+    await this.bookingsRepository.setBookingPaymentIntentId(bookingId, paymentIntentId);
+  }
+
+  async setBookingPaymentStatus(id: string, paymentStatus: BookingPaymentStatus) {
+    await this.bookingsRepository.setBookingPaymentStatus(id, paymentStatus);
+
+    const createdBooking =
+      await this.bookingsRepository.getBookingWithOperatorAndService(id);
+
+    if (paymentStatus === 'succeeded') {
+      await Promise.all([
+        this.emailService.sendEmail(
+          createdBooking.operator.email,
+          emailContent(this.envService).bookingMadeOperator(createdBooking),
+        ),
+        this.emailService.sendEmail(
+          createdBooking.email,
+          emailContent(this.envService).bookingMadeUser(createdBooking),
+        ),
+      ]);
+    }
   }
 
   async getBookingWithOperatorAndService(id: string) {
@@ -41,6 +51,10 @@ export class BookingsService {
 
   async getBookingById(id: string) {
     return await this.bookingsRepository.getBookingById(id);
+  }
+
+  async getBookingByPaymentIntentId(paymentIntentId: string) {
+    return await this.bookingsRepository.getBookingByPaymentIntentId(paymentIntentId);
   }
 
   async getBookingsForUser(user: UserDetails) {

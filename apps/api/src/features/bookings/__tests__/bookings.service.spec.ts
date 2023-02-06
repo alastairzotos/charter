@@ -38,6 +38,7 @@ const mockBooking: BookingNoId = {
   status: 'confirmed',
   operator: mockOperator,
   service: mockService,
+  paymentIntentId: 'paymentintent'
 };
 
 const envServiceMock: Pick<EnvService, keyof EnvService> = {
@@ -69,6 +70,10 @@ const bookingsRepoMock: Partial<
   createBooking: jest.fn(
     async () => new Promise((resolve) => resolve({ _id: '123' } as any)),
   ),
+  getBookingByPaymentIntentId: jest.fn(
+    async () => new Promise(resolve => resolve({ _id: '123', ...mockBooking } as any))
+  ),
+  setBookingPaymentStatus: jest.fn(),
   getBookingWithOperatorAndService: jest.fn(
     async () =>
       new Promise((resolve) =>
@@ -92,6 +97,9 @@ describe('BookingService', () => {
         bookingsRepoMock,
       );
       await bookingsService.createBooking(mockBooking);
+
+      const retrievedBooking = await bookingsService.getBookingByPaymentIntentId('paymentintent');
+      await bookingsService.setBookingPaymentStatus(retrievedBooking._id, 'succeeded');
     });
 
     it('should create the booking', () => {
