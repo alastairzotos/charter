@@ -1,4 +1,4 @@
-import { Box } from "@mui/system";
+import { Box, SxProps } from "@mui/system";
 import React from "react";
 
 const bookingModalStyle = {
@@ -12,8 +12,13 @@ const bookingModalStyle = {
   p: 4,
 };
 
-export const BookingModal: React.FC<React.PropsWithChildren> = ({
+interface Props {
+  sx?: SxProps;
+}
+
+export const BookingModal: React.FC<React.PropsWithChildren<Props>> = ({
   children,
+  sx,
 }) => {
-  return <Box sx={bookingModalStyle}>{children}</Box>;
+  return <Box sx={{ ...bookingModalStyle, ...sx }}>{children}</Box>;
 };

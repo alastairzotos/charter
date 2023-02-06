@@ -75,10 +75,21 @@ const InnerForm: React.FC<Props> = ({ bookingId, clientSecret }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardElement />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <Typography variant="h6" sx={{ textAlign: "center", mb: 2 }}>
+          Payment
+        </Typography>
 
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <CardElement />
         <Button
+          sx={{ mt: 2 }}
           type="submit"
           color="success"
           disabled={isLoading || !stripe || !elements}
@@ -103,7 +114,7 @@ export const BookingPaymentForm: React.FC<Props> = ({
   clientSecret,
 }) => {
   return (
-    <BookingModal>
+    <BookingModal sx={{ maxWidth: 500 }}>
       <StatusSwitch
         status={paymentIntentCreateStatus}
         error={<Typography>There was an error setting up payments</Typography>}

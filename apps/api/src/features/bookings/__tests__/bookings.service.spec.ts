@@ -51,6 +51,7 @@ const envServiceMock: Pick<EnvService, keyof EnvService> = {
     awsS3Region: '',
     awsCloudfrontDomain: '',
     sendGridApiKey: '',
+    stripeSecretKey: '',
   })),
 };
 
