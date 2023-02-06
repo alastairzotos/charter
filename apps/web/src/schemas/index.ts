@@ -58,7 +58,7 @@ export const priceDetailsValidationSchema: yup.SchemaOf<BookingPriceDetails> =
   });
 
 export const bookingValidationSchema: yup.SchemaOf<
-  Omit<BookingNoId, "operator" | "status" | "service">
+  Omit<BookingNoId, "operator" | "status" | "service" | "paymentStatus">
 > = yup.object().shape({
   name: yup.string().required("Enter your name"),
   email: yup
@@ -67,4 +67,7 @@ export const bookingValidationSchema: yup.SchemaOf<
     .email("Enter a valid email address"),
   date: yup.string().required("Enter your departure date"),
   priceDetails: priceDetailsValidationSchema,
+  bookingDate: yup.date(),
+  paymentIntentId: yup.string().optional(),
+  paymentStatus: yup.string().optional(),
 });
