@@ -1,4 +1,4 @@
-export const APP_NAME = "CorfuBooking";
+export const APP_NAME = "Corfu Travel Guide";
 
 export const pluralize = (
   num: number,
@@ -14,3 +14,5 @@ export const pluralize = (
 
 export const shortenText = (text: string, length: number) =>
   text.length <= length ? text : text.substring(0, length) + "...";
+
+export const capitalise = (text: string) => text[0].toLocaleUpperCase() + text.substring(1);

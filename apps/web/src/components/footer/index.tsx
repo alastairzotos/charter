@@ -11,14 +11,14 @@ export const Footer: React.FC = () => {
     <Box sx={{ bgcolor: blueGrey[100], p: 10 }}>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Image
-          src="/logo.png"
+          src="/booking-logo.jpg"
           alt={`${APP_NAME} logo`}
           width={64}
           height={64}
         />
       </Box>
 
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
         <Typography variant="subtitle2" color="GrayText">
           &copy; {APP_NAME} {new Date().getFullYear()}
         </Typography>

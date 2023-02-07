@@ -22,13 +22,11 @@ import { APP_NAME } from "src/util/misc";
 interface Props {
   title?: string;
   pages?: Map<string, string>;
-  color?: "default" | "inherit" | "transparent" | "primary" | "secondary";
 }
 
 export const AppBarBase: React.FC<Props> = ({
   title,
   pages = new Map(),
-  color,
 }) => {
   const router = useRouter();
 
@@ -43,7 +41,7 @@ export const AppBarBase: React.FC<Props> = ({
 
   return (
     <>
-      <MuiAppBar position="fixed" color={color}>
+      <MuiAppBar position="fixed" sx={{ backgroundColor: '#224394' }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {Array.from(pages.keys()).length > 0 && (
@@ -84,7 +82,7 @@ export const AppBarBase: React.FC<Props> = ({
 
             <Link href={urls.home()}>
               <Image
-                src="/logo.png"
+                src="/booking-logo.jpg"
                 alt={`${APP_NAME} logo`}
                 width={64}
                 height={64}

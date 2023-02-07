@@ -11,20 +11,22 @@ import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserOperatorsList } from "src/components/user-operators-list";
 import { ServiceTypes } from "src/components/user-service-types";
 import { OperatorsService } from "src/services/operators.service";
-import { APP_NAME } from "src/util/misc";
+import { APP_NAME, capitalise } from "src/util/misc";
 
 interface Props {
   operators: OperatorDto[];
 }
 
 const Home: NextPage<Props> = ({ operators }) => {
-  const serviceList = serviceTypes
+  const serviceList = capitalise(
+    serviceTypes
     .filter((type) => type !== "none")
     .map((type) =>
       getSchemaForServiceType(type).pluralLabel.toLocaleLowerCase()
     )
-    .join(", ");
-
+    .join(", ")
+  );
+  
   return (
     <>
       <SeoHead
@@ -56,13 +58,13 @@ const Home: NextPage<Props> = ({ operators }) => {
           }}
         >
           <Image
-            src="/logo.png"
+            src="/booking-logo.jpg"
             alt={`${APP_NAME} logo`}
             width={200}
             height={200}
           />
 
-          <Typography variant="h3">The best way to enjoy Corfu</Typography>
+          <Typography variant="h3" sx={{ pt: 3 }}>The best way to enjoy Corfu</Typography>
           <Typography variant="h5" sx={{ pt: 1 }}>
             Easily book boat trips, sun beds, and other services for you and
             your family
