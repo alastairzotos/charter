@@ -6,6 +6,7 @@ import { EnvService } from 'environment/environment.service';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { OperatorsService } from 'features/operators/operators.service';
 import { EmailService } from 'integrations/email/email.service';
+import { ServicesService } from 'features/services/services.service';
 
 @Injectable()
 export class BookingsService {
@@ -13,6 +14,7 @@ export class BookingsService {
     private readonly envService: EnvService,
     private readonly operatorsService: OperatorsService,
     private readonly emailService: EmailService,
+    private readonly servicesService: ServicesService,
     private readonly bookingsRepository: BookingsRepository,
   ) { }
 
@@ -33,6 +35,7 @@ export class BookingsService {
 
     if (paymentStatus === 'succeeded') {
       await Promise.all([
+        this.servicesService.addBookingToService(createdBooking.service._id),
         this.emailService.sendEmail(
           createdBooking.operator.email,
           emailContent(this.envService).bookingMadeOperator(createdBooking),

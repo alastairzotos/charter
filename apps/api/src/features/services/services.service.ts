@@ -31,6 +31,10 @@ export class ServicesService {
     };
   }
 
+  async addBookingToService(serviceId: string) {
+    await this.servicesRepository.addBookingToService(serviceId);
+  }
+
   async getServicesWithOperatorsByType(type: ServiceType) {
     return await this.servicesRepository.getServicesWithOperatorsByType(type);
   }

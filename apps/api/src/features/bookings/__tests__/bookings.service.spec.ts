@@ -5,6 +5,7 @@ import { EnvService } from 'environment/environment.service';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { BookingsService } from 'features/bookings/bookings.service';
 import { OperatorsService } from 'features/operators/operators.service';
+import { ServicesService } from 'features/services/services.service';
 import { EmailService } from 'integrations/email/email.service';
 
 const mockOperator: OperatorDto = {
@@ -27,7 +28,8 @@ const mockService: ServiceDto = {
   photos: [],
   minPeople: null,
   maxPeople: null,
-  data: { fields: [] }
+  data: { fields: [] },
+  numberOfBookings: 0,
 };
 
 const mockBooking: BookingNoId = {
@@ -59,6 +61,12 @@ const envServiceMock: Pick<EnvService, keyof EnvService> = {
 const operatorsServiceMock: Partial<
   Pick<OperatorsService, keyof OperatorsService>
 > = {};
+
+const servicesServiceMock: Partial<
+  Pick<ServicesService, keyof ServicesService>
+> = {
+  addBookingToService: jest.fn(),
+};
 
 const emailServiceMock: Partial<Pick<EmailService, keyof EmailService>> = {
   sendEmail: jest.fn(async (to, emailData) => {}),
@@ -94,6 +102,7 @@ describe('BookingService', () => {
         envServiceMock,
         operatorsServiceMock,
         emailServiceMock,
+        servicesServiceMock,
         bookingsRepoMock,
       );
       await bookingsService.createBooking(mockBooking);
@@ -111,6 +120,10 @@ describe('BookingService', () => {
     it('should send emails', () => {
       expect(emailServiceMock.sendEmail).toHaveBeenCalledTimes(2);
     });
+
+    it('should increment the number of bookings on the service', () => {
+      expect(servicesServiceMock.addBookingToService).toHaveBeenCalled();
+    })
   });
 });
 
@@ -118,6 +131,7 @@ const createService = async (
   envServiceMock: Pick<EnvService, keyof EnvService>,
   operatorsServiceMock: Partial<Pick<OperatorsService, keyof OperatorsService>>,
   emailServiceMock: Partial<Pick<EmailService, keyof EmailService>>,
+  servicesServiceMock: Partial<Pick<ServicesService, keyof ServicesService>>,
   bookingsRepoMock: Partial<Pick<BookingsRepository, keyof BookingsRepository>>,
 ) => {
   const testingModule = await Test.createTestingModule({
@@ -134,6 +148,10 @@ const createService = async (
       {
         provide: EmailService,
         useValue: emailServiceMock,
+      },
+      {
+        provide: ServicesService,
+        useValue: servicesServiceMock,
       },
       {
         provide: BookingsRepository,

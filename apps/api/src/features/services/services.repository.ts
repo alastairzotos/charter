@@ -11,6 +11,13 @@ export class ServicesRepository {
     @InjectModel(Service.name) private readonly servicesModel: Model<Service>,
   ) {}
 
+  async addBookingToService(serviceId: string) {
+    await this.servicesModel.findOneAndUpdate(
+      { _id: serviceId },
+      { $inc: { numberOfBookings: 1  } },
+    );
+  }
+
   async getServicesForOperator(operatorId: string) {
     return await this.servicesModel.find({ operator: operatorId });
   }
@@ -24,7 +31,7 @@ export class ServicesRepository {
   }
 
   async createService(service: ServiceNoId) {
-    const { _id } = await this.servicesModel.create(service);
+    const { _id } = await this.servicesModel.create({ ...service, numberOfBookings: 0 });
 
     return _id;
   }

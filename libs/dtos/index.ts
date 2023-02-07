@@ -78,6 +78,7 @@ export interface ServiceDto {
   minPeople: number | null;
   photos: string[];
   data: Record<string, ServiceFieldValue>;
+  numberOfBookings: number;
 }
 
 export type ServiceNoId = Omit<ServiceDto, '_id'>;

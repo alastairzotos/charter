@@ -34,6 +34,9 @@ export class Service implements ServiceDto {
 
   @Prop({ type: Object })
   data: Record<string, ServiceFieldValue>;
+
+  @Prop()
+  numberOfBookings: number;
 }
 
 export const ServiceSchema = SchemaFactory.createForClass(Service);
