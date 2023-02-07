@@ -7122,6 +7122,11 @@ raw-body@2.5.1:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
+react-animated-show-more@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-animated-show-more/-/react-animated-show-more-1.0.2.tgz#51701bb9f362256d597cd680ac9995fe66403635"
+  integrity sha512-o49oIUDrMGHfW1/AFYy0sjJQ0Ezks+W4IOD7Ko6N6U6Q3fWLPrPM40SSmg/GXKlm80Ae0+8FJdb/QgiBbgfGoQ==
+
 react-dom@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"

@@ -10,6 +10,7 @@ import { getReadablePricingStringsForService } from "utils";
 import { BookingForm } from "src/components/booking-form";
 import { ImageGallery } from "src/components/image-gallery";
 import { KeyValues } from "src/components/key-values";
+import { ReadMore } from "src/components/read-more";
 import { Titled } from "src/components/titled";
 
 interface Props {
@@ -42,11 +43,7 @@ export const UserServiceView: React.FC<Props> = ({
       )}
 
       <Titled title={service.name}>
-        {service.description.split("\n").map((line, index) => (
-          <Typography key={index} sx={{ mt: 2, mb: 2 }}>
-            {line}
-          </Typography>
-        ))}
+        <ReadMore content={service.description} />
 
         {!bookingView && (
           <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>

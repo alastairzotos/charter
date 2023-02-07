@@ -29,6 +29,7 @@
     "just-kebab-case": "^4.2.0",
     "next": "13.0.0",
     "react": "^18.2.0",
+    "react-animated-show-more": "^1.0.2",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-image-gallery": "^1.2.11",
