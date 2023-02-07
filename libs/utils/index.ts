@@ -1,6 +1,8 @@
 import { BookingNoId, BookingPriceDetails, ServiceNoId } from 'dtos';
 import { getSchemaForServiceType } from 'service-schemas';
 
+export type ExtractInterface<T> = Pick<T, keyof T>;
+
 export const calculateBookingPrice = (bookingDetails: BookingPriceDetails, service: ServiceNoId) => {
   const schema = getSchemaForServiceType(service.type);
 

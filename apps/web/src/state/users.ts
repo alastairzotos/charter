@@ -1,5 +1,6 @@
 import { UserDetails } from "dtos";
 import * as jwt from "jsonwebtoken";
+import { ExtractInterface } from "utils";
 import create from "zustand";
 
 import { LocalStorageService } from "src/services/localstorage.service";
@@ -32,8 +33,8 @@ export type UserState = UserStateValues & UserStateActions;
 
 export const createUserState = (
   initialState: UserStateValues,
-  userService: Pick<UserService, keyof UserService>,
-  localStorage: Pick<LocalStorageService, keyof LocalStorageService>
+  userService: ExtractInterface<UserService>,
+  localStorage: ExtractInterface<LocalStorageService>
 ) =>
   create<UserState>((set) => ({
     ...initialState,

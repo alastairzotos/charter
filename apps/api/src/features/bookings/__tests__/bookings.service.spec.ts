@@ -7,6 +7,7 @@ import { BookingsService } from 'features/bookings/bookings.service';
 import { OperatorsService } from 'features/operators/operators.service';
 import { ServicesService } from 'features/services/services.service';
 import { EmailService } from 'integrations/email/email.service';
+import { ExtractInterface } from 'utils';
 
 const mockOperator: OperatorDto = {
   _id: '123',
@@ -43,7 +44,7 @@ const mockBooking: BookingNoId = {
   paymentIntentId: 'paymentintent'
 };
 
-const envServiceMock: Pick<EnvService, keyof EnvService> = {
+const envServiceMock: ExtractInterface<EnvService> = {
   get: jest.fn(() => ({
     frontendUrl: 'foo.com',
     dbConnectionString: '',
@@ -59,21 +60,21 @@ const envServiceMock: Pick<EnvService, keyof EnvService> = {
 };
 
 const operatorsServiceMock: Partial<
-  Pick<OperatorsService, keyof OperatorsService>
+  ExtractInterface<OperatorsService>
 > = {};
 
 const servicesServiceMock: Partial<
-  Pick<ServicesService, keyof ServicesService>
+  ExtractInterface<ServicesService>
 > = {
   addBookingToService: jest.fn(),
 };
 
-const emailServiceMock: Partial<Pick<EmailService, keyof EmailService>> = {
-  sendEmail: jest.fn(async (to, emailData) => {}),
+const emailServiceMock: Partial<ExtractInterface<EmailService>> = {
+  sendEmail: jest.fn(async (to, emailData) => { }),
 };
 
 const bookingsRepoMock: Partial<
-  Pick<BookingsRepository, keyof BookingsRepository>
+  ExtractInterface<BookingsRepository>
 > = {
   createBooking: jest.fn(
     async () => new Promise((resolve) => resolve({ _id: '123' } as any)),
@@ -128,11 +129,11 @@ describe('BookingService', () => {
 });
 
 const createService = async (
-  envServiceMock: Pick<EnvService, keyof EnvService>,
-  operatorsServiceMock: Partial<Pick<OperatorsService, keyof OperatorsService>>,
-  emailServiceMock: Partial<Pick<EmailService, keyof EmailService>>,
-  servicesServiceMock: Partial<Pick<ServicesService, keyof ServicesService>>,
-  bookingsRepoMock: Partial<Pick<BookingsRepository, keyof BookingsRepository>>,
+  envServiceMock: ExtractInterface<EnvService>,
+  operatorsServiceMock: Partial<ExtractInterface<OperatorsService>>,
+  emailServiceMock: Partial<ExtractInterface<EmailService>>,
+  servicesServiceMock: Partial<ExtractInterface<ServicesService>>,
+  bookingsRepoMock: Partial<ExtractInterface<BookingsRepository>>,
 ) => {
   const testingModule = await Test.createTestingModule({
     providers: [

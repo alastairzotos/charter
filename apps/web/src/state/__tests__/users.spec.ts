@@ -1,3 +1,4 @@
+import { ExtractInterface } from "utils";
 import { StoreApi, UseBoundStore } from "zustand";
 
 import { LocalStorageService } from "src/services/localstorage.service";
@@ -9,7 +10,7 @@ import {
 } from "src/state/users";
 
 describe("User state", () => {
-  const mockUserService: Pick<UserService, keyof UserService> = {
+  const mockUserService: ExtractInterface<UserService> = {
     loginUser: jest.fn(
       async () => new Promise((resolve) => resolve({ accessToken: "123" }))
     ),
@@ -20,7 +21,7 @@ describe("User state", () => {
 
   const localStorage: Record<string, string> = {};
 
-  const mockLSService: Pick<LocalStorageService, keyof LocalStorageService> = {
+  const mockLSService: ExtractInterface<LocalStorageService> = {
     get: jest.fn((key, fallback) => localStorage[key] || fallback),
     set: jest.fn((key, value) => (localStorage[key] = value)),
     remove: jest.fn((key) => delete localStorage[key]),
