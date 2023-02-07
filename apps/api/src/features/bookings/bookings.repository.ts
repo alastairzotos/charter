@@ -36,7 +36,7 @@ export class BookingsRepository {
   }
 
   async getBookingsByOperator(operator: OperatorDto) {
-    return await this.bookingsModel.find({ operator }).populate('service');
+    return await this.bookingsModel.find({ operator, paymentStatus: 'succeeded' }).populate('service');
   }
 
   async setBookingStatus(id: string, status: BookingStatus) {
