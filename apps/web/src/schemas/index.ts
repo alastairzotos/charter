@@ -7,6 +7,8 @@ import {
   PriceDto,
   ServiceNoId,
   ServicePricingDto,
+  TieredBookingPriceDetails,
+  TieredPriceDto,
 } from "dtos";
 import * as yup from "yup";
 
@@ -22,16 +24,23 @@ export const perAdultAndChildValidationSchema: yup.SchemaOf<PerAdultAndChildPric
     childPrice: yup.number().required("Child price is required"),
   });
 
+export const tieredValidationSchema: yup.SchemaOf<TieredPriceDto> =
+  yup.object();
+
 export const priceValidationSchema: yup.SchemaOf<ServicePricingDto> = yup
   .object()
   .shape({
     fixed: basicPriceValidationSchema.optional(),
     perPerson: basicPriceValidationSchema.optional(),
     perAdultAndChild: perAdultAndChildValidationSchema.optional(),
+    tiered: tieredValidationSchema.optional(),
   });
 
 export const serviceValidationSchema: yup.SchemaOf<
-  Omit<ServiceNoId, "type" | "operator" | "minPeople" | "maxPeople">
+  Omit<
+    ServiceNoId,
+    "type" | "operator" | "minPeople" | "maxPeople" | "numberOfBookings"
+  >
 > = yup.object().shape({
   name: yup.string().required("Name is required"),
   description: yup.string().required("Description is required"),
@@ -51,10 +60,16 @@ export const perAdultAndChildBookingValidationSchema: yup.SchemaOf<PerAdultAndCh
     childGuests: yup.number().required("Number of children is required"),
   });
 
+export const tieredBookingValidationSchema: yup.SchemaOf<TieredBookingPriceDetails> =
+  yup.object().shape({
+    tier: yup.string().required(),
+  });
+
 export const priceDetailsValidationSchema: yup.SchemaOf<BookingPriceDetails> =
   yup.object().shape({
     perPerson: perPersonBookingValidationSchema.optional(),
     perAdultAndChild: perAdultAndChildBookingValidationSchema.optional(),
+    tiered: tieredBookingValidationSchema.optional(),
   });
 
 export const bookingValidationSchema: yup.SchemaOf<
