@@ -6,12 +6,12 @@ import {
   PaymentElement,
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import React, { useState } from "react";
-import { urls } from "urls";
+import React from "react";
 
 import { BookingModal } from "src/components/booking-modal";
 import { StatusSwitch } from "src/components/status-switch";
 import { FetchStatus } from "src/state/slice";
+import { useConfirmPayment } from "src/state/stripe";
 import { getEnv } from "src/util/env";
 
 interface InnerFormProps {
@@ -21,9 +21,9 @@ interface InnerFormProps {
 const InnerForm: React.FC<InnerFormProps> = ({ bookingId }) => {
   const stripe = useStripe();
   const elements = useElements();
-
-  const [error, setError] = useState<string | undefined>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [confirmPaymentStatus, confirmPayment, errorData] = useConfirmPayment(
+    (s) => [s.status, s.request, s.value]
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,21 +32,10 @@ const InnerForm: React.FC<InnerFormProps> = ({ bookingId }) => {
       return;
     }
 
-    setIsLoading(true);
-
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${getEnv().appUrl}${urls.user.booking(bookingId!)}`,
-      },
-    });
-
-    if (error) {
-      setError(error.message);
-    }
-
-    setIsLoading(false);
+    await confirmPayment(stripe, elements, bookingId);
   };
+
+  const isLoading = confirmPaymentStatus === "fetching";
 
   return (
     <form onSubmit={handleSubmit}>
@@ -79,9 +68,9 @@ const InnerForm: React.FC<InnerFormProps> = ({ bookingId }) => {
         </Button>
       </Box>
 
-      {error && (
+      {errorData?.errorMessage && (
         <div>
-          <Typography variant="caption">{error}</Typography>
+          <Typography variant="caption">{errorData.errorMessage}</Typography>
         </div>
       )}
     </form>
@@ -102,7 +91,7 @@ export const BookingPaymentForm: React.FC<BookingPaymentFormProps> = ({
   clientSecret,
 }) => {
   return (
-    <BookingModal sx={{ maxWidth: 500 }}>
+    <BookingModal>
       <StatusSwitch
         status={paymentIntentCreateStatus}
         error={<Typography>There was an error setting up payments</Typography>}

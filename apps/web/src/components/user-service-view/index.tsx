@@ -77,48 +77,19 @@ export const UserServiceView: React.FC<Props> = ({
           }}
         />
 
-        {/* {schema.fields.map((field) => {
-          const fieldName = field.field;
-
-          switch (field.type) {
-            case "string":
-              return (
-                <KeyValue
-                  key={fieldName}
-                  label={field.label}
-                  value={service.data[fieldName] as string}
-                />
-              );
-            case "time":
-              return (
-                <KeyValue
-                  key={fieldName}
-                  label={field.label}
-                  value={service.data[fieldName] as string}
-                />
-              );
-            case "timeframe":
-              return (
-                <KeyValue
-                  key={fieldName}
-                  label={field.label}
-                  value={service.data[fieldName] as string}
-                />
-              );
-          }
-        })} */}
-
         {service.photos && service.photos.length > 0 && (
           <ImageGallery items={service.photos} />
         )}
       </Titled>
 
       <Modal open={bookingModalOpen} onClose={() => setBookingModalOpen(false)}>
-        <BookingForm
-          operator={operator}
-          service={service}
-          onClose={() => setBookingModalOpen(false)}
-        />
+        <div>
+          <BookingForm
+            operator={operator}
+            service={service}
+            onClose={() => setBookingModalOpen(false)}
+          />
+        </div>
       </Modal>
     </>
   );
