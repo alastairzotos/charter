@@ -74,7 +74,7 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
           )}
         </Box>
 
-        {booking.paymentStatus === "succeeded" && (
+        {paymentStatus === "succeeded" && (
           <KeyValues
             sx={{ maxWidth: 600, mt: 3 }}
             kv={{
