@@ -75,9 +75,24 @@ export const SunbedSchema: ServiceSchemaDto = {
   ],
 }
 
+export const WatersportsSchema: ServiceSchemaDto = {
+  label: 'Watersports',
+  pluralLabel: 'Watersports',
+  description: 'Enjoy an exciting day with some waterskiing, tube riding, paragliding, and more!',
+  pricingStrategy: 'tiered',
+  fields: [
+    {
+      field: 'location',
+      type: 'string',
+      label: 'Location',
+    }
+  ]
+}
+
 export const getSchemaForServiceType = (serviceType: ServiceType): ServiceSchemaDto => ({
   'none': NoneSchema,
   'boat-trip': BoatTripSchema,
   'boat-rental': BoatRentalSchema,
   'sunbed': SunbedSchema,
+  'watersports': WatersportsSchema,
 } as Record<ServiceType, ServiceSchemaDto>)[serviceType]

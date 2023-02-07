@@ -4,18 +4,25 @@ import React from "react";
 import { FixedPriceForm } from "src/components/price-forms/fixed";
 import { PerAdultAndChildPriceForm } from "src/components/price-forms/per-adult-and-child";
 import { PerPersonPriceForm } from "src/components/price-forms/per-person";
+import { PriceFormProps } from "src/components/price-forms/props";
+import { TieredPriceForm } from "src/components/price-forms/tiered";
 
-interface Props {
+interface Props extends PriceFormProps {
   pricingStrategyType: PricingStrategyType;
 }
 
-export const PriceForm: React.FC<Props> = ({ pricingStrategyType }) => {
+export const PriceForm: React.FC<Props> = ({
+  pricingStrategyType,
+  ...props
+}) => {
   switch (pricingStrategyType) {
     case "fixed":
-      return <FixedPriceForm />;
+      return <FixedPriceForm {...props} />;
     case "perPerson":
-      return <PerPersonPriceForm />;
+      return <PerPersonPriceForm {...props} />;
     case "perAdultAndChild":
-      return <PerAdultAndChildPriceForm />;
+      return <PerAdultAndChildPriceForm {...props} />;
+    case "tiered":
+      return <TieredPriceForm {...props} />;
   }
 };

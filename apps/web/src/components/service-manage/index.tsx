@@ -76,6 +76,8 @@ export const ManageServiceForm: React.FC<Props> = ({
               pricingStrategyType={
                 getSchemaForServiceType(service.type).pricingStrategy
               }
+              pricing={values.price}
+              setPricing={(price) => setValues({ ...values, price })}
             />
 
             <ServiceFormFields

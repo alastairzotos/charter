@@ -124,6 +124,7 @@ export const BookingForm: React.FC<Props> = ({
                 pricingStrategy={
                   getSchemaForServiceType(service.type).pricingStrategy
                 }
+                pricing={service.price}
               />
 
               <BookingPeoplePolicyFeedback

@@ -14,6 +14,8 @@ export const calculateBookingPrice = (bookingDetails: BookingPriceDetails, servi
         (service.price.perAdultAndChild?.adultPrice || 0) * (bookingDetails.perAdultAndChild?.adultGuests! || 0) +
         (service.price.perAdultAndChild?.childPrice || 0) * (bookingDetails.perAdultAndChild?.childGuests! || 0)
       );
+    case 'tiered':
+      return service.price.tiered?.tiers[bookingDetails.tiered?.tier || ''] || 0;
   }
 }
 
@@ -22,7 +24,7 @@ export const createPriceString = (price: number) =>
 
 export const getReadablePricingStringsForService = (service: ServiceNoId): Record<string, string> => {
   const schema = getSchemaForServiceType(service.type);
-  
+
   switch (schema.pricingStrategy) {
     case 'fixed': return { Price: createPriceString(service.price.fixed?.price!) };
     case 'perPerson': return { "Price per person": createPriceString(service.price.perPerson?.price!) };
@@ -31,6 +33,11 @@ export const getReadablePricingStringsForService = (service: ServiceNoId): Recor
         "Price per adult": createPriceString(service.price.perAdultAndChild?.adultPrice!),
         "Price per child": createPriceString(service.price.perAdultAndChild?.childPrice!)
       }
+    case 'tiered':
+      return Object.keys(service.price.tiered?.tiers || {}).reduce((acc, tierName) => ({
+        ...acc,
+        [tierName]: createPriceString(service.price.tiered?.tiers[tierName] || 0)
+      }), {} as Record<string, string>);
   }
 }
 
@@ -45,6 +52,7 @@ export const getReadableBookingDetails = (booking: BookingNoId): Record<string, 
         'Number of adults': `${booking.priceDetails.perAdultAndChild?.adultGuests}`,
         'Number of children': `${booking.priceDetails.perAdultAndChild?.childGuests}`,
       }
+    case 'tiered': return { Tier: booking.priceDetails.tiered?.tier || '' }
   }
 }
 
@@ -52,10 +60,12 @@ export const calculateBookingTotalPeople = (booking: BookingNoId): number | unde
   const schema = getSchemaForServiceType(booking.service.type);
 
   switch (schema.pricingStrategy) {
-    case 'fixed': return undefined;
     case 'perPerson': return booking.priceDetails.perPerson?.numberOfPeople;
     case 'perAdultAndChild':
-        return (booking.priceDetails.perAdultAndChild?.adultGuests || 0) + (booking.priceDetails.perAdultAndChild?.childGuests || 0);
+      return (booking.priceDetails.perAdultAndChild?.adultGuests || 0) + (booking.priceDetails.perAdultAndChild?.childGuests || 0);
+    case 'fixed':
+    case 'tiered':
+      return undefined;
   }
 }
 

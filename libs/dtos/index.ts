@@ -10,7 +10,7 @@ export interface OperatorDto {
 
 export type OperatorNoId = Omit<OperatorDto, '_id'>;
 
-export const serviceTypes = ['none', 'boat-trip', 'boat-rental', 'sunbed'] as const;
+export const serviceTypes = ['none', 'boat-trip', 'boat-rental', 'sunbed', 'watersports'] as const;
 
 export type ServiceType = typeof serviceTypes[number];
 
@@ -31,10 +31,15 @@ export interface PerAdultAndChildPriceDto {
   childPrice: number;
 }
 
+export interface TieredPriceDto {
+  tiers: Record<string, number>;
+}
+
 export type ServicePricingDto = Partial<{
   fixed: PriceDto;
   perPerson: PriceDto;
   perAdultAndChild: PerAdultAndChildPriceDto;
+  tiered: TieredPriceDto;
 }>
 
 export type PricingStrategyType = keyof ServicePricingDto;
@@ -95,9 +100,14 @@ export interface PerAdultAndChildBookingPriceDetails {
   childGuests: number;
 }
 
+export interface TieredBookingPriceDetails {
+  tier?: string;
+}
+
 export type BookingPriceDetails = Partial<{
   perPerson: PerPersonBookingPriceDetails;
   perAdultAndChild: PerAdultAndChildBookingPriceDetails;
+  tiered: TieredBookingPriceDetails;
 }>;
 
 export const getDefaultBookingPriceDetails = (schema: ServiceSchemaDto): BookingPriceDetails => ({
@@ -107,7 +117,10 @@ export const getDefaultBookingPriceDetails = (schema: ServiceSchemaDto): Booking
   perAdultAndChild: {
     adultGuests: 1,
     childGuests: 0,
-  }
+  },
+  tiered: {
+    tier: undefined
+  },
 })
 
 export interface BookingDto {

@@ -2,7 +2,9 @@ import { Field } from "formik";
 import { TextField } from "formik-mui";
 import React from "react";
 
-export const PerAdultAndChildPriceForm: React.FC = () => {
+import { PriceFormProps } from "src/components/price-forms/props";
+
+export const PerAdultAndChildPriceForm: React.FC<PriceFormProps> = () => {
   return (
     <>
       <Field
