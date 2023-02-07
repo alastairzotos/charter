@@ -1,5 +1,5 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBackIos";
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 import { OperatorDto, ServiceDto } from "dtos";
 import Link from "next/link";
 import React, { useState } from "react";

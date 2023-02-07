@@ -20,13 +20,13 @@ interface Props {
 const Home: NextPage<Props> = ({ operators }) => {
   const serviceList = capitalise(
     serviceTypes
-    .filter((type) => type !== "none")
-    .map((type) =>
-      getSchemaForServiceType(type).pluralLabel.toLocaleLowerCase()
-    )
-    .join(", ")
+      .filter((type) => type !== "none")
+      .map((type) =>
+        getSchemaForServiceType(type).pluralLabel.toLocaleLowerCase()
+      )
+      .join(", ")
   );
-  
+
   return (
     <>
       <SeoHead
@@ -64,7 +64,9 @@ const Home: NextPage<Props> = ({ operators }) => {
             height={200}
           />
 
-          <Typography variant="h3" sx={{ pt: 3 }}>The best way to enjoy Corfu</Typography>
+          <Typography variant="h3" sx={{ pt: 3 }}>
+            The best way to enjoy Corfu
+          </Typography>
           <Typography variant="h5" sx={{ pt: 1 }}>
             Easily book boat trips, sun beds, and other services for you and
             your family

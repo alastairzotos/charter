@@ -1,6 +1,6 @@
 import { Box, LinearProgress, Typography } from "@mui/material";
 import { BookingDto } from "dtos";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   calculateBookingPrice,
   createPriceString,

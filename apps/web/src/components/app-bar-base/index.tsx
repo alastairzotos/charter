@@ -24,10 +24,7 @@ interface Props {
   pages?: Map<string, string>;
 }
 
-export const AppBarBase: React.FC<Props> = ({
-  title,
-  pages = new Map(),
-}) => {
+export const AppBarBase: React.FC<Props> = ({ title, pages = new Map() }) => {
   const router = useRouter();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -41,7 +38,7 @@ export const AppBarBase: React.FC<Props> = ({
 
   return (
     <>
-      <MuiAppBar position="fixed" sx={{ backgroundColor: '#224394' }}>
+      <MuiAppBar position="fixed" sx={{ backgroundColor: "#224394" }}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {Array.from(pages.keys()).length > 0 && (
