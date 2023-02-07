@@ -48,6 +48,10 @@ export class BookingsService {
     }
   }
 
+  async getBookingPaymentStatus(id: string) {
+    return await this.bookingsRepository.getBookingPaymentStatus(id);
+  }
+
   async getBookingWithOperatorAndService(id: string) {
     return await this.bookingsRepository.getBookingWithOperatorAndService(id);
   }

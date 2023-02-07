@@ -23,6 +23,11 @@ export class BookingsRepository {
     await this.bookingsModel.findOneAndUpdate({ _id: id }, { paymentStatus });
   }
 
+  async getBookingPaymentStatus(id: string) {
+    const { paymentStatus } = await this.bookingsModel.findOne({ _id: id })
+    return paymentStatus;
+  }
+
   async getBookingById(id: string) {
     return await this.bookingsModel.findById(id).populate('service');
   }

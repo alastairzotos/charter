@@ -1,4 +1,9 @@
-import { BookingDto, BookingNoId, BookingStatus } from "dtos";
+import {
+  BookingDto,
+  BookingNoId,
+  BookingPaymentStatus,
+  BookingStatus,
+} from "dtos";
 
 import { BookingsService } from "src/services/bookings.service";
 import { createSlice } from "src/state/slice";
@@ -27,3 +32,8 @@ export const useSetBookingStatus = createSlice<
   await svc.setBookingStatus(id, status);
   useLoadBookingsForUser.getState().request();
 });
+
+export const useGetBookingPaymentStatus = createSlice<
+  BookingPaymentStatus,
+  [id: string]
+>(null, async (id) => await svc.getBookingPaymentStatus(id));

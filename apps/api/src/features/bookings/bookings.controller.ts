@@ -48,4 +48,9 @@ export class BookingsController {
   ) {
     await this.bookingsService.setBookingStatus(id, status);
   }
+
+  @Get('payment-status/:id')
+  async getBookingPaymentStatus(@Param('id') id: string) {
+    return await this.bookingsService.getBookingPaymentStatus(id);
+  }
 }

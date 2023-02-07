@@ -1,4 +1,9 @@
-import { BookingDto, BookingNoId, BookingStatus } from "dtos";
+import {
+  BookingDto,
+  BookingNoId,
+  BookingPaymentStatus,
+  BookingStatus,
+} from "dtos";
 
 import { HttpService } from "src/services/http.service";
 
@@ -41,5 +46,12 @@ export class BookingsService extends HttpService {
       unknown,
       { id: string; status: BookingStatus }
     >("/bookings", { id, status });
+  }
+
+  async getBookingPaymentStatus(id: string) {
+    const { data } = await this.httpClient.get<BookingPaymentStatus>(
+      `/bookings/payment-status/${id}`
+    );
+    return data;
   }
 }
