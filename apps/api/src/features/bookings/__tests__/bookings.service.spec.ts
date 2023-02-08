@@ -56,6 +56,7 @@ const envServiceMock: ExtractInterface<EnvService> = {
     awsCloudfrontDomain: '',
     sendGridApiKey: '',
     stripeSecretKey: '',
+    stripeWebhookSecret: '',
   })),
 };
 
