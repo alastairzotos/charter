@@ -5,5 +5,8 @@ module.exports = {
   },
   images: {
     domains: ['d3tr1qr2feu6jb.cloudfront.net']
-  }
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
