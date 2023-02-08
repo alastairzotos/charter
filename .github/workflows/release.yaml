@@ -6,7 +6,7 @@ on:
       - "*"
 
 jobs:
-  push:
+  api:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,23 +18,10 @@ jobs:
           yarn global add turbo@1.5.5
 
       - name: Test
-        run: yarn test
+        run: turbo run test --scope=api
 
       - name: Docker login
         run: docker login -u bitmetro -p ${{ secrets.DOCKER_PASSWORD }} docker.io
-
-      - name: Build and push web app
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          context: .
-          tags: bitmetro/booking-web:${{ github.ref_name }}
-          build-args: |
-            SCOPE=web
-            PORT=3000
-            NEXT_PUBLIC_APP_URL=https://booking.bitmetro.io
-            NEXT_PUBLIC_API_URL=https://booking-api.bitmetro.io
-            NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}
 
       - name: Build and push api
         uses: docker/build-push-action@v2
@@ -56,3 +43,32 @@ jobs:
             SENDGRID_API_KEY=${{ secrets.SENDGRID_API_KEY }}
             STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
             STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
+  web:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: |
+          yarn --frozen-lockfile
+          yarn global add turbo@1.5.5
+
+      - name: Test
+        run: turbo run test --scope=web
+
+      - name: Docker login
+        run: docker login -u bitmetro -p ${{ secrets.DOCKER_PASSWORD }} docker.io
+
+      - name: Build and push web app
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: .
+          tags: bitmetro/booking-web:${{ github.ref_name }}
+          build-args: |
+            SCOPE=web
+            PORT=3000
+            NEXT_PUBLIC_APP_URL=https://booking.bitmetro.io
+            NEXT_PUBLIC_API_URL=https://booking-api.bitmetro.io
+            NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}
