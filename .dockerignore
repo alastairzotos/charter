@@ -1,2 +1,7 @@
 node_modules
-.env
+**/node_modules
+**/.env
+**/.env.docker
+
+Dockerfile
+Dockerfile.test

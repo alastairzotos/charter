@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SCOPE: api
+        PORT: 3001
+    image: bitmetro/booking-api:test1
+    container_name: booking-api
+    ports:
+      - 3001:3001
+    env_file: ./.env.docker
+    networks:
+      - customnet
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SCOPE: web
+        PORT: 3000
+    image: bitmetro/booking-web:test1
+    container_name: booking-web
+    ports:
+      - 3000:3000
+    env_file: ./.env.docker
+    networks:
+      - customnet
+
+networks:
+  customnet:
