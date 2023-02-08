@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
@@ -14,6 +14,8 @@ import { UsersModule } from 'features/users/users.module';
 import { EmailModule } from 'integrations/email/email.module';
 import { S3Module } from 'integrations/s3/s3.module';
 import { StripeModule } from 'integrations/stripe/stripe.module';
+import { JsonBodyMiddleware } from 'middleware/json-body.middleware';
+import { RawBodyMiddleware } from 'middleware/raw-body.middleware';
 
 @Module({
   imports: [
@@ -40,4 +42,15 @@ import { StripeModule } from 'integrations/stripe/stripe.module';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RawBodyMiddleware)
+      .forRoutes({
+        path: '/payments/webhook',
+        method: RequestMethod.POST,
+      })
+      .apply(JsonBodyMiddleware)
+      .forRoutes('*');
+  }
+}

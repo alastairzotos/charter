@@ -55,3 +55,4 @@ jobs:
             AWS_CLOUDFRONT_DOMAIN=https://d3tr1qr2feu6jb.cloudfront.net/
             SENDGRID_API_KEY=${{ secrets.SENDGRID_API_KEY }}
             STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
+            STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}

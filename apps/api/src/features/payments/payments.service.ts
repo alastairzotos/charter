@@ -22,7 +22,9 @@ export class PaymentsService {
     return client_secret;
   }
 
-  async handleWebhook(event: Stripe.Event, signature: string) {
+  async handleWebhook(body: Buffer, signature: string) {
+    const event = await this.stripeService.constructEvent(body, signature);
+
     const paymentIntentId = event.data.object['id'] as string;
     const booking = await this.bookingService.getBookingByPaymentIntentId(paymentIntentId);
 

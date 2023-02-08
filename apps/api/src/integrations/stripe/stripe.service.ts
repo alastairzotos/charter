@@ -6,7 +6,7 @@ import { Stripe } from 'stripe';
 export class StripeService {
   private readonly stripe: Stripe;
 
-  constructor(env: EnvService) {
+  constructor(private readonly env: EnvService) {
     this.stripe = new Stripe(env.get().stripeSecretKey, {
       apiVersion: '2022-11-15'
     })
@@ -20,5 +20,9 @@ export class StripeService {
         enabled: true,
       },
     })
+  }
+
+  async constructEvent(body: Buffer, signature: string) {
+    return await this.stripe.webhooks.constructEventAsync(body, signature, this.env.get().stripeWebhookSecret);
   }
 }

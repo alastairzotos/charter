@@ -13,6 +13,7 @@ export class EnvService {
     awsCloudfrontDomain: process.env.AWS_CLOUDFRONT_DOMAIN as string,
     sendGridApiKey: process.env.SENDGRID_API_KEY as string,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY as string,
+    stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET as string,
   };
 
   get() {

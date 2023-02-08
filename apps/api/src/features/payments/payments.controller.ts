@@ -15,7 +15,7 @@ export class PaymentsController {
 
   @Post('webhook')
   async webhook(
-    @Body() body: any,
+    @Body() body: Buffer,
     @Headers() headers: Record<string, string>
   ) {
     await this.paymentsService.handleWebhook(body, headers['stripe-signature']);
