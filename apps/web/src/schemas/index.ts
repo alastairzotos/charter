@@ -50,30 +50,43 @@ export const serviceValidationSchema: yup.SchemaOf<
 });
 
 export const perPersonBookingValidationSchema: yup.SchemaOf<PerPersonBookingPriceDetails> =
-  yup.object().shape({
+  yup.object({
     numberOfPeople: yup.number().required("Number of people is required"),
   });
 
 export const perAdultAndChildBookingValidationSchema: yup.SchemaOf<PerAdultAndChildBookingPriceDetails> =
-  yup.object().shape({
+  yup.object({
     adultGuests: yup.number().required("Number of adults is required"),
     childGuests: yup.number().required("Number of children is required"),
   });
 
 export const tieredBookingValidationSchema: yup.SchemaOf<TieredBookingPriceDetails> =
-  yup.object().shape({
-    tier: yup.string().required(),
+  yup.object({
+    tier: yup.string().required("Price tier is required"),
   });
 
 export const priceDetailsValidationSchema: yup.SchemaOf<BookingPriceDetails> =
-  yup.object().shape({
-    perPerson: perPersonBookingValidationSchema.optional(),
-    perAdultAndChild: perAdultAndChildBookingValidationSchema.optional(),
-    tiered: tieredBookingValidationSchema.optional(),
+  yup.object({
+    perPerson: perPersonBookingValidationSchema
+      .notRequired()
+      .default(undefined),
+    perAdultAndChild: perAdultAndChildBookingValidationSchema
+      .notRequired()
+      .default(undefined),
+    tiered: tieredBookingValidationSchema.notRequired().default(undefined),
   });
 
+// TODO: Validate pieceDetails
 export const bookingValidationSchema: yup.SchemaOf<
-  Omit<BookingNoId, "operator" | "status" | "service" | "paymentStatus">
+  Omit<
+    BookingNoId,
+    | "operator"
+    | "status"
+    | "service"
+    | "paymentIntentId"
+    | "paymentStatus"
+    | "priceDetails"
+  >
 > = yup.object().shape({
   name: yup.string().required("Enter your name"),
   email: yup
@@ -81,8 +94,5 @@ export const bookingValidationSchema: yup.SchemaOf<
     .required("Enter your email")
     .email("Enter a valid email address"),
   date: yup.string().required("Enter your departure date"),
-  priceDetails: priceDetailsValidationSchema,
   bookingDate: yup.date(),
-  paymentIntentId: yup.string().optional(),
-  paymentStatus: yup.string().optional(),
 });

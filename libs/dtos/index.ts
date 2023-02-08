@@ -119,7 +119,7 @@ export const getDefaultBookingPriceDetails = (schema: ServiceSchemaDto): Booking
     childGuests: 0,
   },
   tiered: {
-    tier: undefined
+    tier: ''
   },
 })
 
