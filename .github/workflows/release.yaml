@@ -32,7 +32,6 @@ jobs:
           tags: bitmetro/booking-api:${{ github.ref_name }}
           build-args: |
             SCOPE=api
-            PORT=3001
   web:
     runs-on: ubuntu-latest
 
@@ -59,7 +58,3 @@ jobs:
           tags: bitmetro/booking-web:${{ github.ref_name }}
           build-args: |
             SCOPE=web
-            PORT=3000
-            NEXT_PUBLIC_APP_URL: https://booking.bitmetro.io
-            NEXT_PUBLIC_API_URL: https://booking-api.bitmetro.io
-            NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_51MXHdEFwhEz4kIqD7ZyQo6HcYhFY03byVW2SHpQOglZBDhTeZ0jkqknptPK63R2kc8BMRlXP534sw7femKMV05PE00SbVdp8jA
