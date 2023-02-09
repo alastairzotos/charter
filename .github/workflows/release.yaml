@@ -28,21 +28,11 @@ jobs:
         with:
           push: true
           context: .
+          file: Dockerfile.api
           tags: bitmetro/booking-api:${{ github.ref_name }}
           build-args: |
             SCOPE=api
             PORT=3001
-            FRONTEND_URL=https://booking.bitmetro.io
-            DB_CONNECTION_STRING=${{ secrets.DB_CONNECTION_STRING }}
-            JWT_SIGNING_KEY=${{ secrets.JWT_SIGNING_KEY }}
-            AWS_ACCESSKEY_ID=${{ secrets.AWS_ACCESSKEY_ID }}
-            AWS_ACCESS_KEY_SECRET=${{ secrets.AWS_ACCESS_KEY_SECRET }}
-            AWS_S3_BUCKET_NAME=boattrip
-            AWS_S3_REGION=eu-west-1
-            AWS_CLOUDFRONT_DOMAIN=https://d3tr1qr2feu6jb.cloudfront.net/
-            SENDGRID_API_KEY=${{ secrets.SENDGRID_API_KEY }}
-            STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
-            STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
   web:
     runs-on: ubuntu-latest
 
@@ -65,10 +55,11 @@ jobs:
         with:
           push: true
           context: .
+          file: Dockerfile.web
           tags: bitmetro/booking-web:${{ github.ref_name }}
           build-args: |
             SCOPE=web
             PORT=3000
-            NEXT_PUBLIC_APP_URL=https://booking.bitmetro.io
-            NEXT_PUBLIC_API_URL=https://booking-api.bitmetro.io
-            NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+            NEXT_PUBLIC_APP_URL: https://booking.bitmetro.io
+            NEXT_PUBLIC_API_URL: https://booking-api.bitmetro.io
+            NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_51MXHdEFwhEz4kIqD7ZyQo6HcYhFY03byVW2SHpQOglZBDhTeZ0jkqknptPK63R2kc8BMRlXP534sw7femKMV05PE00SbVdp8jA

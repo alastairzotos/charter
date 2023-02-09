@@ -1,0 +1,34 @@
+FROM node:16-alpine as builder
+
+WORKDIR /app
+
+ARG SCOPE
+
+ARG NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+ENV NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY $NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+
+ARG NEXT_PUBLIC_APP_URL
+ENV NEXT_PUBLIC_APP_URL $NEXT_PUBLIC_APP_URL
+
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL $NEXT_PUBLIC_API_URL
+
+COPY . .
+RUN yarn global add turbo@1.5.5 && \
+    turbo prune --scope=${SCOPE} && \
+    cd out && \
+    yarn install && \
+    turbo run build --scope=${SCOPE} --include-dependencies && \
+    rm -rf node_modules/.cache .yarn/cache
+
+FROM node:16-alpine as app
+
+ENV NODE_ENV=production
+
+WORKDIR /app
+COPY --chown=node:node --from=builder /app/out .
+
+WORKDIR /app/apps/${SCOPE}
+
+EXPOSE ${PORT}
+CMD yarn start

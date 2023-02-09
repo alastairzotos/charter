@@ -4,11 +4,11 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.app
       args:
         SCOPE: api
         PORT: 3001
-    image: bitmetro/booking-api:test1
+    image: bitmetro/booking-api:test5
     container_name: booking-api
     ports:
       - 3001:3001
@@ -16,11 +16,14 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.web
       args:
         SCOPE: web
         PORT: 3000
-    image: bitmetro/booking-web:test1
+        NEXT_PUBLIC_APP_URL: http://app:3000
+        NEXT_PUBLIC_API_URL: http://api:3001
+        NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_test_51MXHdEFwhEz4kIqD7ZyQo6HcYhFY03byVW2SHpQOglZBDhTeZ0jkqknptPK63R2kc8BMRlXP534sw7femKMV05PE00SbVdp8jA
+    image: bitmetro/booking-web:test5
     container_name: booking-web
     ports:
       - 3000:3000
