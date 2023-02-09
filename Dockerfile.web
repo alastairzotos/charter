@@ -23,7 +23,9 @@ RUN yarn global add turbo@1.5.5 && \
 
 FROM node:16-alpine as app
 
-ENV NODE_ENV=production
+
+WORKDIR /app
+COPY --chown=node:node --from=builder /app/out .
 
 ARG SCOPE
 ARG PORT
@@ -36,8 +38,7 @@ ENV NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY $NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 ENV NEXT_PUBLIC_APP_URL $NEXT_PUBLIC_APP_URL
 ENV NEXT_PUBLIC_API_URL $NEXT_PUBLIC_API_URL
 
-WORKDIR /app
-COPY --chown=node:node --from=builder /app/out .
+ENV NODE_ENV=production
 
 WORKDIR /app/apps/${SCOPE}
 
