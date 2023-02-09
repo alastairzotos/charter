@@ -9,6 +9,14 @@ import {
   createUserState,
 } from "src/state/users";
 
+jest.mock('next/config', () => () => ({
+  publicRuntimeConfig: {
+    NEXT_PUBLIC_APP_URL: '',
+    NEXT_PUBLIC_API_URL: '',
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: '',
+  }
+}))
+
 describe("User state", () => {
   const mockUserService: ExtractInterface<UserService> = {
     loginUser: jest.fn(
