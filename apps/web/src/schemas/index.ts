@@ -1,6 +1,5 @@
 import {
   BookingNoId,
-  BookingPriceDetails,
   PerAdultAndChildBookingPriceDetails,
   PerAdultAndChildPriceDto,
   PerPersonBookingPriceDetails,
