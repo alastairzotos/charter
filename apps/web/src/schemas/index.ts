@@ -73,9 +73,9 @@ export const pricingStrategyValidators: Record<
   fixed: yup.object(),
   perPerson: yup.object({ perPerson: perPersonBookingValidationSchema }),
   perAdultAndChild: yup.object({
-    perAdultAndChild: perAdultAndChildBookingValidationSchema.notRequired(),
+    perAdultAndChild: perAdultAndChildBookingValidationSchema,
   }),
-  tiered: yup.object({ tiered: tieredBookingValidationSchema.notRequired() }),
+  tiered: yup.object({ tiered: tieredBookingValidationSchema }),
 };
 
 export const bookingValidationSchema = (
