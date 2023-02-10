@@ -89,7 +89,9 @@ export const BookingForm: React.FC<Props> = ({
       <BookingModal>
         <Formik
           initialValues={initialValues}
-          validationSchema={bookingValidationSchema}
+          validationSchema={bookingValidationSchema(
+            getSchemaForServiceType(service.type).pricingStrategy
+          )}
           onSubmit={handleSubmit}
         >
           {({ isValid, values, setValues }) => (

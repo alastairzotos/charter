@@ -5,6 +5,7 @@ import {
   PerAdultAndChildPriceDto,
   PerPersonBookingPriceDetails,
   PriceDto,
+  PricingStrategyType,
   ServiceNoId,
   ServicePricingDto,
   TieredBookingPriceDetails,
@@ -61,38 +62,37 @@ export const perAdultAndChildBookingValidationSchema: yup.SchemaOf<PerAdultAndCh
   });
 
 export const tieredBookingValidationSchema: yup.SchemaOf<TieredBookingPriceDetails> =
-  yup.object({
+  yup.object().shape({
     tier: yup.string().required("Price tier is required"),
   });
 
-export const priceDetailsValidationSchema: yup.SchemaOf<BookingPriceDetails> =
-  yup.object({
-    perPerson: perPersonBookingValidationSchema
-      .notRequired()
-      .default(undefined),
-    perAdultAndChild: perAdultAndChildBookingValidationSchema
-      .notRequired()
-      .default(undefined),
-    tiered: tieredBookingValidationSchema.notRequired().default(undefined),
-  });
+export const pricingStrategyValidators: Record<
+  PricingStrategyType,
+  yup.AnySchema
+> = {
+  fixed: yup.object(),
+  perPerson: yup.object({ perPerson: perPersonBookingValidationSchema }),
+  perAdultAndChild: yup.object({
+    perAdultAndChild: perAdultAndChildBookingValidationSchema.notRequired(),
+  }),
+  tiered: yup.object({ tiered: tieredBookingValidationSchema.notRequired() }),
+};
 
-// TODO: Validate pieceDetails
-export const bookingValidationSchema: yup.SchemaOf<
+export const bookingValidationSchema = (
+  pricingType: PricingStrategyType
+): yup.SchemaOf<
   Omit<
     BookingNoId,
-    | "operator"
-    | "status"
-    | "service"
-    | "paymentIntentId"
-    | "paymentStatus"
-    | "priceDetails"
+    "operator" | "status" | "service" | "paymentIntentId" | "paymentStatus"
   >
-> = yup.object().shape({
-  name: yup.string().required("Enter your name"),
-  email: yup
-    .string()
-    .required("Enter your email")
-    .email("Enter a valid email address"),
-  date: yup.string().required("Enter your departure date"),
-  bookingDate: yup.date(),
-});
+> =>
+  yup.object().shape({
+    name: yup.string().required("Enter your name"),
+    email: yup
+      .string()
+      .required("Enter your email")
+      .email("Enter a valid email address"),
+    date: yup.string().required("Enter your departure date"),
+    bookingDate: yup.date(),
+    priceDetails: pricingStrategyValidators[pricingType] as any,
+  });
