@@ -1,5 +1,12 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Button, Typography, TextField, Paper } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import {
+  Button,
+  Typography,
+  TextField,
+  Paper,
+  IconButton,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 
@@ -25,6 +32,12 @@ export const TieredPriceForm: React.FC<PriceFormProps> = ({
 
   const setTierPrice = (tierName: string, price: number) =>
     setTiers({ ...tiers, [tierName]: price });
+
+  const removeTier = (tierName: string) => {
+    const newTiers = { ...tiers };
+    delete newTiers[tierName];
+    setTiers(newTiers);
+  };
 
   return (
     <Paper
@@ -54,6 +67,11 @@ export const TieredPriceForm: React.FC<PriceFormProps> = ({
               }
               sx={{ flexGrow: 0 }}
             />
+            <div>
+              <IconButton onClick={() => removeTier(tierName)}>
+                <CloseIcon />
+              </IconButton>
+            </div>
           </Box>
         ))}
 
