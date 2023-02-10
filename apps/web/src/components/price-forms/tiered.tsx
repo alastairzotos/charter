@@ -21,7 +21,20 @@ export const TieredPriceForm: React.FC<PriceFormProps> = ({
   const setTiers = (tiers: Record<string, number>) =>
     setPricing({ ...pricing, tiered: { tiers } });
 
-  const addTier = () => setTiers({ ...tiers, "New tier": 10 });
+  const addTier = () => {
+    const tiersThatStartWithNewTier = Object.keys(tiers).filter((tierName) =>
+      tierName.startsWith("New tier")
+    );
+    const lastNewTierNumber =
+      tiersThatStartWithNewTier.length > 0
+        ? parseInt(tiersThatStartWithNewTier.pop()!.split(" ").pop() || "0", 10)
+        : 0;
+
+    setTiers({
+      ...tiers,
+      ["New tier " + (lastNewTierNumber + 1)]: 10,
+    });
+  };
 
   const renameTier = (oldName: string, newName: string) => {
     const newTiers = { ...tiers };
