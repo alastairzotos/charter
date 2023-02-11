@@ -15,7 +15,7 @@ export const calculateBookingPrice = (bookingDetails: BookingPriceDetails, servi
         (service.price.perAdultAndChild?.childPrice || 0) * (bookingDetails.perAdultAndChild?.childGuests! || 0)
       );
     case 'tiered':
-      return service.price.tiered?.tiers[bookingDetails.tiered?.tier || ''] || 0;
+      return service.price.tiered?.tiers.find(tier => tier.name === bookingDetails.tiered?.tier)?.rate || 0;
   }
 }
 
@@ -34,9 +34,9 @@ export const getReadablePricingStringsForService = (service: ServiceNoId): Recor
         "Price per child": createPriceString(service.price.perAdultAndChild?.childPrice!)
       }
     case 'tiered':
-      return Object.keys(service.price.tiered?.tiers || {}).reduce((acc, tierName) => ({
+      return (service.price.tiered?.tiers || []).reduce((acc, { name, rate }) => ({
         ...acc,
-        [tierName]: createPriceString(service.price.tiered?.tiers[tierName] || 0)
+        ["Price tier: " + name]: createPriceString(rate)
       }), {} as Record<string, string>);
   }
 }

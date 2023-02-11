@@ -31,8 +31,13 @@ export interface PerAdultAndChildPriceDto {
   childPrice: number;
 }
 
+export interface PriceTierDto {
+  name: string;
+  rate: number;
+}
+
 export interface TieredPriceDto {
-  tiers: Record<string, number>;
+  tiers: PriceTierDto[];
 }
 
 export type ServicePricingDto = Partial<{

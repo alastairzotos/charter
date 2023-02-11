@@ -9,7 +9,7 @@ import { BookingPriceProps } from "src/components/booking-price-forms/props";
 export const TieredPriceDetails: React.FC<BookingPriceProps> = ({
   pricing,
 }) => {
-  const tiers = pricing.tiered?.tiers || {};
+  const tiers = pricing.tiered?.tiers || [];
 
   return (
     <Field
@@ -17,9 +17,9 @@ export const TieredPriceDetails: React.FC<BookingPriceProps> = ({
       name="priceDetails.tiered.tier"
       label="Select option"
     >
-      {Object.keys(tiers).map((tierName, index) => (
-        <MenuItem key={tierName + index} value={tierName}>
-          {tierName}: {createPriceString(tiers[tierName] || 0)}
+      {tiers.map(({ name, rate }, index) => (
+        <MenuItem key={name + index} value={name}>
+          {name}: {createPriceString(rate)}
         </MenuItem>
       ))}
     </Field>

@@ -8,6 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { PriceTierDto } from "dtos";
 import React from "react";
 
 import { PriceFormProps } from "src/components/price-forms/props";
@@ -16,41 +17,49 @@ export const TieredPriceForm: React.FC<PriceFormProps> = ({
   pricing,
   setPricing,
 }) => {
-  const tiers = pricing.tiered?.tiers || {};
+  const tiers = pricing.tiered?.tiers || [];
 
-  const setTiers = (tiers: Record<string, number>) =>
+  const setTiers = (tiers: PriceTierDto[]) =>
     setPricing({ ...pricing, tiered: { tiers } });
 
   const addTier = () => {
-    const tiersThatStartWithNewTier = Object.keys(tiers).filter((tierName) =>
-      tierName.startsWith("New tier")
+    const tiersStartingWithNewTier = tiers.filter((tier) =>
+      tier.name.startsWith("New tier")
     );
     const lastNewTierNumber =
-      tiersThatStartWithNewTier.length > 0
-        ? parseInt(tiersThatStartWithNewTier.pop()!.split(" ").pop() || "0", 10)
-        : 0;
+      tiersStartingWithNewTier.length > 0
+        ? parseInt(
+            tiersStartingWithNewTier.pop()?.name.split(" ").pop() || "0",
+            10
+          ) + 1
+        : 1;
 
-    setTiers({
+    setTiers([
       ...tiers,
-      ["New tier " + (lastNewTierNumber + 1)]: 10,
-    });
+      {
+        name: "New tier " + lastNewTierNumber,
+        rate: 10,
+      },
+    ]);
   };
 
-  const renameTier = (oldName: string, newName: string) => {
-    const newTiers = { ...tiers };
-    newTiers[newName] = tiers[oldName];
-    delete newTiers[oldName];
-    setTiers(newTiers);
+  const renameTier = (index: number, newName: string) => {
+    if (!tiers.find((tier) => tier.name === newName)) {
+      setTiers(
+        tiers.map((tier, i) =>
+          i === index ? { ...tier, name: newName } : tier
+        )
+      );
+    }
   };
 
-  const setTierPrice = (tierName: string, price: number) =>
-    setTiers({ ...tiers, [tierName]: price });
+  const setTierPrice = (index: number, price: number) =>
+    setTiers(
+      tiers.map((tier, i) => (i === index ? { ...tier, rate: price } : tier))
+    );
 
-  const removeTier = (tierName: string) => {
-    const newTiers = { ...tiers };
-    delete newTiers[tierName];
-    setTiers(newTiers);
-  };
+  const removeTier = (index: number) =>
+    setTiers(tiers.filter((_, i) => i !== index));
 
   return (
     <Paper
@@ -60,28 +69,28 @@ export const TieredPriceForm: React.FC<PriceFormProps> = ({
       <Box sx={{ m: 2 }}>
         <Typography variant="subtitle2">Price tiers</Typography>
 
-        {Object.keys(tiers).map((tierName, index) => (
+        {tiers.map(({ name, rate }, index) => (
           <Box
             key={index}
             sx={{ width: "100%", display: "flex", mt: 2, gap: 1 }}
           >
             <TextField
               label="Tier name"
-              value={tierName}
-              onChange={(e) => renameTier(tierName, e.currentTarget.value)}
+              value={name}
+              onChange={(e) => renameTier(index, e.currentTarget.value)}
               sx={{ flexGrow: 1 }}
             />
             <TextField
               label="Price"
               type="number"
-              value={tiers[tierName]}
+              value={rate}
               onChange={(e) =>
-                setTierPrice(tierName, parseFloat(e.currentTarget.value))
+                setTierPrice(index, parseFloat(e.currentTarget.value))
               }
               sx={{ flexGrow: 0 }}
             />
             <div>
-              <IconButton onClick={() => removeTier(tierName)}>
+              <IconButton onClick={() => removeTier(index)}>
                 <CloseIcon />
               </IconButton>
             </div>

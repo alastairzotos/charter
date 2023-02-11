@@ -24,8 +24,11 @@ export const perAdultAndChildValidationSchema: yup.SchemaOf<PerAdultAndChildPric
     childPrice: yup.number().required("Child price is required"),
   });
 
-export const tieredValidationSchema: yup.SchemaOf<TieredPriceDto> =
-  yup.object();
+export const tieredValidationSchema: yup.SchemaOf<TieredPriceDto> = yup
+  .object()
+  .shape({
+    tiers: yup.array(),
+  });
 
 export const priceValidationSchema: yup.SchemaOf<ServicePricingDto> = yup
   .object()
