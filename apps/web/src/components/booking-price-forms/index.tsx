@@ -15,6 +15,8 @@ export const BookingPriceDetails: React.FC<Props> = ({
   ...props
 }) => {
   switch (pricingStrategy) {
+    case "onPremises":
+      return null;
     case "fixed":
       return null;
     case "perPerson":
