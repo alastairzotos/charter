@@ -1,3 +1,4 @@
+import { FetchStatus } from "@bitmetro/create-query";
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -17,7 +18,6 @@ import { PriceForm } from "src/components/price-forms";
 import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceFormFields } from "src/components/service-form-fields";
 import { serviceValidationSchema } from "src/schemas";
-import { FetchStatus } from "src/state/slice";
 
 interface Props {
   operatorId: string;

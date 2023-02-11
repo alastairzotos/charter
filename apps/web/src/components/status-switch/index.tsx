@@ -1,7 +1,6 @@
+import { FetchStatus } from "@bitmetro/create-query";
 import { CircularProgress } from "@mui/material";
 import React from "react";
-
-import { FetchStatus } from "src/state/slice";
 
 interface Props {
   status?: FetchStatus;

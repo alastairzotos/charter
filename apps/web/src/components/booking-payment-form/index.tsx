@@ -1,3 +1,4 @@
+import { FetchStatus } from "@bitmetro/create-query";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import {
   useStripe,
@@ -10,7 +11,6 @@ import React from "react";
 
 import { BookingModal } from "src/components/booking-modal";
 import { StatusSwitch } from "src/components/status-switch";
-import { FetchStatus } from "src/state/slice";
 import { useConfirmPayment } from "src/state/stripe";
 import { getEnv } from "src/util/env";
 

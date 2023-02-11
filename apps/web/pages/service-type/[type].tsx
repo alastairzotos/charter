@@ -4,11 +4,11 @@ import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 import { getSchemaForServiceType } from "service-schemas";
 
+import { getServicesWithOperatorsByType } from "src/clients/services.client";
 import { SeoHead } from "src/components/seo/head";
 import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserServicesView } from "src/components/user-services-view";
-import { ServicesService } from "src/services/services.service";
 
 interface Props {
   type: ServiceType;
@@ -48,8 +48,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   }
 
   try {
-    const servicesService = new ServicesService();
-    const services = await servicesService.getServicesWithOperatorsByType(type);
+    const services = await getServicesWithOperatorsByType(type);
 
     return {
       props: {

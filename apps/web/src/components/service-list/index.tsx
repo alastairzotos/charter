@@ -30,7 +30,7 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
       }
     >
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-        {services!.map((service) => (
+        {services?.map((service) => (
           <ServiceListItem
             key={service._id}
             operatorId={operatorId}

@@ -1,9 +1,9 @@
+import { FetchStatus } from "@bitmetro/create-query";
 import { Button, CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 
 import { DeleteConfirmModal } from "src/components/modals/delete-confirm";
-import { FetchStatus } from "src/state/slice";
 
 interface Props {
   isValid: boolean;

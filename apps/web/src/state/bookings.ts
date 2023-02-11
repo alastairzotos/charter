@@ -1,39 +1,22 @@
+import { createQuery } from "@bitmetro/create-query";
+import { BookingStatus } from "dtos";
+
 import {
-  BookingDto,
-  BookingNoId,
-  BookingPaymentStatus,
-  BookingStatus,
-} from "dtos";
+  createBooking,
+  getBookingById,
+  getBookingPaymentStatus,
+  getBookingsForUser,
+  setBookingStatus,
+} from "src/clients/bookings.client";
 
-import { BookingsService } from "src/services/bookings.service";
-import { createSlice } from "src/state/slice";
+export const useCreateBooking = createQuery(createBooking);
+export const useLoadBookingsForUser = createQuery(getBookingsForUser);
+export const useLoadBooking = createQuery(getBookingById);
+export const useGetBookingPaymentStatus = createQuery(getBookingPaymentStatus);
 
-const svc = new BookingsService();
-
-export const useCreateBooking = createSlice<string, [booking: BookingNoId]>(
-  null,
-  async (booking) => await svc.createBooking(booking)
+export const useSetBookingStatus = createQuery(
+  async (id: string, status: BookingStatus) => {
+    await setBookingStatus(id, status);
+    useLoadBookingsForUser.getState().request();
+  }
 );
-
-export const useLoadBookingsForUser = createSlice<BookingDto[]>(
-  null,
-  async () => await svc.getBookingsForUser()
-);
-
-export const useLoadBooking = createSlice<BookingDto, [id: string]>(
-  null,
-  async (id) => svc.getBookingById(id)
-);
-
-export const useSetBookingStatus = createSlice<
-  void,
-  [id: string, status: BookingStatus]
->(null, async (id, status) => {
-  await svc.setBookingStatus(id, status);
-  useLoadBookingsForUser.getState().request();
-});
-
-export const useGetBookingPaymentStatus = createSlice<
-  BookingPaymentStatus,
-  [id: string]
->(null, async (id) => await svc.getBookingPaymentStatus(id));

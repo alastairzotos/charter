@@ -5,12 +5,12 @@ import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 import { getSchemaForServiceType } from "service-schemas";
 
+import { getOperators } from "src/clients/operators.client";
 import { SeoHead } from "src/components/seo/head";
 import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserOperatorsList } from "src/components/user-operators-list";
 import { ServiceTypes } from "src/components/user-service-types";
-import { OperatorsService } from "src/services/operators.service";
 import { APP_NAME, capitalise } from "src/util/misc";
 
 interface Props {
@@ -108,11 +108,9 @@ const Home: NextPage<Props> = ({ operators }) => {
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const svc = new OperatorsService();
-
   return {
     props: {
-      operators: await svc.getOperators(),
+      operators: await getOperators(),
     },
   };
 };

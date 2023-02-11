@@ -1,8 +1,8 @@
 import { ExtractInterface } from "utils";
 import { StoreApi, UseBoundStore } from "zustand";
 
-import { LocalStorageService } from "src/services/localstorage.service";
-import { UserService } from "src/services/user.service";
+import { LocalStorageService } from "src/clients/localstorage.service";
+import { UserService } from "src/clients/user.service";
 import {
   ACCESS_TOKEN_LOCALSTORAGE_KEY,
   UserState,

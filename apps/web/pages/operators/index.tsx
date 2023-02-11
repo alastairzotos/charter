@@ -2,11 +2,11 @@ import { OperatorDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 
+import { getOperators } from "src/clients/operators.client";
 import { SeoHead } from "src/components/seo/head";
 import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserOperatorsList } from "src/components/user-operators-list";
-import { OperatorsService } from "src/services/operators.service";
 
 interface Props {
   operators: OperatorDto[];
@@ -28,11 +28,9 @@ const OperatorsPage: NextPage<Props> = ({ operators }) => {
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  const svc = new OperatorsService();
-
   return {
     props: {
-      operators: await svc.getOperators(),
+      operators: await getOperators(),
     },
   };
 };

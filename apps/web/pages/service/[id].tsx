@@ -2,11 +2,11 @@ import { OperatorDto, ServiceDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 
+import { getServiceByIdWithOperator } from "src/clients/services.client";
 import { OperatorLayout } from "src/components/operator-layout";
 import { SeoHead } from "src/components/seo/head";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserServiceView } from "src/components/user-service-view";
-import { ServicesService } from "src/services/services.service";
 
 interface Props {
   service: ServiceDto;
@@ -38,11 +38,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     };
   }
 
-  const servicesService = new ServicesService();
-
   try {
-    const { service, operator } =
-      await servicesService.getServiceByIdWithOperator(id);
+    const { service, operator } = await getServiceByIdWithOperator(id);
 
     return {
       props: {

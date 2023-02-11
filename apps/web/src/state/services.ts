@@ -1,31 +1,15 @@
-import { ServiceDto, ServiceNoId } from "dtos";
+import { createQuery } from "@bitmetro/create-query";
 
-import { ServicesService } from "src/services/services.service";
-import { createSlice } from "src/state/slice";
+import {
+  createService,
+  deleteService,
+  getService,
+  getServicesForOperator,
+  updateService,
+} from "src/clients/services.client";
 
-const svc = new ServicesService();
-
-export const useLoadServices = createSlice<ServiceDto[], [operatorId: string]>(
-  [],
-  async (operatorId) => await svc.getServicesForOperator(operatorId)
-);
-
-export const useLoadService = createSlice<ServiceDto, [id: string]>(
-  null,
-  async (id) => await svc.getService(id)
-);
-
-export const useUpdateService = createSlice<
-  void,
-  [id: string, newService: Partial<ServiceNoId>]
->(null, async (id, newService) => await svc.updateService(id, newService));
-
-export const useDeleteService = createSlice<void, [id: string]>(
-  null,
-  async (id) => await svc.deleteService(id)
-);
-
-export const useCreateService = createSlice<string, [service: ServiceNoId]>(
-  null,
-  async (service) => await svc.createService(service)
-);
+export const useLoadServices = createQuery(getServicesForOperator);
+export const useLoadService = createQuery(getService);
+export const useUpdateService = createQuery(updateService);
+export const useDeleteService = createQuery(deleteService);
+export const useCreateService = createQuery(createService);

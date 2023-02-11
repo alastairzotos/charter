@@ -1,38 +1,24 @@
-import { OperatorDto, OperatorNoId } from "dtos";
+import { createQuery } from "@bitmetro/create-query";
 
-import { OperatorsService } from "src/services/operators.service";
-import { createSlice } from "src/state/slice";
+import {
+  createOperator,
+  deleteOperator,
+  getOperator,
+  getOperators,
+  updateOperator,
+} from "src/clients/operators.client";
 
-const svc = new OperatorsService();
+export const useLoadOperators = createQuery(getOperators);
+export const useLoadOperator = createQuery(getOperator);
+export const useUpdateOperator = createQuery(updateOperator);
 
-export const useLoadOperators = createSlice<OperatorDto[]>(
-  [],
-  async () => await svc.getOperators()
-);
+export const useCreateOperator = createQuery(async (operator) => {
+  const id = await createOperator(operator);
+  useLoadOperators.getState().request();
+  return id;
+});
 
-export const useLoadOperator = createSlice<OperatorDto, [id: string]>(
-  null,
-  async (id) => await svc.getOperator(id)
-);
-
-export const useUpdateOperator = createSlice<
-  void,
-  [id: string, newOperator: Partial<OperatorDto>]
->(null, async (id, newOperator) => await svc.updateOperator(id, newOperator));
-
-export const useCreateOperator = createSlice<string, [operator: OperatorNoId]>(
-  null,
-  async (operator) => {
-    const id = await svc.createOperator(operator);
-    useLoadOperators.getState().request();
-    return id;
-  }
-);
-
-export const useDeleteOperator = createSlice<void, [id: string]>(
-  null,
-  async (id) => {
-    await svc.deleteOperator(id);
-    useLoadOperators.getState().request();
-  }
-);
+export const useDeleteOperator = createQuery(async (id) => {
+  await deleteOperator(id);
+  useLoadOperators.getState().request();
+});

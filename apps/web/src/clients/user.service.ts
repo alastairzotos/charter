@@ -1,5 +1,6 @@
 import { LoginDetails, LoginResponse, RegisterDetails } from "dtos";
-import { httpClient } from "src/services/http.service";
+
+import { httpClient } from "src/clients/http.client";
 
 export class UserService {
   async registerUser(

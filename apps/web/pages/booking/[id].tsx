@@ -2,12 +2,12 @@ import { Box } from "@mui/material";
 import { BookingDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 
+import { getBookingWithOperatorAndService } from "src/clients/bookings.client";
 import { OperatorLayout } from "src/components/operator-layout";
 import { SeoHead } from "src/components/seo/head";
 import { UserBookingView } from "src/components/user-booking-view";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserServiceView } from "src/components/user-service-view";
-import { BookingsService } from "src/services/bookings.service";
 
 interface Props {
   booking: BookingDto;
@@ -47,12 +47,10 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     };
   }
 
-  const bookingsService = new BookingsService();
-
   try {
     return {
       props: {
-        booking: await bookingsService.getBookingWithOperatorAndService(id),
+        booking: await getBookingWithOperatorAndService(id),
       },
     };
   } catch {

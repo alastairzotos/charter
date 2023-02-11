@@ -1,9 +1,5 @@
-import { PaymentsService } from "src/services/payments.service";
-import { createSlice } from "src/state/slice";
+import { createQuery } from "@bitmetro/create-query";
 
-const svc = new PaymentsService();
+import { createPaymentIntent } from "src/clients/payments.client";
 
-export const useCreatePaymentIntent = createSlice<string, [bookingId: string]>(
-  null,
-  async (bookingId) => await svc.createPaymentIntent(bookingId)
-);
+export const useCreatePaymentIntent = createQuery(createPaymentIntent);

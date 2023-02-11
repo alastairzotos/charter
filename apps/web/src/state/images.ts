@@ -1,17 +1,15 @@
-import { ImagesService } from "src/services/images.service";
-import { createSlice } from "src/state/slice";
+import { createQuery } from "@bitmetro/create-query";
 
-const svc = new ImagesService();
+import { uploadImage } from "src/clients/images.client";
 
-export const useUploadImages = createSlice<
-  void,
-  [file: File[], onDone: (urls: string[]) => void]
->(null, async (files, onDone) => {
-  const urls: string[] = [];
+export const useUploadImages = createQuery(
+  async (files: File[], onDone: (urls: string[]) => void) => {
+    const urls: string[] = [];
 
-  for (const file of files) {
-    urls.push(await svc.uploadImage(file));
+    for (const file of files) {
+      urls.push(await uploadImage(file));
+    }
+
+    onDone(urls);
   }
-
-  onDone(urls);
-});
+);
