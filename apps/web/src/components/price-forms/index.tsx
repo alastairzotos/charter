@@ -16,7 +16,7 @@ export const PriceForm: React.FC<Props> = ({
   ...props
 }) => {
   switch (pricingStrategyType) {
-    case 'onPremises':
+    case "onPremises":
       return null;
     case "fixed":
       return <FixedPriceForm {...props} />;
