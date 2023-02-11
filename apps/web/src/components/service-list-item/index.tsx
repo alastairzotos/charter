@@ -1,4 +1,6 @@
+import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import { Avatar, ListItemAvatar } from "@mui/material";
+import { blue } from "@mui/material/colors";
 import ListItem from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { ServiceDto } from "dtos";
@@ -21,11 +23,15 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
       component={Link}
       href={urls.admin.service(operatorId, service._id)}
     >
-      {service.photos && service.photos.length > 0 && (
-        <ListItemAvatar>
+      <ListItemAvatar>
+        {service.photos && service.photos.length > 0 ? (
           <Avatar alt={service.name} src={service.photos[0]} />
-        </ListItemAvatar>
-      )}
+        ) : (
+          <Avatar sx={{ bgcolor: blue[500] }}>
+            <BeachAccessIcon />
+          </Avatar>
+        )}
+      </ListItemAvatar>
 
       <ListItemText
         primary={

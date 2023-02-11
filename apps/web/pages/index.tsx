@@ -68,7 +68,8 @@ const Home: NextPage<Props> = ({ operators }) => {
             The best way to enjoy Corfu
           </Typography>
           <Typography variant="h5" sx={{ pt: 1 }}>
-            Easily book trips, tours, activities, restaurants and other services for you and your family
+            Easily book trips, tours, activities, restaurants and other services
+            for you and your family
           </Typography>
         </Box>
       </Box>
