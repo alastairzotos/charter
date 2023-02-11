@@ -38,6 +38,8 @@ const mockBooking: BookingNoId = {
   email: 'foo@bar.com',
   priceDetails: {},
   date: '12 January 2023',
+  time: '09:00',
+  numberOfPeople: 0,
   status: 'confirmed',
   operator: mockOperator,
   service: mockService,
@@ -68,6 +70,7 @@ const servicesServiceMock: Partial<
   ExtractInterface<ServicesService>
 > = {
   addBookingToService: jest.fn(),
+  getService: jest.fn(() => Promise.resolve(mockService as any)),
 };
 
 const emailServiceMock: Partial<ExtractInterface<EmailService>> = {

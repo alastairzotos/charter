@@ -30,14 +30,14 @@ export const tieredValidationSchema: yup.SchemaOf<TieredPriceDto> = yup
     tiers: yup.array(),
   });
 
-export const priceValidationSchema: yup.SchemaOf<ServicePricingDto> = yup
-  .object()
-  .shape({
-    fixed: basicPriceValidationSchema.optional(),
-    perPerson: basicPriceValidationSchema.optional(),
-    perAdultAndChild: perAdultAndChildValidationSchema.optional(),
-    tiered: tieredValidationSchema.optional(),
-  });
+export const priceValidationSchema: yup.SchemaOf<
+  Omit<ServicePricingDto, "onPremises">
+> = yup.object().shape({
+  fixed: basicPriceValidationSchema.optional(),
+  perPerson: basicPriceValidationSchema.optional(),
+  perAdultAndChild: perAdultAndChildValidationSchema.optional(),
+  tiered: tieredValidationSchema.optional(),
+});
 
 export const serviceValidationSchema: yup.SchemaOf<
   Omit<
@@ -72,6 +72,7 @@ export const pricingStrategyValidators: Record<
   PricingStrategyType,
   yup.AnySchema
 > = {
+  onPremises: yup.object(),
   fixed: yup.object(),
   perPerson: yup.object({ perPerson: perPersonBookingValidationSchema }),
   perAdultAndChild: yup.object({
@@ -94,7 +95,9 @@ export const bookingValidationSchema = (
       .string()
       .required("Enter your email")
       .email("Enter a valid email address"),
-    date: yup.string().required("Enter your departure date"),
     bookingDate: yup.date(),
     priceDetails: pricingStrategyValidators[pricingType] as any,
+    date: yup.string().notRequired(),
+    time: yup.string().notRequired(),
+    numberOfPeople: yup.number().notRequired(),
   });

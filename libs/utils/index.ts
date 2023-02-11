@@ -1,4 +1,4 @@
-import { BookingNoId, BookingPriceDetails, ServiceNoId } from 'dtos';
+import { BookingNoId, BookingPriceDetails, ServiceNoId, ServiceSchemaDto } from 'dtos';
 import { getSchemaForServiceType } from 'service-schemas';
 
 export type ExtractInterface<T> = Pick<T, keyof T>;
@@ -7,6 +7,7 @@ export const calculateBookingPrice = (bookingDetails: BookingPriceDetails, servi
   const schema = getSchemaForServiceType(service.type);
 
   switch (schema.pricingStrategy) {
+    case 'onPremises': return -1;
     case 'fixed': return service.price.fixed?.price || 0;
     case 'perPerson': return (service.price.perPerson?.price || 0) * (bookingDetails.perPerson?.numberOfPeople || 0);
     case 'perAdultAndChild':
@@ -19,6 +20,9 @@ export const calculateBookingPrice = (bookingDetails: BookingPriceDetails, servi
   }
 }
 
+export const shouldPayNow = (schema: ServiceSchemaDto) =>
+  schema.pricingStrategy !== 'onPremises';
+
 export const createPriceString = (price: number) =>
   `€${price.toFixed(2)}`;
 
@@ -26,6 +30,7 @@ export const getReadablePricingStringsForService = (service: ServiceNoId): Recor
   const schema = getSchemaForServiceType(service.type);
 
   switch (schema.pricingStrategy) {
+    case 'onPremises': return {};
     case 'fixed': return { Price: createPriceString(service.price.fixed?.price!) };
     case 'perPerson': return { "Price per person": createPriceString(service.price.perPerson?.price!) };
     case 'perAdultAndChild':
@@ -44,16 +49,46 @@ export const getReadablePricingStringsForService = (service: ServiceNoId): Recor
 export const getReadableBookingDetails = (booking: BookingNoId): Record<string, string> => {
   const schema = getSchemaForServiceType(booking.service.type);
 
+  let obj: Record<string, string> = {
+    Name: booking.name,
+    Email: booking.email,
+  };
+
   switch (schema.pricingStrategy) {
-    case 'fixed': return {};
-    case 'perPerson': return { 'Number of people': `${booking.priceDetails.perPerson?.numberOfPeople}` };
+    case 'onPremises': break
+    case 'fixed': break;
+
+    case 'perPerson':
+      obj['Number of people'] = `${booking.priceDetails.perPerson?.numberOfPeople}`;
+      break;
+
     case 'perAdultAndChild':
-      return {
-        'Number of adults': `${booking.priceDetails.perAdultAndChild?.adultGuests}`,
-        'Number of children': `${booking.priceDetails.perAdultAndChild?.childGuests}`,
-      }
-    case 'tiered': return { Tier: booking.priceDetails.tiered?.tier || '' }
+      obj['Number of adults'] = `${booking.priceDetails.perAdultAndChild?.adultGuests}`;
+      obj['Number of children'] = `${booking.priceDetails.perAdultAndChild?.childGuests}`;
+      break;
+
+    case 'tiered':
+      obj['Tier'] = booking.priceDetails.tiered?.tier || '';
+      break;
   }
+
+  if (schema.defaultBookingFields.includes('date')) {
+    obj['Date'] = booking.date!;
+  }
+
+  if (schema.defaultBookingFields.includes('time')) {
+    obj['Time'] = booking.time!;
+  }
+
+  if (schema.defaultBookingFields.includes('numberOfPeople')) {
+    obj['Number of people'] = `${booking.numberOfPeople!}`;
+  }
+
+  if (shouldPayNow(schema)) {
+    obj['Price'] = createPriceString(calculateBookingPrice(booking.priceDetails, booking.service));
+  }
+
+  return obj;
 }
 
 export const calculateBookingTotalPeople = (booking: BookingNoId): number | undefined => {

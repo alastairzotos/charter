@@ -1,7 +1,7 @@
 import * as dedent from 'dedent';
 import { BookingDto } from 'dtos';
 import { urls } from 'urls';
-import { calculateBookingPrice, createPriceString, getReadableBookingDetails } from 'utils';
+import { getReadableBookingDetails } from 'utils';
 
 import { EnvService } from 'environment/environment.service';
 
@@ -22,8 +22,6 @@ export const emailContent = (env: EnvService) => ({
         }</strong> on <strong>${booking.date}</strong></p>
       <p>Here are the details:</p>
       <ul>
-        <li><strong>Name of guest</strong>: ${booking.name}</li>
-        <li><strong>Guest email</strong>: ${booking.email}</li>
         ${
           Object.keys(bookingDetails)
             .map(key => (
@@ -31,13 +29,6 @@ export const emailContent = (env: EnvService) => ({
             ))
             .join('\n')
         }
-        <li><strong>Price</strong>: ${createPriceString(
-          calculateBookingPrice(
-            booking.priceDetails,
-            booking.service,
-          )
-        )}</li>
-        <li><strong>Date</strong>: ${booking.date}</li>
       </ul>
 
       <a href="${env.get().frontendUrl}${urls.operators.booking(

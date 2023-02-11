@@ -5,6 +5,7 @@ export const NoneSchema: ServiceSchemaDto = {
   pluralLabel: 'None',
   description: 'None',
   pricingStrategy: 'fixed',
+  defaultBookingFields: ['date'],
   fields: []
 }
 
@@ -13,6 +14,7 @@ export const BoatTripSchema: ServiceSchemaDto = {
   pluralLabel: 'Boat trips',
   description: 'Take a guided trip on a boat around the island',
   pricingStrategy: 'perAdultAndChild',
+  defaultBookingFields: ['date'],
   fields: [
     { 
       field: 'duration',
@@ -37,6 +39,7 @@ export const BoatRentalSchema: ServiceSchemaDto = {
   pluralLabel: 'Boat rentals',
   description: 'Rent boats at cheap prices to explore the seas at your leisure',
   pricingStrategy: 'fixed',
+  defaultBookingFields: ['date'],
   fields: [
     { 
       field: 'duration',
@@ -61,6 +64,7 @@ export const SunbedSchema: ServiceSchemaDto = {
   pluralLabel: 'Sun beds',
   description: 'Reserve a sun bed and breathe easy knowing you\'ll have one waiting for you',
   pricingStrategy: 'fixed',
+  defaultBookingFields: ['date'],
   fields: [
     {
       field: 'location',
@@ -80,6 +84,7 @@ export const WatersportsSchema: ServiceSchemaDto = {
   pluralLabel: 'Watersports',
   description: 'Enjoy an exciting day with some waterskiing, tube riding, paragliding, and more!',
   pricingStrategy: 'tiered',
+  defaultBookingFields: ['date'],
   fields: [
     {
       field: 'location',
@@ -89,10 +94,20 @@ export const WatersportsSchema: ServiceSchemaDto = {
   ]
 }
 
+export const RestaurantSchema: ServiceSchemaDto = {
+  label: 'Restaurant',
+  pluralLabel: 'Restaurants',
+  description: 'Discover the taste of the area with our selection of restaurants',
+  pricingStrategy: 'onPremises',
+  defaultBookingFields: ['date', 'time', 'numberOfPeople'],
+  fields: []
+}
+
 export const getSchemaForServiceType = (serviceType: ServiceType): ServiceSchemaDto => ({
   'none': NoneSchema,
   'boat-trip': BoatTripSchema,
   'boat-rental': BoatRentalSchema,
   'sunbed': SunbedSchema,
   'watersports': WatersportsSchema,
+  'restaurant': RestaurantSchema,
 } as Record<ServiceType, ServiceSchemaDto>)[serviceType]

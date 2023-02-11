@@ -8,7 +8,7 @@ interface Props {
 
 export const KeyValues: React.FC<Props> = ({ sx, kv }) => {
   return (
-    <Table sx={sx}>
+    <Table sx={sx} size="small">
       <TableBody>
         {Object.keys(kv).map((key) => (
           <TableRow key={key}>

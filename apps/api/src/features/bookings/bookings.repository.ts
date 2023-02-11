@@ -12,7 +12,12 @@ export class BookingsRepository {
   ) {}
 
   async createBooking(booking: BookingNoId) {
-    return await this.bookingsModel.create({ ...booking, status: 'confirmed', paymentStatus: 'pending', bookingDate: Date.now() });
+    return await this.bookingsModel.create({
+      ...booking,
+      status: 'confirmed',
+      bookingDate: Date.now(),
+      paymentStatus: 'pending',
+    });
   }
 
   async setBookingPaymentIntentId(id: string, paymentIntentId: string) {

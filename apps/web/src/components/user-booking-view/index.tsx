@@ -1,11 +1,7 @@
 import { Box, LinearProgress, Typography } from "@mui/material";
 import { BookingDto } from "dtos";
 import React, { useEffect, useRef } from "react";
-import {
-  calculateBookingPrice,
-  createPriceString,
-  getReadableBookingDetails,
-} from "utils";
+import { getReadableBookingDetails } from "utils";
 
 import { KeyValues } from "src/components/key-values";
 import { useGetBookingPaymentStatus } from "src/state/bookings";
@@ -33,8 +29,6 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
       clearInterval(interval.current);
     }
   }, [paymentStatus]);
-
-  const bookingDetails = getReadableBookingDetails(booking);
 
   return (
     <>
@@ -68,7 +62,7 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
 
           {paymentStatus === "succeeded" && (
             <Typography>
-              Your payment has succeeded! Get ready to enjoy{" "}
+              Your booking is a success! Get ready to enjoy{" "}
               <strong>{booking.service.name}!</strong>
             </Typography>
           )}
@@ -77,15 +71,7 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
         {paymentStatus === "succeeded" && (
           <KeyValues
             sx={{ maxWidth: 600, mt: 3 }}
-            kv={{
-              Name: booking.name,
-              Email: booking.email,
-              Date: booking.date,
-              ...bookingDetails,
-              Price: createPriceString(
-                calculateBookingPrice(booking.priceDetails, booking.service)
-              ),
-            }}
+            kv={getReadableBookingDetails(booking)}
           />
         )}
       </Box>

@@ -24,7 +24,13 @@ export class Booking implements BookingDto {
   email: string;
 
   @Prop()
-  date: string;
+  date?: string;
+
+  @Prop()
+  time?: string;
+
+  @Prop()
+  numberOfPeople?: number;
 
   @Prop({ type: Object })
   priceDetails: BookingPriceDetails;

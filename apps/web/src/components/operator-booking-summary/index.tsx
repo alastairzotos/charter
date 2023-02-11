@@ -4,11 +4,7 @@ import { BookingDto } from "dtos";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { urls } from "urls";
-import {
-  calculateBookingPrice,
-  createPriceString,
-  getReadableBookingDetails,
-} from "utils";
+import { getReadableBookingDetails } from "utils";
 
 import { KeyValues } from "src/components/key-values";
 import { DeleteConfirmModal } from "src/components/modals/delete-confirm";
@@ -38,21 +34,11 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
     router.push(urls.operators.home());
   };
 
-  const bookingDetails = getReadableBookingDetails(booking);
-
   return (
     <Titled title={booking.service.name}>
       <KeyValues
         sx={{ maxWidth: 600 }}
-        kv={{
-          Name: booking.name,
-          Email: booking.email,
-          Date: booking.date,
-          ...bookingDetails,
-          Price: createPriceString(
-            calculateBookingPrice(booking.priceDetails, booking.service)
-          ),
-        }}
+        kv={getReadableBookingDetails(booking)}
       />
 
       <Box sx={{ mt: 3 }}>

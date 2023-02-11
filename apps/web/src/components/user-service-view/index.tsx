@@ -62,7 +62,6 @@ export const UserServiceView: React.FC<Props> = ({
         <KeyValues
           sx={{ maxWidth: 600 }}
           kv={{
-            Type: getSchemaForServiceType(service.type).label,
             ...priceDetails,
             ...schema.fields.reduce(
               (acc, field) => ({

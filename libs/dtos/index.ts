@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export interface OperatorDto {
   _id: string;
   name: string;
@@ -10,7 +12,7 @@ export interface OperatorDto {
 
 export type OperatorNoId = Omit<OperatorDto, '_id'>;
 
-export const serviceTypes = ['none', 'boat-trip', 'boat-rental', 'sunbed', 'watersports'] as const;
+export const serviceTypes = ['none', 'boat-trip', 'boat-rental', 'sunbed', 'watersports', 'restaurant'] as const;
 
 export type ServiceType = typeof serviceTypes[number];
 
@@ -41,6 +43,7 @@ export interface TieredPriceDto {
 }
 
 export type ServicePricingDto = Partial<{
+  onPremises: void;
   fixed: PriceDto;
   perPerson: PriceDto;
   perAdultAndChild: PerAdultAndChildPriceDto;
@@ -49,10 +52,13 @@ export type ServicePricingDto = Partial<{
 
 export type PricingStrategyType = keyof ServicePricingDto;
 
+export type DefaultBookingFieldType = keyof DefaultBookingFields;
+
 export interface ServiceSchemaDto {
   label: string;
   pluralLabel: string;
   description: string;
+  defaultBookingFields: DefaultBookingFieldType[];
   pricingStrategy: PricingStrategyType;
   fields: ServiceSchemaFieldDto[];
 }
@@ -128,13 +134,26 @@ export const getDefaultBookingPriceDetails = (schema: ServiceSchemaDto): Booking
   },
 })
 
-export interface BookingDto {
+export interface DefaultBookingFields {
+  date?: string;
+  time?: string;
+  numberOfPeople?: number;
+}
+
+export const getDefaultDefaultBookingFields = (schema: ServiceSchemaDto): DefaultBookingFields => {
+  return {
+    date: schema.defaultBookingFields.includes('date') ? dayjs().add(1, "day").format("DD MMM YYYY") : undefined,
+    time: schema.defaultBookingFields.includes('time') ? '09:00' : undefined,
+    numberOfPeople: schema.defaultBookingFields.includes('numberOfPeople') ? 1 : 0,
+  }
+}
+
+export interface BookingDto extends DefaultBookingFields {
   _id: string;
   service: ServiceDto;
   operator: OperatorDto;
   name: string;
   email: string;
-  date: string;
   bookingDate?: Date;
   priceDetails: BookingPriceDetails;
   paymentIntentId?: string;

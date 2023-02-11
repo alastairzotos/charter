@@ -1,11 +1,10 @@
-import { Box, Button, TextField as MuiTextField } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
-import dayjs from "dayjs";
 import {
   BookingNoId,
   getDefaultBookingPriceDetails,
+  getDefaultDefaultBookingFields,
   OperatorDto,
   ServiceDto,
 } from "dtos";
@@ -13,8 +12,10 @@ import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import React, { useEffect, useState } from "react";
 import { getSchemaForServiceType } from "service-schemas";
-import { calculateBookingPrice, createPriceString } from "utils";
+import { urls } from "urls";
+import { calculateBookingPrice, createPriceString, shouldPayNow } from "utils";
 
+import { BookingDefaultForms } from "src/components/booking-default-forms";
 import { BookingModal } from "src/components/booking-modal";
 import { BookingPaymentForm } from "src/components/booking-payment-form";
 import { BookingPeoplePolicyFeedback } from "src/components/booking-people-policy-feedback";
@@ -38,6 +39,8 @@ export const BookingForm: React.FC<Props> = ({
   service,
   onClose,
 }) => {
+  const schema = getSchemaForServiceType(service.type);
+
   const [isNumberOfPeopleInvalid, setIsNumberOfPeopleInvalid] = useState(false);
 
   const loggedinUser = useUserState((s) => s.loggedInUser);
@@ -51,30 +54,32 @@ export const BookingForm: React.FC<Props> = ({
 
   useEffect(() => {
     if (!!bookingId) {
-      createPaymentIntent(bookingId);
+      if (shouldPayNow(schema)) {
+        createPaymentIntent(bookingId);
+      } else {
+        // router.push() doesn't work here for some reason
+        window.location.href = urls.user.booking(bookingId);
+      }
     }
   }, [bookingId]);
 
-  const handleSubmit = async (booking: Omit<BookingNoId, "status">) => {
+  const handleSubmit = async (booking: Omit<BookingNoId, "status">) =>
     await createBooking({ ...booking, status: "confirmed" });
-  };
 
   const initialValues: Omit<BookingNoId, "status"> = {
     operator,
     service,
     name: loggedinUser?.givenName || "",
     email: loggedinUser?.email || "",
-    date: dayjs().add(1, "day").format("DD MMM YYYY"),
-    priceDetails: getDefaultBookingPriceDetails(
-      getSchemaForServiceType(service.type)
-    ),
+    priceDetails: getDefaultBookingPriceDetails(schema),
+    ...getDefaultDefaultBookingFields(schema),
   };
 
   const isSubmitting =
     createBookingStatus === "fetching" ||
     paymentIntentCreateStatus === "fetching";
 
-  if (!!bookingId && !!clientSecret) {
+  if (!!bookingId && !!clientSecret && shouldPayNow(schema)) {
     return (
       <BookingPaymentForm
         paymentIntentCreateStatus={paymentIntentCreateStatus}
@@ -89,9 +94,7 @@ export const BookingForm: React.FC<Props> = ({
       <BookingModal>
         <Formik
           initialValues={initialValues}
-          validationSchema={bookingValidationSchema(
-            getSchemaForServiceType(service.type).pricingStrategy
-          )}
+          validationSchema={bookingValidationSchema(schema.pricingStrategy)}
           onSubmit={handleSubmit}
         >
           {({ isValid, values, setValues }) => (
@@ -108,24 +111,15 @@ export const BookingForm: React.FC<Props> = ({
                 type="email"
               />
 
-              <MobileDatePicker
-                label="Date"
-                inputFormat="DD/MM/YYYY"
-                disabled={isSubmitting}
-                minDate={dayjs().add(1, "day")}
-                value={values.date}
-                onChange={(date) =>
-                  setValues({ ...values, date: date!.format("DD MMM YYYY") })
-                }
-                renderInput={(params) => (
-                  <MuiTextField {...params} disabled={isSubmitting} />
-                )}
+              <BookingDefaultForms
+                schema={schema}
+                values={values}
+                setValues={setValues}
+                isSubmitting={isSubmitting}
               />
 
               <BookingPriceDetails
-                pricingStrategy={
-                  getSchemaForServiceType(service.type).pricingStrategy
-                }
+                pricingStrategy={schema.pricingStrategy}
                 pricing={service.price}
               />
 
@@ -135,14 +129,16 @@ export const BookingForm: React.FC<Props> = ({
                 setError={setIsNumberOfPeopleInvalid}
               />
 
-              <KeyValues
-                sx={{ maxWidth: 300 }}
-                kv={{
-                  "Total Price": createPriceString(
-                    calculateBookingPrice(values.priceDetails, service)
-                  ),
-                }}
-              />
+              {shouldPayNow(schema) && (
+                <KeyValues
+                  sx={{ maxWidth: 300 }}
+                  kv={{
+                    "Total Price": createPriceString(
+                      calculateBookingPrice(values.priceDetails, service)
+                    ),
+                  }}
+                />
+              )}
 
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Button
@@ -151,7 +147,7 @@ export const BookingForm: React.FC<Props> = ({
                   variant="contained"
                   disabled={!isValid || isSubmitting || isNumberOfPeopleInvalid}
                 >
-                  Proceed to payment
+                  {shouldPayNow(schema) ? "Proceed to payment" : "Book now"}
                 </Button>
               </Box>
             </FormBox>
