@@ -12,10 +12,10 @@ export const KeyValues: React.FC<Props> = ({ sx, kv }) => {
       <TableBody>
         {Object.keys(kv).map((key) => (
           <TableRow key={key}>
-            <TableCell component="th" sx={{ fontWeight: "bold" }}>
+            <TableCell component="th">
               {key}
             </TableCell>
-            <TableCell align="right">{kv[key]}</TableCell>
+            <TableCell align="right" sx={{ fontWeight: "bold" }}>{kv[key]}</TableCell>
           </TableRow>
         ))}
       </TableBody>
