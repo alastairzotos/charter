@@ -1,14 +1,13 @@
 import { LoginDetails, LoginResponse, RegisterDetails } from "dtos";
+import { httpClient } from "src/services/http.service";
 
-import { HttpService } from "src/services/http.service";
-
-export class UserService extends HttpService {
+export class UserService {
   async registerUser(
     givenName: string,
     email: string,
     password: string
   ): Promise<LoginResponse> {
-    const { data } = await this.httpClient.post<
+    const { data } = await httpClient.post<
       any,
       { data: LoginResponse },
       RegisterDetails
@@ -18,7 +17,7 @@ export class UserService extends HttpService {
   }
 
   async loginUser(email: string, password: string): Promise<LoginResponse> {
-    const { data } = await this.httpClient.post<
+    const { data } = await httpClient.post<
       any,
       { data: LoginResponse },
       LoginDetails

@@ -1,11 +1,11 @@
-import { HttpService } from "src/services/http.service";
+import { httpClient } from "src/services/http.service";
 
-export class ImagesService extends HttpService {
+export class ImagesService {
   async uploadImage(file: File): Promise<string> {
     const formData = new FormData();
     formData.append("file", file);
 
-    const { data } = await this.httpClient.post<
+    const { data } = await httpClient.post<
       any,
       { data: string },
       FormData

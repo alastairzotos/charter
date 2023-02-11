@@ -4,12 +4,11 @@ import {
   BookingPaymentStatus,
   BookingStatus,
 } from "dtos";
+import { httpClient } from "src/services/http.service";
 
-import { HttpService } from "src/services/http.service";
-
-export class BookingsService extends HttpService {
+export class BookingsService {
   async createBooking(booking: BookingNoId): Promise<string> {
-    const { data } = await this.httpClient.post<
+    const { data } = await httpClient.post<
       any,
       { data: string },
       BookingNoId
@@ -19,13 +18,13 @@ export class BookingsService extends HttpService {
   }
 
   async getBookingById(id: string) {
-    const { data } = await this.httpClient.get<BookingDto>(`/bookings/${id}`);
+    const { data } = await httpClient.get<BookingDto>(`/bookings/${id}`);
 
     return data;
   }
 
   async getBookingWithOperatorAndService(id: string) {
-    const { data } = await this.httpClient.get<BookingDto>(
+    const { data } = await httpClient.get<BookingDto>(
       `/bookings/with-details/${id}`
     );
 
@@ -33,7 +32,7 @@ export class BookingsService extends HttpService {
   }
 
   async getBookingsForUser() {
-    const { data } = await this.httpClient.get<BookingDto[]>(
+    const { data } = await httpClient.get<BookingDto[]>(
       "/bookings/for-user"
     );
 
@@ -41,7 +40,7 @@ export class BookingsService extends HttpService {
   }
 
   async setBookingStatus(id: string, status: BookingStatus) {
-    await this.httpClient.patch<
+    await httpClient.patch<
       any,
       unknown,
       { id: string; status: BookingStatus }
@@ -49,7 +48,7 @@ export class BookingsService extends HttpService {
   }
 
   async getBookingPaymentStatus(id: string) {
-    const { data } = await this.httpClient.get<BookingPaymentStatus>(
+    const { data } = await httpClient.get<BookingPaymentStatus>(
       `/bookings/payment-status/${id}`
     );
     return data;

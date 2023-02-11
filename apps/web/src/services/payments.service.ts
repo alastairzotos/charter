@@ -1,10 +1,9 @@
 import { CreatePaymentIntentDto } from "dtos";
+import { httpClient } from "src/services/http.service";
 
-import { HttpService } from "src/services/http.service";
-
-export class PaymentsService extends HttpService {
+export class PaymentsService {
   async createPaymentIntent(bookingId: string): Promise<string> {
-    const { data } = await this.httpClient.post<
+    const { data } = await httpClient.post<
       any,
       { data: string },
       CreatePaymentIntentDto

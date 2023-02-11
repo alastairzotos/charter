@@ -1,10 +1,9 @@
 import { OperatorDto, ServiceDto, ServiceNoId } from "dtos";
+import { httpClient } from "src/services/http.service";
 
-import { HttpService } from "src/services/http.service";
-
-export class ServicesService extends HttpService {
+export class ServicesService {
   async getServicesForOperator(operatorId: string): Promise<ServiceDto[]> {
-    const { data } = await this.httpClient.get<ServiceDto[]>(
+    const { data } = await httpClient.get<ServiceDto[]>(
       `/services?operatorId=${operatorId}`
     );
 
@@ -12,7 +11,7 @@ export class ServicesService extends HttpService {
   }
 
   async getService(id: string): Promise<ServiceDto> {
-    const { data } = await this.httpClient.get<ServiceDto>(`/services/${id}`);
+    const { data } = await httpClient.get<ServiceDto>(`/services/${id}`);
 
     return data;
   }
@@ -20,7 +19,7 @@ export class ServicesService extends HttpService {
   async getServiceByIdWithOperator(
     id: string
   ): Promise<{ service: ServiceDto; operator: OperatorDto }> {
-    const { data } = await this.httpClient.get<{
+    const { data } = await httpClient.get<{
       service: ServiceDto;
       operator: OperatorDto;
     }>(`/services/with-operator/${id}`);
@@ -29,7 +28,7 @@ export class ServicesService extends HttpService {
   }
 
   async getServicesWithOperatorsByType(type: string): Promise<ServiceDto[]> {
-    const { data } = await this.httpClient.get<ServiceDto[]>(
+    const { data } = await httpClient.get<ServiceDto[]>(
       `/services/by-type/${type}`
     );
 
@@ -40,7 +39,7 @@ export class ServicesService extends HttpService {
     id: string,
     newService: Partial<ServiceNoId>
   ): Promise<void> {
-    await this.httpClient.patch<
+    await httpClient.patch<
       any,
       unknown,
       { id: string; newService: Partial<ServiceNoId> }
@@ -48,13 +47,13 @@ export class ServicesService extends HttpService {
   }
 
   async deleteService(id: string): Promise<void> {
-    await this.httpClient.delete<any, unknown, { id: string }>("/services", {
+    await httpClient.delete<any, unknown, { id: string }>("/services", {
       data: { id },
     });
   }
 
   async createService(service: ServiceNoId): Promise<string> {
-    const { data } = await this.httpClient.post<
+    const { data } = await httpClient.post<
       any,
       { data: string },
       ServiceNoId

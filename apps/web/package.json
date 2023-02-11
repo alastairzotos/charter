@@ -10,6 +10,8 @@
     "test": "jest -c jest.config.js"
   },
   "dependencies": {
+    "@bitmetro/create-query": "^0.0.5",
+    "@bitmetro/http-client": "0.0.4",
     "@date-io/dayjs": "^2.16.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -19,7 +21,6 @@
     "@mui/x-date-pickers": "^5.0.17",
     "@stripe/react-stripe-js": "^1.16.4",
     "@stripe/stripe-js": "^1.46.0",
-    "axios": "^1.2.1",
     "dayjs": "^1.11.7",
     "dtos": "*",
     "formik": "^2.2.9",

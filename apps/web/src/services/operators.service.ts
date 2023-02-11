@@ -1,16 +1,15 @@
 import { OperatorDto, OperatorNoId, ServiceDto } from "dtos";
+import { httpClient } from "src/services/http.service";
 
-import { HttpService } from "src/services/http.service";
-
-export class OperatorsService extends HttpService {
+export class OperatorsService {
   async getOperators(): Promise<OperatorDto[]> {
-    const { data } = await this.httpClient.get<OperatorDto[]>("/operators");
+    const { data } = await httpClient.get<OperatorDto[]>("/operators");
 
     return data;
   }
 
   async getOperator(id: string): Promise<OperatorDto> {
-    const { data } = await this.httpClient.get<OperatorDto>(`/operators/${id}`);
+    const { data } = await httpClient.get<OperatorDto>(`/operators/${id}`);
 
     return data;
   }
@@ -18,7 +17,7 @@ export class OperatorsService extends HttpService {
   async getOperatorWithServicesById(
     id: string
   ): Promise<{ operator: OperatorDto; services: ServiceDto[] }> {
-    const { data } = await this.httpClient.get<{
+    const { data } = await httpClient.get<{
       operator: OperatorDto;
       services: ServiceDto[];
     }>(`/operators/with-services/${id}`);
@@ -27,7 +26,7 @@ export class OperatorsService extends HttpService {
   }
 
   async createOperator(operator: OperatorNoId): Promise<string> {
-    const { data } = await this.httpClient.post<
+    const { data } = await httpClient.post<
       any,
       { data: string },
       OperatorNoId
@@ -40,7 +39,7 @@ export class OperatorsService extends HttpService {
     id: string,
     newOperator: Partial<OperatorDto>
   ): Promise<void> {
-    await this.httpClient.patch<
+    await httpClient.patch<
       any,
       unknown,
       { id: string; newOperator: Partial<OperatorDto> }
@@ -48,7 +47,7 @@ export class OperatorsService extends HttpService {
   }
 
   async deleteOperator(id: string): Promise<void> {
-    await this.httpClient.delete<any, unknown, { id: string }>("/operators", {
+    await httpClient.delete<any, unknown, { id: string }>("/operators", {
       data: { id },
     });
   }
