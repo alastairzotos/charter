@@ -29,7 +29,7 @@ jobs:
           push: true
           context: .
           file: Dockerfile.api
-          tags: bitmetro/booking-api:${{ github.ref_name }}
+          tags: bitmetro/charter-api:${{ github.ref_name }}
           build-args: |
             SCOPE=api
   web:
@@ -55,6 +55,6 @@ jobs:
           push: true
           context: .
           file: Dockerfile.web
-          tags: bitmetro/booking-web:${{ github.ref_name }}
+          tags: bitmetro/charter-web:${{ github.ref_name }}
           build-args: |
             SCOPE=web

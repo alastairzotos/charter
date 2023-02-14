@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile.app
       args:
         SCOPE: api
-    image: bitmetro/booking-api:test5
-    container_name: booking-api
+    image: bitmetro/charter
+    container_name: charter-api
     ports:
       - 3001:3001
     env_file: ./.env.docker
@@ -18,8 +18,8 @@ services:
       dockerfile: Dockerfile.web
       args:
         SCOPE: web
-    image: bitmetro/booking-web:test5
-    container_name: booking-web
+    image: bitmetro/charter
+    container_name: charter-web
     ports:
       - 3000:3000
     env_file: ./.env.docker
