@@ -7,7 +7,6 @@ import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { OperatorsService } from 'features/operators/operators.service';
 import { EmailService } from 'integrations/email/email.service';
 import { ServicesService } from 'features/services/services.service';
-import { shouldPayNow } from 'utils';
 import { getSchemaForServiceType } from 'service-schemas';
 
 @Injectable()
@@ -26,7 +25,7 @@ export class BookingsService {
 
     const { _id } = await this.bookingsRepository.createBooking(booking);
 
-    if (!shouldPayNow(schema)) {
+    if (!schema.shouldPayNow) {
       await this.setBookingPaymentStatus(_id, 'succeeded');
     }
     

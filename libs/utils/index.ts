@@ -20,9 +20,6 @@ export const calculateBookingPrice = (bookingDetails: BookingPriceDetails, servi
   }
 }
 
-export const shouldPayNow = (schema: ServiceSchemaDto) =>
-  schema.pricingStrategy !== 'onPremises';
-
 export const createPriceString = (price: number) =>
   `€${price.toFixed(2)}`;
 
@@ -84,7 +81,7 @@ export const getReadableBookingDetails = (booking: BookingNoId): Record<string, 
     obj['Number of people'] = `${booking.numberOfPeople!}`;
   }
 
-  if (shouldPayNow(schema)) {
+  if (schema.shouldPayNow) {
     obj['Price'] = createPriceString(calculateBookingPrice(booking.priceDetails, booking.service));
   }
 

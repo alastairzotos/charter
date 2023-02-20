@@ -19,6 +19,7 @@ export interface ServiceSchemaDto {
   description: string;
   defaultBookingFields: DefaultBookingFieldType[];
   pricingStrategy: PricingStrategyType;
+  shouldPayNow: boolean;
   fields: ServiceSchemaFieldDto[];
 }
 

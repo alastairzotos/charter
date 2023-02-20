@@ -5,6 +5,7 @@ export const NoneSchema: ServiceSchemaDto = {
   pluralLabel: 'None',
   description: 'None',
   pricingStrategy: 'fixed',
+  shouldPayNow: true,
   defaultBookingFields: ['date'],
   fields: []
 }
@@ -14,6 +15,7 @@ export const BoatTripSchema: ServiceSchemaDto = {
   pluralLabel: 'Boat trips',
   description: 'Take a guided trip on a boat around the island',
   pricingStrategy: 'perAdultAndChild',
+  shouldPayNow: true,
   defaultBookingFields: ['date'],
   fields: [
     { 
@@ -39,6 +41,7 @@ export const BoatRentalSchema: ServiceSchemaDto = {
   pluralLabel: 'Boat rentals',
   description: 'Rent boats at cheap prices to explore the seas at your leisure',
   pricingStrategy: 'fixed',
+  shouldPayNow: true,
   defaultBookingFields: ['date'],
   fields: [
     { 
@@ -64,6 +67,7 @@ export const SunbedSchema: ServiceSchemaDto = {
   pluralLabel: 'Sun beds',
   description: 'Reserve a sun bed and breathe easy knowing you\'ll have one waiting for you',
   pricingStrategy: 'fixed',
+  shouldPayNow: true,
   defaultBookingFields: ['date'],
   fields: [
     {
@@ -84,6 +88,7 @@ export const WatersportsSchema: ServiceSchemaDto = {
   pluralLabel: 'Watersports',
   description: 'Enjoy an exciting day with some waterskiing, tube riding, paragliding, and more!',
   pricingStrategy: 'tiered',
+  shouldPayNow: true,
   defaultBookingFields: ['date'],
   fields: [
     {
@@ -99,6 +104,7 @@ export const RestaurantSchema: ServiceSchemaDto = {
   pluralLabel: 'Restaurants',
   description: 'Discover the taste of the area with our selection of restaurants',
   pricingStrategy: 'onPremises',
+  shouldPayNow: false,
   defaultBookingFields: ['date', 'time', 'numberOfPeople'],
   fields: []
 }

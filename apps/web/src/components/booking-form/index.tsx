@@ -13,7 +13,7 @@ import { TextField } from "formik-mui";
 import React, { useEffect, useState } from "react";
 import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
-import { calculateBookingPrice, createPriceString, shouldPayNow } from "utils";
+import { calculateBookingPrice, createPriceString } from "utils";
 
 import { BookingDefaultForms } from "src/components/booking-default-forms";
 import { BookingModal } from "src/components/booking-modal";
@@ -54,7 +54,7 @@ export const BookingForm: React.FC<Props> = ({
 
   useEffect(() => {
     if (!!bookingId) {
-      if (shouldPayNow(schema)) {
+      if (schema.shouldPayNow) {
         createPaymentIntent(bookingId);
       } else {
         // router.push() doesn't work here for some reason
@@ -79,7 +79,7 @@ export const BookingForm: React.FC<Props> = ({
     createBookingStatus === "fetching" ||
     paymentIntentCreateStatus === "fetching";
 
-  if (!!bookingId && !!clientSecret && shouldPayNow(schema)) {
+  if (!!bookingId && !!clientSecret && schema.shouldPayNow) {
     return (
       <BookingPaymentForm
         paymentIntentCreateStatus={paymentIntentCreateStatus}
@@ -129,7 +129,7 @@ export const BookingForm: React.FC<Props> = ({
                 setError={setIsNumberOfPeopleInvalid}
               />
 
-              {shouldPayNow(schema) && (
+              {schema.shouldPayNow && (
                 <KeyValues
                   sx={{ maxWidth: 300 }}
                   kv={{
@@ -147,7 +147,7 @@ export const BookingForm: React.FC<Props> = ({
                   variant="contained"
                   disabled={!isValid || isSubmitting || isNumberOfPeopleInvalid}
                 >
-                  {shouldPayNow(schema) ? "Proceed to payment" : "Book now"}
+                  {schema.shouldPayNow ? "Proceed to payment" : "Book now"}
                 </Button>
               </Box>
             </FormBox>
