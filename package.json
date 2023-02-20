@@ -1,5 +1,5 @@
 {
-  "name": "booking-your-boat-trip",
+  "name": "@bitmetro/charter",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
