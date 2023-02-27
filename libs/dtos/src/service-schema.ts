@@ -1,10 +1,6 @@
 import { DefaultBookingFieldType } from "./booking";
 import { PricingStrategyType } from "./pricing";
 
-export const serviceTypes = ['none', 'boat-trip', 'boat-rental', 'sunbed', 'watersports', 'restaurant'] as const;
-
-export type ServiceType = typeof serviceTypes[number];
-
 export type ServiceSchemaFieldType = 'string' | 'time' | 'timeframe';
 
 export interface ServiceSchemaFieldDto {

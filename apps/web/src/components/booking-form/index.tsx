@@ -11,7 +11,6 @@ import {
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import React, { useEffect, useState } from "react";
-import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
 import { calculateBookingPrice, createPriceString } from "utils";
 
@@ -39,7 +38,7 @@ export const BookingForm: React.FC<Props> = ({
   service,
   onClose,
 }) => {
-  const schema = getSchemaForServiceType(service.type);
+  const schema = service.serviceSchema;
 
   const [isNumberOfPeopleInvalid, setIsNumberOfPeopleInvalid] = useState(false);
 

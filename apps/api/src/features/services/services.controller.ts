@@ -10,7 +10,7 @@ import {
   UseGuards,
   NotFoundException,
 } from '@nestjs/common';
-import { ServiceDto, ServiceNoId, ServiceType } from 'dtos';
+import { ServiceDto, ServiceNoId } from 'dtos';
 
 import { AuthGuard } from 'auth/auth.guard';
 import { Roles } from 'auth/roles.decorator';
@@ -43,10 +43,10 @@ export class ServicesController {
     }
   }
 
-  @Get('by-type/:type')
+  @Get('by-schema-id/:schemaId')
   @Roles('all')
-  async getServicesWithOperatorsByType(@Param('type') type: ServiceType) {
-    return await this.servicesService.getServicesWithOperatorsByType(type);
+  async getServicesWithOperatorsBySchemaId(@Param('schemaId') schemaId: string) {
+    return await this.servicesService.getServicesWithOperatorsBySchemaId(schemaId);
   }
 
   @Post()

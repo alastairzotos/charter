@@ -1,5 +1,5 @@
 import { paramCase } from 'change-case';
-import { OperatorDto, ServiceDto, ServiceType } from "dtos";
+import { OperatorDto, ServiceDto, ServiceSchemaDto } from "dtos";
 
 type UrlFn = (...args: any[]) => string;
 
@@ -17,7 +17,7 @@ export const urls = {
     operatorsCreate: () => '/admin/operators/create',
     operator: (id: string) => `/admin/operators/${id}`,
     operatorEdit: (id: string) => `/admin/operators/${id}/edit`,
-    servicesCreate: (operatorId: string, type: ServiceType) => `/admin/operators/${operatorId}/services/create?type=${type}`,
+    servicesCreate: (operatorId: string, schemaId: string) => `/admin/operators/${operatorId}/services/create?schemaId=${schemaId}`,
     service: (operatorId: string, id: string) => `/admin/operators/${operatorId}/services/${id}`,
     serviceSchemas: () => `/admin/service-schemas`,
     serviceSchema: (id: string) => `/admin/service-schemas/${id}`,
@@ -29,7 +29,7 @@ export const urls = {
     service: (service: ServiceDto) => `/service/${service._id}`,
     booking: (id: string) => `/booking/${id}`,
     services: () => '/services',
-    serviceType: (type: ServiceType) => `service-type/${type}`,
+    serviceType: (schema: ServiceSchemaDto) => `service-type/${paramCase(schema.pluralLabel)}-${schema._id}`,
   },
   operators: {
     home: () => '/operator-admin',

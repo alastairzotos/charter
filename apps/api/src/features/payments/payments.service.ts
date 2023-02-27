@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { BookingsService } from "features/bookings/bookings.service";
 import { StripeService } from "integrations/stripe/stripe.service";
-import { Stripe } from 'stripe';
 import { calculateBookingPrice } from "utils";
 
 @Injectable()

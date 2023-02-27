@@ -1,11 +1,11 @@
 import { Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { OperatorDto, serviceTypes } from "dtos";
+import { OperatorDto, ServiceSchemaDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
-import { getSchemaForServiceType } from "service-schemas";
 
 import { getOperators } from "src/clients/operators.client";
+import { getServiceSchemas } from "src/clients/service-schemas.client";
 import { SeoHead } from "src/components/seo/head";
 import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
@@ -14,16 +14,14 @@ import { ServiceTypes } from "src/components/user-service-types";
 import { APP_NAME, capitalise } from "src/util/misc";
 
 interface Props {
+  serviceSchemas: ServiceSchemaDto[];
   operators: OperatorDto[];
 }
 
-const Home: NextPage<Props> = ({ operators }) => {
+const Home: NextPage<Props> = ({ serviceSchemas, operators }) => {
   const serviceList = capitalise(
-    serviceTypes
-      .filter((type) => type !== "none")
-      .map((type) =>
-        getSchemaForServiceType(type).pluralLabel.toLocaleLowerCase()
-      )
+    serviceSchemas
+      .map((schema) => schema.pluralLabel.toLocaleLowerCase())
       .join(", ")
   );
 
@@ -75,7 +73,7 @@ const Home: NextPage<Props> = ({ operators }) => {
       </Box>
 
       <UserLayoutContainer>
-        <ServiceTypes />
+        <ServiceTypes serviceSchemas={serviceSchemas} />
       </UserLayoutContainer>
 
       <UserLayoutContainer alternative>
@@ -110,6 +108,7 @@ const Home: NextPage<Props> = ({ operators }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   return {
     props: {
+      serviceSchemas: await getServiceSchemas(),
       operators: await getOperators(),
     },
   };

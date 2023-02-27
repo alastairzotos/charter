@@ -1,11 +1,11 @@
 import { OperatorDto } from "./operator";
 import { ServicePricingDto } from "./pricing";
-import { ServiceFieldValue, ServiceType } from "./service-schema";
+import { ServiceFieldValue, ServiceSchemaDto } from "./service-schema";
 
 export interface ServiceDto {
   _id: string;
   operator: OperatorDto;
-  type: ServiceType;
+  serviceSchema: ServiceSchemaDto;
   name: string;
   description: string;
   price: ServicePricingDto;

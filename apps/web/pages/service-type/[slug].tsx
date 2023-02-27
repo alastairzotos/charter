@@ -1,33 +1,31 @@
 import { Typography } from "@mui/material";
-import { ServiceDto, ServiceType } from "dtos";
+import { ServiceDto, ServiceSchemaDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
-import { getSchemaForServiceType } from "service-schemas";
 
-import { getServicesWithOperatorsByType } from "src/clients/services.client";
+import { getServiceSchemaById } from "src/clients/service-schemas.client";
+import { getServicesWithOperatorsBySchemaId } from "src/clients/services.client";
 import { SeoHead } from "src/components/seo/head";
 import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserServicesView } from "src/components/user-services-view";
 
 interface Props {
-  type: ServiceType;
+  serviceSchema: ServiceSchemaDto;
   services: ServiceDto[];
 }
 
-const ServiceTypePage: NextPage<Props> = ({ type, services }) => {
+const ServiceTypePage: NextPage<Props> = ({ serviceSchema, services }) => {
   return (
     <UserLayoutContainer>
       <SeoHead
-        subtitle={getSchemaForServiceType(type).label}
-        description={getSchemaForServiceType(type).description || ""}
+        subtitle={serviceSchema.label}
+        description={serviceSchema.description || ""}
       />
 
       <UserLayoutContainer>
-        <Titled title={getSchemaForServiceType(type).pluralLabel || ""}>
-          <Typography>
-            {getSchemaForServiceType(type).description || ""}
-          </Typography>
+        <Titled title={serviceSchema.pluralLabel || ""}>
+          <Typography>{serviceSchema.description || ""}</Typography>
         </Titled>
 
         <UserServicesView showOperator services={services} />
@@ -39,20 +37,22 @@ const ServiceTypePage: NextPage<Props> = ({ type, services }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   params,
 }) => {
-  const type = params?.type as ServiceType;
+  const slug = params?.slug as string;
+  const schemaId = slug.split("-").pop();
 
-  if (!type) {
+  if (!schemaId) {
     return {
       notFound: true,
     };
   }
 
   try {
-    const services = await getServicesWithOperatorsByType(type);
+    const serviceSchema = await getServiceSchemaById(schemaId);
+    const services = await getServicesWithOperatorsBySchemaId(schemaId);
 
     return {
       props: {
-        type,
+        serviceSchema,
         services,
       },
     };

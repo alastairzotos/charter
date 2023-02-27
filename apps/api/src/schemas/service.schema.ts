@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ServiceDto, ServiceFieldValue, ServicePricingDto, ServiceType } from 'dtos';
+import { ServiceDto, ServiceFieldValue, ServicePricingDto, ServiceSchemaDto } from 'dtos';
 import { Schema as MongooseSchema } from 'mongoose';
 
 import { Operator } from 'schemas/operator.schema';
+import { ServiceSchema as ServiceSchemaSchema } from 'schemas/service-schema.schema';
 
 @Schema({ collection: 'services' })
 export class Service implements ServiceDto {
@@ -11,8 +12,8 @@ export class Service implements ServiceDto {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Operator.name })
   operator: Operator;
 
-  @Prop()
-  type: ServiceType;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: ServiceSchemaSchema.name })
+  serviceSchema: ServiceSchemaDto;
 
   @Prop()
   name: string;

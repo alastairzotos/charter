@@ -19,15 +19,19 @@ export class ServicesRepository {
   }
 
   async getServicesForOperator(operatorId: string) {
-    return await this.servicesModel.find({ operator: operatorId });
+    return await this.servicesModel.find({ operator: operatorId }).populate('serviceSchema');
+  }
+
+  async getServices() {
+    return await this.servicesModel.find().populate('serviceSchema');
   }
 
   async getService(id: string) {
-    return await this.servicesModel.findById(id);
+    return await this.servicesModel.findOne({ _id: id }).populate('serviceSchema');
   }
 
-  async getServicesWithOperatorsByType(type: string) {
-    return await this.servicesModel.find({ type }).populate('operator');
+  async getServicesWithOperatorsBySchemaId(schemaId: string) {
+    return await this.servicesModel.find({ serviceSchema: schemaId }).populate(['operator', 'serviceSchema']);
   }
 
   async createService(service: ServiceNoId) {

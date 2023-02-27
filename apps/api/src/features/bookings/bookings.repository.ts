@@ -34,7 +34,12 @@ export class BookingsRepository {
   }
 
   async getBookingById(id: string) {
-    return await this.bookingsModel.findById(id).populate('service');
+    return await this.bookingsModel.findById(id).populate({
+      path: 'service',
+      populate: {
+        path: 'serviceSchema'
+      }
+    })
   }
 
   async getBookingByPaymentIntentId(paymentIntentId: string) {
@@ -42,7 +47,14 @@ export class BookingsRepository {
   }
 
   async getBookingWithOperatorAndService(id: string) {
-    return await this.bookingsModel.findById(id).populate(['operator', 'service']);
+    return await this.bookingsModel.findById(id)
+      .populate('operator')
+      .populate({
+        path: 'service',
+        populate: {
+          path: 'serviceSchema'
+        }
+      });
   }
 
   async getBookingsByOperator(operator: OperatorDto) {

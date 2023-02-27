@@ -1,12 +1,9 @@
 import { BookingNoId, BookingPriceDetails, ServiceNoId } from 'dtos';
-import { getSchemaForServiceType } from 'service-schemas';
 
 export type ExtractInterface<T> = Pick<T, keyof T>;
 
 export const calculateBookingPrice = (bookingDetails: BookingPriceDetails, service: ServiceNoId) => {
-  const schema = getSchemaForServiceType(service.type);
-
-  switch (schema.pricingStrategy) {
+  switch (service.serviceSchema.pricingStrategy) {
     case 'onPremises': return -1;
     case 'fixed': return service.price.fixed?.price || 0;
     case 'perPerson': return (service.price.perPerson?.price || 0) * (bookingDetails.perPerson?.numberOfPeople || 0);
@@ -24,9 +21,7 @@ export const createPriceString = (price: number) =>
   `€${price.toFixed(2)}`;
 
 export const getReadablePricingStringsForService = (service: ServiceNoId): Record<string, string> => {
-  const schema = getSchemaForServiceType(service.type);
-
-  switch (schema.pricingStrategy) {
+  switch (service.serviceSchema.pricingStrategy) {
     case 'onPremises': return {};
     case 'fixed': return { Price: createPriceString(service.price.fixed?.price!) };
     case 'perPerson': return { "Price per person": createPriceString(service.price.perPerson?.price!) };
@@ -44,7 +39,7 @@ export const getReadablePricingStringsForService = (service: ServiceNoId): Recor
 }
 
 export const getReadableBookingDetails = (booking: BookingNoId): Record<string, string> => {
-  const schema = getSchemaForServiceType(booking.service.type);
+  const schema = booking.service.serviceSchema;
 
   let obj: Record<string, string> = {
     Name: booking.name,
@@ -88,10 +83,8 @@ export const getReadableBookingDetails = (booking: BookingNoId): Record<string, 
   return obj;
 }
 
-export const calculateBookingTotalPeople = (booking: BookingNoId): number | undefined => {
-  const schema = getSchemaForServiceType(booking.service.type);
-
-  switch (schema.pricingStrategy) {
+export const calculateBookingTotalPeople = (booking: BookingNoId, service: ServiceNoId): number | undefined => {
+  switch (service.serviceSchema.pricingStrategy) {
     case 'perPerson': return booking.priceDetails.perPerson?.numberOfPeople;
     case 'perAdultAndChild':
       return (booking.priceDetails.perAdultAndChild?.adultGuests || 0) + (booking.priceDetails.perAdultAndChild?.childGuests || 0);
@@ -102,7 +95,7 @@ export const calculateBookingTotalPeople = (booking: BookingNoId): number | unde
 }
 
 export const bookingSatisfiesPeoplePolicy = (booking: BookingNoId, service: ServiceNoId): 'unknown' | 'too-many' | 'too-few' | 'okay' => {
-  const totalPeople = calculateBookingTotalPeople(booking);
+  const totalPeople = calculateBookingTotalPeople(booking, service);
 
   if (totalPeople === undefined) {
     return 'unknown';

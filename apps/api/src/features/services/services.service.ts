@@ -1,5 +1,5 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { ServiceDto, ServiceNoId, ServiceType } from 'dtos';
+import { ServiceDto, ServiceNoId } from 'dtos';
 
 import { OperatorsService } from 'features/operators/operators.service';
 import { ServicesRepository } from 'features/services/services.repository';
@@ -21,7 +21,7 @@ export class ServicesService {
   }
 
   async getServiceByIdWithOperator(id: string) {
-    const service = await this.getService(id);
+    const service = await this.servicesRepository.getService(id);
 
     return {
       service,
@@ -35,8 +35,8 @@ export class ServicesService {
     await this.servicesRepository.addBookingToService(serviceId);
   }
 
-  async getServicesWithOperatorsByType(type: ServiceType) {
-    return await this.servicesRepository.getServicesWithOperatorsByType(type);
+  async getServicesWithOperatorsBySchemaId(schemaId: string) {
+    return await this.servicesRepository.getServicesWithOperatorsBySchemaId(schemaId);
   }
 
   async createService(service: ServiceNoId) {

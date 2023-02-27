@@ -8,7 +8,6 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
-import { getSchemaForServiceType } from "service-schemas";
 import { urls } from "urls";
 
 import { FileUpload } from "src/components/file-upload";
@@ -73,15 +72,13 @@ export const ManageServiceForm: React.FC<Props> = ({
             />
 
             <PriceForm
-              pricingStrategyType={
-                getSchemaForServiceType(service.type).pricingStrategy
-              }
+              pricingStrategyType={service.serviceSchema.pricingStrategy}
               pricing={values.price}
               setPricing={(price) => setValues({ ...values, price })}
             />
 
             <ServiceFormFields
-              schema={getSchemaForServiceType(service.type)}
+              schema={service.serviceSchema}
               isSubmitting={isSubmitting}
               values={values}
               setValues={setValues}

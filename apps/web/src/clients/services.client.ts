@@ -29,11 +29,11 @@ export const getServiceByIdWithOperator = async (
   return data;
 };
 
-export const getServicesWithOperatorsByType = async (
-  type: string
+export const getServicesWithOperatorsBySchemaId = async (
+  schemaId: string
 ): Promise<ServiceDto[]> => {
   const { data } = await httpClient.get<ServiceDto[]>(
-    `/services/by-type/${type}`
+    `/services/by-schema-id/${schemaId}`
   );
 
   return data;
