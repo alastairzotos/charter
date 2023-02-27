@@ -4,7 +4,6 @@ import React from "react";
 import { urls } from "urls";
 
 import { ServiceSchemaCategoryManage } from "src/components/service-schema-category-manage";
-import { ManageServiceSchemaForm } from "src/components/service-schema-manage";
 import { useCreateServiceSchemaCategory } from "src/state/service-schema-categories";
 
 export const ServiceSchemaCategoryCreate: React.FC = () => {
