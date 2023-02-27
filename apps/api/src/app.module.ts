@@ -9,6 +9,7 @@ import { HealthModule } from 'features/health/health.module';
 import { ImagesModule } from 'features/images/images.module';
 import { OperatorsModule } from 'features/operators/operators.module';
 import { PaymentsModule } from 'features/payments/payments.module';
+import { ServiceSchemaCategoriesModule } from 'features/service-schema-categories/service-schema-categories.module';
 import { ServiceSchemaModule } from 'features/service-schemas/service-schema.module';
 import { ServicesModule } from 'features/services/services.module';
 import { UsersModule } from 'features/users/users.module';
@@ -33,6 +34,7 @@ import { RawBodyMiddleware } from 'middleware/raw-body.middleware';
     PaymentsModule,
     StripeModule,
     ServiceSchemaModule,
+    ServiceSchemaCategoriesModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],
