@@ -2,22 +2,23 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "src/components/breadcrumbs";
-import { ServiceSchemaList } from "src/components/service-schema-list";
+import { ServiceSchemaCreate } from "src/components/service-schema-create";
 
-const ServiceSchemasPage: React.FC = () => {
+const ServiceSchemaCreatePage: React.FC = () => {
   return (
     <>
       <Breadcrumbs
         list={[
           { href: urls.home(), title: "Home" },
           { href: urls.admin.home(), title: "Admin" },
+          { href: urls.admin.serviceSchemas(), title: "Service schemas" },
         ]}
-        current="Service Schemas"
+        current="Create service schema"
       />
 
-      <ServiceSchemaList />
+      <ServiceSchemaCreate />
     </>
   );
 };
 
-export default ServiceSchemasPage;
+export default ServiceSchemaCreatePage;

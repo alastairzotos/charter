@@ -26,7 +26,9 @@ export class ServiceSchemaController {
   }
 
   @Post()
-  async createServiceSchema(serviceSchema: ServiceSchemaNoId) {
+  async createServiceSchema(
+    @Body() serviceSchema: ServiceSchemaNoId
+  ) {
     return await this.serviceSchemaService.createServiceSchema(serviceSchema);
   }
 

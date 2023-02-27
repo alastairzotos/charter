@@ -19,7 +19,7 @@ export const getServiceSchemaById = async (
 };
 
 export const createServiceSchema = async (
-  serviceSchema: ServiceSchemaDto
+  serviceSchema: ServiceSchemaNoId
 ): Promise<string> => {
   const { data } = await httpClient.post<
     any,

@@ -20,6 +20,8 @@ export const urls = {
     servicesCreate: (operatorId: string, type: ServiceType) => `/admin/operators/${operatorId}/services/create?type=${type}`,
     service: (operatorId: string, id: string) => `/admin/operators/${operatorId}/services/${id}`,
     serviceSchemas: () => `/admin/service-schemas`,
+    serviceSchema: (id: string) => `/admin/service-schemas/${id}`,
+    serviceSchemaCreate: () => `/admin/service-schemas/create`,
   },
   user: {
     operators: () => '/operators',
