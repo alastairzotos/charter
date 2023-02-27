@@ -42,6 +42,8 @@ export const ServiceSchemaList: React.FC = () => {
         </List>
       </StatusSwitch>
 
+      <div />
+      
       <Button
         variant="contained"
         component={Link}
