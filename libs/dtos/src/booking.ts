@@ -25,7 +25,7 @@ export type BookingPriceDetails = Partial<{
   tiered: TieredBookingPriceDetails;
 }>;
 
-export const getDefaultBookingPriceDetails = (schema: ServiceSchemaDto): BookingPriceDetails => ({
+export const getDefaultBookingPriceDetails = (): BookingPriceDetails => ({
   perPerson: {
     numberOfPeople: 1,
   },

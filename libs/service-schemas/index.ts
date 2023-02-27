@@ -1,6 +1,7 @@
 import { ServiceSchemaDto, ServiceType } from 'dtos';
 
 export const NoneSchema: ServiceSchemaDto = {
+  _id: '',
   label: 'None',
   pluralLabel: 'None',
   description: 'None',
@@ -11,6 +12,7 @@ export const NoneSchema: ServiceSchemaDto = {
 }
 
 export const BoatTripSchema: ServiceSchemaDto = {
+  _id: '',
   label: 'Boat trip',
   pluralLabel: 'Boat trips',
   description: 'Take a guided trip on a boat around the island',
@@ -37,6 +39,7 @@ export const BoatTripSchema: ServiceSchemaDto = {
 }
 
 export const BoatRentalSchema: ServiceSchemaDto = {
+  _id: '',
   label: 'Boat rental',
   pluralLabel: 'Boat rentals',
   description: 'Rent boats at cheap prices to explore the seas at your leisure',
@@ -63,6 +66,7 @@ export const BoatRentalSchema: ServiceSchemaDto = {
 }
 
 export const SunbedSchema: ServiceSchemaDto = {
+  _id: '',
   label: 'Sun bed',
   pluralLabel: 'Sun beds',
   description: 'Reserve a sun bed and breathe easy knowing you\'ll have one waiting for you',
@@ -84,6 +88,7 @@ export const SunbedSchema: ServiceSchemaDto = {
 }
 
 export const WatersportsSchema: ServiceSchemaDto = {
+  _id: '',
   label: 'Watersports',
   pluralLabel: 'Watersports',
   description: 'Enjoy an exciting day with some waterskiing, tube riding, paragliding, and more!',
@@ -100,6 +105,7 @@ export const WatersportsSchema: ServiceSchemaDto = {
 }
 
 export const RestaurantSchema: ServiceSchemaDto = {
+  _id: '',
   label: 'Restaurant',
   pluralLabel: 'Restaurants',
   description: 'Discover the taste of the area with our selection of restaurants',

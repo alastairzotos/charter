@@ -1,4 +1,4 @@
-import { BookingNoId, BookingPriceDetails, ServiceNoId, ServiceSchemaDto } from 'dtos';
+import { BookingNoId, BookingPriceDetails, ServiceNoId } from 'dtos';
 import { getSchemaForServiceType } from 'service-schemas';
 
 export type ExtractInterface<T> = Pick<T, keyof T>;

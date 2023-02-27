@@ -71,7 +71,7 @@ export const BookingForm: React.FC<Props> = ({
     service,
     name: loggedinUser?.givenName || "",
     email: loggedinUser?.email || "",
-    priceDetails: getDefaultBookingPriceDetails(schema),
+    priceDetails: getDefaultBookingPriceDetails(),
     ...getDefaultDefaultBookingFields(schema),
   };
 

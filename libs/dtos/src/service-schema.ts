@@ -14,6 +14,7 @@ export interface ServiceSchemaFieldDto {
 }
 
 export interface ServiceSchemaDto {
+  _id: string;
   label: string;
   pluralLabel: string;
   description: string;
@@ -22,6 +23,8 @@ export interface ServiceSchemaDto {
   shouldPayNow: boolean;
   fields: ServiceSchemaFieldDto[];
 }
+
+export type ServiceSchemaNoId = Omit<ServiceSchemaDto, '_id'>;
 
 export type ServiceFieldValue = string | string[];
 
