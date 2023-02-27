@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import Link from "next/link";
 import * as React from "react";
 import { urls } from "urls";
@@ -12,7 +13,13 @@ const AdminPage: React.FC = () => {
         current="Admin"
       />
 
-      <Link href={urls.admin.operators()}>Operators</Link>
+      <Button component={Link} href={urls.admin.operators()}>
+        Operators
+      </Button>
+      <div />
+      <Button component={Link} href={urls.admin.serviceSchemas()}>
+        Service schemas
+      </Button>
     </>
   );
 };

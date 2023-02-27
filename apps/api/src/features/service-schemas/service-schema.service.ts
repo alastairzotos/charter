@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { ServiceSchemaDto } from "dtos";
+import { ServiceSchemaDto, ServiceSchemaNoId } from "dtos";
 import { ServiceSchemaRepository } from "features/service-schemas/service-schema.repository";
 
 @Injectable()
@@ -11,12 +11,12 @@ export class ServiceSchemaService {
   async getServiceSchemas() {
     return await this.serviceSchemaRepository.getServiceSchemas();
   }
-  
+
   async getServiceSchemaById(id: string) {
     return await this.serviceSchemaRepository.getServiceSchemaById(id);
   }
 
-  async createServiceSchema(serviceSchema: ServiceSchemaDto) {
+  async createServiceSchema(serviceSchema: ServiceSchemaNoId) {
     return await this.serviceSchemaRepository.createServiceSchema(serviceSchema);
   }
 

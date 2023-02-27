@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { ServiceSchemaDto } from "dtos";
+import { ServiceSchemaDto, ServiceSchemaNoId } from "dtos";
 import { Model } from "mongoose";
 import { ServiceSchema } from "schemas/service-schema.schema";
 
@@ -18,7 +18,7 @@ export class ServiceSchemaRepository {
     return await this.serviceSchemasModel.findById(id);
   }
 
-  async createServiceSchema(serviceSchema: ServiceSchemaDto) {
+  async createServiceSchema(serviceSchema: ServiceSchemaNoId) {
     const { _id } = await this.serviceSchemasModel.create(serviceSchema);
 
     return _id;

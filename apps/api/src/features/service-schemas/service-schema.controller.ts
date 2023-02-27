@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "auth/auth.guard";
 import { Roles } from "auth/roles.decorator";
-import { ServiceSchemaDto } from "dtos";
+import { ServiceSchemaDto, ServiceSchemaNoId } from "dtos";
 import { ServiceSchemaService } from "features/service-schemas/service-schema.service";
 
 @Controller('service-schemas')
@@ -26,7 +26,7 @@ export class ServiceSchemaController {
   }
 
   @Post()
-  async createServiceSchema(serviceSchema: ServiceSchemaDto) {
+  async createServiceSchema(serviceSchema: ServiceSchemaNoId) {
     return await this.serviceSchemaService.createServiceSchema(serviceSchema);
   }
 
