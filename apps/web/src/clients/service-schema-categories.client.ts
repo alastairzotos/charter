@@ -1,20 +1,28 @@
-import { ServiceSchemaCategoryDto, ServiceSchemaCategoryNoId } from "dtos"
+import { ServiceSchemaCategoryDto, ServiceSchemaCategoryNoId } from "dtos";
+
 import { httpClient } from "src/clients/http.client";
 
-
-export const getServiceSchemaCategories = async (): Promise<ServiceSchemaCategoryDto[]> => {
-  const { data } = await httpClient.get<ServiceSchemaCategoryDto[]>("/service-schema-categories");
+export const getServiceSchemaCategories = async (): Promise<
+  ServiceSchemaCategoryDto[]
+> => {
+  const { data } = await httpClient.get<ServiceSchemaCategoryDto[]>(
+    "/service-schema-categories"
+  );
 
   return data;
-}
+};
 
 export const getServiceSchemaCategoryById = async (id: string) => {
-  const { data } = await httpClient.get<ServiceSchemaCategoryDto>(`/service-schema-categories/${id}`);
+  const { data } = await httpClient.get<ServiceSchemaCategoryDto>(
+    `/service-schema-categories/${id}`
+  );
 
   return data;
-}
+};
 
-export const createServiceSchemaCategory = async (category: ServiceSchemaCategoryNoId) => {
+export const createServiceSchemaCategory = async (
+  category: ServiceSchemaCategoryNoId
+) => {
   const { data } = await httpClient.post<
     any,
     { data: string },
@@ -22,18 +30,24 @@ export const createServiceSchemaCategory = async (category: ServiceSchemaCategor
   >(`/service-schema-categories`, category);
 
   return data;
-}
+};
 
-export const updateServiceSchemaCategory = async (id: string, newSchemaServiceCategory: Partial<ServiceSchemaCategoryDto>) => {
+export const updateServiceSchemaCategory = async (
+  id: string,
+  newSchemaServiceCategory: Partial<ServiceSchemaCategoryDto>
+) => {
   await httpClient.patch<
     any,
     unknown,
     { id: string; newSchemaServiceCategory: Partial<ServiceSchemaCategoryDto> }
   >(`/service-schemas`, { id, newSchemaServiceCategory });
-}
+};
 
 export const deleteServiceSchemaCategory = async (id: string) => {
-  await httpClient.delete<any, unknown, { id: string }>(`/service-schema-categories`, {
-    data: { id },
-  });
-}
+  await httpClient.delete<any, unknown, { id: string }>(
+    `/service-schema-categories`,
+    {
+      data: { id },
+    }
+  );
+};
