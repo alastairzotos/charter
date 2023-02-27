@@ -1,7 +1,7 @@
 import { FetchStatus } from "@bitmetro/create-query";
 import { FormControlLabel, Typography, Checkbox } from "@mui/material";
 import { ServiceSchemaNoId } from "dtos";
-import { Formik, Field, ErrorMessage } from "formik";
+import { Formik, Field } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
@@ -45,7 +45,7 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
 
   return (
     <Formik initialValues={serviceSchema} onSubmit={onSave}>
-      {({ isValid, isSubmitting, values, setValues }) => (
+      {({ isValid, values, setValues }) => (
         <FormBox title={title} maxWidth={600}>
           <Field component={TextField} name="label" label="Label" />
 
