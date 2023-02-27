@@ -19,7 +19,7 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
 
       {fields.map((field, index) => (
         <ServiceSchemaField
-          key={field.field + index}
+          key={index}
           field={field}
           onChange={(newField) =>
             onChange(
