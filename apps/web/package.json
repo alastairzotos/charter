@@ -35,7 +35,6 @@
     "react-dropzone": "^14.2.3",
     "react-image-gallery": "^1.2.11",
     "react-mui-dropzone": "^4.0.6",
-    "service-schemas": "*",
     "sharp": "^0.31.3",
     "urls": "*",
     "utils": "*",

@@ -9,8 +9,7 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "dtos": "*",
-    "service-schemas": "*"
+    "dtos": "*"
   },
   "author": "",
   "license": "ISC",
