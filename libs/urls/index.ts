@@ -22,6 +22,9 @@ export const urls = {
     serviceSchemas: () => `/admin/service-schemas`,
     serviceSchema: (id: string) => `/admin/service-schemas/${id}`,
     serviceSchemaCreate: () => `/admin/service-schemas/create`,
+    serviceSchemaCategories: () => '/admin/service-schema-categories',
+    serviceSchemaCategory: (id: string) => `/admin/service-schema-categories/${id}`,
+    serviceSchemaCategoryCreate: () => '/admin/service-schema-categories/create',
   },
   user: {
     operators: () => '/operators',

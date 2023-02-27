@@ -9,6 +9,9 @@ export class ServiceSchemaCategory implements ServiceSchemaCategoryDto {
   name: string;
 
   @Prop()
+  pluralName: string;
+
+  @Prop()
   photo: string;
 }
 

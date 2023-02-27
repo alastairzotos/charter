@@ -2,9 +2,9 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "src/components/breadcrumbs";
-import { ServiceSchemaList } from "src/components/service-schema-list";
+import { ServiceSchemaCategoryList } from "src/components/service-schema-categories-list";
 
-const ServiceSchemasPage: React.FC = () => {
+const ServiceSchemaCategoriesPage: React.FC = () => {
   return (
     <>
       <Breadcrumbs
@@ -12,12 +12,12 @@ const ServiceSchemasPage: React.FC = () => {
           { href: urls.home(), title: "Home" },
           { href: urls.admin.home(), title: "Admin" },
         ]}
-        current="Service schemas"
+        current="Service schema categories"
       />
 
-      <ServiceSchemaList />
+      <ServiceSchemaCategoryList />
     </>
   );
 };
 
-export default ServiceSchemasPage;
+export default ServiceSchemaCategoriesPage;
