@@ -29,7 +29,7 @@ export const urls = {
     service: (service: ServiceDto) => `/service/${service._id}`,
     booking: (id: string) => `/booking/${id}`,
     services: () => '/services',
-    serviceType: (schema: ServiceSchemaDto) => `service-type/${paramCase(schema.pluralLabel)}-${schema._id}`,
+    serviceType: (schema: ServiceSchemaDto) => `type/${paramCase(schema.pluralLabel)}-${schema._id}`,
   },
   operators: {
     home: () => '/operator-admin',
