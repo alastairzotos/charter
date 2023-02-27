@@ -1,5 +1,5 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import { Typography } from "@mui/material";
+import { FormControlLabel, Typography, Checkbox } from "@mui/material";
 import { ServiceSchemaNoId } from "dtos";
 import { Formik, Field, ErrorMessage } from "formik";
 import { TextField } from "formik-mui";
@@ -7,8 +7,11 @@ import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
 
+import { DefaultBookingFieldsSelector } from "src/components/default-booking-fields-selector";
 import { FormBox } from "src/components/form-box";
+import { PricingStrategyTypeSelector } from "src/components/pricing-strategy-type-selector";
 import { SaveAndDelete } from "src/components/save-delete";
+import { ServiceSchemaFieldsSelector } from "src/components/service-schema-fields-selector";
 
 interface Props {
   title: string;
@@ -58,6 +61,37 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
             label="Description"
             multiline
             rows={4}
+          />
+
+          <PricingStrategyTypeSelector
+            pricingStrategy={values.pricingStrategy}
+            onChange={(pricingStrategy) =>
+              setValues({ ...values, pricingStrategy })
+            }
+          />
+
+          <FormControlLabel
+            label="Should pay now"
+            control={
+              <Checkbox
+                checked={values.shouldPayNow}
+                onChange={(e) =>
+                  setValues({ ...values, shouldPayNow: e.target.checked })
+                }
+              />
+            }
+          />
+
+          <DefaultBookingFieldsSelector
+            defaultBookingFields={values.defaultBookingFields}
+            onChange={(defaultBookingFields) =>
+              setValues({ ...values, defaultBookingFields })
+            }
+          />
+
+          <ServiceSchemaFieldsSelector
+            fields={values.fields}
+            onChange={(fields) => setValues({ ...values, fields })}
           />
 
           <SaveAndDelete
