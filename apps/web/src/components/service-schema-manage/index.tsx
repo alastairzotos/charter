@@ -1,5 +1,11 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import { FormControlLabel, Typography, Checkbox } from "@mui/material";
+import {
+  FormControlLabel,
+  Typography,
+  Checkbox,
+  Paper,
+  FormLabel,
+} from "@mui/material";
 import { ServiceSchemaNoId } from "dtos";
 import { Formik, Field } from "formik";
 import { TextField } from "formik-mui";
@@ -63,24 +69,30 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
             rows={4}
           />
 
-          <PricingStrategyTypeSelector
-            pricingStrategy={values.pricingStrategy}
-            onChange={(pricingStrategy) =>
-              setValues({ ...values, pricingStrategy })
-            }
-          />
+          <Paper
+            sx={{ p: 2, display: "flex", flexDirection: "column", gap: 2 }}
+          >
+            <FormLabel>Pricing</FormLabel>
 
-          <FormControlLabel
-            label="Should pay now"
-            control={
-              <Checkbox
-                checked={values.shouldPayNow}
-                onChange={(e) =>
-                  setValues({ ...values, shouldPayNow: e.target.checked })
-                }
-              />
-            }
-          />
+            <PricingStrategyTypeSelector
+              pricingStrategy={values.pricingStrategy}
+              onChange={(pricingStrategy) =>
+                setValues({ ...values, pricingStrategy })
+              }
+            />
+
+            <FormControlLabel
+              label="Should pay now"
+              control={
+                <Checkbox
+                  checked={values.shouldPayNow}
+                  onChange={(e) =>
+                    setValues({ ...values, shouldPayNow: e.target.checked })
+                  }
+                />
+              }
+            />
+          </Paper>
 
           <DefaultBookingFieldsSelector
             defaultBookingFields={values.defaultBookingFields}
