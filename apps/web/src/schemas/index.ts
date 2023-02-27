@@ -50,6 +50,7 @@ export const serviceValidationSchema: yup.SchemaOf<
   price: yup.object(), // TODO: Use this. It won't let me save when creating a service -> priceValidationSchema,
   photos: yup.array().of(yup.string().required("Photo is required")),
   data: yup.object(),
+  serviceSchema: yup.object(),
 });
 
 export const perPersonBookingValidationSchema: yup.SchemaOf<PerPersonBookingPriceDetails> =
