@@ -40,7 +40,7 @@ export const ServiceSchemaCategoryList: React.FC = () => {
               component={Link}
               href={urls.admin.serviceSchemaCategory(category._id)}
             >
-              <ListItemText>{category.name}</ListItemText>
+              <ListItemText>{category.pluralName}</ListItemText>
             </ListItem>
           ))}
         </List>
