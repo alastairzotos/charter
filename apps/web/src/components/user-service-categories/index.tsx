@@ -8,7 +8,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { ServiceSchemaDto } from "dtos";
+import { ServiceSchemaCategoryDto } from "dtos";
 import Link from "next/link";
 import React from "react";
 import { urls } from "urls";
@@ -16,15 +16,15 @@ import { urls } from "urls";
 import { Titled } from "src/components/titled";
 
 interface Props {
-  serviceSchemas: ServiceSchemaDto[];
+  schemaCategories: ServiceSchemaCategoryDto[];
 }
 
-export const ServiceTypes: React.FC<Props> = ({ serviceSchemas }) => {
+export const ServiceCategories: React.FC<Props> = ({ schemaCategories }) => {
   return (
     <Titled title="Available services" center>
       <Grid container gap={2} sx={{ mt: 3 }} justifyContent="center">
-        {serviceSchemas.map((schema) => (
-          <Grid key={schema._id} item xs={12} md={3}>
+        {schemaCategories.map((category) => (
+          <Grid key={category._id} item xs={12} md={3}>
             <Card
               sx={{
                 height: "100%",
@@ -33,18 +33,22 @@ export const ServiceTypes: React.FC<Props> = ({ serviceSchemas }) => {
               }}
             >
               <CardMedia
-                title={schema.label}
-                image={`/service-type-images/${schema.label}.jpeg`}
+                title={category.name}
+                // image={`/service-type-images/${category.label}.jpeg`}
+                image={category.photo}
                 sx={{ height: 180 }}
               />
-              <CardHeader title={schema.pluralLabel} />
+              <CardHeader title={category.pluralName} />
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="body2" color="text.secondary">
-                  {schema.description}
+                  {category.description}
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button component={Link} href={urls.user.serviceType(schema)}>
+                <Button
+                  component={Link}
+                  href={urls.user.serviceCategory(category)}
+                >
                   Browse
                 </Button>
               </CardActions>

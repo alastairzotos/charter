@@ -16,6 +16,10 @@ export class ServiceSchemaService {
     return await this.serviceSchemaRepository.getServiceSchemaById(id);
   }
 
+  async getServicesSchemasByCategoryId(categoryId: string) {
+    return await this.serviceSchemaRepository.getServicesSchemasByCategoryId(categoryId);
+  }
+
   async createServiceSchema(serviceSchema: ServiceSchemaNoId) {
     return await this.serviceSchemaRepository.createServiceSchema(serviceSchema);
   }

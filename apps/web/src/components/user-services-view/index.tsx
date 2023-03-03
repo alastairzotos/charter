@@ -21,8 +21,9 @@ export const UserServicesView: React.FC<Props> = ({
     const servicesByCategory = services.reduce<Record<string, ServiceDto[]>>(
       (acc, cur) => ({
         ...acc,
-        [cur.serviceSchema.pluralLabel]: [
-          ...(acc[cur.serviceSchema.pluralLabel] || []),
+        [cur.serviceSchema.schemaCategory!.pluralName || "Default"]: [
+          ...(acc[cur.serviceSchema.schemaCategory!.pluralName || "Default"] ||
+            []),
           cur,
         ],
       }),

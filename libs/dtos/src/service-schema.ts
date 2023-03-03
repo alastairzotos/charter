@@ -1,5 +1,6 @@
 import { DefaultBookingFieldType } from "./booking";
 import { PricingStrategyType } from "./pricing";
+import { ServiceSchemaCategoryDto } from "./service-schema-category";
 
 export type ServiceSchemaFieldType = 'string' | 'time' | 'timeframe';
 
@@ -11,9 +12,8 @@ export interface ServiceSchemaFieldDto {
 
 export interface ServiceSchemaDto {
   _id: string;
-  label: string;
-  pluralLabel: string;
-  description: string;
+  name: string;
+  schemaCategory: ServiceSchemaCategoryDto | null;
   defaultBookingFields: DefaultBookingFieldType[];
   pricingStrategy: PricingStrategyType;
   shouldPayNow: boolean;

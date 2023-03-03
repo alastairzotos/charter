@@ -40,7 +40,7 @@ export const updateServiceSchemaCategory = async (
     any,
     unknown,
     { id: string; newSchemaServiceCategory: Partial<ServiceSchemaCategoryDto> }
-  >(`/service-schemas`, { id, newSchemaServiceCategory });
+  >(`/service-schema-categories`, { id, newSchemaServiceCategory });
 };
 
 export const deleteServiceSchemaCategory = async (id: string) => {

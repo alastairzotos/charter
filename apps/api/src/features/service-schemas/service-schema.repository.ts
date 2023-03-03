@@ -18,6 +18,10 @@ export class ServiceSchemaRepository {
     return await this.serviceSchemasModel.findById(id);
   }
 
+  async getServicesSchemasByCategoryId(categoryId: string) {
+    return await this.serviceSchemasModel.find({ schemaCategory: categoryId });
+  }
+
   async createServiceSchema(serviceSchema: ServiceSchemaNoId) {
     const { _id } = await this.serviceSchemasModel.create(serviceSchema);
 

@@ -1,18 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { DefaultBookingFieldType, PricingStrategyType, ServiceSchemaDto, ServiceSchemaFieldDto } from 'dtos';
+import { Schema as MongooseSchema } from 'mongoose';
+import { DefaultBookingFieldType, PricingStrategyType, ServiceSchemaCategoryDto, ServiceSchemaDto, ServiceSchemaFieldDto } from 'dtos';
+import { ServiceSchemaCategory } from 'schemas/service-schema-category.schema';
 
 @Schema({ collection: 'service_schemas' })
 export class ServiceSchema implements ServiceSchemaDto {
   _id: string;
 
   @Prop()
-  label: string;
+  name: string;
 
-  @Prop()
-  pluralLabel: string;
-
-  @Prop()
-  description: string;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: ServiceSchemaCategory.name })
+  schemaCategory: ServiceSchemaCategoryDto | null;
 
   @Prop({ type: Array })
   defaultBookingFields: DefaultBookingFieldType[];

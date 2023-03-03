@@ -24,9 +24,8 @@ export const ServiceSchemaCreate: React.FC = () => {
       onSave={handleCreateServiceSchema}
       saveStatus={status}
       serviceSchema={{
-        label: "Restaurant",
-        pluralLabel: "Restaurants",
-        description: "",
+        name: "Restaurant",
+        schemaCategory: null,
         defaultBookingFields: [],
         pricingStrategy: "fixed",
         shouldPayNow: true,

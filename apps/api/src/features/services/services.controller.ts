@@ -49,6 +49,12 @@ export class ServicesController {
     return await this.servicesService.getServicesWithOperatorsBySchemaId(schemaId);
   }
 
+  @Get('by-schema-category-id/:categoryId')
+  @Roles('all')
+  async getServicesWithOperatorsBySchemaCategoryId(@Param('categoryId') categoryId: string) {
+    return await this.servicesService.getServicesWithOperatorsBySchemaCategoryId(categoryId);
+  }
+
   @Post()
   async createService(@Body() service: ServiceNoId) {
     return await this.servicesService.createService(service);

@@ -36,7 +36,7 @@ export const ServiceSchemaList: React.FC = () => {
               component={Link}
               href={urls.admin.serviceSchema(serviceSchema._id)}
             >
-              <ListItemText>{serviceSchema.label}</ListItemText>
+              <ListItemText>{serviceSchema.name}</ListItemText>
             </ListItem>
           ))}
         </List>

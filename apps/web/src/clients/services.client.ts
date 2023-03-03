@@ -39,6 +39,16 @@ export const getServicesWithOperatorsBySchemaId = async (
   return data;
 };
 
+export const getServicesWithOperatorsBySchemaCategoryId = async (
+  categoryId: string
+): Promise<ServiceDto[]> => {
+  const { data } = await httpClient.get<ServiceDto[]>(
+    `/services/by-schema-category-id/${categoryId}`
+  );
+
+  return data;
+};
+
 export const updateService = async (
   id: string,
   newService: Partial<ServiceNoId>

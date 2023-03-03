@@ -1,18 +1,18 @@
-import { ServiceSchemaDto } from "dtos";
+import { ServiceSchemaCategoryDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 
-import { getServiceSchemas } from "src/clients/service-schemas.client";
+import { getServiceSchemaCategories } from "src/clients/service-schema-categories.client";
 import { SeoHead } from "src/components/seo/head";
 import { UserLayoutContainer } from "src/components/user-layout/container";
-import { ServiceTypes } from "src/components/user-service-types";
+import { ServiceCategories } from "src/components/user-service-categories";
 
 interface Props {
-  serviceSchemas: ServiceSchemaDto[];
+  schemaCategories: ServiceSchemaCategoryDto[];
 }
 
-const ServicesPage: NextPage<Props> = ({ serviceSchemas }) => {
-  const serviceList = serviceSchemas
-    .map((schema) => schema.pluralLabel.toLocaleLowerCase())
+const ServicesPage: NextPage<Props> = ({ schemaCategories }) => {
+  const serviceList = schemaCategories
+    .map((category) => category.pluralName.toLocaleLowerCase())
     .join(", ");
 
   return (
@@ -23,7 +23,7 @@ const ServicesPage: NextPage<Props> = ({ serviceSchemas }) => {
       />
 
       <UserLayoutContainer>
-        <ServiceTypes serviceSchemas={serviceSchemas} />
+        <ServiceCategories schemaCategories={schemaCategories} />
       </UserLayoutContainer>
     </>
   );
@@ -32,7 +32,7 @@ const ServicesPage: NextPage<Props> = ({ serviceSchemas }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   return {
     props: {
-      serviceSchemas: await getServiceSchemas(),
+      schemaCategories: await getServiceSchemaCategories(),
     },
   };
 };

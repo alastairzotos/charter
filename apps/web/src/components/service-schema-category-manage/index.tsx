@@ -49,6 +49,14 @@ export const ServiceSchemaCategoryManage: React.FC<Props> = ({
 
           <Field name="pluralName" label="Plural name" component={TextField} />
 
+          <Field
+            name="description"
+            label="Description"
+            component={TextField}
+            multiline
+            rows={4}
+          />
+
           <FileUpload
             title="Photo"
             filesLimit={1}

@@ -10,10 +10,10 @@ export const migrateToServiceSchemas = async (app: INestApplication) => {
   const services = await repo.getServices() as any[];
 
   for (const svc of services) {
-    const foundSchema = schemas.find(schema => schema.label.toLocaleLowerCase().replace(/\s+/g, '-') === svc.type as string);
+    const foundSchema = schemas.find(schema => (schema as any).label.toLocaleLowerCase().replace(/\s+/g, '-') === svc.type as string);
 
     if (foundSchema) {
-      console.log(`Matched ${svc.name} to schema ${foundSchema.label}. Updating...`);
+      console.log(`Matched ${svc.name} to schema ${(foundSchema as any).label}. Updating...`);
 
       await repo.updateService(svc._id, {
         serviceSchema: foundSchema._id as any

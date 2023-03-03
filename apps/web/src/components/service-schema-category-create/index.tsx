@@ -26,6 +26,7 @@ export const ServiceSchemaCategoryCreate: React.FC = () => {
       serviceSchemaCategory={{
         name: "Restaurant",
         pluralName: "Restaurants",
+        description: "",
         photo: "",
       }}
     />

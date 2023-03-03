@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { BookingNoId, OperatorDto, ServiceDto, ServiceSchemaDto } from 'dtos';
+import { BookingNoId, OperatorDto, ServiceDto, ServiceSchemaCategoryDto, ServiceSchemaDto } from 'dtos';
 
 import { EnvService } from 'environment/environment.service';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
@@ -19,11 +19,18 @@ const mockOperator: OperatorDto = {
   photo: '',
 };
 
+const mockServiceSchemaCategory: ServiceSchemaCategoryDto = {
+  _id: '',
+  name: 'Trip',
+  pluralName: 'Trips',
+  description: '',
+  photo: '',
+}
+
 const mockServiceSchema: ServiceSchemaDto = {
   _id: '',
-  label: 'Boat trip',
-  pluralLabel: 'Boat trips',
-  description: '',
+  schemaCategory: mockServiceSchemaCategory,
+  name: 'Boat trip',
   defaultBookingFields: ['date'],
   pricingStrategy: 'perAdultAndChild',
   shouldPayNow: true,

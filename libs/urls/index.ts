@@ -1,5 +1,5 @@
 import { paramCase } from 'change-case';
-import { OperatorDto, ServiceDto, ServiceSchemaDto } from "dtos";
+import { OperatorDto, ServiceDto, ServiceSchemaCategoryDto } from "dtos";
 
 type UrlFn = (...args: any[]) => string;
 
@@ -32,7 +32,7 @@ export const urls = {
     service: (service: ServiceDto) => `/service/${service._id}`,
     booking: (id: string) => `/booking/${id}`,
     services: () => '/services',
-    serviceType: (schema: ServiceSchemaDto) => `/type/${paramCase(schema.pluralLabel)}-${schema._id}`,
+    serviceCategory: (category: ServiceSchemaCategoryDto) => `/type/${paramCase(category.pluralName)}-${category._id}`,
   },
   operators: {
     home: () => '/operator-admin',

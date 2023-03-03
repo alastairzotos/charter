@@ -1,31 +1,31 @@
 import { Typography } from "@mui/material";
-import { ServiceDto, ServiceSchemaDto } from "dtos";
+import { ServiceDto, ServiceSchemaCategoryDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 
-import { getServiceSchemaById } from "src/clients/service-schemas.client";
-import { getServicesWithOperatorsBySchemaId } from "src/clients/services.client";
+import { getServiceSchemaCategoryById } from "src/clients/service-schema-categories.client";
+import { getServicesWithOperatorsBySchemaCategoryId } from "src/clients/services.client";
 import { SeoHead } from "src/components/seo/head";
 import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserServicesView } from "src/components/user-services-view";
 
 interface Props {
-  serviceSchema: ServiceSchemaDto;
+  schemaCategory: ServiceSchemaCategoryDto;
   services: ServiceDto[];
 }
 
-const ServiceTypePage: NextPage<Props> = ({ serviceSchema, services }) => {
+const ServiceTypePage: NextPage<Props> = ({ schemaCategory, services }) => {
   return (
     <UserLayoutContainer>
       <SeoHead
-        subtitle={serviceSchema.label}
-        description={serviceSchema.description || ""}
+        subtitle={schemaCategory.name}
+        description={schemaCategory.description || ""}
       />
 
       <UserLayoutContainer>
-        <Titled title={serviceSchema.pluralLabel || ""}>
-          <Typography>{serviceSchema.description || ""}</Typography>
+        <Titled title={schemaCategory.pluralName || ""}>
+          <Typography>{schemaCategory.description || ""}</Typography>
         </Titled>
 
         <UserServicesView showOperator services={services} />
@@ -38,21 +38,23 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   params,
 }) => {
   const slug = params?.slug as string;
-  const schemaId = slug.split("-").pop();
+  const schemaCategoryId = slug.split("-").pop();
 
-  if (!schemaId) {
+  if (!schemaCategoryId) {
     return {
       notFound: true,
     };
   }
 
   try {
-    const serviceSchema = await getServiceSchemaById(schemaId);
-    const services = await getServicesWithOperatorsBySchemaId(schemaId);
+    const schemaCategory = await getServiceSchemaCategoryById(schemaCategoryId);
+    const services = await getServicesWithOperatorsBySchemaCategoryId(
+      schemaCategoryId
+    );
 
     return {
       props: {
-        serviceSchema,
+        schemaCategory,
         services,
       },
     };

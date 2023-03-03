@@ -17,6 +17,7 @@ import { DefaultBookingFieldsSelector } from "src/components/default-booking-fie
 import { FormBox } from "src/components/form-box";
 import { PricingStrategyTypeSelector } from "src/components/pricing-strategy-type-selector";
 import { SaveAndDelete } from "src/components/save-delete";
+import { ServiceSchemaCategorySelector } from "src/components/service-schema-category-selector";
 import { ServiceSchemaFieldsSelector } from "src/components/service-schema-fields-selector";
 
 interface Props {
@@ -53,20 +54,13 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
     <Formik initialValues={serviceSchema} onSubmit={onSave}>
       {({ isValid, values, setValues }) => (
         <FormBox title={title} maxWidth={600}>
-          <Field component={TextField} name="label" label="Label" />
+          <Field component={TextField} name="name" label="Name" />
 
-          <Field
-            component={TextField}
-            name="pluralLabel"
-            label="Plural label"
-          />
-
-          <Field
-            component={TextField}
-            name="description"
-            label="Description"
-            multiline
-            rows={4}
+          <ServiceSchemaCategorySelector
+            value={values.schemaCategory}
+            onChange={(schemaCategory) =>
+              setValues({ ...values, schemaCategory })
+            }
           />
 
           <Paper

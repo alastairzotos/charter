@@ -27,6 +27,7 @@ export const ServiceSchemaField: React.FC<Props> = ({
   return (
     <Box sx={{ display: "flex", pt: 2, pb: 2 }}>
       <TextField
+        sx={{ width: 350 }}
         size="small"
         label="Field"
         value={field.field}
@@ -34,13 +35,14 @@ export const ServiceSchemaField: React.FC<Props> = ({
       />
 
       <TextField
+        sx={{ width: 350 }}
         size="small"
         label="Label"
         value={field.label}
         onChange={(e) => onChange({ ...field, label: e.target.value })}
       />
 
-      <FormControl>
+      <FormControl sx={{ width: "100%" }}>
         <InputLabel id={labelId}>Field type</InputLabel>
         <Select
           size="small"

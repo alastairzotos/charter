@@ -1,27 +1,27 @@
 import { Step, StepLabel, Stepper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { OperatorDto, ServiceSchemaDto } from "dtos";
+import { OperatorDto, ServiceSchemaCategoryDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 
 import { getOperators } from "src/clients/operators.client";
-import { getServiceSchemas } from "src/clients/service-schemas.client";
+import { getServiceSchemaCategories } from "src/clients/service-schema-categories.client";
 import { SeoHead } from "src/components/seo/head";
 import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserOperatorsList } from "src/components/user-operators-list";
-import { ServiceTypes } from "src/components/user-service-types";
+import { ServiceCategories } from "src/components/user-service-categories";
 import { APP_NAME, capitalise } from "src/util/misc";
 
 interface Props {
-  serviceSchemas: ServiceSchemaDto[];
+  schemaCategories: ServiceSchemaCategoryDto[];
   operators: OperatorDto[];
 }
 
-const Home: NextPage<Props> = ({ serviceSchemas, operators }) => {
+const Home: NextPage<Props> = ({ schemaCategories, operators }) => {
   const serviceList = capitalise(
-    serviceSchemas
-      .map((schema) => schema.pluralLabel.toLocaleLowerCase())
+    schemaCategories
+      .map((category) => category.pluralName.toLocaleLowerCase())
       .join(", ")
   );
 
@@ -73,7 +73,7 @@ const Home: NextPage<Props> = ({ serviceSchemas, operators }) => {
       </Box>
 
       <UserLayoutContainer>
-        <ServiceTypes serviceSchemas={serviceSchemas} />
+        <ServiceCategories schemaCategories={schemaCategories} />
       </UserLayoutContainer>
 
       <UserLayoutContainer alternative>
@@ -108,7 +108,7 @@ const Home: NextPage<Props> = ({ serviceSchemas, operators }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   return {
     props: {
-      serviceSchemas: await getServiceSchemas(),
+      schemaCategories: await getServiceSchemaCategories(),
       operators: await getOperators(),
     },
   };
