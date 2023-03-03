@@ -7,4 +7,6 @@ const OperatorsAdminPage: NextPage = () => {
   return <OperatorBookings />;
 };
 
+OperatorsAdminPage.getInitialProps = () => ({});
+
 export default OperatorsAdminPage;

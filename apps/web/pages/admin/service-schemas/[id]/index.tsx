@@ -1,3 +1,4 @@
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
@@ -5,7 +6,7 @@ import { urls } from "urls";
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { ServiceSchemaEdit } from "src/components/service-schema-edit";
 
-const ServiceSchemaEditPage: React.FC = () => {
+const ServiceSchemaEditPage: NextPage = () => {
   const router = useRouter();
   const id = router.query.id as string;
 
@@ -24,5 +25,7 @@ const ServiceSchemaEditPage: React.FC = () => {
     </>
   );
 };
+
+ServiceSchemaEditPage.getInitialProps = () => ({});
 
 export default ServiceSchemaEditPage;

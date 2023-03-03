@@ -1,10 +1,11 @@
+import { NextPage } from "next";
 import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { OperatorCreate } from "src/components/operator-create";
 
-const CreateOperatorPage: React.FC = () => {
+const CreateOperatorPage: NextPage = () => {
   return (
     <>
       <Breadcrumbs
@@ -20,5 +21,7 @@ const CreateOperatorPage: React.FC = () => {
     </>
   );
 };
+
+CreateOperatorPage.getInitialProps = () => ({});
 
 export default CreateOperatorPage;

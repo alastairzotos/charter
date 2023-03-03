@@ -1,3 +1,4 @@
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
@@ -5,7 +6,7 @@ import { urls } from "urls";
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { ServiceEdit } from "src/components/service-edit";
 
-const EditServicePage: React.FC = () => {
+const EditServicePage: NextPage = () => {
   const router = useRouter();
   const operatorId = router.query.id as string;
   const serviceId = router.query.serviceId as string;
@@ -26,5 +27,7 @@ const EditServicePage: React.FC = () => {
     </>
   );
 };
+
+EditServicePage.getInitialProps = () => ({});
 
 export default EditServicePage;

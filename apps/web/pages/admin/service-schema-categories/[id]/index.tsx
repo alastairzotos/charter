@@ -1,3 +1,4 @@
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
@@ -5,7 +6,7 @@ import { urls } from "urls";
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { ServiceSchemaCategoryEdit } from "src/components/service-schema-category-edit";
 
-const ServiceSchemaCategoryEditPage: React.FC = () => {
+const ServiceSchemaCategoryEditPage: NextPage = () => {
   const router = useRouter();
   const id = router.query.id as string;
 
@@ -27,5 +28,7 @@ const ServiceSchemaCategoryEditPage: React.FC = () => {
     </>
   );
 };
+
+ServiceSchemaCategoryEditPage.getInitialProps = () => ({});
 
 export default ServiceSchemaCategoryEditPage;

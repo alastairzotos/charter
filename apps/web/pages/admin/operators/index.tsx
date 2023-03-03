@@ -1,10 +1,11 @@
+import { NextPage } from "next";
 import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { OperatorsList } from "src/components/operators-list";
 
-const OperatorsPage: React.FC = () => {
+const OperatorsPage: NextPage = () => {
   return (
     <>
       <Breadcrumbs
@@ -19,5 +20,7 @@ const OperatorsPage: React.FC = () => {
     </>
   );
 };
+
+OperatorsPage.getInitialProps = () => ({});
 
 export default OperatorsPage;

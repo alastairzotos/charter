@@ -1,10 +1,11 @@
+import { NextPage } from "next";
 import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { ServiceSchemaCategoryList } from "src/components/service-schema-categories-list";
 
-const ServiceSchemaCategoriesPage: React.FC = () => {
+const ServiceSchemaCategoriesPage: NextPage = () => {
   return (
     <>
       <Breadcrumbs
@@ -19,5 +20,7 @@ const ServiceSchemaCategoriesPage: React.FC = () => {
     </>
   );
 };
+
+ServiceSchemaCategoriesPage.getInitialProps = () => ({});
 
 export default ServiceSchemaCategoriesPage;

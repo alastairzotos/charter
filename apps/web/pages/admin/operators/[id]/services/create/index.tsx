@@ -1,3 +1,4 @@
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
@@ -5,7 +6,7 @@ import { urls } from "urls";
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { ServiceCreate } from "src/components/service-create";
 
-const CreateServicePage: React.FC = () => {
+const CreateServicePage: NextPage = () => {
   const router = useRouter();
   const operatorId = router.query.id as string;
   const schemaId = router.query.schemaId as string;
@@ -26,5 +27,7 @@ const CreateServicePage: React.FC = () => {
     </>
   );
 };
+
+CreateServicePage.getInitialProps = () => ({});
 
 export default CreateServicePage;

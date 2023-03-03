@@ -1,3 +1,4 @@
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
@@ -5,7 +6,7 @@ import { urls } from "urls";
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { OperatorEdit } from "src/components/operator-edit";
 
-const OperatorPage: React.FC = () => {
+const OperatorPage: NextPage = () => {
   const router = useRouter();
   const id = router.query.id as string;
 
@@ -25,5 +26,7 @@ const OperatorPage: React.FC = () => {
     </>
   );
 };
+
+OperatorPage.getInitialProps = () => ({});
 
 export default OperatorPage;

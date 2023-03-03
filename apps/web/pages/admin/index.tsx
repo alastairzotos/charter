@@ -1,12 +1,13 @@
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
+import { NextPage } from "next";
 import Link from "next/link";
 import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "src/components/breadcrumbs";
 
-const AdminPage: React.FC = () => {
+const AdminPage: NextPage = () => {
   return (
     <>
       <Breadcrumbs
@@ -34,5 +35,7 @@ const AdminPage: React.FC = () => {
     </>
   );
 };
+
+AdminPage.getInitialProps = () => ({});
 
 export default AdminPage;

@@ -11,4 +11,6 @@ const OperatorBookingPage: NextPage = () => {
   return <OperatorBooking id={id} />;
 };
 
+OperatorBookingPage.getInitialProps = () => ({});
+
 export default OperatorBookingPage;
