@@ -35,7 +35,7 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
       <ListItemText
         primary={
           <>
-            <strong>[{service.serviceSchema.label}]</strong> {service.name}
+            <strong>[{service.serviceSchema.name}]</strong> {service.name}
           </>
         }
         secondary={<>{shortenText(service.description, 150)}</>}

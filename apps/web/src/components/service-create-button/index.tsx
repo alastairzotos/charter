@@ -54,7 +54,7 @@ export const ServiceCreateButton: React.FC<Props> = ({ operatorId }) => {
             key={schema._id}
             onClick={() => handleServiceSchemaClick(schema)}
           >
-            {schema.label}
+            {schema.name}
           </MenuItem>
         ))}
       </Menu>
