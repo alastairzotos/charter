@@ -5,26 +5,28 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  SxProps,
   Typography,
 } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { urls } from "urls";
 
 import { AppBarLoginLogout } from "src/components/app-bar-login-logout";
-import { APP_NAME } from "src/util/misc";
 
 interface Props {
-  title?: string;
+  sx?: SxProps;
   pages?: Map<string, string>;
 }
 
-export const AppBarBase: React.FC<Props> = ({ title, pages = new Map() }) => {
+export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
+  sx,
+  pages = new Map(),
+  children,
+}) => {
   const router = useRouter();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -38,7 +40,7 @@ export const AppBarBase: React.FC<Props> = ({ title, pages = new Map() }) => {
 
   return (
     <>
-      <MuiAppBar position="fixed" sx={{ backgroundColor: "#224394" }}>
+      <MuiAppBar position="fixed" sx={sx}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             {Array.from(pages.keys()).length > 0 && (
@@ -77,16 +79,7 @@ export const AppBarBase: React.FC<Props> = ({ title, pages = new Map() }) => {
               </Box>
             )}
 
-            <Link href={urls.home()}>
-              <Image
-                src="/booking-logo.jpg"
-                alt={`${APP_NAME} logo`}
-                width={64}
-                height={64}
-              />
-            </Link>
-
-            {title && <Typography>{title}</Typography>}
+            {children}
 
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               {Array.from(pages.keys()).map((url) => (
