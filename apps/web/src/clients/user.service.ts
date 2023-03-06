@@ -26,4 +26,10 @@ export class UserService {
 
     return data;
   }
+
+  async deleteUser(email: string) {
+    await httpClient.delete<any, unknown, { email: string }>("/users", {
+      data: { email },
+    });
+  }
 }

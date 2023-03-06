@@ -45,6 +45,11 @@ export const AppBarLoggedInButton: React.FC = () => {
       </Button>
 
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
+        <MenuItem>
+          <Link href={urls.account()} style={{ textDecoration: "none" }}>
+            Account
+          </Link>
+        </MenuItem>
         {loggedInUser.role === "admin" && (
           <MenuItem>
             <Link href={urls.admin.home()} style={{ textDecoration: "none" }}>

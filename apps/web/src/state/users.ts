@@ -15,6 +15,7 @@ export interface UserStateValues {
   loginStatus?: FetchStatus;
   accessToken?: string;
   loggedInUser?: UserDetails;
+  deleteUserStatus?: FetchStatus;
 }
 
 export interface UserStateActions {
@@ -27,6 +28,8 @@ export interface UserStateActions {
   ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+
+  deleteUser: () => Promise<boolean>;
 }
 
 export type UserState = UserStateValues & UserStateActions;
@@ -36,7 +39,7 @@ export const createUserState = (
   userService: ExtractInterface<UserService>,
   localStorage: ExtractInterface<LocalStorageService>
 ) =>
-  create<UserState>((set) => ({
+  create<UserState>((set, self) => ({
     ...initialState,
 
     initLocalStorage: () => {
@@ -90,6 +93,26 @@ export const createUserState = (
       });
 
       localStorage.remove(ACCESS_TOKEN_LOCALSTORAGE_KEY);
+    },
+
+    deleteUser: async () => {
+      try {
+        set({ deleteUserStatus: "fetching" });
+
+        if (!self().loggedInUser) {
+          throw new Error("No user object");
+        }
+
+        await userService.deleteUser(self().loggedInUser?.email || "");
+
+        set({ deleteUserStatus: "success" });
+        self().logout();
+        return true;
+      } catch {
+        set({ deleteUserStatus: "error" });
+
+        return false;
+      }
     },
   }));
 

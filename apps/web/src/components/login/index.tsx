@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
@@ -75,6 +76,13 @@ export const LoginForm: React.FC = () => {
             correct email and password
           </Typography>
         )}
+
+        <Typography color="GrayText">
+          <Link href={urls.register()} style={{ textDecoration: "none" }}>
+            Register
+          </Link>{" "}
+          an account
+        </Typography>
       </Box>
     </Paper>
   );

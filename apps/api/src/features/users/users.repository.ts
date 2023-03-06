@@ -27,8 +27,8 @@ export class UsersRepository {
     await this.userModel.findOneAndUpdate({ _id: id }, newUser);
   }
 
-  async deleteUser(id: string) {
-    await this.userModel.deleteOne({ _id: id });
+  async deleteUser(email: string) {
+    await this.userModel.deleteOne({ email });
   }
 
   async registerUser(details: UserDetails, hashedPassword: string) {

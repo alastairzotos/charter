@@ -31,8 +31,8 @@ export class UsersService {
     await this.usersRepository.updateUser(id, newUser);
   }
 
-  async deleteUser(id: string) {
-    await this.usersRepository.deleteUser(id);
+  async deleteUser(email: string) {
+    await this.usersRepository.deleteUser(email);
   }
 
   async registerUser({

@@ -11,6 +11,7 @@ export const urls = {
   home: () => '/',
   login: () => '/login',
   register: () => '/register',
+  account: () => '/account',
   admin: {
     home: () => '/admin',
     operators: () => '/admin/operators',

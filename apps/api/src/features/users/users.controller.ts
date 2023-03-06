@@ -39,8 +39,8 @@ export class UsersController {
   }
 
   @Delete()
-  async deleteUser(@Body() { id }: { id: string }) {
-    return await this.usersService.deleteUser(id);
+  async deleteUser(@Body() { email }: { email: string }) {
+    return await this.usersService.deleteUser(email);
   }
 
   @Post()
