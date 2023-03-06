@@ -33,6 +33,8 @@ export const urls = {
     booking: (id: string) => `/booking/${id}`,
     services: () => '/services',
     serviceCategory: (category: ServiceSchemaCategoryDto) => `/type/${paramCase(category.pluralName)}-${category._id}`,
+    terms: () => '/legal/terms',
+    privacy: () => '/legal/privacy',
   },
   operators: {
     home: () => '/operator-admin',

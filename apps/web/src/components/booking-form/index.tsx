@@ -1,4 +1,10 @@
-import { Box, Button } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Typography,
+} from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import {
@@ -10,6 +16,7 @@ import {
 } from "dtos";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { urls } from "urls";
 import { calculateBookingPrice, createPriceString } from "utils";
@@ -41,6 +48,7 @@ export const BookingForm: React.FC<Props> = ({
   const schema = service.serviceSchema;
 
   const [isNumberOfPeopleInvalid, setIsNumberOfPeopleInvalid] = useState(false);
+  const [tAndCsAccepted, setTAndCsAccepted] = useState(false);
 
   const loggedinUser = useUserState((s) => s.loggedInUser);
 
@@ -139,12 +147,38 @@ export const BookingForm: React.FC<Props> = ({
                 />
               )}
 
+              <FormControlLabel
+                label={
+                  <Typography fontSize="small" color="GrayText">
+                    I accept the{" "}
+                    <Link
+                      href={urls.user.terms()}
+                      target="_blank"
+                      style={{ textDecoration: "none" }}
+                    >
+                      terms and conditions
+                    </Link>
+                  </Typography>
+                }
+                control={
+                  <Checkbox
+                    checked={tAndCsAccepted}
+                    onChange={(e) => setTAndCsAccepted(e.currentTarget.checked)}
+                  />
+                }
+              />
+
               <Box sx={{ display: "flex", justifyContent: "center" }}>
                 <Button
                   color="success"
                   type="submit"
                   variant="contained"
-                  disabled={!isValid || isSubmitting || isNumberOfPeopleInvalid}
+                  disabled={
+                    !isValid ||
+                    isSubmitting ||
+                    isNumberOfPeopleInvalid ||
+                    !tAndCsAccepted
+                  }
                 >
                   {schema.shouldPayNow ? "Proceed to payment" : "Book now"}
                 </Button>
