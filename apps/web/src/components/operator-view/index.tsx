@@ -23,8 +23,7 @@ import {
 import React, { useState } from "react";
 
 import { KeyValues } from "src/components/key-values";
-
-const formatTime = (time: string) => dayjs(time, "HH:mm").format("h:mma");
+import { formatTime } from "src/util/misc";
 
 interface Props {
   operator: OperatorDto;

@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const APP_NAME = "Corfu Travel Guide";
 
 export const pluralize = (
@@ -17,3 +19,6 @@ export const shortenText = (text: string, length: number) =>
 
 export const capitalise = (text: string) =>
   text[0].toLocaleUpperCase() + text.substring(1);
+
+export const formatTime = (time: string) =>
+  dayjs(time, "HH:mm").format("h:mma");
