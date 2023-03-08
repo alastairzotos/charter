@@ -5,7 +5,6 @@ import {
   defaultOpeningDayTime,
   OperatorOpeningHoursDto,
 } from "dtos";
-import { ErrorMessage } from "formik";
 import React from "react";
 
 import { BookingDefaultFormsProps } from "src/components/booking-default-forms/props";
@@ -68,6 +67,10 @@ export const BookingTimeForm: React.FC<BookingDefaultFormsProps> = ({
 
     const openingTimesOnDay = getOpeningTimesOnDay();
 
+    if (openingTimesOnDay.closed) {
+      return "Operator is closed on this date";
+    }
+
     return `Opening hours are ${formatTime(
       openingTimesOnDay.openingTime || defaultOpeningDayTime.openingTime!
     )} to ${formatTime(
@@ -81,7 +84,7 @@ export const BookingTimeForm: React.FC<BookingDefaultFormsProps> = ({
       type="time"
       value={values.time}
       onChange={(e) => setValues({ ...values, time: e.currentTarget.value })}
-      disabled={!!isSubmitting}
+      disabled={!!isSubmitting || getOpeningTimesOnDay().closed}
       inputProps={{ step: 300 }}
       error={timeIsOutOfOpeningHours()}
       helperText={getHelperText()}

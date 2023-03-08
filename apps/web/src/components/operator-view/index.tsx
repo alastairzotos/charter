@@ -13,7 +13,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import dayjs from "dayjs";
 import {
   Day,
   defaultOpeningTimes,

@@ -1,5 +1,5 @@
 import { FormLabel, Paper } from "@mui/material";
-import { Day, days, OperatorNoId, OperatorOpeningHoursDto } from "dtos";
+import { Day, days, OperatorOpeningHoursDto } from "dtos";
 import React from "react";
 
 import { KeyValues } from "src/components/key-values";
