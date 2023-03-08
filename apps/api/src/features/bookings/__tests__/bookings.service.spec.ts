@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { BookingNoId, OperatorDto, ServiceDto, ServiceSchemaCategoryDto, ServiceSchemaDto } from 'dtos';
+import { BookingNoId, defaultOpeningTimes, OperatorDto, ServiceDto, ServiceSchemaCategoryDto, ServiceSchemaDto } from 'dtos';
 
 import { EnvService } from 'environment/environment.service';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
@@ -17,15 +17,7 @@ const mockOperator: OperatorDto = {
   name: '',
   phoneNumber: '',
   photo: '',
-  openingTimes: {
-    Mon: { allDay: true },
-    Tue: { allDay: true },
-    Wed: { allDay: true },
-    Thu: { allDay: true },
-    Fri: { allDay: true },
-    Sat: { allDay: true },
-    Sun: { allDay: true },
-  }
+  openingTimes: defaultOpeningTimes,
 };
 
 const mockServiceSchemaCategory: ServiceSchemaCategoryDto = {

@@ -13,10 +13,18 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { Day, OperatorDto, OperatorOpeningHoursDto } from "dtos";
+import dayjs from "dayjs";
+import {
+  Day,
+  defaultOpeningTimes,
+  OperatorDto,
+  OperatorOpeningHoursDto,
+} from "dtos";
 import React, { useState } from "react";
 
 import { KeyValues } from "src/components/key-values";
+
+const formatTime = (time: string) => dayjs(time, "HH:mm").format("h:mma");
 
 interface Props {
   operator: OperatorDto;
@@ -38,23 +46,17 @@ const OperatorViewTitle: React.FC<Props> = ({ operator }) => (
 
 const OperatorOpeningTimes: React.FC<{
   openingTimes?: Record<Day, OperatorOpeningHoursDto>;
-}> = ({
-  openingTimes = {
-    Mon: { allDay: true },
-    Tue: { allDay: true },
-    Wed: { allDay: true },
-    Thu: { allDay: true },
-    Fri: { allDay: true },
-    Sat: { allDay: true },
-    Sun: { allDay: true },
-  },
-}) => {
+}> = ({ openingTimes = defaultOpeningTimes }) => {
   const renderedKeyValues = Object.entries(openingTimes)
     .map(([day, openingHours]) => ({
       day,
-      openingHours: openingHours.allDay
+      openingHours: openingHours.closed
+        ? "Closed"
+        : openingHours.allDay
         ? "All day"
-        : `${openingHours.openingTime} to ${openingHours.closingTime}`,
+        : `${formatTime(openingHours.openingTime || "09:00")} to ${formatTime(
+            openingHours.closingTime || "21:00"
+          )}`,
     }))
     .reduce<Record<Day, string>>(
       (acc, { day, openingHours }) => ({

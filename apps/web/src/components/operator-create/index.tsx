@@ -1,4 +1,4 @@
-import { OperatorNoId } from "dtos";
+import { defaultOpeningTimes, OperatorNoId } from "dtos";
 import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
@@ -28,6 +28,7 @@ export const OperatorCreate: React.FC = () => {
         address: "",
         description: "",
         photo: "",
+        openingTimes: defaultOpeningTimes,
       }}
       onSave={handleCreateOperator}
       saveStatus={createOperatorsStatus}

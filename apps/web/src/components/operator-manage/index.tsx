@@ -1,6 +1,6 @@
 import { FetchStatus } from "@bitmetro/create-query";
 import { Typography } from "@mui/material";
-import { OperatorNoId } from "dtos";
+import { defaultOpeningTimes, OperatorNoId } from "dtos";
 import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
@@ -10,6 +10,7 @@ import * as yup from "yup";
 
 import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
+import { OpeningTimesForm } from "src/components/opening-times-form";
 import { SaveAndDelete } from "src/components/save-delete";
 
 interface Props {
@@ -33,6 +34,7 @@ const validationSchema: yup.SchemaOf<OperatorNoId> = yup.object().shape({
   phoneNumber: yup.string().required("Phone number is required"),
   description: yup.string().required("Description is required"),
   photo: yup.string().required("Photo is required"),
+  openingTimes: yup.object(),
 });
 
 export const ManageOperatorForm: React.FC<Props> = ({
@@ -91,6 +93,19 @@ export const ManageOperatorForm: React.FC<Props> = ({
             label="Description"
             multiline
             rows={4}
+          />
+
+          <OpeningTimesForm
+            openingTimes={values.openingTimes || defaultOpeningTimes}
+            setOpeningTimes={(openingTimes) => {
+              setValues({
+                ...values,
+                openingTimes: {
+                  ...defaultOpeningTimes,
+                  ...openingTimes,
+                },
+              });
+            }}
           />
 
           <FileUpload

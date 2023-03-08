@@ -3,7 +3,7 @@ import React from "react";
 
 interface Props {
   sx?: SxProps;
-  kv: Record<string, string>;
+  kv: Record<string, React.ReactNode>;
 }
 
 export const KeyValues: React.FC<Props> = ({ sx, kv }) => {
