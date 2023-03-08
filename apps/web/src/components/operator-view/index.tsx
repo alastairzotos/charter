@@ -15,6 +15,7 @@ import {
 import { Stack } from "@mui/system";
 import {
   Day,
+  defaultOpeningDayTime,
   defaultOpeningTimes,
   OperatorDto,
   OperatorOpeningHoursDto,
@@ -52,8 +53,10 @@ const OperatorOpeningTimes: React.FC<{
         ? "Closed"
         : openingHours.allDay
         ? "All day"
-        : `${formatTime(openingHours.openingTime || "09:00")} to ${formatTime(
-            openingHours.closingTime || "21:00"
+        : `${formatTime(
+            openingHours.openingTime || defaultOpeningDayTime.openingTime!
+          )} to ${formatTime(
+            openingHours.closingTime || defaultOpeningDayTime.closingTime!
           )}`,
     }))
     .reduce<Record<Day, string>>(
