@@ -1,3 +1,4 @@
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EmailIcon from "@mui/icons-material/Email";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HomeIcon from "@mui/icons-material/Home";
@@ -12,8 +13,10 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import { OperatorDto } from "dtos";
+import { Day, OperatorDto, OperatorOpeningHoursDto } from "dtos";
 import React, { useState } from "react";
+
+import { KeyValues } from "src/components/key-values";
 
 interface Props {
   operator: OperatorDto;
@@ -33,7 +36,40 @@ const OperatorViewTitle: React.FC<Props> = ({ operator }) => (
   </Box>
 );
 
+const OperatorOpeningTimes: React.FC<{
+  openingTimes?: Record<Day, OperatorOpeningHoursDto>;
+}> = ({
+  openingTimes = {
+    Mon: { allDay: true },
+    Tue: { allDay: true },
+    Wed: { allDay: true },
+    Thu: { allDay: true },
+    Fri: { allDay: true },
+    Sat: { allDay: true },
+    Sun: { allDay: true },
+  },
+}) => {
+  const renderedKeyValues = Object.entries(openingTimes)
+    .map(([day, openingHours]) => ({
+      day,
+      openingHours: openingHours.allDay
+        ? "All day"
+        : `${openingHours.openingTime} to ${openingHours.closingTime}`,
+    }))
+    .reduce<Record<Day, string>>(
+      (acc, { day, openingHours }) => ({
+        ...acc,
+        [day]: openingHours,
+      }),
+      {} as any
+    );
+
+  return <KeyValues kv={renderedKeyValues} />;
+};
+
 const OperatorViewInner: React.FC<InnerProps> = ({ operator, showTitle }) => {
+  const [openingTimesExpanded, setOpeningTimesExpanded] = useState(false);
+
   return (
     <>
       {showTitle && <OperatorViewTitle operator={operator} />}
@@ -54,6 +90,34 @@ const OperatorViewInner: React.FC<InnerProps> = ({ operator, showTitle }) => {
           {operator.address.split("\n").join(", ")}
         </Typography>
       </Stack>
+
+      <Accordion
+        elevation={0}
+        sx={{
+          width: "100%",
+          mt: 1,
+          "&::before": {
+            backgroundColor: "transparent",
+          },
+        }}
+        expanded={openingTimesExpanded}
+        onChange={() => setOpeningTimesExpanded(!openingTimesExpanded)}
+      >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+          <Stack
+            direction="row"
+            alignItems="flex-start"
+            gap={1}
+            sx={{ ml: -1 }}
+          >
+            <AccessTimeIcon />
+            <Typography>Opening times</Typography>
+          </Stack>
+        </AccordionSummary>
+        <AccordionDetails>
+          <OperatorOpeningTimes openingTimes={operator.openingTimes} />
+        </AccordionDetails>
+      </Accordion>
 
       <Box sx={{ mt: 4, ml: 1 }}>
         {operator.description.split("\n").map((line, index) => (

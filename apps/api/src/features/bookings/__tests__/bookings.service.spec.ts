@@ -17,6 +17,15 @@ const mockOperator: OperatorDto = {
   name: '',
   phoneNumber: '',
   photo: '',
+  openingTimes: {
+    Mon: { allDay: true },
+    Tue: { allDay: true },
+    Wed: { allDay: true },
+    Thu: { allDay: true },
+    Fri: { allDay: true },
+    Sat: { allDay: true },
+    Sun: { allDay: true },
+  }
 };
 
 const mockServiceSchemaCategory: ServiceSchemaCategoryDto = {
