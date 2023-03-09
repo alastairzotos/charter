@@ -2,7 +2,13 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  LegacyRef,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ReactImageGallery from "react-image-gallery";
 
 import { ImageGalleryItem } from "src/components/image-gallery/image-gallery-item";
@@ -16,14 +22,14 @@ export const ImageGallery: React.FC<Props> = ({ items }) => {
   const router = useRouter();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const ref = useRef<any>();
+  const ref = useRef<LegacyRef<ReactImageGallery>>();
 
   useEffect(() => {
     router.beforePopState(() => {
       if (isFullscreen) {
         window.history.pushState(null, "", router.asPath);
         setIsFullscreen(false);
-        ref.current.toggleFullScreen();
+        (ref as RefObject<ReactImageGallery>).current?.exitFullScreen();
         return false;
       }
 
@@ -36,7 +42,7 @@ export const ImageGallery: React.FC<Props> = ({ items }) => {
   return (
     <Box sx={{ mt: 3 }}>
       <ReactImageGallery
-        ref={ref}
+        ref={ref as any}
         showPlayButton={false}
         showFullscreenButton={true}
         useBrowserFullscreen={false}
