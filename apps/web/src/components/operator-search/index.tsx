@@ -36,13 +36,17 @@ export const OperatorSearch: React.FC<Props> = ({ onSelectOperator }) => {
               loading="lazy"
               width="20"
               src={option.photo}
-              alt={`${option.name}`}
+              alt={option.name}
             />
             {option.name}
           </Box>
         )}
         renderInput={(params) => (
-          <TextField {...params} label="Search operators" />
+          <TextField
+            {...params}
+            label="Search operators"
+            sx={{ backgroundColor: "white" }}
+          />
         )}
       />
     </StatusSwitch>

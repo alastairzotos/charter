@@ -62,6 +62,10 @@ export class ServicesRepository {
       })
   }
 
+  async getServicesBySchemaIds(schemaIds: string[]) {
+    return await this.servicesModel.find({ serviceSchema: { $in: schemaIds } }).populate('operator');
+  }
+
   async createService(service: ServiceNoId) {
     const { _id } = await this.servicesModel.create({ ...service, numberOfBookings: 0 });
 
@@ -78,5 +82,9 @@ export class ServicesRepository {
 
   async getServicesBySchema(schemaId: string) {
     return await this.servicesModel.find({ serviceSchema: schemaId });
+  }
+
+  async searchServices(term: string) {
+    return await this.servicesModel.find({ name: { $regex: new RegExp('^' + term, 'i') }}).populate('operator');
   }
 }

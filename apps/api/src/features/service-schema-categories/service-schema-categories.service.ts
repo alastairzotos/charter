@@ -27,4 +27,8 @@ export class ServiceSchemaCategoryService {
   async deleteServiceSchemaCategory(id: string) {
     return await this.repo.deleteServiceSchemaCategory(id);
   }
+
+  async searchServiceSchemaCategories(term: string) {
+    return await this.repo.searchServiceSchemaCategories(term);
+  }
 }

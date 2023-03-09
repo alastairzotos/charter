@@ -2,8 +2,10 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { getDefaultValueForServiceSchemaFieldType, ServiceDto, ServiceFieldValue, ServiceNoId, ServiceSchemaDto } from 'dtos';
 
 import { OperatorsService } from 'features/operators/operators.service';
+import { ServiceSchemaCategoryService } from 'features/service-schema-categories/service-schema-categories.service';
 import { ServiceSchemaService } from 'features/service-schemas/service-schema.service';
 import { ServicesRepository } from 'features/services/services.repository';
+import { uniqBy } from 'lodash';
 
 @Injectable()
 export class ServicesService {
@@ -11,8 +13,9 @@ export class ServicesService {
     @Inject(forwardRef(() => OperatorsService))
     private readonly operatorsService: OperatorsService,
     private readonly serviceSchemaService: ServiceSchemaService,
+    private readonly categoriesService: ServiceSchemaCategoryService,
     private readonly servicesRepository: ServicesRepository,
-  ) {}
+  ) { }
 
   async getServicesForOperator(operatorId: string) {
     return await this.servicesRepository.getServicesForOperator(operatorId);
@@ -60,7 +63,7 @@ export class ServicesService {
 
   async updateServicesWithNewServiceSchema(updatedSchema: ServiceSchemaDto) {
     const services = await this.servicesRepository.getServicesBySchema(updatedSchema._id);
-    
+
     for (const service of services.map(s => s.toObject())) {
       const serviceFields = Object.keys(service.data)
       const schemaFields = updatedSchema.fields.map(field => field.field);
@@ -91,12 +94,47 @@ export class ServicesService {
 
     const maxServices = 10;
 
-    const sortedByPopularity = services
+    return this.sortServicesByPopularity(services).slice(0, maxServices);
+  }
+
+  async searchServices(term: string) {
+    const [
+      servicesSearchedByName,
+      categories,
+      serviceSchemas,
+    ] = await Promise.all([
+      this.servicesRepository.searchServices(term),
+      this.categoriesService.searchServiceSchemaCategories(term),
+      this.serviceSchemaService.searchServiceSchemas(term),
+    ])
+
+    const schemasByCategories = await this.serviceSchemaService.getServicesSchemasByCategoryIds(categories.map(category => category._id));
+
+    const allSchemasToSearch = uniqBy(
+      [
+        ...serviceSchemas,
+        ...schemasByCategories,
+      ],
+      schema => schema._id.toString()
+    )
+
+    const servicesBySchemas = await this.servicesRepository.getServicesBySchemaIds(allSchemasToSearch.map(schema => schema._id));
+
+    const allServices = uniqBy(
+      [
+        ...servicesSearchedByName,
+        ...servicesBySchemas,
+      ],
+      service => service._id.toString()
+    )
+
+    return allServices;
+  }
+
+  private sortServicesByPopularity(services: ServiceDto[]) {
+    return services
       .sort((a, b) => a.numberOfBookings - b.numberOfBookings)
       .slice()
-      .reverse()
-      .slice(0, maxServices);
-
-    return sortedByPopularity;
+      .reverse();
   }
 }

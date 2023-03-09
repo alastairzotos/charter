@@ -45,4 +45,8 @@ export class OperatorsService {
   async deleteOperator(id: string) {
     await this.operatorsRepo.deleteOperator(id);
   }
+
+  async searchOperators(term: string) {
+    return await this.operatorsRepo.searchOperators(term);
+  }
 }

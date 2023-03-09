@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { EnvModule } from 'environment/environment.module';
 import { OperatorsModule } from 'features/operators/operators.module';
+import { ServiceSchemaCategoriesModule } from 'features/service-schema-categories/service-schema-categories.module';
 import { ServiceSchemaModule } from 'features/service-schemas/service-schema.module';
 import { ServicesController } from 'features/services/services.controller';
 import { ServicesRepository } from 'features/services/services.repository';
@@ -16,6 +17,7 @@ import { Service, ServiceSchema } from 'schemas/service.schema';
     EnvModule,
     forwardRef(() => ServiceSchemaModule),
     forwardRef(() => OperatorsModule),
+    forwardRef(() => ServiceSchemaCategoriesModule),
     MongooseModule.forFeature([{ name: Service.name, schema: ServiceSchema }]),
   ],
   controllers: [ServicesController],

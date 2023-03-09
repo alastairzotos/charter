@@ -37,4 +37,8 @@ export class OperatorsRepository {
   async deleteOperator(id: string) {
     await this.operatorsModel.deleteOne({ _id: id });
   }
+
+  async searchOperators(term: string) {
+    return await this.operatorsModel.find({ name: { $regex: new RegExp('^' + term, 'i') }});
+  }
 }

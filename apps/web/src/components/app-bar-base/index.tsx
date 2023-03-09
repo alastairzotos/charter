@@ -19,11 +19,13 @@ import { AppBarLoginLogout } from "src/components/app-bar-login-logout";
 
 interface Props {
   sx?: SxProps;
+  logo?: React.ReactNode;
   pages?: Map<string, string>;
 }
 
 export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
   sx,
+  logo = <></>,
   pages = new Map(),
   children,
 }) => {
@@ -79,7 +81,7 @@ export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
               </Box>
             )}
 
-            {children}
+            {logo}
 
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               {Array.from(pages.keys()).map((url) => (
@@ -90,6 +92,8 @@ export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
                 </Link>
               ))}
             </Box>
+
+            {children}
 
             <Box sx={{ display: "flex", flexGrow: 1 }} />
 

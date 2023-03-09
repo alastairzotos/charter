@@ -22,6 +22,10 @@ export class ServiceSchemaService {
     return await this.serviceSchemaRepository.getServicesSchemasByCategoryId(categoryId);
   }
 
+  async getServicesSchemasByCategoryIds(categoryIds: string[]) {
+    return await this.serviceSchemaRepository.getServicesSchemasByCategoryIds(categoryIds);
+  }
+
   async createServiceSchema(serviceSchema: ServiceSchemaNoId) {
     return await this.serviceSchemaRepository.createServiceSchema(serviceSchema);
   }
@@ -35,5 +39,9 @@ export class ServiceSchemaService {
 
   async deleteServiceSchema(id: string) {
     await this.serviceSchemaRepository.deleteServiceSchema(id);
+  }
+
+  async searchServiceSchemas(term: string) {
+    return await this.serviceSchemaRepository.searchServiceSchemas(term);
   }
 }

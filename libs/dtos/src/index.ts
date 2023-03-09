@@ -6,3 +6,4 @@ export * from './booking';
 export * from './auth';
 export * from './payments';
 export * from './service-schema-category';
+export * from './search';
