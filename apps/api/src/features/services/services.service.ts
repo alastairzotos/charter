@@ -128,7 +128,7 @@ export class ServicesService {
       service => service._id.toString()
     )
 
-    return allServices;
+    return this.sortServicesByPopularity(allServices);
   }
 
   private sortServicesByPopularity(services: ServiceDto[]) {

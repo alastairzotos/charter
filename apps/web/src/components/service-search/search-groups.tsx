@@ -5,6 +5,7 @@ export const GroupHeader = styled("div")(({ theme }) => ({
   top: "-8px",
   padding: "4px 10px",
   color: theme.palette.primary.main,
+  zIndex: 10000,
   backgroundColor:
     theme.palette.mode === "light"
       ? lighten(theme.palette.primary.light, 0.85)
