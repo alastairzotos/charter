@@ -22,14 +22,23 @@ export const ImageGallery: React.FC<Props> = ({ items }) => {
   const router = useRouter();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const ref = useRef<LegacyRef<ReactImageGallery>>();
+  const ref = useRef<ReactImageGallery>();
+
+  const enterFullscreen = () => {
+    setIsFullscreen(true);
+    ref.current?.fullScreen();
+  };
+
+  const exitFullscreen = () => {
+    setIsFullscreen(false);
+    ref.current?.exitFullScreen();
+  };
 
   useEffect(() => {
     router.beforePopState(() => {
       if (isFullscreen) {
         window.history.pushState(null, "", router.asPath);
-        setIsFullscreen(false);
-        (ref as RefObject<ReactImageGallery>).current?.exitFullScreen();
+        exitFullscreen();
         return false;
       }
 
@@ -75,6 +84,7 @@ export const ImageGallery: React.FC<Props> = ({ items }) => {
             <ImageGalleryItem
               url={item.original}
               alt={item.originalAlt || "Operator photo"}
+              onClick={enterFullscreen}
             />
           ),
         }))}

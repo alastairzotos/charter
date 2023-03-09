@@ -4,6 +4,7 @@ import React from "react";
 interface Props {
   url: string;
   alt: string;
+  onClick: () => void;
 }
 
 const Underlay = styled("div")(() => ({
@@ -12,7 +13,7 @@ const Underlay = styled("div")(() => ({
   height: "100%",
 }));
 
-export const ImageGalleryItem: React.FC<Props> = ({ url, alt }) => {
+export const ImageGalleryItem: React.FC<Props> = ({ url, alt, onClick }) => {
   return (
     <Underlay>
       <img
@@ -23,6 +24,7 @@ export const ImageGalleryItem: React.FC<Props> = ({ url, alt }) => {
           marginLeft: "-100%",
           marginRight: "-100%",
         }}
+        onClick={onClick}
       />
     </Underlay>
   );
