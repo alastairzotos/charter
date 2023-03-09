@@ -15,7 +15,15 @@ const Underlay = styled("div")(() => ({
 export const ImageGalleryItem: React.FC<Props> = ({ url, alt }) => {
   return (
     <Underlay>
-      <img src={url} alt={alt} height={500} />
+      <img
+        src={url}
+        alt={alt}
+        height={500}
+        style={{
+          marginLeft: "-100%",
+          marginRight: "-100%",
+        }}
+      />
     </Underlay>
   );
 };

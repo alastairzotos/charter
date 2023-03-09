@@ -16,7 +16,8 @@ export const ImageGallery: React.FC<Props> = ({ items }) => {
     <Box sx={{ mt: 3 }}>
       <ReactImageGallery
         showPlayButton={false}
-        showFullscreenButton={false}
+        showFullscreenButton={true}
+        useBrowserFullscreen={false}
         showThumbnails={items.length > 1}
         renderLeftNav={(onClick, disabled) => (
           <ImageGalleryNavBase
