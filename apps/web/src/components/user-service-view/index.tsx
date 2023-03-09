@@ -2,7 +2,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBackIos";
 import { Box, Button, Modal } from "@mui/material";
 import { OperatorDto, ServiceDto } from "dtos";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { urls } from "urls";
 import { getReadablePricingStringsForService } from "utils";
 
@@ -23,10 +24,26 @@ export const UserServiceView: React.FC<Props> = ({
   service,
   operator,
 }) => {
+  const router = useRouter();
+
   const schema = service.serviceSchema;
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
 
   const priceDetails = getReadablePricingStringsForService(service);
+
+  useEffect(() => {
+    router.beforePopState(() => {
+      if (bookingModalOpen) {
+        window.history.pushState(null, "", router.asPath);
+        setBookingModalOpen(false);
+        return false;
+      }
+
+      return true;
+    });
+
+    return () => router.beforePopState(() => true);
+  }, [router, bookingModalOpen]);
 
   return (
     <>

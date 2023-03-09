@@ -22,9 +22,6 @@ export const BookingModal: React.FC<React.PropsWithChildren> = ({
         height: isDesktop ? "auto" : "100vh",
         width: isDesktop ? "85%" : "100vw",
       }}
-      style={{
-        marginTop: isDesktop ? "inherit" : 70,
-      }}
     >
       {children}
     </Box>
