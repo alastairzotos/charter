@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import {
   dayNumberToDayMap,
   defaultOpeningDayTime,
+  defaultOpeningTimes,
   OperatorOpeningHoursDto,
 } from "dtos";
 import React from "react";
@@ -16,7 +17,7 @@ export const BookingTimeForm: React.FC<BookingDefaultFormsProps> = ({
   isSubmitting,
 }) => {
   const getOpeningTimesOnDay = () => {
-    const openingTimes = values.operator.openingTimes;
+    const openingTimes = values.operator.openingTimes || defaultOpeningTimes;
     const openingTimesOnDay: OperatorOpeningHoursDto = {
       ...defaultOpeningDayTime,
       ...openingTimes[dayNumberToDayMap[dayjs(values.date).day()]],
