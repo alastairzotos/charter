@@ -1,20 +1,32 @@
-import { Box, SxProps } from "@mui/system";
+import { useMediaQuery, useTheme } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
-
-const bookingModalStyle: SxProps = {
-  position: "absolute" as const,
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "85%",
-  maxWidth: 500,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-};
 
 export const BookingModal: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  return <Box sx={bookingModalStyle}>{children}</Box>;
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+
+  return (
+    <Box
+      sx={{
+        position: "absolute" as const,
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        bgcolor: "background.paper",
+        boxShadow: 24,
+        p: 4,
+        boxSizing: "border-box",
+        height: isDesktop ? "auto" : "100vh",
+        width: isDesktop ? "85%" : "100vw",
+      }}
+      style={{
+        marginTop: isDesktop ? "inherit" : 70,
+      }}
+    >
+      {children}
+    </Box>
+  );
 };
