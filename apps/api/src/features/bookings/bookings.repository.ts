@@ -61,6 +61,16 @@ export class BookingsRepository {
     return await this.bookingsModel.find({ operator, paymentStatus: 'succeeded' }).populate('service');
   }
 
+  async getBookingsByOperatorId(id: string) {
+    return await this.bookingsModel.find({ operator: id, paymentStatus: 'succeeded' })
+      .populate({
+        path: 'service',
+        populate: {
+          path: 'serviceSchema'
+        }
+      });
+  }
+
   async setBookingStatus(id: string, status: BookingStatus) {
     await this.bookingsModel.findOneAndUpdate({ _id: id }, { status });
   }

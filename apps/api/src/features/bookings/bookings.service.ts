@@ -80,6 +80,10 @@ export class BookingsService {
     return bookings;
   }
 
+  async getBookingsByOperatorId(id: string) {
+    return await this.bookingsRepository.getBookingsByOperatorId(id);
+  }
+
   async setBookingStatus(id: string, status: BookingStatus) {
     await this.bookingsRepository.setBookingStatus(id, status);
     const booking = await this.bookingsRepository.getBookingWithOperatorAndService(

@@ -53,4 +53,9 @@ export class BookingsController {
   async getBookingPaymentStatus(@Param('id') id: string) {
     return await this.bookingsService.getBookingPaymentStatus(id);
   }
+
+  @Get('by-operator-id/:id')
+  async getBookingsByOperatorId(@Param('id') id: string) {
+    return await this.bookingsService.getBookingsByOperatorId(id);
+  }
 }

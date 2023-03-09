@@ -49,3 +49,10 @@ export const getBookingPaymentStatus = async (id: string) => {
   );
   return data;
 };
+
+export const getBookingsByOperatorId = async (id: string) => {
+  const { data } = await httpClient.get<BookingDto[]>(
+    `/bookings/by-operator-id/${id}`
+  );
+  return data;
+};

@@ -25,6 +25,10 @@ const AdminPage: NextPage = () => {
         <Button component={Link} href={urls.admin.operators()}>
           Operators
         </Button>
+        <Button component={Link} href={urls.admin.bookings()}>
+          Bookings
+        </Button>
+
         <Button component={Link} href={urls.admin.serviceSchemas()}>
           Service schemas
         </Button>

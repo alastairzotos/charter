@@ -26,6 +26,9 @@ export const urls = {
     serviceSchemaCategories: () => '/admin/service-schema-categories',
     serviceSchemaCategory: (id: string) => `/admin/service-schema-categories/${id}`,
     serviceSchemaCategoryCreate: () => '/admin/service-schema-categories/create',
+    bookings: () => '/admin/bookings',
+    operatorBookings: (operatorId: string) => `/admin/bookings/${operatorId}`,
+    operatorBooking: (operatorId: string, bookingId: string) => `/admin/bookings/${operatorId}/${bookingId}`,
   },
   user: {
     operators: () => '/operators',
