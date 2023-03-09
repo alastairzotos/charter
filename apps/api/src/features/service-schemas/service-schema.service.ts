@@ -1,11 +1,13 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { ServiceSchemaDto, ServiceSchemaNoId } from "dtos";
 import { ServiceSchemaRepository } from "features/service-schemas/service-schema.repository";
+import { ServicesService } from "features/services/services.service";
 
 @Injectable()
 export class ServiceSchemaService {
   constructor(
-    private readonly serviceSchemaRepository: ServiceSchemaRepository
+    private readonly serviceSchemaRepository: ServiceSchemaRepository,
+    @Inject(forwardRef(() => ServicesService)) private readonly servicesService: ServicesService,
   ) {}
 
   async getServiceSchemas() {
@@ -25,10 +27,13 @@ export class ServiceSchemaService {
   }
 
   async updateServiceSchema(id: string, newServiceSchema: Partial<ServiceSchemaDto>) {
-    return await this.serviceSchemaRepository.updateServiceSchema(id, newServiceSchema);
+    await this.serviceSchemaRepository.updateServiceSchema(id, newServiceSchema);
+
+    const updatedSchema = await this.serviceSchemaRepository.getServiceSchemaById(id);
+    await this.servicesService.updateServicesWithNewServiceSchema(updatedSchema);
   }
 
   async deleteServiceSchema(id: string) {
-    return await this.serviceSchemaRepository.deleteServiceSchema(id);
+    await this.serviceSchemaRepository.deleteServiceSchema(id);
   }
 }

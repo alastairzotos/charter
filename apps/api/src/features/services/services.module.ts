@@ -14,7 +14,7 @@ import { Service, ServiceSchema } from 'schemas/service.schema';
   imports: [
     UsersModule,
     EnvModule,
-    ServiceSchemaModule,
+    forwardRef(() => ServiceSchemaModule),
     forwardRef(() => OperatorsModule),
     MongooseModule.forFeature([{ name: Service.name, schema: ServiceSchema }]),
   ],

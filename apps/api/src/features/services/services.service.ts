@@ -1,5 +1,5 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { ServiceDto, ServiceNoId } from 'dtos';
+import { getDefaultValueForServiceSchemaFieldType, ServiceDto, ServiceFieldValue, ServiceNoId, ServiceSchemaDto } from 'dtos';
 
 import { OperatorsService } from 'features/operators/operators.service';
 import { ServiceSchemaService } from 'features/service-schemas/service-schema.service';
@@ -56,5 +56,33 @@ export class ServicesService {
 
   async deleteService(id: string) {
     return await this.servicesRepository.deleteService(id);
+  }
+
+  async updateServicesWithNewServiceSchema(updatedSchema: ServiceSchemaDto) {
+    const services = await this.servicesRepository.getServicesBySchema(updatedSchema._id);
+    
+    for (const service of services.map(s => s.toObject())) {
+      const serviceFields = Object.keys(service.data)
+      const schemaFields = updatedSchema.fields.map(field => field.field);
+
+      const missingFieldsNames = schemaFields.filter(field => !serviceFields.includes(field));
+      const missingFields = updatedSchema.fields.filter(field => missingFieldsNames.includes(field.field));
+
+      const newDefaults = missingFields.reduce<Record<string, ServiceFieldValue>>((acc, cur) => ({
+        ...acc,
+        [cur.field]: getDefaultValueForServiceSchemaFieldType(cur.type),
+      }), {});
+
+      await this.servicesRepository.updateService(
+        service._id,
+        {
+          ...service,
+          data: {
+            ...service.data,
+            ...newDefaults,
+          }
+        }
+      )
+    }
   }
 }

@@ -71,4 +71,8 @@ export class ServicesRepository {
   async deleteService(id: string) {
     return await this.servicesModel.findOneAndDelete({ _id: id });
   }
+
+  async getServicesBySchema(schemaId: string) {
+    return await this.servicesModel.find({ serviceSchema: schemaId });
+  }
 }
