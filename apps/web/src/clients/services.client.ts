@@ -74,3 +74,9 @@ export const createService = async (service: ServiceNoId): Promise<string> => {
 
   return data;
 };
+
+export const getPopularServices = async (): Promise<ServiceDto[]> => {
+  const { data } = await httpClient.get<ServiceDto[]>("/services/popular");
+
+  return data;
+};

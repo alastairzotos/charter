@@ -1,24 +1,23 @@
-import { Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { OperatorDto, ServiceSchemaCategoryDto } from "dtos";
+import { ServiceDto, ServiceSchemaCategoryDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 
-import { getOperators } from "src/clients/operators.client";
 import { getServiceSchemaCategories } from "src/clients/service-schema-categories.client";
+import { getPopularServices } from "src/clients/services.client";
+import { PopularServices } from "src/components/popular-services";
 import { SeoHead } from "src/components/seo/head";
-import { Titled } from "src/components/titled";
 import { UserLayoutContainer } from "src/components/user-layout/container";
-import { UserOperatorsList } from "src/components/user-operators-list";
 import { ServiceCategories } from "src/components/user-service-categories";
 import { APP_NAME, capitalise } from "src/util/misc";
 
 interface Props {
   schemaCategories: ServiceSchemaCategoryDto[];
-  operators: OperatorDto[];
+  popularServices: ServiceDto[];
 }
 
-const Home: NextPage<Props> = ({ schemaCategories, operators }) => {
+const Home: NextPage<Props> = ({ schemaCategories, popularServices }) => {
   const serviceList = capitalise(
     schemaCategories
       .map((category) => category.pluralName.toLocaleLowerCase())
@@ -77,29 +76,7 @@ const Home: NextPage<Props> = ({ schemaCategories, operators }) => {
       </UserLayoutContainer>
 
       <UserLayoutContainer alternative>
-        <Titled title="Operators" center>
-          <UserOperatorsList operators={operators} />
-        </Titled>
-      </UserLayoutContainer>
-
-      <UserLayoutContainer>
-        <Typography variant="h3" sx={{ mt: 4, textAlign: "center" }}>
-          How it works
-        </Typography>
-
-        <Box sx={{ mt: 3, p: 6, display: "flex", justifyContent: "center" }}>
-          <Stepper activeStep={3} orientation="vertical">
-            <Step>
-              <StepLabel>Find an operator near you</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Find a service that you like</StepLabel>
-            </Step>
-            <Step>
-              <StepLabel>Book the service!</StepLabel>
-            </Step>
-          </Stepper>
-        </Box>
+        <PopularServices services={popularServices} />
       </UserLayoutContainer>
     </>
   );
@@ -109,7 +86,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
   return {
     props: {
       schemaCategories: await getServiceSchemaCategories(),
-      operators: await getOperators(),
+      popularServices: await getPopularServices(),
     },
   };
 };

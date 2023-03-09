@@ -32,6 +32,10 @@ export class ServicesRepository {
     return await this.servicesModel.find().populate('serviceSchema');
   }
 
+  async getServicesWithOperator() {
+    return await this.servicesModel.find().populate('operator');
+  }
+
   async getService(id: string) {
     return await this.servicesModel.findOne({ _id: id }).populate('serviceSchema');
   }

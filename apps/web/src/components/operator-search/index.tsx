@@ -42,7 +42,7 @@ export const OperatorSearch: React.FC<Props> = ({ onSelectOperator }) => {
           </Box>
         )}
         renderInput={(params) => (
-          <TextField {...params} label="Search operator" />
+          <TextField {...params} label="Search operators" />
         )}
       />
     </StatusSwitch>

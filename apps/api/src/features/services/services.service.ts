@@ -85,4 +85,18 @@ export class ServicesService {
       )
     }
   }
+
+  async getPopularServices() {
+    const services = await this.servicesRepository.getServicesWithOperator();
+
+    const maxServices = 10;
+
+    const sortedByPopularity = services
+      .sort((a, b) => a.numberOfBookings - b.numberOfBookings)
+      .slice()
+      .reverse()
+      .slice(0, maxServices);
+
+    return sortedByPopularity;
+  }
 }

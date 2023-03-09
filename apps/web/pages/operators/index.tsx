@@ -16,11 +16,11 @@ const OperatorsPage: NextPage<Props> = ({ operators }) => {
   return (
     <UserLayoutContainer>
       <SeoHead
-        subtitle="Operators"
+        subtitle="Browse pperators"
         description="View list of available operators"
       />
 
-      <Titled title="Operators" center>
+      <Titled title="Browse operators" center>
         <UserOperatorsList operators={operators} />
       </Titled>
     </UserLayoutContainer>
