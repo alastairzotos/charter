@@ -8,6 +8,6 @@ export const AdminAppBar: React.FC = () => (
   <AppBarBase
     sx={{ backgroundColor: "#bbb", color: "#fff" }}
     logo={<CharterLogo title="Admin" url={urls.admin.home()} />}
-    pages={new Map([[urls.home(), "Home"]])}
+    pages={new Map([[urls.home(), "View site"]])}
   />
 );

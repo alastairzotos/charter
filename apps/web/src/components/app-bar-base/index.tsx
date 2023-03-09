@@ -83,7 +83,7 @@ export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
 
             {logo}
 
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ ml: 2, display: { xs: "none", md: "flex" } }}>
               {Array.from(pages.keys()).map((url) => (
                 <Link key={url} href={url} style={{ textDecoration: "none" }}>
                   <Button sx={{ my: 2, color: "white", display: "block" }}>
