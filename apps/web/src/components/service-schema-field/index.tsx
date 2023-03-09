@@ -25,7 +25,7 @@ export const ServiceSchemaField: React.FC<Props> = ({
   const labelId = useId();
 
   return (
-    <Box sx={{ display: "flex", pt: 2, pb: 2 }}>
+    <Box sx={{ display: "flex", pt: 2, pb: 2 }} gap={1}>
       <TextField
         sx={{ width: 350 }}
         size="small"
