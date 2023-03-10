@@ -8,7 +8,8 @@ export class StripeService {
 
   constructor(private readonly env: EnvService) {
     this.stripe = new Stripe(env.get().stripeSecretKey, {
-      apiVersion: '2022-11-15'
+      // @ts-ignore
+      apiVersion: env.get().stripeApiVersion,
     })
   }
 

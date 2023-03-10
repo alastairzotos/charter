@@ -12,6 +12,7 @@ export class EnvService {
     awsS3Region: process.env.AWS_S3_REGION as string,
     awsCloudfrontDomain: process.env.AWS_CLOUDFRONT_DOMAIN as string,
     sendGridApiKey: process.env.SENDGRID_API_KEY as string,
+    stripeApiVersion: process.env.STRIPE_API_VERSION as string,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY as string,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET as string,
   };
