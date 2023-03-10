@@ -1,6 +1,7 @@
 import "styles/globals.css";
 import type { AppProps } from "next/app";
 import * as React from "react";
+import CookieConsent from "react-cookie-consent";
 
 import { AdminLayout } from "src/components/admin-layout";
 import { OperatorsLayout } from "src/components/operators-layout";
@@ -41,6 +42,10 @@ function AppPage(props: AppProps) {
   return (
     <PageWrapper>
       <Inner {...props} />
+
+      <CookieConsent>
+        This website uses cookies to enhance the user experience.
+      </CookieConsent>
     </PageWrapper>
   );
 }
