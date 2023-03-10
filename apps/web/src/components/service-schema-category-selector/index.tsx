@@ -53,6 +53,11 @@ export const ServiceSchemaCategorySelector: React.FC<Props> = ({
         >
           {schemaCategories?.map((category) => (
             <MenuItem key={category._id} value={category._id}>
+              <img
+                src={category.photo}
+                alt=""
+                style={{ width: 20, height: 20, marginRight: 10 }}
+              />
               {category.name}
             </MenuItem>
           ))}
