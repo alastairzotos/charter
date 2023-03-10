@@ -71,7 +71,7 @@ export class ServicesService {
       const missingFieldsNames = schemaFields.filter(field => !serviceFields.includes(field));
       const missingFields = updatedSchema.fields.filter(field => missingFieldsNames.includes(field.label));
 
-      const newDefaults = missingFields.reduce<Record<string, ServiceFieldValue>>((acc, cur) => ({
+      const addedDefaults = missingFields.reduce<Record<string, ServiceFieldValue>>((acc, cur) => ({
         ...acc,
         [cur.label]: getDefaultValueForServiceSchemaFieldType(cur.type),
       }), {});
@@ -82,7 +82,7 @@ export class ServicesService {
           ...service,
           data: {
             ...service.data,
-            ...newDefaults,
+            ...addedDefaults,
           }
         }
       )
