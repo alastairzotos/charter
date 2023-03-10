@@ -22,6 +22,7 @@ export const BookingModal: React.FC<React.PropsWithChildren> = ({
         height: isDesktop ? "auto" : "100vh",
         width: isDesktop ? "85%" : "100vw",
         maxWidth: isDesktop ? 600 : undefined,
+        overflow: "scroll",
       }}
     >
       {children}
