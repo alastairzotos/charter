@@ -22,7 +22,7 @@ export class ServiceSchemaService {
     return await this.serviceSchemaRepository.getServicesSchemasByCategoryId(categoryId);
   }
 
-  async getServicesSchemasByCategoryIds(categoryIds: string[]) {
+  async getServiceSchemasByCategoryIds(categoryIds: string[]) {
     return await this.serviceSchemaRepository.getServicesSchemasByCategoryIds(categoryIds);
   }
 

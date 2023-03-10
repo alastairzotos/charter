@@ -108,7 +108,7 @@ export class ServicesService {
       this.serviceSchemaService.searchServiceSchemas(term),
     ])
 
-    const schemasByCategories = await this.serviceSchemaService.getServicesSchemasByCategoryIds(categories.map(category => category._id));
+    const schemasByCategories = await this.serviceSchemaService.getServiceSchemasByCategoryIds(categories.map(category => category._id));
 
     const allSchemasToSearch = uniqBy(
       [
