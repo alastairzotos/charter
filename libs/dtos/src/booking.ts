@@ -62,6 +62,7 @@ export interface BookingDto extends DefaultBookingFields {
   email: string;
   bookingDate?: Date;
   priceDetails: BookingPriceDetails;
+  notes?: string;
   paymentIntentId?: string;
   paymentStatus?: BookingPaymentStatus;
   status: BookingStatus;

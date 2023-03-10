@@ -39,6 +39,9 @@ export class Booking implements BookingDto {
   bookingDate?: Date;
 
   @Prop()
+  notes?: string;
+
+  @Prop()
   paymentIntentId?: string;
 
   @Prop()

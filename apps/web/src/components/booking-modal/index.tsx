@@ -21,6 +21,7 @@ export const BookingModal: React.FC<React.PropsWithChildren> = ({
         boxSizing: "border-box",
         height: isDesktop ? "auto" : "100vh",
         width: isDesktop ? "85%" : "100vw",
+        maxWidth: isDesktop ? 600 : undefined,
       }}
     >
       {children}

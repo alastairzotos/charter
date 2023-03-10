@@ -136,6 +136,14 @@ export const BookingForm: React.FC<Props> = ({
                 setError={setIsNumberOfPeopleInvalid}
               />
 
+              <Field
+                component={TextField}
+                name="notes"
+                label="Additional notes"
+                multiline
+                rows={4}
+              />
+
               {schema.shouldPayNow && (
                 <KeyValues
                   sx={{ maxWidth: 300 }}

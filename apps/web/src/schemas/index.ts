@@ -101,4 +101,5 @@ export const bookingValidationSchema = (
     date: yup.string().notRequired(),
     time: yup.string().notRequired(),
     numberOfPeople: yup.number().notRequired(),
+    notes: yup.string().notRequired(),
   });

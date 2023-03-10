@@ -23,17 +23,23 @@ export const OperatorBookingList: React.FC<Props> = ({ title, bookings }) => {
     <Box sx={{ mb: 3 }}>
       <Titled title={title}>
         {bookings && bookings.length ? (
-          <List>
-            {bookings.map((booking) => (
-              <ListItem key={booking._id}>
-                <ListItemButton
-                  component={Link}
-                  href={urls.operators.booking(booking._id)}
-                >
-                  <ListItemText primary={booking.service.name} />
-                </ListItemButton>
-              </ListItem>
-            ))}
+          <List dense>
+            {bookings
+              .slice()
+              .reverse()
+              .map((booking) => (
+                <ListItem key={booking._id}>
+                  <ListItemButton
+                    component={Link}
+                    href={urls.operators.booking(booking._id)}
+                  >
+                    <ListItemText
+                      primary={booking.service.name}
+                      secondary={booking.date}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
           </List>
         ) : (
           <Typography color="text.secondary">
