@@ -23,17 +23,17 @@ export const createPriceString = (price: number) =>
 export const getReadablePricingStringsForService = (service: ServiceNoId): Record<string, string> => {
   switch (service.serviceSchema.pricingStrategy) {
     case 'onPremises': return {};
-    case 'fixed': return { Price: createPriceString(service.price.fixed?.price!) };
-    case 'perPerson': return { "Price per person": createPriceString(service.price.perPerson?.price!) };
+    case 'fixed': return { Price: createPriceString(service.price.fixed?.price || 0) };
+    case 'perPerson': return { "Price per person": createPriceString(service.price.perPerson?.price || 0) };
     case 'perAdultAndChild':
       return {
-        "Price per adult": createPriceString(service.price.perAdultAndChild?.adultPrice!),
-        "Price per child": createPriceString(service.price.perAdultAndChild?.childPrice!)
+        "Price per adult": createPriceString(service.price.perAdultAndChild?.adultPrice || 0),
+        "Price per child": createPriceString(service.price.perAdultAndChild?.childPrice || 0)
       }
     case 'tiered':
       return (service.price.tiered?.tiers || []).reduce((acc, { name, rate }) => ({
         ...acc,
-        ["Price tier: " + name]: createPriceString(rate)
+        ["Price tier: " + name]: createPriceString(rate || 0)
       }), {} as Record<string, string>);
   }
 }

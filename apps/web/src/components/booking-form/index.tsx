@@ -177,7 +177,8 @@ export const BookingForm: React.FC<Props> = ({
                     !isValid ||
                     isSubmitting ||
                     isNumberOfPeopleInvalid ||
-                    !tAndCsAccepted
+                    !tAndCsAccepted ||
+                    calculateBookingPrice(values.priceDetails, service) <= 0
                   }
                 >
                   {schema.shouldPayNow ? "Proceed to payment" : "Book now"}
