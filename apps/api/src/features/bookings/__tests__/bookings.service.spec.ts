@@ -76,6 +76,7 @@ const envServiceMock: ExtractInterface<EnvService> = {
     awsS3Region: '',
     awsCloudfrontDomain: '',
     sendGridApiKey: '',
+    stripeApiVersion: '',
     stripeSecretKey: '',
     stripeWebhookSecret: '',
   })),
