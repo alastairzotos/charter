@@ -5,9 +5,8 @@ import { ServiceSchemaCategoryDto } from "./service-schema-category";
 export type ServiceSchemaFieldType = 'string' | 'time' | 'timeframe';
 
 export interface ServiceSchemaFieldDto {
-  field: string;
-  type: ServiceSchemaFieldType;
   label: string;
+  type: ServiceSchemaFieldType;
 }
 
 export interface ServiceSchemaDto {
@@ -36,7 +35,7 @@ export const getDefaultValuesForServiceSchema = (serviceSchema: ServiceSchemaDto
   return serviceSchema.fields.reduce<Record<string, ServiceFieldValue>>(
     (acc, cur) => ({
       ...acc,
-      [cur.field]: getDefaultValueForServiceSchemaFieldType(cur.type)
+      [cur.label]: getDefaultValueForServiceSchemaFieldType(cur.type)
     }),
     {}
   )

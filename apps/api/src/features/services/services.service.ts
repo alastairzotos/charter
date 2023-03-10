@@ -66,14 +66,14 @@ export class ServicesService {
 
     for (const service of services.map(s => s.toObject())) {
       const serviceFields = Object.keys(service.data)
-      const schemaFields = updatedSchema.fields.map(field => field.field);
+      const schemaFields = updatedSchema.fields.map(field => field.label);
 
       const missingFieldsNames = schemaFields.filter(field => !serviceFields.includes(field));
-      const missingFields = updatedSchema.fields.filter(field => missingFieldsNames.includes(field.field));
+      const missingFields = updatedSchema.fields.filter(field => missingFieldsNames.includes(field.label));
 
       const newDefaults = missingFields.reduce<Record<string, ServiceFieldValue>>((acc, cur) => ({
         ...acc,
-        [cur.field]: getDefaultValueForServiceSchemaFieldType(cur.type),
+        [cur.label]: getDefaultValueForServiceSchemaFieldType(cur.type),
       }), {});
 
       await this.servicesRepository.updateService(

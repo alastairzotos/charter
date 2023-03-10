@@ -23,3 +23,43 @@ export const migrateToServiceSchemas = async (app: INestApplication) => {
     }
   }
 }
+
+export const migrateServiceFields = async (app: INestApplication) => {
+  const schemaRepo = await app.get<ServiceSchemaRepository>(ServiceSchemaRepository);
+  const schemas = await schemaRepo.getServiceSchemas();
+
+  const serviceRepo = await app.get<ServicesRepository>(ServicesRepository);
+
+  for (const schema of schemas) {
+    const services = await serviceRepo.getServicesBySchema(schema._id.toString());
+
+    if (schema.fields.length > 0) {
+      console.log('For schema:', schema.name);
+      console.log(schema.fields);
+
+      for (const svc of services.map(svc => svc.toObject())) {
+        console.log('Updating:', svc.name);
+
+        const newData = schema.fields.reduce((acc, cur: any) => ({
+          ...acc,
+          [cur.label]: svc.data[cur.field],
+        }), {});
+
+        console.log(svc.data);
+        console.log('->');
+        console.log({ ...svc.data, ...newData });
+
+        await serviceRepo.updateService(
+          svc._id,
+          {
+            ...svc,
+            data: {
+              ...svc.data,
+              ...newData
+            }
+          }
+        )
+      }
+    }
+  }
+}

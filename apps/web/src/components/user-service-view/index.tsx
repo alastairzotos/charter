@@ -45,6 +45,8 @@ export const UserServiceView: React.FC<Props> = ({
     return () => router.beforePopState(() => true);
   }, [router, bookingModalOpen]);
 
+  console.log(service);
+
   return (
     <>
       {!bookingView && (
@@ -82,7 +84,7 @@ export const UserServiceView: React.FC<Props> = ({
             ...schema.fields.reduce(
               (acc, field) => ({
                 ...acc,
-                [field.label]: service.data[field.field],
+                [field.label]: service.data[field.label],
               }),
               {}
             ),

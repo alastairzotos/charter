@@ -41,7 +41,6 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
             ...fields,
             {
               label: "New field",
-              field: "newField",
               type: "string",
             },
           ])

@@ -2,13 +2,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
-import React, {
-  LegacyRef,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactImageGallery from "react-image-gallery";
 
 import { ImageGalleryItem } from "src/components/image-gallery/image-gallery-item";
