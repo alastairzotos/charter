@@ -69,7 +69,7 @@ export const TimeframeField: React.FC<ServiceFieldProps> = ({
           style: {
             borderTopRightRadius: 0,
             borderBottomRightRadius: 0,
-          }
+          },
         }}
       />
       <Select
@@ -79,7 +79,7 @@ export const TimeframeField: React.FC<ServiceFieldProps> = ({
         sx={{
           borderTopLeftRadius: 0,
           borderBottomLeftRadius: 0,
-          marginLeft: '-1px',
+          marginLeft: "-1px",
         }}
       >
         <MenuItem value="Hours">{number === "1" ? "Hour" : "Hours"}</MenuItem>
