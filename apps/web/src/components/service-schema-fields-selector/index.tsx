@@ -40,6 +40,7 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
           onChange([
             ...fields,
             {
+              key: "key",
               label: "New field",
               type: "string",
             },

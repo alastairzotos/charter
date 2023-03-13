@@ -27,6 +27,14 @@ export const ServiceSchemaField: React.FC<Props> = ({
   return (
     <Box sx={{ display: "flex", pt: 2, pb: 2 }} gap={1}>
       <TextField
+        sx={{ width: 200 }}
+        size="small"
+        label="Key"
+        value={field.key}
+        onChange={(e) => onChange({ ...field, key: e.target.value })}
+      />
+
+      <TextField
         sx={{ width: 350 }}
         size="small"
         label="Label"

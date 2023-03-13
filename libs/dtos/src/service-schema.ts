@@ -5,8 +5,9 @@ import { ServiceSchemaCategoryDto } from "./service-schema-category";
 export type ServiceSchemaFieldType = 'string' | 'time' | 'timeframe';
 
 export interface ServiceSchemaFieldDto {
-  label: string;
+  key: string;
   type: ServiceSchemaFieldType;
+  label: string;
 }
 
 export type ServiceSchemaContentSectionType = 'text' | 'bullets';

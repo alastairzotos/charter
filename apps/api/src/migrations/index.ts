@@ -1,6 +1,7 @@
 import { INestApplication } from "@nestjs/common";
 import { ServiceSchemaRepository } from "features/service-schemas/service-schema.repository";
 import { ServicesRepository } from "features/services/services.repository";
+import { ServicesService } from "features/services/services.service";
 
 export const migrateToServiceSchemas = async (app: INestApplication) => {
   const schemaRepo = await app.get<ServiceSchemaRepository>(ServiceSchemaRepository);
@@ -59,6 +60,53 @@ export const migrateServiceFields = async (app: INestApplication) => {
             }
           }
         )
+      }
+    }
+  }
+}
+
+export const migrateChangeFieldToKey = async (app: INestApplication) => {
+  const schemaRepo = await app.get<ServiceSchemaRepository>(ServiceSchemaRepository);
+  const schemas = await schemaRepo.getServiceSchemas();
+
+  const servicesRepo = await app.get<ServicesRepository>(ServicesRepository);
+
+  for (const schema of schemas) {
+    console.log('Schema:', schema.name);
+    console.log('Fields:', schema.fields);
+
+    const updatedFields = schema.fields.map(field => ({
+      ...field,
+      key: (field as any)['field']
+    }));
+
+    await schemaRepo.updateServiceSchema(schema._id, {
+      ...schema,
+      fields: updatedFields
+    })
+
+    const services = await servicesRepo.getServicesBySchema(schema._id);
+
+    for (const service of services) {
+      console.log('Service:', service.name);
+      console.log('Data:', service.data);
+
+      if (service.data) {
+        const updatedData = {
+          ...service.data,
+          ...updatedFields.reduce((acc, cur) => ({
+            ...acc,
+            [cur.key]: service.data[cur.label]
+          }), {})
+        }
+
+        console.log('>>>', updatedData);
+        servicesRepo.updateService(service._id, {
+          ...service,
+          data: updatedData
+        })
+      } else {
+        servicesRepo.updateService(service._id, { ...service, data: {} });
       }
     }
   }

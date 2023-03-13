@@ -29,9 +29,9 @@ export const ServiceFormFields: React.FC<Props> = ({ schema, ...props }) => {
         return (
           <FieldForm
             field={field}
-            fullField={`data.${field.label}`}
+            fullField={`data.${field.key}`}
             {...props}
-            key={field.label}
+            key={field.key}
           />
         );
       })}

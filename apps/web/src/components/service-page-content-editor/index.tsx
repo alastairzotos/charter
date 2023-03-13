@@ -46,7 +46,7 @@ export const ServicePageContentEditor: React.FC<Props> = ({
 }) => {
   const handleSaveClick = () => onSave(values);
 
-  const schemaContentSections = values.serviceSchema.contentSections;
+  const schemaContentSections = values.serviceSchema.contentSections || [];
 
   return (
     <Modal open={open} onClose={onClose}>
