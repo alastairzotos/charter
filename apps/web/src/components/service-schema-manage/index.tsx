@@ -18,6 +18,7 @@ import { FormBox } from "src/components/form-box";
 import { PricingStrategyTypeSelector } from "src/components/pricing-strategy-type-selector";
 import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceSchemaCategorySelector } from "src/components/service-schema-category-selector";
+import { ServiceSchemaContentSectionsSelector } from "src/components/service-schema-content-sections-selector";
 import { ServiceSchemaFieldsSelector } from "src/components/service-schema-fields-selector";
 
 interface Props {
@@ -98,6 +99,13 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
           <ServiceSchemaFieldsSelector
             fields={values.fields}
             onChange={(fields) => setValues({ ...values, fields })}
+          />
+
+          <ServiceSchemaContentSectionsSelector
+            sections={values.contentSections || []}
+            onChange={(contentSections) =>
+              setValues({ ...values, contentSections })
+            }
           />
 
           <SaveAndDelete

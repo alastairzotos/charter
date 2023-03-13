@@ -10,8 +10,8 @@ import { getReadablePricingStringsForService } from "utils";
 import { BookingForm } from "src/components/booking-form";
 import { ImageGallery } from "src/components/image-gallery";
 import { KeyValues } from "src/components/key-values";
-import { ReadMore } from "src/components/read-more";
 import { Titled } from "src/components/titled";
+import { UserServiceViewContent } from "src/components/user-service-view-content";
 
 interface Props {
   bookingView?: boolean;
@@ -45,8 +45,6 @@ export const UserServiceView: React.FC<Props> = ({
     return () => router.beforePopState(() => true);
   }, [router, bookingModalOpen]);
 
-  console.log(service);
-
   return (
     <>
       {!bookingView && (
@@ -61,7 +59,7 @@ export const UserServiceView: React.FC<Props> = ({
       )}
 
       <Titled title={service.name}>
-        <ReadMore content={service.description} />
+        <UserServiceViewContent service={service} />
 
         {!bookingView && (
           <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>

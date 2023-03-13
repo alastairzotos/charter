@@ -30,6 +30,7 @@ export const ServiceSchemaCreate: React.FC = () => {
         pricingStrategy: "fixed",
         shouldPayNow: true,
         fields: [],
+        contentSections: [],
       }}
     />
   );

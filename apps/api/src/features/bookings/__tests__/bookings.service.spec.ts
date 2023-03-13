@@ -35,13 +35,15 @@ const mockServiceSchema: ServiceSchemaDto = {
   defaultBookingFields: ['date'],
   pricingStrategy: 'perAdultAndChild',
   shouldPayNow: true,
-  fields: []
+  fields: [],
+  contentSections: [],
 }
 
 const mockService: ServiceDto = {
   _id: '',
   price: {},
   description: '',
+  content: {},
   name: '',
   operator: mockOperator,
   serviceSchema: mockServiceSchema,

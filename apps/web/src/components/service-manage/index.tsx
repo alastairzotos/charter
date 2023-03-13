@@ -1,5 +1,5 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -7,7 +7,7 @@ import { ServiceNoId } from "dtos";
 import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { urls } from "urls";
 
 import { FileUpload } from "src/components/file-upload";
@@ -16,6 +16,7 @@ import { MinMaxPeopleSelector } from "src/components/min-max-people-selector";
 import { PriceForm } from "src/components/price-forms";
 import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceFormFields } from "src/components/service-form-fields";
+import { ServicePageContentEditor } from "src/components/service-page-content-editor";
 import { serviceValidationSchema } from "src/schemas";
 
 interface Props {
@@ -41,6 +42,8 @@ export const ManageServiceForm: React.FC<Props> = ({
 }) => {
   const router = useRouter();
 
+  const [contentEditorOpen, setContentEditorOpen] = useState(false);
+
   const handleDeleteService =
     onDelete &&
     (async () => {
@@ -63,13 +66,13 @@ export const ManageServiceForm: React.FC<Props> = ({
           <FormBox title={title} maxWidth={600}>
             <Field component={TextField} name="name" label="Service name" />
 
-            <Field
-              component={TextField}
-              name="description"
-              label="Description"
-              multiline
-              rows={4}
-            />
+            <Button
+              variant="contained"
+              onClick={() => setContentEditorOpen(true)}
+              sx={{ width: 300 }}
+            >
+              Open content editor
+            </Button>
 
             <PriceForm
               pricingStrategyType={service.serviceSchema.pricingStrategy}
@@ -137,6 +140,14 @@ export const ManageServiceForm: React.FC<Props> = ({
                 There was an error saving the service data
               </Typography>
             )}
+
+            <ServicePageContentEditor
+              open={contentEditorOpen}
+              onClose={() => setContentEditorOpen(false)}
+              values={values}
+              onChange={setValues}
+              onSave={onSave}
+            />
           </FormBox>
         )}
       </Formik>

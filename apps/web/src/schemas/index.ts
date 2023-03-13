@@ -47,6 +47,7 @@ export const serviceValidationSchema: yup.SchemaOf<
 > = yup.object().shape({
   name: yup.string().required("Name is required"),
   description: yup.string().required("Description is required"),
+  content: yup.object(),
   price: yup.object(), // TODO: Use this. It won't let me save when creating a service -> priceValidationSchema,
   photos: yup.array().of(yup.string().required("Photo is required")),
   data: yup.object(),

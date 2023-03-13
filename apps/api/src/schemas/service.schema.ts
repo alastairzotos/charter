@@ -22,6 +22,9 @@ export class Service implements ServiceDto {
   description: string;
 
   @Prop({ type: Object })
+  content: Record<string, string | string[]>;
+
+  @Prop({ type: Object })
   price: ServicePricingDto;
 
   @Prop({ type: Number })

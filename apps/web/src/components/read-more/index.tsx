@@ -1,14 +1,8 @@
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import React from "react";
 import AnimatedShowMore from "react-animated-show-more";
 
-interface Props {
-  content: string;
-}
-
-export const ReadMore: React.FC<Props> = ({ content }) => {
-  const lines = content.split("\n");
-
+export const ReadMore: React.FC<React.PropsWithChildren> = ({ children }) => {
   return (
     <AnimatedShowMore
       height={400}
@@ -18,11 +12,7 @@ export const ReadMore: React.FC<Props> = ({ content }) => {
       speed={500}
       shadowColor="rgba(0, 0, 0, 0.1)"
     >
-      {lines.map((line, index) => (
-        <Typography key={index} sx={{ mt: 2, mb: 2 }}>
-          {line}
-        </Typography>
-      ))}
+      {children}
     </AnimatedShowMore>
   );
 };

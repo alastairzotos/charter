@@ -9,6 +9,15 @@ export interface ServiceSchemaFieldDto {
   type: ServiceSchemaFieldType;
 }
 
+export type ServiceSchemaContentSectionType = 'text' | 'bullets';
+
+export interface ServiceSchemaContentSectionDto {
+  key: string;
+  type: ServiceSchemaContentSectionType;
+  title: string;
+}
+
+
 export interface ServiceSchemaDto {
   _id: string;
   name: string;
@@ -17,6 +26,7 @@ export interface ServiceSchemaDto {
   pricingStrategy: PricingStrategyType;
   shouldPayNow: boolean;
   fields: ServiceSchemaFieldDto[];
+  contentSections: ServiceSchemaContentSectionDto[];
 }
 
 export type ServiceSchemaNoId = Omit<ServiceSchemaDto, '_id'>;

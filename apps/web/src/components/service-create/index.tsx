@@ -53,6 +53,7 @@ export const ServiceCreate: React.FC<Props> = ({
           service={{
             name: "",
             description: "",
+            content: {},
             photos: [],
             price: {},
             maxPeople: null,
