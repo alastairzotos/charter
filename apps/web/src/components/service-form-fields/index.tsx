@@ -1,6 +1,7 @@
 import { ServiceSchemaDto, ServiceSchemaFieldDto } from "dtos";
 import React from "react";
 
+import { MultilineTextField } from "src/components/service-form-fields/fields/multiline-text-field";
 import { StringField } from "src/components/service-form-fields/fields/string-field";
 import { TimeField } from "src/components/service-form-fields/fields/time-field";
 import { TimeframeField } from "src/components/service-form-fields/fields/timeframe-field";
@@ -14,6 +15,8 @@ const getFieldForm = (field: ServiceSchemaFieldDto) => {
   switch (field.type) {
     case "string":
       return StringField;
+    case "multiline-text":
+      return MultilineTextField;
     case "time":
       return TimeField;
     case "timeframe":

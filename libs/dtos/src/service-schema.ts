@@ -2,7 +2,7 @@ import { DefaultBookingFieldType } from "./booking";
 import { PricingStrategyType } from "./pricing";
 import { ServiceSchemaCategoryDto } from "./service-schema-category";
 
-export type ServiceSchemaFieldType = 'string' | 'time' | 'timeframe';
+export type ServiceSchemaFieldType = 'string' | 'multiline-text' | 'time' | 'timeframe';
 
 export interface ServiceSchemaFieldDto {
   key: string;
@@ -37,6 +37,7 @@ export type ServiceFieldValue = string | string[];
 export const getDefaultValueForServiceSchemaFieldType = (schemaFieldType: ServiceSchemaFieldType): ServiceFieldValue => {
   switch (schemaFieldType) {
     case 'string': return '';
+    case 'multiline-text': return '';
     case 'time': return '9am';
     case 'timeframe': return '1 Hours';
   }

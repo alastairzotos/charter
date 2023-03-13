@@ -12,6 +12,7 @@ import { ImageGallery } from "src/components/image-gallery";
 import { KeyValues } from "src/components/key-values";
 import { Titled } from "src/components/titled";
 import { UserServiceViewContent } from "src/components/user-service-view-content";
+import { UserServiceViewFields } from "src/components/user-service-view-fields";
 
 interface Props {
   bookingView?: boolean;
@@ -75,19 +76,8 @@ export const UserServiceView: React.FC<Props> = ({
           </Box>
         )}
 
-        <KeyValues
-          sx={{ maxWidth: 600 }}
-          kv={{
-            ...priceDetails,
-            ...schema.fields.reduce(
-              (acc, field) => ({
-                ...acc,
-                [field.label]: service.data[field.key],
-              }),
-              {}
-            ),
-          }}
-        />
+        <KeyValues sx={{ maxWidth: 600 }} kv={priceDetails} />
+        <UserServiceViewFields data={service.data} fields={schema.fields} />
 
         {service.photos && service.photos.length > 0 && (
           <ImageGallery items={service.photos} />

@@ -57,6 +57,7 @@ export const ServiceSchemaField: React.FC<Props> = ({
           }
         >
           <MenuItem value="string">String</MenuItem>
+          <MenuItem value="multiline-text">Multiline Text</MenuItem>
           <MenuItem value="time">Time</MenuItem>
           <MenuItem value="timeframe">Timeframe</MenuItem>
         </Select>

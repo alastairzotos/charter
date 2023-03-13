@@ -11,11 +11,11 @@ import React, { useEffect, useState } from "react";
 import { ServiceFieldProps } from "src/components/service-form-fields/fields/props";
 
 export const TimeframeField: React.FC<ServiceFieldProps> = ({
-  field: { label },
+  field: { key, label },
   values,
   setValues,
 }) => {
-  const value = values.data[label] as string;
+  const value = (values.data[key] as string) || "";
   let initialNumber = "1";
   let initialTimestep = "Hours";
 
@@ -34,7 +34,7 @@ export const TimeframeField: React.FC<ServiceFieldProps> = ({
       ...(values as any),
       data: {
         ...values.data,
-        [label]: `${number} ${timestep}`,
+        [key]: `${number} ${timestep}`,
       },
     });
   }, [number, timestep]);
@@ -45,7 +45,7 @@ export const TimeframeField: React.FC<ServiceFieldProps> = ({
       ...(values as any),
       data: {
         ...values.data,
-        [label]: "All day",
+        [key]: "All day",
       },
     });
 
