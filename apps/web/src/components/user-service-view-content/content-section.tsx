@@ -5,10 +5,17 @@ import {
   AccordionSummary,
   Typography,
 } from "@mui/material";
+import { styled } from "@mui/system";
 import { ServiceDto, ServiceSchemaContentSectionDto } from "dtos";
 import React from "react";
 
 import { MultilineText } from "src/components/multiline-text";
+
+const BulletList = styled("ul")(({ theme }) => ({
+  "& li": {
+    marginBottom: theme.spacing(1),
+  },
+}));
 
 interface Props {
   service: ServiceDto;
@@ -35,13 +42,13 @@ export const UserServiceViewContentSection: React.FC<Props> = ({
             content={(service.content[contentSection.key] as string) || ""}
           />
         ) : (
-          <ul>
+          <BulletList>
             {((service.content[contentSection.key] as string[]) || []).map(
               (bullet, index) => (
                 <li key={index}>{bullet}</li>
               )
             )}
-          </ul>
+          </BulletList>
         )}
       </AccordionDetails>
     </Accordion>
