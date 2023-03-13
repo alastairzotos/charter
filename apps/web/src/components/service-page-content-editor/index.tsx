@@ -1,5 +1,12 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import { Button, CircularProgress, Modal, SxProps, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Modal,
+  SxProps,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import { ServiceNoId } from "dtos";
 import React from "react";
@@ -75,20 +82,22 @@ export const ServicePageContentEditor: React.FC<Props> = ({
           <Button
             variant="contained"
             onClick={handleSaveClick}
-            disabled={saveStatus === 'fetching'}
+            disabled={saveStatus === "fetching"}
             sx={{
               width: 200,
               alignSelf: "flex-start",
             }}
           >
-            {
-              saveStatus === 'fetching'
-                ? <CircularProgress size={20} />
-                : "Save"
-            }
+            {saveStatus === "fetching" ? (
+              <CircularProgress size={20} />
+            ) : (
+              "Save"
+            )}
           </Button>
 
-          {saveStatus === 'error' && <Typography>There was an error</Typography>}
+          {saveStatus === "error" && (
+            <Typography>There was an error</Typography>
+          )}
         </FormBox>
       </Box>
     </Modal>
