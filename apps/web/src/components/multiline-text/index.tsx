@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const MultilineText: React.FC<Props> = ({ sx, content }) => {
-  const lines = (content || '').split("\n");
+  const lines = (content || "").split("\n");
 
   return (
     <>
