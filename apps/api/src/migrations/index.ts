@@ -71,7 +71,7 @@ export const migrateChangeFieldToKey = async (app: INestApplication) => {
 
   const servicesRepo = await app.get<ServicesRepository>(ServicesRepository);
 
-  for (const schema of schemas) {
+  for (const schema of schemas.map(schema => schema.toObject())) {
     console.log('Schema:', schema.name);
     console.log('Fields:', schema.fields);
 
@@ -80,6 +80,8 @@ export const migrateChangeFieldToKey = async (app: INestApplication) => {
       key: (field as any)['field']
     }));
 
+    console.log(updatedFields);
+
     await schemaRepo.updateServiceSchema(schema._id, {
       ...schema,
       fields: updatedFields
@@ -87,7 +89,7 @@ export const migrateChangeFieldToKey = async (app: INestApplication) => {
 
     const services = await servicesRepo.getServicesBySchema(schema._id);
 
-    for (const service of services) {
+    for (const service of services.map(service => service.toObject())) {
       console.log('Service:', service.name);
       console.log('Data:', service.data);
 
