@@ -3,11 +3,11 @@ import React from "react";
 
 interface Props {
   sx?: SxProps;
-  content: string;
+  content?: string;
 }
 
 export const MultilineText: React.FC<Props> = ({ sx, content }) => {
-  const lines = content.split("\n");
+  const lines = (content || '').split("\n");
 
   return (
     <>
