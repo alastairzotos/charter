@@ -82,7 +82,7 @@ export const UserServiceView: React.FC<Props> = ({
             ...schema.fields.reduce(
               (acc, field) => ({
                 ...acc,
-                [field.label]: service.data[field.label],
+                [field.label]: service.data[field.key],
               }),
               {}
             ),
