@@ -1,4 +1,5 @@
-import { Button, Modal, SxProps, TextField } from "@mui/material";
+import { FetchStatus } from "@bitmetro/create-query";
+import { Button, CircularProgress, Modal, SxProps, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { ServiceNoId } from "dtos";
 import React from "react";
@@ -12,6 +13,7 @@ interface Props {
   values: ServiceNoId;
   onChange: (values: ServiceNoId) => void;
   onSave: (values: ServiceNoId) => void;
+  saveStatus?: FetchStatus;
 }
 
 const modalStyle: SxProps = {
@@ -33,6 +35,7 @@ export const ServicePageContentEditor: React.FC<Props> = ({
   values,
   onChange,
   onSave,
+  saveStatus,
 }) => {
   const handleSaveClick = () => onSave(values);
 
@@ -54,6 +57,7 @@ export const ServicePageContentEditor: React.FC<Props> = ({
 
           {schemaContentSections.map((section) => (
             <ServiceContentSectionEditor
+              key={section.key}
               contentSection={section}
               value={values.content?.[section.key]}
               onChange={(sectionValue) =>
@@ -71,13 +75,20 @@ export const ServicePageContentEditor: React.FC<Props> = ({
           <Button
             variant="contained"
             onClick={handleSaveClick}
+            disabled={saveStatus === 'fetching'}
             sx={{
               width: 200,
               alignSelf: "flex-start",
             }}
           >
-            Save
+            {
+              saveStatus === 'fetching'
+                ? <CircularProgress size={20} />
+                : "Save"
+            }
           </Button>
+
+          {saveStatus === 'error' && <Typography>There was an error</Typography>}
         </FormBox>
       </Box>
     </Modal>

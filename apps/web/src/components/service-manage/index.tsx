@@ -147,6 +147,7 @@ export const ManageServiceForm: React.FC<Props> = ({
               values={values}
               onChange={setValues}
               onSave={onSave}
+              saveStatus={saveStatus}
             />
           </FormBox>
         )}
