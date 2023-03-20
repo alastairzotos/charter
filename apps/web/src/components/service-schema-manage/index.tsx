@@ -20,6 +20,7 @@ import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceSchemaCategorySelector } from "src/components/service-schema-category-selector";
 import { ServiceSchemaContentSectionsSelector } from "src/components/service-schema-content-sections-selector";
 import { ServiceSchemaFieldsSelector } from "src/components/service-schema-fields-selector";
+import { Tabs } from "src/components/tabs";
 
 interface Props {
   title: string;
@@ -55,57 +56,84 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
     <Formik initialValues={serviceSchema} onSubmit={onSave}>
       {({ isValid, values, setValues }) => (
         <FormBox title={title} maxWidth={600}>
-          <Field component={TextField} name="name" label="Name" />
+          <Tabs
+            tabs={[
+              {
+                label: "Basics",
+                content: (
+                  <>
+                    <Field component={TextField} name="name" label="Name" />
 
-          <ServiceSchemaCategorySelector
-            value={values.schemaCategory}
-            onChange={(schemaCategory) =>
-              setValues({ ...values, schemaCategory })
-            }
-          />
+                    <ServiceSchemaCategorySelector
+                      value={values.schemaCategory}
+                      onChange={(schemaCategory) =>
+                        setValues({ ...values, schemaCategory })
+                      }
+                    />
 
-          <Paper
-            sx={{ p: 2, display: "flex", flexDirection: "column", gap: 2 }}
-          >
-            <FormLabel>Pricing</FormLabel>
+                    <Paper
+                      sx={{
+                        p: 2,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                      }}
+                    >
+                      <FormLabel>Pricing</FormLabel>
 
-            <PricingStrategyTypeSelector
-              pricingStrategy={values.pricingStrategy}
-              onChange={(pricingStrategy) =>
-                setValues({ ...values, pricingStrategy })
-              }
-            />
+                      <PricingStrategyTypeSelector
+                        pricingStrategy={values.pricingStrategy}
+                        onChange={(pricingStrategy) =>
+                          setValues({ ...values, pricingStrategy })
+                        }
+                      />
 
-            <FormControlLabel
-              label="Should pay now"
-              control={
-                <Checkbox
-                  checked={values.shouldPayNow}
-                  onChange={(e) =>
-                    setValues({ ...values, shouldPayNow: e.target.checked })
-                  }
-                />
-              }
-            />
-          </Paper>
+                      <FormControlLabel
+                        label="Should pay now"
+                        control={
+                          <Checkbox
+                            checked={values.shouldPayNow}
+                            onChange={(e) =>
+                              setValues({
+                                ...values,
+                                shouldPayNow: e.target.checked,
+                              })
+                            }
+                          />
+                        }
+                      />
+                    </Paper>
 
-          <DefaultBookingFieldsSelector
-            defaultBookingFields={values.defaultBookingFields}
-            onChange={(defaultBookingFields) =>
-              setValues({ ...values, defaultBookingFields })
-            }
-          />
-
-          <ServiceSchemaFieldsSelector
-            fields={values.fields}
-            onChange={(fields) => setValues({ ...values, fields })}
-          />
-
-          <ServiceSchemaContentSectionsSelector
-            sections={values.contentSections || []}
-            onChange={(contentSections) =>
-              setValues({ ...values, contentSections })
-            }
+                    <DefaultBookingFieldsSelector
+                      defaultBookingFields={values.defaultBookingFields}
+                      onChange={(defaultBookingFields) =>
+                        setValues({ ...values, defaultBookingFields })
+                      }
+                    />
+                  </>
+                ),
+              },
+              {
+                label: "Service fields",
+                content: (
+                  <ServiceSchemaFieldsSelector
+                    fields={values.fields}
+                    onChange={(fields) => setValues({ ...values, fields })}
+                  />
+                ),
+              },
+              {
+                label: "Content sections",
+                content: (
+                  <ServiceSchemaContentSectionsSelector
+                    sections={values.contentSections || []}
+                    onChange={(contentSections) =>
+                      setValues({ ...values, contentSections })
+                    }
+                  />
+                ),
+              },
+            ]}
           />
 
           <SaveAndDelete

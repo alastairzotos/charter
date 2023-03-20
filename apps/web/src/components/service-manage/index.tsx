@@ -1,5 +1,5 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -7,7 +7,7 @@ import { ServiceNoId } from "dtos";
 import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import { urls } from "urls";
 
 import { FileUpload } from "src/components/file-upload";
@@ -17,6 +17,7 @@ import { PriceForm } from "src/components/price-forms";
 import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceFormFields } from "src/components/service-form-fields";
 import { ServicePageContentEditor } from "src/components/service-page-content-editor";
+import { Tabs } from "src/components/tabs";
 import { serviceValidationSchema } from "src/schemas";
 
 interface Props {
@@ -42,8 +43,6 @@ export const ManageServiceForm: React.FC<Props> = ({
 }) => {
   const router = useRouter();
 
-  const [contentEditorOpen, setContentEditorOpen] = useState(false);
-
   const handleDeleteService =
     onDelete &&
     (async () => {
@@ -64,67 +63,101 @@ export const ManageServiceForm: React.FC<Props> = ({
       >
         {({ isValid, isSubmitting, values, setValues }) => (
           <FormBox title={title} maxWidth={600}>
-            <Field component={TextField} name="name" label="Service name" />
+            <Tabs
+              tabs={[
+                {
+                  label: "Basics",
+                  content: (
+                    <>
+                      <Field
+                        component={TextField}
+                        name="name"
+                        label="Service name"
+                      />
 
-            <Button
-              variant="contained"
-              onClick={() => setContentEditorOpen(true)}
-              sx={{ width: 300 }}
-            >
-              Open content editor
-            </Button>
+                      <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
+                        <MinMaxPeopleSelector
+                          label="Minimum people"
+                          checkboxLabel="Set minimum people"
+                          defaultValue={1}
+                          value={values.minPeople}
+                          setValue={(minPeople) =>
+                            setValues({ ...values, minPeople })
+                          }
+                        />
 
-            <PriceForm
-              pricingStrategyType={service.serviceSchema.pricingStrategy}
-              pricing={values.price}
-              setPricing={(price) => setValues({ ...values, price })}
+                        <MinMaxPeopleSelector
+                          label="Maximum people"
+                          checkboxLabel="Set maximum people"
+                          defaultValue={10}
+                          value={values.maxPeople}
+                          setValue={(maxPeople) =>
+                            setValues({ ...values, maxPeople })
+                          }
+                        />
+                      </Box>
+
+                      <FileUpload
+                        title="Photos"
+                        filesLimit={100}
+                        acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+                        disabled={isSubmitting}
+                        value={values.photos || []}
+                        onChange={(photos) =>
+                          setValues({
+                            ...(values as any),
+                            photos: [...(values.photos || []), ...photos],
+                          })
+                        }
+                        onDelete={(item) =>
+                          setValues({
+                            ...(values as any),
+                            photos: values.photos.filter(
+                              (photo) => photo !== item
+                            ),
+                          })
+                        }
+                      />
+                      <ErrorMessage name="photos" />
+                    </>
+                  ),
+                },
+                {
+                  label: "Service details",
+                  content: (
+                    <ServiceFormFields
+                      schema={service.serviceSchema}
+                      isSubmitting={isSubmitting}
+                      values={values}
+                      setValues={setValues}
+                    />
+                  ),
+                },
+                {
+                  label: "Pricing",
+                  content: (
+                    <PriceForm
+                      pricingStrategyType={
+                        service.serviceSchema.pricingStrategy
+                      }
+                      pricing={values.price}
+                      setPricing={(price) => setValues({ ...values, price })}
+                    />
+                  ),
+                },
+                {
+                  label: "Content",
+                  content: (
+                    <ServicePageContentEditor
+                      values={values}
+                      onChange={setValues}
+                      onSave={onSave}
+                      saveStatus={saveStatus}
+                    />
+                  ),
+                },
+              ]}
             />
-
-            <ServiceFormFields
-              schema={service.serviceSchema}
-              isSubmitting={isSubmitting}
-              values={values}
-              setValues={setValues}
-            />
-
-            <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
-              <MinMaxPeopleSelector
-                label="Minimum people"
-                checkboxLabel="Set minimum people"
-                defaultValue={1}
-                value={values.minPeople}
-                setValue={(minPeople) => setValues({ ...values, minPeople })}
-              />
-
-              <MinMaxPeopleSelector
-                label="Maximum people"
-                checkboxLabel="Set maximum people"
-                defaultValue={10}
-                value={values.maxPeople}
-                setValue={(maxPeople) => setValues({ ...values, maxPeople })}
-              />
-            </Box>
-
-            <FileUpload
-              title="Photos"
-              filesLimit={100}
-              acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-              disabled={isSubmitting}
-              value={values.photos || []}
-              onChange={(photos) =>
-                setValues({
-                  ...(values as any),
-                  photos: [...(values.photos || []), ...photos],
-                })
-              }
-              onDelete={(item) =>
-                setValues({
-                  ...(values as any),
-                  photos: values.photos.filter((photo) => photo !== item),
-                })
-              }
-            />
-            <ErrorMessage name="photos" />
 
             <SaveAndDelete
               isValid={isValid}
@@ -140,15 +173,6 @@ export const ManageServiceForm: React.FC<Props> = ({
                 There was an error saving the service data
               </Typography>
             )}
-
-            <ServicePageContentEditor
-              open={contentEditorOpen}
-              onClose={() => setContentEditorOpen(false)}
-              values={values}
-              onChange={setValues}
-              onSave={onSave}
-              saveStatus={saveStatus}
-            />
           </FormBox>
         )}
       </Formik>

@@ -12,6 +12,7 @@ import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
 import { OpeningTimesForm } from "src/components/opening-times-form";
 import { SaveAndDelete } from "src/components/save-delete";
+import { Tabs } from "src/components/tabs";
 
 interface Props {
   title: string;
@@ -64,59 +65,80 @@ export const ManageOperatorForm: React.FC<Props> = ({
     >
       {({ isValid, isSubmitting, values, setValues }) => (
         <FormBox title={title} maxWidth={600}>
-          <Field component={TextField} name="name" label="Operator name" />
+          <Tabs
+            tabs={[
+              {
+                label: "Basics",
+                content: (
+                  <>
+                    <Field
+                      component={TextField}
+                      name="name"
+                      label="Operator name"
+                    />
 
-          <Field
-            component={TextField}
-            name="email"
-            type="email"
-            label="Email"
-          />
+                    <Field
+                      component={TextField}
+                      name="email"
+                      type="email"
+                      label="Email"
+                    />
 
-          <Field
-            component={TextField}
-            name="phoneNumber"
-            label="Phone number"
-          />
+                    <Field
+                      component={TextField}
+                      name="phoneNumber"
+                      label="Phone number"
+                    />
 
-          <Field
-            component={TextField}
-            name="address"
-            label="Address"
-            multiline
-            rows={4}
-          />
+                    <Field
+                      component={TextField}
+                      name="address"
+                      label="Address"
+                      multiline
+                      rows={4}
+                    />
 
-          <Field
-            component={TextField}
-            name="description"
-            label="Description"
-            multiline
-            rows={4}
-          />
+                    <Field
+                      component={TextField}
+                      name="description"
+                      label="Description"
+                      multiline
+                      rows={4}
+                    />
 
-          <OpeningTimesForm
-            openingTimes={values.openingTimes || defaultOpeningTimes}
-            setOpeningTimes={(openingTimes) => {
-              setValues({
-                ...values,
-                openingTimes: {
-                  ...defaultOpeningTimes,
-                  ...openingTimes,
-                },
-              });
-            }}
+                    <FileUpload
+                      title="Avatar"
+                      filesLimit={100}
+                      acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+                      disabled={isSubmitting}
+                      value={[values.photo].filter((i) => !!i)}
+                      onChange={(urls) =>
+                        setValues({ ...values, photo: urls[0] })
+                      }
+                    />
+                    <ErrorMessage name="photo" />
+                  </>
+                ),
+              },
+              {
+                label: "Opening times",
+                content: (
+                  <OpeningTimesForm
+                    openingTimes={values.openingTimes || defaultOpeningTimes}
+                    setOpeningTimes={(openingTimes) => {
+                      setValues({
+                        ...values,
+                        openingTimes: {
+                          ...defaultOpeningTimes,
+                          ...openingTimes,
+                        },
+                      });
+                    }}
+                  />
+                ),
+              },
+            ]}
           />
-
-          <FileUpload
-            title="Avatar"
-            filesLimit={100}
-            acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-            disabled={isSubmitting}
-            value={[values.photo].filter((i) => !!i)}
-            onChange={(urls) => setValues({ ...values, photo: urls[0] })}
-          />
-          <ErrorMessage name="photo" />
 
           <SaveAndDelete
             isValid={isValid}

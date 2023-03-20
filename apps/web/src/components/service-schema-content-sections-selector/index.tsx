@@ -1,4 +1,4 @@
-import { Button, FormLabel, Paper } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { ServiceSchemaContentSectionDto } from "dtos";
 import React from "react";
 
@@ -14,9 +14,7 @@ export const ServiceSchemaContentSectionsSelector: React.FC<Props> = ({
   onChange,
 }) => {
   return (
-    <Paper sx={{ p: 3 }}>
-      <FormLabel>Content sections</FormLabel>
-
+    <Box sx={{ p: 3 }}>
       {sections.map((section, index) => (
         <ServiceSchemaContentSection
           key={index}
@@ -49,6 +47,6 @@ export const ServiceSchemaContentSectionsSelector: React.FC<Props> = ({
       >
         Add section
       </Button>
-    </Paper>
+    </Box>
   );
 };

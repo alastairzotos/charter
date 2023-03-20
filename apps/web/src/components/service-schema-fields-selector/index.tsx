@@ -1,4 +1,4 @@
-import { Button, FormLabel, Paper } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { ServiceSchemaFieldDto } from "dtos";
 import React from "react";
 
@@ -14,9 +14,7 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
   onChange,
 }) => {
   return (
-    <Paper sx={{ p: 3 }}>
-      <FormLabel>Service fields</FormLabel>
-
+    <Box sx={{ p: 3 }}>
       {fields.map((field, index) => (
         <ServiceSchemaField
           key={index}
@@ -49,6 +47,6 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
       >
         Add field
       </Button>
-    </Paper>
+    </Box>
   );
 };
