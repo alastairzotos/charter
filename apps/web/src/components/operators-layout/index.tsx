@@ -1,6 +1,8 @@
 import * as React from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { AdminFooter } from "src/components/admin-footer";
+import { DefaultErrorFallback } from "src/components/default-error-fallback";
 import { OperatorsAppBar } from "src/components/operators-app-bar";
 import { ResponsiveLayout } from "src/components/responsive-layout";
 import { RoleRoute } from "src/components/role-route";
@@ -16,7 +18,11 @@ export const OperatorsLayout: React.FC<React.PropsWithChildren> = ({
       <OperatorsAppBar />
 
       <VerticalLayout>
-        <ResponsiveLayout>{children}</ResponsiveLayout>
+        <ResponsiveLayout>
+          <ErrorBoundary FallbackComponent={DefaultErrorFallback}>
+            {children}
+          </ErrorBoundary>
+        </ResponsiveLayout>
 
         <AdminFooter />
       </VerticalLayout>
