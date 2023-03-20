@@ -151,8 +151,6 @@ export const ManageServiceForm: React.FC<Props> = ({
                     <ServicePageContentEditor
                       values={values}
                       onChange={setValues}
-                      onSave={onSave}
-                      saveStatus={saveStatus}
                     />
                   ),
                 },
