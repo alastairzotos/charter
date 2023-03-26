@@ -80,6 +80,15 @@ export const getReadableBookingDetails = (booking: BookingNoId): Record<string, 
     obj['Price'] = createPriceString(calculateBookingPrice(booking.priceDetails, booking.service));
   }
 
+  if (!!booking.additionalFields) {
+    Object.keys(booking.additionalFields).map(key => {
+      const schemaField = booking.service.serviceSchema.additionalBookingFields.find(field => field.key === key);
+      if (schemaField) {
+        obj[schemaField.title] = booking.additionalFields?.[key] || '';
+      }
+    })
+  }
+
   if (!!booking.notes) {
     obj['Notes'] = booking.notes;
   }

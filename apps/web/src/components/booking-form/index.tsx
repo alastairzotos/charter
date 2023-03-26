@@ -22,6 +22,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { urls } from "urls";
 import { calculateBookingPrice, createPriceString } from "utils";
 
+import { BookingAdditionalForms } from "src/components/booking-additonal-forms";
 import { BookingDefaultForms } from "src/components/booking-default-forms";
 import { BookingModal } from "src/components/booking-modal";
 import { BookingPaymentForm } from "src/components/booking-payment-form";
@@ -81,6 +82,7 @@ export const BookingForm: React.FC<Props> = ({
     name: loggedinUser?.givenName || "",
     email: loggedinUser?.email || "",
     priceDetails: getDefaultBookingPriceDetails(),
+    additionalFields: {},
     ...getDefaultDefaultBookingFields(schema),
   };
 
@@ -141,6 +143,13 @@ export const BookingForm: React.FC<Props> = ({
                   booking={values}
                   service={service}
                   setError={setIsNumberOfPeopleInvalid}
+                />
+
+                <BookingAdditionalForms
+                  schema={schema}
+                  values={values}
+                  setValues={setValues}
+                  isSubmitting={isSubmitting}
                 />
 
                 <Field

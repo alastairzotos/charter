@@ -54,6 +54,8 @@ export const getDefaultDefaultBookingFields = (schema: ServiceSchemaDto): Defaul
   }
 }
 
+export type AdditionalBookingFieldContent = string;
+
 export interface BookingDto extends DefaultBookingFields {
   _id: string;
   service: ServiceDto;
@@ -62,6 +64,7 @@ export interface BookingDto extends DefaultBookingFields {
   email: string;
   bookingDate?: Date;
   priceDetails: BookingPriceDetails;
+  additionalFields?: Record<string, AdditionalBookingFieldContent>;
   notes?: string;
   paymentIntentId?: string;
   paymentStatus?: BookingPaymentStatus;

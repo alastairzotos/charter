@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
 
+import { AdditionalBookingFieldsSelector } from "src/components/additional-booking-fields-selector";
 import { DefaultBookingFieldsSelector } from "src/components/default-booking-fields-selector";
 import { FormBox } from "src/components/form-box";
 import { PricingStrategyTypeSelector } from "src/components/pricing-strategy-type-selector";
@@ -103,13 +104,6 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
                         }
                       />
                     </Paper>
-
-                    <DefaultBookingFieldsSelector
-                      defaultBookingFields={values.defaultBookingFields}
-                      onChange={(defaultBookingFields) =>
-                        setValues({ ...values, defaultBookingFields })
-                      }
-                    />
                   </>
                 ),
               },
@@ -120,6 +114,26 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
                     fields={values.fields}
                     onChange={(fields) => setValues({ ...values, fields })}
                   />
+                ),
+              },
+              {
+                label: "Booking fields",
+                content: (
+                  <>
+                    <DefaultBookingFieldsSelector
+                      defaultBookingFields={values.defaultBookingFields}
+                      onChange={(defaultBookingFields) =>
+                        setValues({ ...values, defaultBookingFields })
+                      }
+                    />
+
+                    <AdditionalBookingFieldsSelector
+                      fields={values.additionalBookingFields || []}
+                      onChange={(additionalBookingFields) =>
+                        setValues({ ...values, additionalBookingFields })
+                      }
+                    />
+                  </>
                 ),
               },
               {

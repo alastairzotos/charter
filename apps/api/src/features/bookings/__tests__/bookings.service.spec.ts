@@ -37,6 +37,7 @@ const mockServiceSchema: ServiceSchemaDto = {
   shouldPayNow: true,
   fields: [],
   contentSections: [],
+  additionalBookingFields: [],
 }
 
 const mockService: ServiceDto = {

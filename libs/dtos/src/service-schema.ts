@@ -18,12 +18,20 @@ export interface ServiceSchemaContentSectionDto {
   title: string;
 }
 
+export type AdditionalBookingFieldType = 'string';
+
+export interface AdditionalBookingField {
+  key: string;
+  type: AdditionalBookingFieldType;
+  title: string;
+}
 
 export interface ServiceSchemaDto {
   _id: string;
   name: string;
   schemaCategory: ServiceSchemaCategoryDto | null;
   defaultBookingFields: DefaultBookingFieldType[];
+  additionalBookingFields: AdditionalBookingField[];
   pricingStrategy: PricingStrategyType;
   shouldPayNow: boolean;
   fields: ServiceSchemaFieldDto[];
