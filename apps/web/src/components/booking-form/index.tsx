@@ -153,9 +153,8 @@ export const BookingForm: React.FC<Props> = ({
 
                 {schema.shouldPayNow && (
                   <KeyValues
-                    sx={{ maxWidth: 300 }}
                     kv={{
-                      "Total Price": createPriceString(
+                      "Total Price (all taxes and fees included)": createPriceString(
                         calculateBookingPrice(values.priceDetails, service)
                       ),
                     }}
