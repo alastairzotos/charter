@@ -1,6 +1,6 @@
 import { Tab, Tabs as MuiTabs } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 interface TabPanelProps {
   hidden: boolean;
@@ -36,10 +36,37 @@ interface TabData {
 
 interface Props {
   tabs: TabData[];
+  tabIndex: number;
+  setTabIndex: (index: number) => void;
 }
 
-export const Tabs: React.FC<Props> = ({ tabs }) => {
+export const TabsContext = createContext<Props>({
+  tabs: [],
+  tabIndex: 0,
+  setTabIndex: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
+});
+export const useTabs = () => useContext(TabsContext);
+
+export const TabsProvider: React.FC<
+  React.PropsWithChildren<{ tabs: TabData[] }>
+> = ({ tabs, children }) => {
   const [tabIndex, setTabIndex] = useState(0);
+
+  return (
+    <TabsContext.Provider
+      value={{
+        tabs,
+        tabIndex,
+        setTabIndex,
+      }}
+    >
+      {children}
+    </TabsContext.Provider>
+  );
+};
+
+export const TabsView: React.FC = () => {
+  const { tabs, tabIndex, setTabIndex } = useTabs();
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) =>
     setTabIndex(newValue);
@@ -48,14 +75,16 @@ export const Tabs: React.FC<Props> = ({ tabs }) => {
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <MuiTabs value={tabIndex} onChange={handleChange}>
-          {tabs.map((tab) => (
-            <Tab label={tab.label} />
+          {tabs.map((tab, index) => (
+            <Tab key={index} label={tab.label} />
           ))}
         </MuiTabs>
       </Box>
 
       {tabs.map((tab, index) => (
-        <TabPanel hidden={index !== tabIndex}>{tab.content}</TabPanel>
+        <TabPanel key={index} hidden={index !== tabIndex}>
+          {tab.content}
+        </TabPanel>
       ))}
     </Box>
   );

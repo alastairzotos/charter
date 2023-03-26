@@ -21,7 +21,7 @@ import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceSchemaCategorySelector } from "src/components/service-schema-category-selector";
 import { ServiceSchemaContentSectionsSelector } from "src/components/service-schema-content-sections-selector";
 import { ServiceSchemaFieldsSelector } from "src/components/service-schema-fields-selector";
-import { Tabs } from "src/components/tabs";
+import { TabsProvider, TabsView } from "src/components/tabs";
 
 interface Props {
   title: string;
@@ -57,7 +57,7 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
     <Formik initialValues={serviceSchema} onSubmit={onSave}>
       {({ isValid, values, setValues }) => (
         <FormBox title={title} maxWidth={600}>
-          <Tabs
+          <TabsProvider
             tabs={[
               {
                 label: "Basics",
@@ -148,7 +148,9 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
                 ),
               },
             ]}
-          />
+          >
+            <TabsView />
+          </TabsProvider>
 
           <SaveAndDelete
             isValid={isValid}

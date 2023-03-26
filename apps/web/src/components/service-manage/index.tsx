@@ -17,7 +17,7 @@ import { PriceForm } from "src/components/price-forms";
 import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceFormFields } from "src/components/service-form-fields";
 import { ServicePageContentEditor } from "src/components/service-page-content-editor";
-import { Tabs } from "src/components/tabs";
+import { TabsProvider, TabsView } from "src/components/tabs";
 import { serviceValidationSchema } from "src/schemas";
 
 interface Props {
@@ -63,7 +63,7 @@ export const ManageServiceForm: React.FC<Props> = ({
       >
         {({ isValid, isSubmitting, values, setValues }) => (
           <FormBox title={title} maxWidth={600}>
-            <Tabs
+            <TabsProvider
               tabs={[
                 {
                   label: "Basics",
@@ -155,7 +155,9 @@ export const ManageServiceForm: React.FC<Props> = ({
                   ),
                 },
               ]}
-            />
+            >
+              <TabsView />
+            </TabsProvider>
 
             <SaveAndDelete
               isValid={isValid}

@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Typography,
-} from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import {
@@ -16,7 +10,6 @@ import {
 } from "dtos";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { urls } from "urls";
@@ -31,6 +24,9 @@ import { BookingPriceDetails } from "src/components/booking-price-forms";
 import { DefaultErrorFallback } from "src/components/default-error-fallback";
 import { FormBox } from "src/components/form-box";
 import { KeyValues } from "src/components/key-values";
+import { TAndCCheckbox } from "src/components/t-and-c-checkbox";
+import { TabsView, TabsProvider } from "src/components/tabs";
+import { TabsPrevNextButtons } from "src/components/tabs/prev-next-buttons";
 import { bookingValidationSchema } from "src/schemas";
 import { useCreateBooking } from "src/state/bookings";
 import { useCreatePaymentIntent } from "src/state/payments";
@@ -118,98 +114,120 @@ export const BookingForm: React.FC<Props> = ({
                 title={`Book ${service.name} by ${operator.name}`}
                 onClose={onClose}
               >
-                <Field component={TextField} name="name" label="Your name" />
+                <TabsProvider
+                  tabs={[
+                    {
+                      label: "Basics",
+                      content: (
+                        <>
+                          <Field
+                            component={TextField}
+                            name="name"
+                            label="Your name"
+                          />
 
-                <Field
-                  component={TextField}
-                  name="email"
-                  label="Your email address"
-                  type="email"
-                />
+                          <Field
+                            component={TextField}
+                            name="email"
+                            label="Your email address"
+                            type="email"
+                          />
 
-                <BookingDefaultForms
-                  schema={schema}
-                  values={values}
-                  setValues={setValues}
-                  isSubmitting={isSubmitting}
-                />
+                          <BookingDefaultForms
+                            schema={schema}
+                            values={values}
+                            setValues={setValues}
+                            isSubmitting={isSubmitting}
+                          />
+                        </>
+                      ),
+                    },
 
-                <BookingPriceDetails
-                  pricingStrategy={schema.pricingStrategy}
-                  pricing={service.price}
-                />
+                    {
+                      label: "Booking details",
+                      content: (
+                        <>
+                          <BookingPriceDetails
+                            pricingStrategy={schema.pricingStrategy}
+                            pricing={service.price}
+                          />
 
-                <BookingPeoplePolicyFeedback
-                  booking={values}
-                  service={service}
-                  setError={setIsNumberOfPeopleInvalid}
-                />
+                          <BookingPeoplePolicyFeedback
+                            booking={values}
+                            service={service}
+                            setError={setIsNumberOfPeopleInvalid}
+                          />
+                        </>
+                      ),
+                    },
 
-                <BookingAdditionalForms
-                  schema={schema}
-                  values={values}
-                  setValues={setValues}
-                  isSubmitting={isSubmitting}
-                />
+                    {
+                      label: "Additional details",
+                      content: (
+                        <>
+                          <BookingAdditionalForms
+                            schema={schema}
+                            values={values}
+                            setValues={setValues}
+                            isSubmitting={isSubmitting}
+                          />
 
-                <Field
-                  component={TextField}
-                  name="notes"
-                  label="Additional notes"
-                  multiline
-                  rows={4}
-                />
+                          <Field
+                            component={TextField}
+                            name="notes"
+                            label="Additional notes"
+                            multiline
+                            rows={4}
+                          />
 
-                {schema.shouldPayNow && (
-                  <KeyValues
-                    kv={{
-                      "Total Price (all taxes and fees included)":
-                        createPriceString(
-                          calculateBookingPrice(values.priceDetails, service)
-                        ),
-                    }}
-                  />
-                )}
+                          <TAndCCheckbox
+                            accepted={tAndCsAccepted}
+                            setAccepted={setTAndCsAccepted}
+                          />
 
-                <FormControlLabel
-                  label={
-                    <Typography fontSize="small" color="GrayText">
-                      I accept the{" "}
-                      <Link
-                        href={urls.user.terms()}
-                        target="_blank"
-                        style={{ textDecoration: "none" }}
-                      >
-                        terms and conditions
-                      </Link>
-                    </Typography>
-                  }
-                  control={
-                    <Checkbox
-                      checked={tAndCsAccepted}
-                      onChange={(e) =>
-                        setTAndCsAccepted(e.currentTarget.checked)
-                      }
+                          <Box
+                            sx={{ display: "flex", justifyContent: "center" }}
+                          >
+                            <Button
+                              color="success"
+                              type="submit"
+                              variant="contained"
+                              disabled={
+                                !isValid ||
+                                isSubmitting ||
+                                isNumberOfPeopleInvalid ||
+                                !tAndCsAccepted ||
+                                calculateBookingPrice(
+                                  values.priceDetails,
+                                  service
+                                ) <= 0
+                              }
+                            >
+                              {schema.shouldPayNow
+                                ? "Proceed to payment"
+                                : "Book now"}
+                            </Button>
+                          </Box>
+                        </>
+                      ),
+                    },
+                  ]}
+                >
+                  <TabsView />
+
+                  {schema.shouldPayNow && (
+                    <KeyValues
+                      kv={{
+                        "Total Price (all taxes and fees included)":
+                          createPriceString(
+                            calculateBookingPrice(values.priceDetails, service)
+                          ),
+                      }}
                     />
-                  }
-                />
+                  )}
 
-                <Box sx={{ display: "flex", justifyContent: "center" }}>
-                  <Button
-                    color="success"
-                    type="submit"
-                    variant="contained"
-                    disabled={
-                      !isValid ||
-                      isSubmitting ||
-                      isNumberOfPeopleInvalid ||
-                      !tAndCsAccepted ||
-                      calculateBookingPrice(values.priceDetails, service) <= 0
-                    }
-                  >
-                    {schema.shouldPayNow ? "Proceed to payment" : "Book now"}
-                  </Button>
-                </Box>
+                  <TabsPrevNextButtons />
+                </TabsProvider>
               </FormBox>
             </ErrorBoundary>
           )}

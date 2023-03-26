@@ -12,7 +12,7 @@ import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
 import { OpeningTimesForm } from "src/components/opening-times-form";
 import { SaveAndDelete } from "src/components/save-delete";
-import { Tabs } from "src/components/tabs";
+import { TabsProvider, TabsView } from "src/components/tabs";
 
 interface Props {
   title: string;
@@ -65,7 +65,7 @@ export const ManageOperatorForm: React.FC<Props> = ({
     >
       {({ isValid, isSubmitting, values, setValues }) => (
         <FormBox title={title} maxWidth={600}>
-          <Tabs
+          <TabsProvider
             tabs={[
               {
                 label: "Basics",
@@ -138,7 +138,9 @@ export const ManageOperatorForm: React.FC<Props> = ({
                 ),
               },
             ]}
-          />
+          >
+            <TabsView />
+          </TabsProvider>
 
           <SaveAndDelete
             isValid={isValid}
