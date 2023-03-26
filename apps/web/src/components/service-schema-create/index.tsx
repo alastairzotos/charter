@@ -31,6 +31,7 @@ export const ServiceSchemaCreate: React.FC = () => {
         shouldPayNow: true,
         fields: [],
         contentSections: [],
+        additionalBookingFields: [],
       }}
     />
   );
