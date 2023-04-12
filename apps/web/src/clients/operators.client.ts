@@ -14,6 +14,12 @@ export const getOperator = async (id: string): Promise<OperatorDto> => {
   return data;
 };
 
+export const getOperatorByOwner = async (): Promise<OperatorDto> => {
+  const { data } = await httpClient.get<OperatorDto>(`/operators/by-owner`);
+
+  return data;
+};
+
 export const getOperatorWithServicesById = async (
   id: string
 ): Promise<{ operator: OperatorDto; services: ServiceDto[] }> => {

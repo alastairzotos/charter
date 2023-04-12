@@ -3,9 +3,9 @@ import { Button, Menu, MenuItem, Typography } from "@mui/material";
 import { ServiceSchemaDto } from "dtos";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { urls } from "urls";
 
 import { StatusSwitch } from "src/components/status-switch";
+import { useOperatorDashboard } from "src/contexts/operator-dashboard";
 import { useLoadServiceSchemas } from "src/state/service-schemas";
 
 interface Props {
@@ -14,6 +14,7 @@ interface Props {
 
 export const ServiceCreateButton: React.FC<Props> = ({ operatorId }) => {
   const router = useRouter();
+  const { getServiceCreateUrl } = useOperatorDashboard();
 
   const [loadServiceSchemasStatus, loadServiceSchemas, serviceSchemas] =
     useLoadServiceSchemas((s) => [s.status, s.request, s.value]);
@@ -26,7 +27,7 @@ export const ServiceCreateButton: React.FC<Props> = ({ operatorId }) => {
 
   const handleServiceSchemaClick = (schema: ServiceSchemaDto) => {
     setAnchorEl(null);
-    router.push(urls.admin.servicesCreate(operatorId, schema._id));
+    router.push(getServiceCreateUrl(operatorId, schema._id));
   };
 
   return (

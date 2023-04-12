@@ -17,7 +17,7 @@ export const TieredPriceForm: React.FC<PriceFormProps> = ({
   pricing,
   setPricing,
 }) => {
-  const tiers = pricing.tiered?.tiers || [];
+  const tiers = pricing?.tiered?.tiers || [];
 
   const setTiers = (tiers: PriceTierDto[]) =>
     setPricing({ ...pricing, tiered: { tiers } });

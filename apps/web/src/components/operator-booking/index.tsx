@@ -27,7 +27,7 @@ export const OperatorBooking: React.FC<Props> = ({ id }) => {
 
   return (
     <>
-      <Button component={Link} href={urls.operators.home()}>
+      <Button component={Link} href={urls.operators.bookings()}>
         <ArrowBackIcon />
         Back to bookings
       </Button>

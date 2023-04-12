@@ -5,12 +5,14 @@ import {
   createOperator,
   deleteOperator,
   getOperator,
+  getOperatorByOwner,
   getOperators,
   updateOperator,
 } from "src/clients/operators.client";
 
 export const useLoadOperators = createQuery(getOperators);
 export const useLoadOperator = createQuery(getOperator);
+export const useLoadOperatorByOwner = createQuery(getOperatorByOwner);
 export const useUpdateOperator = createQuery(updateOperator);
 
 export const useCreateOperator = createQuery(async (operator: OperatorNoId) => {

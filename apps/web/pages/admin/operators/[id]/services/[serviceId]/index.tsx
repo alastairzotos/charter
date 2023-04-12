@@ -4,6 +4,7 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "src/components/breadcrumbs";
+import { AdminOperatorDashboardProvider } from "src/components/operator-dashboard-providers";
 import { ServiceEdit } from "src/components/service-edit";
 
 const EditServicePage: NextPage = () => {
@@ -12,7 +13,7 @@ const EditServicePage: NextPage = () => {
   const serviceId = router.query.serviceId as string;
 
   return (
-    <>
+    <AdminOperatorDashboardProvider>
       <Breadcrumbs
         list={[
           { href: urls.home(), title: "Home" },
@@ -24,7 +25,7 @@ const EditServicePage: NextPage = () => {
       />
 
       <ServiceEdit id={serviceId} operatorId={operatorId} />
-    </>
+    </AdminOperatorDashboardProvider>
   );
 };
 

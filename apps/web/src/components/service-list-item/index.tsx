@@ -6,8 +6,8 @@ import ListItemText from "@mui/material/ListItemText";
 import { ServiceDto } from "dtos";
 import Link from "next/link";
 import React from "react";
-import { urls } from "urls";
 
+import { useOperatorDashboard } from "src/contexts/operator-dashboard";
 import { shortenText } from "src/util/misc";
 
 interface Props {
@@ -16,11 +16,13 @@ interface Props {
 }
 
 export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
+  const { getServiceEditUrl } = useOperatorDashboard();
+
   return (
     <ListItem
       alignItems="flex-start"
       component={Link}
-      href={urls.admin.service(operatorId, service._id)}
+      href={getServiceEditUrl(operatorId, service._id)}
     >
       <ListItemAvatar>
         {service.photos && service.photos.length > 0 ? (

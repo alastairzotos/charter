@@ -8,7 +8,6 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
-import { urls } from "urls";
 
 import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
@@ -18,6 +17,8 @@ import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceFormFields } from "src/components/service-form-fields";
 import { ServicePageContentEditor } from "src/components/service-page-content-editor";
 import { TabsProvider, TabsView } from "src/components/tabs";
+import { TabsPrevNextButtons } from "src/components/tabs/prev-next-buttons";
+import { useOperatorDashboard } from "src/contexts/operator-dashboard";
 import { serviceValidationSchema } from "src/schemas";
 
 interface Props {
@@ -43,12 +44,14 @@ export const ManageServiceForm: React.FC<Props> = ({
 }) => {
   const router = useRouter();
 
+  const { getServiceDeletedRedirectUrl } = useOperatorDashboard();
+
   const handleDeleteService =
     onDelete &&
     (async () => {
       if (!!onDelete) {
         await onDelete();
-        router.push(urls.admin.operator(operatorId));
+        router.push(getServiceDeletedRedirectUrl(operatorId));
       }
     });
 
@@ -157,6 +160,7 @@ export const ManageServiceForm: React.FC<Props> = ({
               ]}
             >
               <TabsView />
+              <TabsPrevNextButtons />
             </TabsProvider>
 
             <SaveAndDelete

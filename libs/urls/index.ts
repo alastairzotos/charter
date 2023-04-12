@@ -42,6 +42,11 @@ export const urls = {
   },
   operators: {
     home: () => '/operator-admin',
-    booking: (id: string) => `/operator-admin/booking/${id}`
+    bookings: () => '/operator-admin/bookings',
+    booking: (id: string) => `/operator-admin/bookings/${id}`,
+    dashboard: () => '/operator-admin/dashboard',
+    operatorEdit: () => '/operator-admin/dashboard/edit',
+    service: (_: string, id: string) => `/operator-admin/dashboard/services/${id}`,
+    servicesCreate: (_: string, schemaId: string) => `/operator-admin/dashboard/services/create?schemaId=${schemaId}`,
   }
 } satisfies Urls;

@@ -2,10 +2,10 @@ import { Typography } from "@mui/material";
 import { getDefaultValuesForServiceSchema, ServiceNoId } from "dtos";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-import { urls } from "urls";
 
 import { ManageServiceForm } from "src/components/service-manage";
 import { StatusSwitch } from "src/components/status-switch";
+import { useOperatorDashboard } from "src/contexts/operator-dashboard";
 import { useLoadServiceSchemaById } from "src/state/service-schemas";
 import { useCreateService } from "src/state/services";
 
@@ -19,6 +19,7 @@ export const ServiceCreate: React.FC<Props> = ({
   operatorId,
 }) => {
   const router = useRouter();
+  const { getServiceCreatedRedirectUrl } = useOperatorDashboard();
 
   const [loadServiceSchemaStatus, loadServiceSchema, serviceSchema] =
     useLoadServiceSchemaById((s) => [s.status, s.request, s.value]);
@@ -36,7 +37,7 @@ export const ServiceCreate: React.FC<Props> = ({
 
   const handleCreateService = async (service: ServiceNoId) => {
     await createService(service);
-    router.push(urls.admin.operator(operatorId));
+    router.push(getServiceCreatedRedirectUrl(operatorId));
   };
 
   return (

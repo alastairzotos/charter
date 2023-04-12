@@ -4,6 +4,7 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "src/components/breadcrumbs";
+import { AdminOperatorDashboardProvider } from "src/components/operator-dashboard-providers";
 import { OperatorItem } from "src/components/operator-item";
 
 const OperatorPage: NextPage = () => {
@@ -11,7 +12,7 @@ const OperatorPage: NextPage = () => {
   const id = router.query.id as string;
 
   return (
-    <>
+    <AdminOperatorDashboardProvider>
       <Breadcrumbs
         list={[
           { href: urls.home(), title: "Home" },
@@ -22,7 +23,7 @@ const OperatorPage: NextPage = () => {
       />
 
       <OperatorItem id={id} />
-    </>
+    </AdminOperatorDashboardProvider>
   );
 };
 

@@ -8,11 +8,12 @@ import {
   UseGuards,
   Param,
 } from '@nestjs/common';
-import { OperatorDto, OperatorNoId } from 'dtos';
+import { LoggedInUserDetails, OperatorDto, OperatorNoId } from 'dtos';
 
 import { AuthGuard } from 'auth/auth.guard';
 import { Roles } from 'auth/roles.decorator';
 import { OperatorsService } from 'features/operators/operators.service';
+import { Principal } from 'auth/principal.decorator';
 
 @Controller('operators')
 @UseGuards(AuthGuard)
@@ -23,6 +24,12 @@ export class OperatorsController {
   @Roles('all')
   async getOperators() {
     return await this.operatorsService.getOperators();
+  }
+
+  @Get('by-owner')
+  @Roles('operator')
+  async getOperatorByOwner(@Principal() user?: LoggedInUserDetails) {
+    return await this.operatorsService.getOperatorByOwnerId(user?._id);
   }
 
   @Get(':id')

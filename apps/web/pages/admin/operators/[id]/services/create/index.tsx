@@ -4,6 +4,7 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "src/components/breadcrumbs";
+import { AdminOperatorDashboardProvider } from "src/components/operator-dashboard-providers";
 import { ServiceCreate } from "src/components/service-create";
 
 const CreateServicePage: NextPage = () => {
@@ -12,7 +13,7 @@ const CreateServicePage: NextPage = () => {
   const schemaId = router.query.schemaId as string;
 
   return (
-    <>
+    <AdminOperatorDashboardProvider>
       <Breadcrumbs
         list={[
           { href: urls.home(), title: "Home" },
@@ -24,7 +25,7 @@ const CreateServicePage: NextPage = () => {
       />
 
       <ServiceCreate operatorId={operatorId} serviceSchemaId={schemaId} />
-    </>
+    </AdminOperatorDashboardProvider>
   );
 };
 

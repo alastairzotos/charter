@@ -5,7 +5,6 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
-import { urls } from "urls";
 import * as yup from "yup";
 
 import { FileUpload } from "src/components/file-upload";
@@ -14,6 +13,7 @@ import { OpeningTimesForm } from "src/components/opening-times-form";
 import { SaveAndDelete } from "src/components/save-delete";
 import { TabsProvider, TabsView } from "src/components/tabs";
 import { UserSearch } from "src/components/user-search";
+import { useOperatorDashboard } from "src/contexts/operator-dashboard";
 
 interface Props {
   title: string;
@@ -50,13 +50,18 @@ export const ManageOperatorForm: React.FC<Props> = ({
   deleteStatus,
 }) => {
   const router = useRouter();
+  const {
+    isOperatorDeletable,
+    getOperatorDeletedRedirectUrl,
+    isOwnerSearchAvailable,
+  } = useOperatorDashboard();
 
   const handleDeleteOperator =
     onDelete &&
     (async () => {
       if (!!onDelete) {
         await onDelete();
-        router.push(urls.admin.operators());
+        router.push(getOperatorDeletedRedirectUrl());
       }
     });
 
@@ -74,10 +79,14 @@ export const ManageOperatorForm: React.FC<Props> = ({
                 label: "Basics",
                 content: (
                   <>
-                    <UserSearch
-                      owner={values.owner}
-                      onSelectUser={(owner) => setValues({ ...values, owner })}
-                    />
+                    {isOwnerSearchAvailable() && (
+                      <UserSearch
+                        owner={values.owner}
+                        onSelectUser={(owner) =>
+                          setValues({ ...values, owner })
+                        }
+                      />
+                    )}
 
                     <Field
                       component={TextField}
@@ -153,7 +162,7 @@ export const ManageOperatorForm: React.FC<Props> = ({
           <SaveAndDelete
             isValid={isValid}
             saveStatus={saveStatus}
-            onDelete={handleDeleteOperator}
+            onDelete={isOperatorDeletable() ? handleDeleteOperator : undefined}
             deleteStatus={deleteStatus}
             deleteModalTitle="Delete operator?"
             deleteModalText="Are you sure you want to delete this operator?"
