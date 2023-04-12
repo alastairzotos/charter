@@ -13,6 +13,10 @@ const MainButton = styled(Button)(() => ({
     backgroundColor: "#2241a8",
   },
 
+  '&:disabled': {
+    backgroundColor: '#5e73b8',
+  },
+
   "& i": {
     color: "white",
   },
