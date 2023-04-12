@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BookingNoId, BookingPaymentStatus, BookingStatus, UserDetails } from 'dtos';
+import { BookingNoId, BookingPaymentStatus, BookingStatus, LoggedInUserDetails, UserDetails } from 'dtos';
 
 import { emailContent } from 'content/email';
 import { EnvService } from 'environment/environment.service';
@@ -71,8 +71,8 @@ export class BookingsService {
     return await this.bookingsRepository.getBookingByPaymentIntentId(paymentIntentId);
   }
 
-  async getBookingsForUser(user: UserDetails) {
-    const operator = await this.operatorsService.getOperatorByEmail(user.email);
+  async getBookingsForUser(user: LoggedInUserDetails) {
+    const operator = await this.operatorsService.getOperatorByOwnerId(user._id);
     const bookings = await this.bookingsRepository.getBookingsByOperator(
       operator,
     );

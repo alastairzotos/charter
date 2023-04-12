@@ -14,11 +14,14 @@ jest.mock("next/config", () => () => ({
     NEXT_PUBLIC_APP_URL: "",
     NEXT_PUBLIC_API_URL: "",
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: "",
+    NEXT_PUBLIC_FB_APP_ID: "",
+    NEXT_PUBLIC_GOOGLE_CLIENT_ID: "",
   },
 }));
 
 describe("User state", () => {
   const mockUserService: ExtractInterface<UserService> = {
+    getUsers: jest.fn(),
     loginUser: jest.fn(
       async () => new Promise((resolve) => resolve({ accessToken: "123" }))
     ),

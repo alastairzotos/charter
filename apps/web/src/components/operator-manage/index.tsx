@@ -13,6 +13,7 @@ import { FormBox } from "src/components/form-box";
 import { OpeningTimesForm } from "src/components/opening-times-form";
 import { SaveAndDelete } from "src/components/save-delete";
 import { TabsProvider, TabsView } from "src/components/tabs";
+import { UserSearch } from "src/components/user-search";
 
 interface Props {
   title: string;
@@ -25,18 +26,20 @@ interface Props {
   deleteStatus?: FetchStatus;
 }
 
-const validationSchema: yup.SchemaOf<OperatorNoId> = yup.object().shape({
-  name: yup.string().required("Name is required"),
-  address: yup.string().required("Address is required"),
-  email: yup
-    .string()
-    .required("Email is required")
-    .email("Enter a valid email"),
-  phoneNumber: yup.string().required("Phone number is required"),
-  description: yup.string().required("Description is required"),
-  photo: yup.string().required("Photo is required"),
-  openingTimes: yup.object(),
-});
+const validationSchema: yup.SchemaOf<Omit<OperatorNoId, "owner">> = yup
+  .object()
+  .shape({
+    name: yup.string().required("Name is required"),
+    address: yup.string().required("Address is required"),
+    email: yup
+      .string()
+      .required("Email is required")
+      .email("Enter a valid email"),
+    phoneNumber: yup.string().required("Phone number is required"),
+    description: yup.string().required("Description is required"),
+    photo: yup.string().required("Photo is required"),
+    openingTimes: yup.object(),
+  });
 
 export const ManageOperatorForm: React.FC<Props> = ({
   title,
@@ -71,6 +74,11 @@ export const ManageOperatorForm: React.FC<Props> = ({
                 label: "Basics",
                 content: (
                   <>
+                    <UserSearch
+                      owner={values.owner}
+                      onSelectUser={(owner) => setValues({ ...values, owner })}
+                    />
+
                     <Field
                       component={TextField}
                       name="name"

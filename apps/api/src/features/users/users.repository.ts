@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { UserDetails } from 'dtos';
+import { UserDetails, UserRole } from 'dtos';
 import { Model } from 'mongoose';
 
 import { User } from 'schemas/user.schema';
@@ -13,6 +13,10 @@ export class UsersRepository {
 
   async getUsers() {
     return await this.userModel.find();
+  }
+
+  async getUserById(id: string) {
+    return await this.userModel.findById(id);
   }
 
   async getUserByEmail(email: string) {
@@ -36,6 +40,10 @@ export class UsersRepository {
       ...details,
       hashedPassword,
     });
+  }
+
+  async setUserRole(id: string, role: UserRole) {
+    await this.userModel.findOneAndUpdate({ _id: id }, { role });
   }
 
   async createUserFromOAuth2(details: UserDetails) {

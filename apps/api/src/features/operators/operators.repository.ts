@@ -13,15 +13,19 @@ export class OperatorsRepository {
   ) {}
 
   async getOperators() {
-    return await this.operatorsModel.find();
+    return await this.operatorsModel.find().populate('owner');
   }
 
   async getOperatorById(id: string) {
-    return await this.operatorsModel.findById(id);
+    return await this.operatorsModel.findById(id).populate('owner');
+  }
+
+  async getOperatorByOwnerId(id: string) {
+    return await this.operatorsModel.findOne({ owner: { _id: id }}).populate('owner');
   }
 
   async getOperatorByEmail(email: string) {
-    return await this.operatorsModel.findOne({ email });
+    return await this.operatorsModel.findOne({ email }).populate('owner');
   }
 
   async createOperator(operator: OperatorNoId) {
@@ -39,6 +43,6 @@ export class OperatorsRepository {
   }
 
   async searchOperators(term: string) {
-    return await this.operatorsModel.find({ name: { $regex: new RegExp('^' + term, 'i') }});
+    return await this.operatorsModel.find({ name: { $regex: new RegExp('^' + term, 'i') }}).populate('owner');
   }
 }

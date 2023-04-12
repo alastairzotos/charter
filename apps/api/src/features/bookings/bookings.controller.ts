@@ -7,7 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { BookingDto, BookingStatus, UserDetails } from 'dtos';
+import { BookingDto, BookingStatus, LoggedInUserDetails, UserDetails } from 'dtos';
 
 import { AuthGuard } from 'auth/auth.guard';
 import { Principal } from 'auth/principal.decorator';
@@ -27,7 +27,7 @@ export class BookingsController {
 
   @Get('for-user')
   @Roles('admin', 'operator')
-  async getBookingsForUser(@Principal() user: UserDetails) {
+  async getBookingsForUser(@Principal() user: LoggedInUserDetails) {
     return await this.bookingsService.getBookingsForUser(user);
   }
 

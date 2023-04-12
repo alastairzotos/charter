@@ -2,13 +2,14 @@ import BeachAccessIcon from "@mui/icons-material/BeachAccess";
 import { Avatar } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import { Box } from "@mui/system";
-import { OperatorDto, ServiceDto } from "dtos";
+import { LoggedInUserDetails, OperatorDto, ServiceDto } from "dtos";
 import React from "react";
 
 export interface OptionType {
-  type: "operator" | "service";
+  type: "operator" | "service" | "user";
   operator?: OperatorDto;
   service?: ServiceDto;
+  user?: LoggedInUserDetails;
 }
 
 interface Props {
@@ -20,12 +21,16 @@ const IMAGE_SIZE = 30;
 
 export const SearchResult: React.FC<Props> = ({ props, option }) => {
   const srcUrl =
-    option.type === "operator"
+    option.type === "user"
+      ? undefined
+      : option.type === "operator"
       ? option.operator?.photo
       : option.service?.photos[0];
 
   const label =
-    option.type === "operator"
+    option.type === "user"
+      ? option.user?.email
+      : option.type === "operator"
       ? option.operator?.name
       : `${option.service?.name} by ${option.service?.operator.name}`;
 

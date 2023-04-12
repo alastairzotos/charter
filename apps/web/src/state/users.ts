@@ -1,5 +1,5 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import { UserDetails } from "dtos";
+import { LoggedInUserDetails, UserDetails } from "dtos";
 import * as jwt from "jsonwebtoken";
 import { ExtractInterface } from "utils";
 import create from "zustand";
@@ -19,10 +19,14 @@ export interface UserStateValues {
   accessToken?: string;
   loggedInUser?: UserDetails;
   deleteUserStatus?: FetchStatus;
+  userList?: LoggedInUserDetails[];
+  getUserListStatus?: FetchStatus;
 }
 
 export interface UserStateActions {
   initLocalStorage: () => void;
+
+  getUsers: () => Promise<void>;
 
   registerUser: (
     givenName: string,
@@ -55,6 +59,23 @@ export const createUserState = (
         });
       } else {
         set({ initialised: true });
+      }
+    },
+
+    getUsers: async () => {
+      try {
+        set({ getUserListStatus: "fetching" });
+
+        const userList = await userService.getUsers();
+
+        set({
+          getUserListStatus: "success",
+          userList: userList.filter(
+            (user) => !!user.email && !!user.email.length
+          ),
+        });
+      } catch {
+        set({ getUserListStatus: "error" });
       }
     },
 

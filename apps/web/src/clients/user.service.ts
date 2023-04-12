@@ -1,8 +1,19 @@
-import { LoginDetails, LoginResponse, RegisterDetails } from "dtos";
+import {
+  LoggedInUserDetails,
+  LoginDetails,
+  LoginResponse,
+  RegisterDetails,
+} from "dtos";
 
 import { httpClient } from "src/clients/http.client";
 
 export class UserService {
+  async getUsers(): Promise<LoggedInUserDetails[]> {
+    const { data } = await httpClient.get<LoggedInUserDetails[]>("/users");
+
+    return data;
+  }
+
   async registerUser(
     givenName: string,
     email: string,

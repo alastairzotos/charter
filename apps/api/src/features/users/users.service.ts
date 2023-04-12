@@ -5,6 +5,7 @@ import {
   UserDetails,
   RegisterDetails,
   LoginDetails,
+  UserRole,
 } from 'dtos';
 import * as jwt from 'jsonwebtoken';
 
@@ -33,6 +34,14 @@ export class UsersService {
 
   async deleteUser(email: string) {
     await this.usersRepository.deleteUser(email);
+  }
+
+  async promoteBasicUserToOperator(id: string) {
+    const user = await this.usersRepository.getUserById(id);
+
+    if (!!user && (!user.role || user.role === 'user')) {
+      await this.usersRepository.setUserRole(id, 'operator');
+    }
   }
 
   async registerUser({

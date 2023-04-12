@@ -1,3 +1,6 @@
+import { LoggedInUserDetails } from "./auth";
+
+
 export interface OperatorOpeningHoursDto {
   allDay?: boolean;
   closed?: boolean;
@@ -44,6 +47,7 @@ export interface OperatorDto {
   photo: string;
   description: string;
   openingTimes: Record<Day, OperatorOpeningHoursDto>;
+  owner?: LoggedInUserDetails;
 }
 
 export type OperatorNoId = Omit<OperatorDto, '_id'>;

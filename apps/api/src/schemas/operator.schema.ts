@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Day, OperatorDto, OperatorOpeningHoursDto } from 'dtos';
+import { Schema as MongooseSchema } from 'mongoose';
+import { Day, LoggedInUserDetails, OperatorDto, OperatorOpeningHoursDto } from 'dtos';
 import { Document } from 'mongoose';
+import { User } from 'schemas/user.schema';
 
 export type OperatorDocument = Operator & Document;
 
@@ -28,6 +30,9 @@ export class Operator implements OperatorDto {
 
   @Prop({ type: Object })
   openingTimes: Record<Day, OperatorOpeningHoursDto>;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: User.name })
+  owner?: LoggedInUserDetails;
 }
 
 export const OperatorSchema = SchemaFactory.createForClass(Operator);
