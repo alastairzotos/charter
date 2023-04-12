@@ -54,6 +54,10 @@ export class UsersService {
     };
   }
 
+  async createUserFromOAuth2(details: UserDetails) {
+    return await this.usersRepository.createUserFromOAuth2(details);
+  }
+
   async loginUser({
     email,
     password,
@@ -75,7 +79,7 @@ export class UsersService {
     };
   }
 
-  private generateAccessToken({ _id, email, givenName, role }: User) {
+  generateAccessToken({ _id, email, givenName, role }: User) {
     return jwt.sign(
       { _id, email, givenName, role },
       this.env.get().jwtSigningKey,

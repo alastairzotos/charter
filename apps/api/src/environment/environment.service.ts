@@ -15,6 +15,8 @@ export class EnvService {
     stripeApiVersion: process.env.STRIPE_API_VERSION as string,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY as string,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET as string,
+    googleClientId: process.env.GOOGLE_CLIENT_ID as string,
+    googleClientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
   };
 
   get() {

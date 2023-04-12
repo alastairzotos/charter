@@ -1,0 +1,20 @@
+.button {
+  height: 50px;
+  font-size: 1.1em;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: #345eeb;
+}
+
+.button:hover {
+  background-color: #2241a8;
+}
+
+.button i {
+  color: white;
+}
+
+.span {
+  margin-left: 5px;
+  color: white;
+}

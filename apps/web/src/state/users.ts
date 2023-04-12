@@ -4,7 +4,10 @@ import * as jwt from "jsonwebtoken";
 import { ExtractInterface } from "utils";
 import create from "zustand";
 
-import { LocalStorageService } from "src/clients/localstorage.service";
+import {
+  localStorageService,
+  LocalStorageService,
+} from "src/clients/localstorage.service";
 import { UserService } from "src/clients/user.service";
 
 export const ACCESS_TOKEN_LOCALSTORAGE_KEY = "boatrental:auth-token";
@@ -121,5 +124,5 @@ export const useUserState = createUserState(
     initialised: false,
   },
   new UserService(),
-  new LocalStorageService()
+  localStorageService
 );

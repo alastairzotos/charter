@@ -7,6 +7,7 @@ import { EnvService } from 'environment/environment.service';
 import { BookingsModule } from 'features/bookings/bookings.module';
 import { HealthModule } from 'features/health/health.module';
 import { ImagesModule } from 'features/images/images.module';
+import { OAuth2Module } from 'features/oauth2/oauth2.module';
 import { OperatorsModule } from 'features/operators/operators.module';
 import { PaymentsModule } from 'features/payments/payments.module';
 import { SearchModule } from 'features/search/search.module';
@@ -37,6 +38,7 @@ import { RawBodyMiddleware } from 'middleware/raw-body.middleware';
     ServiceSchemaModule,
     ServiceSchemaCategoriesModule,
     SearchModule,
+    OAuth2Module,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],

@@ -82,6 +82,8 @@ const envServiceMock: ExtractInterface<EnvService> = {
     stripeApiVersion: '',
     stripeSecretKey: '',
     stripeWebhookSecret: '',
+    googleClientId: '',
+    googleClientSecret: '',
   })),
 };
 

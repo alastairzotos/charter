@@ -37,4 +37,8 @@ export class UsersRepository {
       hashedPassword,
     });
   }
+
+  async createUserFromOAuth2(details: UserDetails) {
+    return await this.userModel.create(details);
+  }
 }
