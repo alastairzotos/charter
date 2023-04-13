@@ -53,6 +53,7 @@ export const serviceValidationSchema: yup.SchemaOf<
   data: yup.object(),
   serviceSchema: yup.object(),
   hidden: yup.boolean().required(),
+  approveBookingBeforePayment: yup.boolean().required(),
 });
 
 export const perPersonBookingValidationSchema: yup.SchemaOf<PerPersonBookingPriceDetails> =

@@ -54,6 +54,7 @@ const mockService: ServiceDto = {
   data: { fields: [] },
   numberOfBookings: 0,
   hidden: false,
+  approveBookingBeforePayment: false,
 };
 
 const mockBooking: BookingNoId = {

@@ -17,6 +17,7 @@ export interface ServiceDto {
   data: Record<string, ServiceFieldValue>;
   numberOfBookings: number;
   hidden: boolean;
+  approveBookingBeforePayment: boolean;
 }
 
 export type ServiceNoId = Omit<ServiceDto, '_id'>;

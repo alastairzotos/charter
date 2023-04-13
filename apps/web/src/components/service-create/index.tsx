@@ -64,6 +64,7 @@ export const ServiceCreate: React.FC<Props> = ({
             serviceSchema,
             numberOfBookings: 0,
             hidden: false,
+            approveBookingBeforePayment: false,
           }}
           onSave={handleCreateService}
           saveStatus={createServiceStatus}

@@ -72,6 +72,24 @@ export const ManageServiceForm: React.FC<Props> = ({
                   label: "Basics",
                   content: (
                     <>
+                      {service.serviceSchema.shouldPayNow && (
+                        <FormControlLabel
+                          label="Approve booking before payment"
+                          control={
+                            <Checkbox
+                              checked={values.approveBookingBeforePayment}
+                              onChange={(e) => {
+                                setValues({
+                                  ...values,
+                                  approveBookingBeforePayment:
+                                    e.currentTarget.checked,
+                                });
+                              }}
+                            />
+                          }
+                        />
+                      )}
+
                       <FormControlLabel
                         label="Hide service from users"
                         control={
