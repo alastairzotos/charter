@@ -46,7 +46,7 @@ export const getDefaultValueForServiceSchemaFieldType = (schemaFieldType: Servic
   switch (schemaFieldType) {
     case 'string': return '';
     case 'multiline-text': return '';
-    case 'time': return '9am';
+    case 'time': return '09:00';
     case 'timeframe': return '1 Hours';
   }
 }
@@ -55,7 +55,7 @@ export const getDefaultValuesForServiceSchema = (serviceSchema: ServiceSchemaDto
   return serviceSchema.fields.reduce<Record<string, ServiceFieldValue>>(
     (acc, cur) => ({
       ...acc,
-      [cur.label]: getDefaultValueForServiceSchemaFieldType(cur.type)
+      [cur.key]: getDefaultValueForServiceSchemaFieldType(cur.type)
     }),
     {}
   )

@@ -29,6 +29,8 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
         </Typography>
       }
     >
+      <ServiceCreateButton operatorId={operatorId} />
+
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         {services?.map((service) => (
           <ServiceListItem
@@ -38,8 +40,6 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
           />
         ))}
       </List>
-
-      <ServiceCreateButton operatorId={operatorId} />
     </StatusSwitch>
   );
 };
