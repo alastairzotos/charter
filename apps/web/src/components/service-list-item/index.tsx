@@ -1,5 +1,5 @@
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-import { Avatar, ListItemAvatar } from "@mui/material";
+import { Avatar, ListItemAvatar, Typography } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import ListItem from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -20,6 +20,7 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
 
   return (
     <ListItem
+      sx={{ backgroundColor: service.hidden ? "lightgray" : "none" }}
       alignItems="flex-start"
       component={Link}
       href={getServiceEditUrl(operatorId, service._id)}
@@ -38,6 +39,11 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
         primary={
           <>
             <strong>[{service.serviceSchema.name}]</strong> {service.name}
+            {service.hidden && (
+              <Typography sx={{ ml: 2 }} variant="overline">
+                (Hidden from users)
+              </Typography>
+            )}
           </>
         }
         secondary={<>{shortenText(service.description, 150)}</>}

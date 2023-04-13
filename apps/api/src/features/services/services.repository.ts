@@ -19,6 +19,26 @@ export class ServicesRepository {
   }
 
   async getServicesForOperator(operatorId: string) {
+    return await this.servicesModel.find({
+      operator: operatorId,
+
+      // Handle all falsy values
+      $or: [
+        { hidden: false },
+        { hidden: undefined },
+        { hidden: null },
+        { hidden: 0 },
+      ]
+    })
+      .populate({
+        path: 'serviceSchema',
+        populate: {
+          path: 'schemaCategory'
+        }
+      });
+  }
+
+  async getServicesForOperatorIncludingHidden(operatorId: string) {
     return await this.servicesModel.find({ operator: operatorId })
       .populate({
         path: 'serviceSchema',

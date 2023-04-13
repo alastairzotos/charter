@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { ServiceCreateButton } from "src/components/service-create-button";
 import { ServiceListItem } from "src/components/service-list-item";
 import { StatusSwitch } from "src/components/status-switch";
-import { useLoadServices } from "src/state/services";
+import { useLoadServicesIncludingHidden } from "src/state/services";
 
 interface Props {
   operatorId: string;
@@ -12,7 +12,7 @@ interface Props {
 
 export const ServiceList: React.FC<Props> = ({ operatorId }) => {
   const [loadServicesStatus, loadServicesForOperator, services] =
-    useLoadServices((s) => [s.status, s.request, s.value]);
+    useLoadServicesIncludingHidden((s) => [s.status, s.request, s.value]);
 
   useEffect(() => {
     if (operatorId) {
@@ -31,7 +31,7 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
     >
       <ServiceCreateButton operatorId={operatorId} />
 
-      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      <List sx={{ width: "100%", maxWidth: 600, bgcolor: "background.paper" }}>
         {services?.map((service) => (
           <ServiceListItem
             key={service._id}

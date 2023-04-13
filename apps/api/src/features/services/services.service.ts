@@ -21,6 +21,10 @@ export class ServicesService {
     return await this.servicesRepository.getServicesForOperator(operatorId);
   }
 
+  async getServicesForOperatorIncludingHidden(operatorId: string) {
+    return await this.servicesRepository.getServicesForOperatorIncludingHidden(operatorId);
+  }
+
   async getService(id: string) {
     return await this.servicesRepository.getService(id);
   }

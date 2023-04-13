@@ -52,6 +52,7 @@ export const serviceValidationSchema: yup.SchemaOf<
   photos: yup.array().of(yup.string().required("Photo is required")),
   data: yup.object(),
   serviceSchema: yup.object(),
+  hidden: yup.boolean().required(),
 });
 
 export const perPersonBookingValidationSchema: yup.SchemaOf<PerPersonBookingPriceDetails> =

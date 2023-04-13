@@ -53,6 +53,7 @@ const mockService: ServiceDto = {
   maxPeople: null,
   data: { fields: [] },
   numberOfBookings: 0,
+  hidden: false,
 };
 
 const mockBooking: BookingNoId = {

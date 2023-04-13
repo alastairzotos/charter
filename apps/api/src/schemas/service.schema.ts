@@ -41,6 +41,9 @@ export class Service implements ServiceDto {
 
   @Prop()
   numberOfBookings: number;
+
+  @Prop()
+  hidden: boolean;
 }
 
 export const ServiceSchema = SchemaFactory.createForClass(Service);

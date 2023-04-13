@@ -5,10 +5,14 @@ import {
   deleteService,
   getService,
   getServicesForOperator,
+  getServicesForOperatorIncludingHidden,
   updateService,
 } from "src/clients/services.client";
 
 export const useLoadServices = createQuery(getServicesForOperator);
+export const useLoadServicesIncludingHidden = createQuery(
+  getServicesForOperatorIncludingHidden
+);
 export const useLoadService = createQuery(getService);
 export const useUpdateService = createQuery(updateService);
 export const useDeleteService = createQuery(deleteService);

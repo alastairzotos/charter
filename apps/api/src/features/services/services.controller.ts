@@ -27,6 +27,12 @@ export class ServicesController {
     return await this.servicesService.getServicesForOperator(operatorId);
   }
 
+  @Get('all')
+  @Roles('all')
+  async getServicesForOperatorIncludingHidden(@Query('operatorId') operatorId: string) {
+    return await this.servicesService.getServicesForOperatorIncludingHidden(operatorId);
+  }
+
   @Get('popular')
   @Roles('all')
   async getPopularServices() {

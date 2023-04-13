@@ -12,6 +12,16 @@ export const getServicesForOperator = async (
   return data;
 };
 
+export const getServicesForOperatorIncludingHidden = async (
+  operatorId: string
+): Promise<ServiceDto[]> => {
+  const { data } = await httpClient.get<ServiceDto[]>(
+    `/services/all?operatorId=${operatorId}`
+  );
+
+  return data;
+};
+
 export const getService = async (id: string): Promise<ServiceDto> => {
   const { data } = await httpClient.get<ServiceDto>(`/services/${id}`);
 

@@ -1,5 +1,5 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import { Typography } from "@mui/material";
+import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -72,6 +72,21 @@ export const ManageServiceForm: React.FC<Props> = ({
                   label: "Basics",
                   content: (
                     <>
+                      <FormControlLabel
+                        label="Hide service from users"
+                        control={
+                          <Checkbox
+                            checked={values.hidden}
+                            onChange={(e) => {
+                              setValues({
+                                ...values,
+                                hidden: e.currentTarget.checked,
+                              });
+                            }}
+                          />
+                        }
+                      />
+
                       <Field
                         component={TextField}
                         name="name"
