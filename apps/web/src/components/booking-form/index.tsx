@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import {
@@ -18,7 +18,8 @@ import { calculateBookingPrice, createPriceString } from "utils";
 import { BookingAdditionalForms } from "src/components/booking-additonal-forms";
 import { BookingDefaultForms } from "src/components/booking-default-forms";
 import { BookingModal } from "src/components/booking-modal";
-import { BookingPaymentForm } from "src/components/booking-payment-form";
+import { BookingPayLaterForm } from "src/components/booking-payment-forms/booking-pay-later-form";
+import { BookingPayNowForm } from "src/components/booking-payment-forms/booking-pay-now-form";
 import { BookingPeoplePolicyFeedback } from "src/components/booking-people-policy-feedback";
 import { BookingPriceDetails } from "src/components/booking-price-forms";
 import { DefaultErrorFallback } from "src/components/default-error-fallback";
@@ -29,7 +30,6 @@ import { TabsView, TabsProvider } from "src/components/tabs";
 import { TabsPrevNextButtons } from "src/components/tabs/prev-next-buttons";
 import { bookingValidationSchema } from "src/schemas";
 import { useCreateBooking } from "src/state/bookings";
-import { useCreatePaymentIntent } from "src/state/payments";
 import { useUserState } from "src/state/users";
 
 interface Props {
@@ -49,51 +49,40 @@ export const BookingForm: React.FC<Props> = ({
   const [isNumberOfPeopleInvalid, setIsNumberOfPeopleInvalid] = useState(false);
   const [tAndCsAccepted, setTAndCsAccepted] = useState(false);
 
-  const loggedinUser = useUserState((s) => s.loggedInUser);
+  const loggedInUser = useUserState((s) => s.loggedInUser);
 
-  const [createBookingStatus, createBooking, bookingId] = useCreateBooking(
+  const [createBookingStatus, createBooking, booking] = useCreateBooking(
     (s) => [s.status, s.request, s.value]
   );
 
-  const [paymentIntentCreateStatus, createPaymentIntent, clientSecret] =
-    useCreatePaymentIntent((s) => [s.status, s.request, s.value]);
-
   useEffect(() => {
-    if (!!bookingId) {
-      if (schema.shouldPayNow) {
-        createPaymentIntent(bookingId);
-      } else {
-        // router.push() doesn't work here for some reason
-        window.location.href = urls.user.booking(bookingId);
-      }
+    if (!!booking && !schema.shouldPayNow) {
+      // router.push() doesn't work here for some reason
+      window.location.href = urls.user.bookingNow(booking._id);
     }
-  }, [bookingId]);
+  }, [booking]);
 
   const handleSubmit = async (booking: Omit<BookingNoId, "status">) =>
-    await createBooking({ ...booking, status: "confirmed" });
+    await createBooking({ ...booking, status: "pending" });
 
   const initialValues: Omit<BookingNoId, "status"> = {
     operator,
     service,
-    name: loggedinUser?.givenName || "",
-    email: loggedinUser?.email || "",
+    name: loggedInUser?.givenName || "",
+    email: loggedInUser?.email || "",
     priceDetails: getDefaultBookingPriceDetails(),
     additionalFields: {},
     ...getDefaultDefaultBookingFields(schema),
   };
 
-  const isSubmitting =
-    createBookingStatus === "fetching" ||
-    paymentIntentCreateStatus === "fetching";
+  const isSubmitting = createBookingStatus === "fetching";
 
-  if (!!bookingId && !!clientSecret && schema.shouldPayNow) {
-    return (
-      <BookingPaymentForm
-        paymentIntentCreateStatus={paymentIntentCreateStatus}
-        clientSecret={clientSecret}
-        bookingId={bookingId}
-      />
-    );
+  if (!!booking && schema.shouldPayNow) {
+    if (service.approveBookingBeforePayment) {
+      return <BookingPayLaterForm booking={booking} service={service} />;
+    } else {
+      return <BookingPayNowForm booking={booking} service={service} />;
+    }
   }
 
   return (
@@ -204,10 +193,20 @@ export const BookingForm: React.FC<Props> = ({
                               }
                             >
                               {schema.shouldPayNow
-                                ? "Proceed to payment"
+                                ? "Enter payment details"
                                 : "Book now"}
                             </Button>
                           </Box>
+
+                          {service.approveBookingBeforePayment && (
+                            <Typography
+                              variant="caption"
+                              sx={{ textAlign: "center", mt: 1 }}
+                            >
+                              No payment will be taken until the operator has
+                              approved your booking
+                            </Typography>
+                          )}
                         </>
                       ),
                     },

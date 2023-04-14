@@ -5,7 +5,7 @@ import { GetServerSideProps, NextPage } from "next";
 import { getBookingWithOperatorAndService } from "src/clients/bookings.client";
 import { OperatorLayout } from "src/components/operator-layout";
 import { SeoHead } from "src/components/seo/head";
-import { UserBookingView } from "src/components/user-booking-view";
+import { UserBookingNowView } from "src/components/user-booking-now-view";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserServiceView } from "src/components/user-service-view";
 
@@ -13,7 +13,7 @@ interface Props {
   booking: BookingDto;
 }
 
-const BookingPage: NextPage<Props> = ({ booking }) => {
+const BookingNowPage: NextPage<Props> = ({ booking }) => {
   return (
     <UserLayoutContainer>
       <SeoHead
@@ -21,7 +21,7 @@ const BookingPage: NextPage<Props> = ({ booking }) => {
         description={`Your booking for ${booking.service.name} by ${booking.operator.name}`}
       />
 
-      <UserBookingView booking={booking} />
+      <UserBookingNowView booking={booking} />
 
       <Box sx={{ mt: 3 }}>
         <OperatorLayout operator={booking.operator}>
@@ -60,4 +60,4 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   }
 };
 
-export default BookingPage;
+export default BookingNowPage;

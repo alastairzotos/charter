@@ -10,17 +10,6 @@ export class PaymentsService {
     private readonly bookingService: BookingsService,
   ) { }
 
-  async createPaymentIntent(bookingId: string) {
-    const booking = await this.bookingService.getBookingById(bookingId);
-    const amount = calculateBookingPrice(booking.priceDetails, booking.service);
-
-    const { id, client_secret } = await this.stripeService.createPaymentIntent(amount * 100, "EUR");
-
-    await this.bookingService.setBookingPaymentIntentId(bookingId, id);
-
-    return client_secret;
-  }
-
   async handleWebhook(body: Buffer, signature: string) {
     const event = await this.stripeService.constructEvent(body, signature);
 
@@ -42,5 +31,28 @@ export class PaymentsService {
           break;
       }
     }
+  }
+
+  async createPaymentIntent(bookingId: string) {
+    const booking = await this.bookingService.getBookingById(bookingId);
+    const amount = calculateBookingPrice(booking.priceDetails, booking.service);
+
+    const { id, client_secret } = await this.stripeService.createPaymentIntent(amount * 100, "EUR");
+
+    await this.bookingService.setBookingPaymentIntentId(bookingId, id);
+
+    return client_secret;
+  }
+
+  async getOrCreateCustomer(name: string, email: string) {
+    return await this.stripeService.getOrCreateCustomer(name, email);
+  }
+
+  async createSetupIntent(bookingId, customerId: string) {
+    const { id, client_secret } = await this.stripeService.createSetupIntent(customerId);
+
+    await this.bookingService.setBookingSetupIntentId(bookingId, id);
+
+    return client_secret;
   }
 }

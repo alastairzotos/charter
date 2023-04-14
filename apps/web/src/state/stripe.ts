@@ -13,7 +13,28 @@ export const useConfirmPayment = createQuery(
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${getEnv().appUrl}${urls.user.booking(bookingId!)}`,
+        return_url: `${getEnv().appUrl}${urls.user.bookingNow(bookingId!)}`,
+      },
+    });
+
+    if (!!error) {
+      useConfirmPayment.setState({ status: "error" });
+    }
+
+    return { errorMessage: error.message };
+  }
+);
+
+export const useConfirmSetup = createQuery(
+  async (
+    stripe: Stripe,
+    elements: StripeElements,
+    bookingId: string | undefined
+  ) => {
+    const { error } = await stripe.confirmSetup({
+      elements,
+      confirmParams: {
+        return_url: `${getEnv().appUrl}${urls.user.bookingLater(bookingId!)}`,
       },
     });
 

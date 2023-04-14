@@ -62,12 +62,15 @@ const mockBooking: BookingNoId = {
   email: 'foo@bar.com',
   priceDetails: {},
   date: '12 January 2023',
+  bookingDate: new Date(),
   time: '09:00',
   numberOfPeople: 0,
   status: 'confirmed',
   operator: mockOperator,
   service: mockService,
-  paymentIntentId: 'paymentintent'
+  paymentStatus: 'pending',
+  paymentIntentId: 'paymentintent',
+  setupIntentId: 'setupintent',
 };
 
 const envServiceMock: ExtractInterface<EnvService> = {

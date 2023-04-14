@@ -7,11 +7,14 @@ import {
 
 import { httpClient } from "src/clients/http.client";
 
-export const createBooking = async (booking: BookingNoId): Promise<string> => {
-  const { data } = await httpClient.post<any, { data: string }, BookingNoId>(
-    "/bookings",
-    booking
-  );
+export const createBooking = async (
+  booking: BookingNoId
+): Promise<BookingDto> => {
+  const { data } = await httpClient.post<
+    any,
+    { data: BookingDto },
+    BookingNoId
+  >("/bookings", booking);
 
   return data;
 };

@@ -67,6 +67,7 @@ export interface BookingDto extends DefaultBookingFields {
   additionalFields?: Record<string, AdditionalBookingFieldContent>;
   notes?: string;
   paymentIntentId?: string;
+  setupIntentId?: string;
   paymentStatus?: BookingPaymentStatus;
   status: BookingStatus;
 }

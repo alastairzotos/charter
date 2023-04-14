@@ -10,7 +10,7 @@ interface Props {
   booking: BookingDto;
 }
 
-export const UserBookingView: React.FC<Props> = ({ booking }) => {
+export const UserBookingNowView: React.FC<Props> = ({ booking }) => {
   const [getPaymentStatus, paymentStatus] = useGetBookingPaymentStatus((s) => [
     s.request,
     s.value,

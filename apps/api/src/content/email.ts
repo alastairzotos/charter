@@ -50,7 +50,7 @@ export const emailContent = (env: EnvService) => ({
         <a href="${env.get().frontendUrl}${urls.user.service(booking.service)}">${booking.service.name
       }</a>
       </p>
-      <p>You can view <a href="${env.get().frontendUrl}${urls.user.booking(
+      <p>You can view <a href="${env.get().frontendUrl}${urls.user.bookingNow(
         booking._id,
       )}">this page</a> to view the booking</p>
     `,
@@ -63,7 +63,7 @@ export const emailContent = (env: EnvService) => ({
       }${urls.user.service(booking.service)}">${booking.service.name
       }</a> has been confirmed!</p>
       <p>You can view your booking details <a href="${env.get().frontendUrl
-      }${urls.user.booking(booking._id)}">on this page</a></p>
+      }${urls.user.bookingNow(booking._id)}">on this page</a></p>
     `,
   }),
 

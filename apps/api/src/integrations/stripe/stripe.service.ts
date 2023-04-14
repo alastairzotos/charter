@@ -26,4 +26,18 @@ export class StripeService {
   async constructEvent(body: Buffer, signature: string) {
     return await this.stripe.webhooks.constructEventAsync(body, signature, this.env.get().stripeWebhookSecret);
   }
+
+  async getOrCreateCustomer(name: string, email: string) {
+    const customersByEmail = await this.stripe.customers.list({ email });
+
+    if (customersByEmail.data.length) {
+      return customersByEmail.data[0];
+    }
+    
+    return await this.stripe.customers.create({ name, email });
+  }
+
+  async createSetupIntent(customer: string) {
+    return await this.stripe.setupIntents.create({ customer, payment_method_types: ['card'] })
+  }
 }

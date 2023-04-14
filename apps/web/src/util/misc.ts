@@ -1,3 +1,4 @@
+import { FetchStatus } from "@bitmetro/create-query";
 import dayjs from "dayjs";
 
 export const APP_NAME = "Corfu Travel Guide";
@@ -22,3 +23,14 @@ export const capitalise = (text: string) =>
 
 export const formatTime = (time: string) =>
   dayjs(time, "HH:mm").format("h:mma");
+
+export const getLowestStatus = (
+  stati: Array<FetchStatus | undefined>
+): FetchStatus | undefined => {
+  if (stati.find((status) => status === "error")) return "error";
+  if (stati.find((status) => status === "fetching")) return "fetching";
+  if (stati.find((status) => status === undefined)) return undefined;
+  if (stati.find((status) => status === "success")) return "success";
+
+  return undefined;
+};

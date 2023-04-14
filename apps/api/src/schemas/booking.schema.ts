@@ -48,6 +48,9 @@ export class Booking implements BookingDto {
   paymentIntentId?: string;
 
   @Prop()
+  setupIntentId?: string;
+
+  @Prop()
   paymentStatus: BookingPaymentStatus;
 
   @Prop(String)

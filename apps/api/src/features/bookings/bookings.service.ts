@@ -19,19 +19,28 @@ export class BookingsService {
   ) { }
 
   async createBooking(booking: BookingNoId) {
-    const service = await this.servicesService.getService(booking.service._id);
+    const service = booking.service;
 
-    const { _id } = await this.bookingsRepository.createBooking(booking);
+    const createdBooking = await this.bookingsRepository.createBooking({
+      bookingDate: new Date(),
+      ...booking,
+      paymentStatus: 'pending',
+      status: service.approveBookingBeforePayment ? "pending" : "confirmed"
+    });
 
     if (!service.serviceSchema.shouldPayNow) {
-      await this.setBookingPaymentStatus(_id, 'succeeded');
+      await this.setBookingPaymentStatus(createdBooking._id, 'succeeded');
     }
     
-    return _id;
+    return createdBooking;
   }
 
   async setBookingPaymentIntentId(bookingId: string, paymentIntentId: string) {
     await this.bookingsRepository.setBookingPaymentIntentId(bookingId, paymentIntentId);
+  }
+
+  async setBookingSetupIntentId(bookingId: string, setupIntentId: string) {
+    await this.bookingsRepository.setBookingSetupIntentId(bookingId, setupIntentId);
   }
 
   async setBookingPaymentStatus(id: string, paymentStatus: BookingPaymentStatus) {
