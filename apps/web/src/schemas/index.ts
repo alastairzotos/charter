@@ -90,7 +90,7 @@ export const bookingValidationSchema = (
 ): yup.SchemaOf<
   Omit<
     BookingNoId,
-    "operator" | "status" | "service" | "paymentIntentId" | "paymentStatus"
+    "operator" | "status" | "service" | "paymentIntentId" | "paymentStatus" | "setupIntentId" | "stripeCustomerId"
   >
 > =>
   yup.object().shape({
