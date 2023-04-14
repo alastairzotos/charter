@@ -51,6 +51,9 @@ export class Booking implements BookingDto {
   setupIntentId?: string;
 
   @Prop()
+  stripeCustomerId?: string;
+
+  @Prop()
   paymentStatus: BookingPaymentStatus;
 
   @Prop(String)

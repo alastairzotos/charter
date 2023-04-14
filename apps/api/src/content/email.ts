@@ -38,6 +38,33 @@ export const emailContent = (env: EnvService) => ({
     }
   },
 
+  bookingMadeOperatorActionRequired: (booking: BookingDto): EmailData => {
+    const bookingDetails = getReadableBookingDetails(booking);
+
+    return {
+      subject: `[ACTION REQUIRED] A new booking for ${booking.service.name} on ${booking.date} is waiting for your response`,
+      content: dedent`
+      <h3>Hello ${booking.operator.name}</h3>
+      <p>You have a new booking for <strong>${booking.service.name
+        }</strong> on <strong>${booking.date}</strong></p>
+      <p>Here are the details:</p>
+      <ul>
+        ${
+          Object.keys(bookingDetails)
+            .map(key => (
+              `<li><strong>${key}</strong>: ${bookingDetails[key]}</li>`
+            ))
+            .join('\n')
+        }
+      </ul>
+
+      <a href="${env.get().frontendUrl}${urls.operators.booking(
+          booking._id,
+        )}">Click here to approve or reject the booking</a>
+    `,
+    }
+  },
+
   bookingMadeUser: (booking: BookingDto): EmailData => ({
     subject: `Your booking with ${booking.operator.name}`,
     content: dedent`
@@ -50,7 +77,27 @@ export const emailContent = (env: EnvService) => ({
         <a href="${env.get().frontendUrl}${urls.user.service(booking.service)}">${booking.service.name
       }</a>
       </p>
-      <p>You can view <a href="${env.get().frontendUrl}${urls.user.bookingNow(
+      <p>You can view <a href="${env.get().frontendUrl}${urls.user.booking(
+        booking._id,
+      )}">this page</a> to view the booking</p>
+    `,
+  }),
+
+  bookingMadeUserPending: (booking: BookingDto): EmailData => ({
+    subject: `Your booking with ${booking.operator.name}`,
+    content: dedent`
+      <h3>Hello ${booking.name}!</h3>
+      <p>Your booking has been made with
+        <a href="${env.get().frontendUrl}${urls.user.operator(
+      booking.operator,
+    )}">${booking.operator.name}</a>
+        for
+        <a href="${env.get().frontendUrl}${urls.user.service(booking.service)}">${booking.service.name
+      }</a>
+      </p>
+      <p>You will receive an email when the operator responds.</p>
+      <p>Payment will only be taken if the operator approves your booking.</p>
+      <p>You can view <a href="${env.get().frontendUrl}${urls.user.booking(
         booking._id,
       )}">this page</a> to view the booking</p>
     `,
@@ -63,7 +110,7 @@ export const emailContent = (env: EnvService) => ({
       }${urls.user.service(booking.service)}">${booking.service.name
       }</a> has been confirmed!</p>
       <p>You can view your booking details <a href="${env.get().frontendUrl
-      }${urls.user.bookingNow(booking._id)}">on this page</a></p>
+      }${urls.user.booking(booking._id)}">on this page</a></p>
     `,
   }),
 

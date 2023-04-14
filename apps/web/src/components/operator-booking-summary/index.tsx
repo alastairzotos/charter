@@ -26,12 +26,12 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
 
   const rejectBooking = async () => {
     await setBookingStatus(booking._id, "rejected");
-    router.push(urls.operators.home());
+    router.push(urls.operators.bookings());
   };
 
   const confirmBooking = async () => {
     await setBookingStatus(booking._id, "confirmed");
-    router.push(urls.operators.home());
+    router.push(urls.operators.bookings());
   };
 
   return (

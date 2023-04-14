@@ -68,6 +68,7 @@ export interface BookingDto extends DefaultBookingFields {
   notes?: string;
   paymentIntentId?: string;
   setupIntentId?: string;
+  stripeCustomerId?: string;
   paymentStatus?: BookingPaymentStatus;
   status: BookingStatus;
 }

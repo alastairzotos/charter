@@ -58,7 +58,7 @@ export const BookingForm: React.FC<Props> = ({
   useEffect(() => {
     if (!!booking && !schema.shouldPayNow) {
       // router.push() doesn't work here for some reason
-      window.location.href = urls.user.bookingNow(booking._id);
+      window.location.href = urls.user.booking(booking._id);
     }
   }, [booking]);
 

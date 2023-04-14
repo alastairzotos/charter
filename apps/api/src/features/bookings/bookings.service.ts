@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { BookingNoId, BookingPaymentStatus, BookingStatus, LoggedInUserDetails, UserDetails } from 'dtos';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { BookingDto, BookingNoId, BookingPaymentStatus, BookingStatus, LoggedInUserDetails, UserDetails } from 'dtos';
 
 import { emailContent } from 'content/email';
 import { EnvService } from 'environment/environment.service';
@@ -7,6 +7,7 @@ import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { OperatorsService } from 'features/operators/operators.service';
 import { EmailService } from 'integrations/email/email.service';
 import { ServicesService } from 'features/services/services.service';
+import { PaymentsService } from 'features/payments/payments.service';
 
 @Injectable()
 export class BookingsService {
@@ -16,6 +17,9 @@ export class BookingsService {
     private readonly emailService: EmailService,
     private readonly servicesService: ServicesService,
     private readonly bookingsRepository: BookingsRepository,
+
+    @Inject(forwardRef(() => PaymentsService))
+    private readonly paymentsService: PaymentsService,
   ) { }
 
   async createBooking(booking: BookingNoId) {
@@ -39,8 +43,8 @@ export class BookingsService {
     await this.bookingsRepository.setBookingPaymentIntentId(bookingId, paymentIntentId);
   }
 
-  async setBookingSetupIntentId(bookingId: string, setupIntentId: string) {
-    await this.bookingsRepository.setBookingSetupIntentId(bookingId, setupIntentId);
+  async setBookingSetupIntentIdAndStripeCustomerId(bookingId: string, setupIntentId: string, stripeCustomerId: string) {
+    await this.bookingsRepository.setBookingSetupIntentIdAndStripeCustomerId(bookingId, setupIntentId, stripeCustomerId);
   }
 
   async setBookingPaymentStatus(id: string, paymentStatus: BookingPaymentStatus) {
@@ -80,6 +84,10 @@ export class BookingsService {
     return await this.bookingsRepository.getBookingByPaymentIntentId(paymentIntentId);
   }
 
+  async getBookingBySetupIntentId(paymentIntentId: string) {
+    return await this.bookingsRepository.getBookingBySetupIntentId(paymentIntentId);
+  }
+
   async getBookingsForUser(user: LoggedInUserDetails) {
     const operator = await this.operatorsService.getOperatorByOwnerId(user._id);
     const bookings = await this.bookingsRepository.getBookingsByOperator(
@@ -94,10 +102,15 @@ export class BookingsService {
   }
 
   async setBookingStatus(id: string, status: BookingStatus) {
-    await this.bookingsRepository.setBookingStatus(id, status);
     const booking = await this.bookingsRepository.getBookingWithOperatorAndService(
       id,
     );
+
+    if (status === 'confirmed' && booking.service.approveBookingBeforePayment) {
+      await this.paymentsService.chargeUserOffSession(booking);
+    }
+
+    await this.bookingsRepository.setBookingStatus(id, status);
 
     const email =
       status === 'confirmed'
@@ -105,5 +118,18 @@ export class BookingsService {
         : emailContent(this.envService).bookingRejectedUser(booking);
 
     await this.emailService.sendEmail(booking.email, email);
+  }
+
+  async notifyPartiesOfPendingBooking(booking: BookingDto) {
+    await Promise.all([
+      this.emailService.sendEmail(
+        booking.email,
+        emailContent(this.envService).bookingMadeUserPending(booking)
+      ),
+      this.emailService.sendEmail(
+        booking.operator.email,
+        emailContent(this.envService).bookingMadeOperatorActionRequired(booking),
+      )
+    ])
   }
 }

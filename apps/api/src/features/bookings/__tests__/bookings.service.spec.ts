@@ -5,6 +5,7 @@ import { EnvService } from 'environment/environment.service';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { BookingsService } from 'features/bookings/bookings.service';
 import { OperatorsService } from 'features/operators/operators.service';
+import { PaymentsService } from 'features/payments/payments.service';
 import { ServicesService } from 'features/services/services.service';
 import { EmailService } from 'integrations/email/email.service';
 import { ExtractInterface } from 'utils';
@@ -128,6 +129,8 @@ const bookingsRepoMock: Partial<
   ),
 };
 
+const paymentsServiceMock: Partial<ExtractInterface<PaymentsService>> = {};
+
 describe('BookingService', () => {
   describe('createBooking', () => {
     let bookingsService: BookingsService;
@@ -139,6 +142,7 @@ describe('BookingService', () => {
         emailServiceMock,
         servicesServiceMock,
         bookingsRepoMock,
+        paymentsServiceMock,
       );
       await bookingsService.createBooking(mockBooking);
 
@@ -168,6 +172,7 @@ const createService = async (
   emailServiceMock: Partial<ExtractInterface<EmailService>>,
   servicesServiceMock: Partial<ExtractInterface<ServicesService>>,
   bookingsRepoMock: Partial<ExtractInterface<BookingsRepository>>,
+  paymentsServiceMock: Partial<ExtractInterface<PaymentsService>>,
 ) => {
   const testingModule = await Test.createTestingModule({
     providers: [
@@ -192,6 +197,10 @@ const createService = async (
         provide: BookingsRepository,
         useValue: bookingsRepoMock,
       },
+      {
+        provide: PaymentsService,
+        useValue: paymentsServiceMock,
+      }
     ],
   }).compile();
 

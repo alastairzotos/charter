@@ -13,7 +13,7 @@ export const useConfirmPayment = createQuery(
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${getEnv().appUrl}${urls.user.bookingNow(bookingId!)}`,
+        return_url: `${getEnv().appUrl}${urls.user.booking(bookingId!)}`,
       },
     });
 
@@ -34,7 +34,7 @@ export const useConfirmSetup = createQuery(
     const { error } = await stripe.confirmSetup({
       elements,
       confirmParams: {
-        return_url: `${getEnv().appUrl}${urls.user.bookingLater(bookingId!)}`,
+        return_url: `${getEnv().appUrl}${urls.user.booking(bookingId!)}`,
       },
     });
 

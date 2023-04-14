@@ -15,8 +15,16 @@ export const OperatorBookings: React.FC = () => {
     }
   }, [userBookings]);
 
+  const pendingBookings = userBookings
+    ? userBookings.filter((booking) => booking.status === "pending")
+    : undefined;
+
   const confirmedBookings = userBookings
     ? userBookings.filter((booking) => booking.status === "confirmed")
+    : undefined;
+
+  const rejectedBookings = userBookings
+    ? userBookings.filter((booking) => booking.status === "rejected")
     : undefined;
 
   return (
@@ -29,8 +37,18 @@ export const OperatorBookings: React.FC = () => {
       }
     >
       <OperatorBookingList
+        title="Pending bookings"
+        bookings={pendingBookings}
+      />
+
+      <OperatorBookingList
         title="Confirmed bookings"
         bookings={confirmedBookings}
+      />
+
+      <OperatorBookingList
+        title="Rejected bookings"
+        bookings={rejectedBookings}
       />
     </StatusSwitch>
   );

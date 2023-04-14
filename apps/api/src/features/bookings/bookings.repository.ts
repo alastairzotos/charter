@@ -9,7 +9,7 @@ import { Booking } from 'schemas/booking.schema';
 export class BookingsRepository {
   constructor(
     @InjectModel(Booking.name) private readonly bookingsModel: Model<Booking>,
-  ) {}
+  ) { }
 
   async createBooking(booking: BookingNoId) {
     return await this.bookingsModel.create(booking);
@@ -19,8 +19,8 @@ export class BookingsRepository {
     await this.bookingsModel.findOneAndUpdate({ _id: id }, { paymentIntentId });
   }
 
-  async setBookingSetupIntentId(id: string, setupIntentId: string) {
-    await this.bookingsModel.findOneAndUpdate({ _id: id }, { setupIntentId });
+  async setBookingSetupIntentIdAndStripeCustomerId(id: string, setupIntentId: string, stripeCustomerId: string) {
+    await this.bookingsModel.findOneAndUpdate({ _id: id }, { setupIntentId, stripeCustomerId });
   }
 
   async setBookingPaymentStatus(id: string, paymentStatus: BookingPaymentStatus) {
@@ -28,21 +28,41 @@ export class BookingsRepository {
   }
 
   async getBookingPaymentStatus(id: string) {
-    const { paymentStatus } = await this.bookingsModel.findOne({ _id: id })
-    return paymentStatus;
+    const booking = await this.bookingsModel.findOne({ _id: id })
+    return booking.paymentStatus;
   }
 
   async getBookingById(id: string) {
-    return await this.bookingsModel.findById(id).populate({
-      path: 'service',
-      populate: {
-        path: 'serviceSchema'
-      }
-    })
+    return await this.bookingsModel.findById(id)
+      .populate('operator')
+      .populate({
+        path: 'service',
+        populate: {
+          path: 'serviceSchema'
+        }
+      })
   }
 
   async getBookingByPaymentIntentId(paymentIntentId: string) {
-    return await this.bookingsModel.findOne({ paymentIntentId });
+    return await this.bookingsModel.findOne({ paymentIntentId })
+      .populate('operator')
+      .populate({
+        path: 'service',
+        populate: {
+          path: 'serviceSchema'
+        }
+      });
+  }
+
+  async getBookingBySetupIntentId(setupIntentId: string) {
+    return await this.bookingsModel.findOne({ setupIntentId })
+      .populate('operator')
+      .populate({
+        path: 'service',
+        populate: {
+          path: 'serviceSchema'
+        }
+      });
   }
 
   async getBookingWithOperatorAndService(id: string) {
@@ -57,7 +77,7 @@ export class BookingsRepository {
   }
 
   async getBookingsByOperator(operator: OperatorDto) {
-    return await this.bookingsModel.find({ operator, paymentStatus: 'succeeded' }).populate('service');
+    return await this.bookingsModel.find({ operator }).populate('service');
   }
 
   async getBookingsByOperatorId(id: string) {
@@ -71,6 +91,6 @@ export class BookingsRepository {
   }
 
   async setBookingStatus(id: string, status: BookingStatus) {
-    await this.bookingsModel.findOneAndUpdate({ _id: id }, { status });
+    await this.bookingsModel.findOneAndUpdate({ _id: id }, { status, paymentStatus: status === 'rejected' && 'cancelled' });
   }
 }
