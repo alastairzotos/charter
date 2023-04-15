@@ -3,6 +3,7 @@ import React from "react";
 
 import { FixedPriceForm } from "src/components/price-forms/fixed";
 import { PerAdultAndChildPriceForm } from "src/components/price-forms/per-adult-and-child";
+import { PerAgeCohortPriceForm } from "src/components/price-forms/per-age-cohort";
 import { PerPersonPriceForm } from "src/components/price-forms/per-person";
 import { PriceFormProps } from "src/components/price-forms/props";
 import { TieredPriceForm } from "src/components/price-forms/tiered";
@@ -24,6 +25,8 @@ export const PriceForm: React.FC<Props> = ({
       return <PerPersonPriceForm {...props} />;
     case "perAdultAndChild":
       return <PerAdultAndChildPriceForm {...props} />;
+    case "perAgeCohort":
+      return <PerAgeCohortPriceForm {...props} />;
     case "tiered":
       return <TieredPriceForm {...props} />;
   }

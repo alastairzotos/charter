@@ -15,6 +15,10 @@ export interface PerAdultAndChildBookingPriceDetails {
   childGuests: number;
 }
 
+export interface PerAgeCohortBookingPriceDetails {
+  guestsInCohorts: Record<string, number>;
+}
+
 export interface TieredBookingPriceDetails {
   tier?: string;
 }
@@ -22,6 +26,7 @@ export interface TieredBookingPriceDetails {
 export type BookingPriceDetails = Partial<{
   perPerson: PerPersonBookingPriceDetails;
   perAdultAndChild: PerAdultAndChildBookingPriceDetails;
+  perAgeCohort: PerAgeCohortBookingPriceDetails;
   tiered: TieredBookingPriceDetails;
 }>;
 
@@ -32,6 +37,9 @@ export const getDefaultBookingPriceDetails = (): BookingPriceDetails => ({
   perAdultAndChild: {
     adultGuests: 1,
     childGuests: 0,
+  },
+  perAgeCohort: {
+    guestsInCohorts: {},
   },
   tiered: {
     tier: ''

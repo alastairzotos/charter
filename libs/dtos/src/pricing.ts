@@ -7,6 +7,17 @@ export interface PerAdultAndChildPriceDto {
   childPrice: number;
 }
 
+export interface AgeCohortPrice {
+  name: string;
+  fromAge: number;
+  toAge: number;
+  price: number;
+}
+
+export interface PerAgeCohortPriceDto {
+  ageCohorts: AgeCohortPrice[];
+}
+
 export interface PriceTierDto {
   name: string;
   rate: number;
@@ -21,6 +32,7 @@ export type ServicePricingDto = Partial<{
   fixed: PriceDto;
   perPerson: PriceDto;
   perAdultAndChild: PerAdultAndChildPriceDto;
+  perAgeCohort: PerAgeCohortPriceDto;
   tiered: TieredPriceDto;
 }>
 

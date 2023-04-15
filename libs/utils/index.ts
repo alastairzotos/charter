@@ -12,6 +12,14 @@ export const calculateBookingPrice = (bookingDetails: BookingPriceDetails, servi
         (service.price.perAdultAndChild?.adultPrice || 0) * (bookingDetails.perAdultAndChild?.adultGuests! || 0) +
         (service.price.perAdultAndChild?.childPrice || 0) * (bookingDetails.perAdultAndChild?.childGuests! || 0)
       );
+    case 'perAgeCohort':
+      return (
+        Object.keys(bookingDetails.perAgeCohort?.guestsInCohorts || {})
+          .reduce(
+            (acc, cohort) => acc + (service.price.perAgeCohort?.ageCohorts.find(c => c.name === cohort)?.price || 0) * (bookingDetails.perAgeCohort?.guestsInCohorts[cohort] || 0),
+            0
+          )
+      )
     case 'tiered':
       return service.price.tiered?.tiers.find(tier => tier.name === bookingDetails.tiered?.tier)?.rate || 0;
   }
@@ -30,6 +38,14 @@ export const getReadablePricingStringsForService = (service: ServiceNoId): Recor
         "Price per adult": createPriceString(service.price.perAdultAndChild?.adultPrice || 0),
         "Price per child": createPriceString(service.price.perAdultAndChild?.childPrice || 0)
       }
+    case 'perAgeCohort':
+      return service.price.perAgeCohort!.ageCohorts.reduce<Record<string, string>>(
+        (acc, cohort) => ({
+          ...acc,
+          [`Price for ${cohort.name.toLocaleLowerCase()} (Ages ${cohort.fromAge} to ${cohort.toAge})`]: createPriceString(cohort.price),
+        }),
+        {}
+      );
     case 'tiered':
       return (service.price.tiered?.tiers || []).reduce((acc, { name, rate }) => ({
         ...acc,
@@ -57,6 +73,13 @@ export const getReadableBookingDetails = (booking: BookingNoId): Record<string, 
     case 'perAdultAndChild':
       obj['Number of adults'] = `${booking.priceDetails.perAdultAndChild?.adultGuests}`;
       obj['Number of children'] = `${booking.priceDetails.perAdultAndChild?.childGuests}`;
+      break;
+
+    case 'perAgeCohort':
+      Object.keys(booking.priceDetails.perAgeCohort?.guestsInCohorts || {})
+        .forEach((key) => {
+          obj[`Number of ${key.toLocaleLowerCase()}`] = `${booking.priceDetails.perAgeCohort?.guestsInCohorts[key]}`;
+        })
       break;
 
     case 'tiered':
@@ -101,6 +124,9 @@ export const calculateBookingTotalPeople = (booking: BookingNoId, service: Servi
     case 'perPerson': return booking.priceDetails.perPerson?.numberOfPeople;
     case 'perAdultAndChild':
       return (booking.priceDetails.perAdultAndChild?.adultGuests || 0) + (booking.priceDetails.perAdultAndChild?.childGuests || 0);
+    case 'perAgeCohort':
+      return Object.values(booking.priceDetails.perAgeCohort?.guestsInCohorts || {})
+        .reduce((acc, c) => acc + c, 0);
     case 'fixed':
     case 'tiered':
       return undefined;

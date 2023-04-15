@@ -56,11 +56,11 @@ export const BookingForm: React.FC<Props> = ({
   );
 
   useEffect(() => {
-    if (!!booking && !schema.shouldPayNow) {
+    if (!!booking?._id && !schema.shouldPayNow) {
       // router.push() doesn't work here for some reason
       window.location.href = urls.user.booking(booking._id);
     }
-  }, [booking]);
+  }, [booking?._id]);
 
   const handleSubmit = async (booking: Omit<BookingNoId, "status">) =>
     await createBooking({ ...booking, status: "pending" });
@@ -139,6 +139,10 @@ export const BookingForm: React.FC<Props> = ({
                           <BookingPriceDetails
                             pricingStrategy={schema.pricingStrategy}
                             pricing={service.price}
+                            priceDetails={values.priceDetails}
+                            setPriceDetails={(priceDetails) =>
+                              setValues({ ...values, priceDetails })
+                            }
                           />
 
                           <BookingPeoplePolicyFeedback

@@ -2,6 +2,8 @@ import {
   BookingNoId,
   PerAdultAndChildBookingPriceDetails,
   PerAdultAndChildPriceDto,
+  PerAgeCohortBookingPriceDetails,
+  PerAgeCohortPriceDto,
   PerPersonBookingPriceDetails,
   PriceDto,
   PricingStrategyType,
@@ -24,6 +26,18 @@ export const perAdultAndChildValidationSchema: yup.SchemaOf<PerAdultAndChildPric
     childPrice: yup.number().required("Child price is required"),
   });
 
+export const perAgeCohortValidationSchema: yup.SchemaOf<PerAgeCohortPriceDto> =
+  yup.object().shape({
+    ageCohorts: yup.array().of(
+      yup.object({
+        name: yup.string().required("Name is required"),
+        fromAge: yup.number().required("Age is required"),
+        toAge: yup.number().required("Age is required"),
+        price: yup.number().required("Price is required"),
+      })
+    ),
+  });
+
 export const tieredValidationSchema: yup.SchemaOf<TieredPriceDto> = yup
   .object()
   .shape({
@@ -36,6 +50,7 @@ export const priceValidationSchema: yup.SchemaOf<
   fixed: basicPriceValidationSchema.optional(),
   perPerson: basicPriceValidationSchema.optional(),
   perAdultAndChild: perAdultAndChildValidationSchema.optional(),
+  perAgeCohort: perAgeCohortValidationSchema.optional(),
   tiered: tieredValidationSchema.optional(),
 });
 
@@ -67,6 +82,11 @@ export const perAdultAndChildBookingValidationSchema: yup.SchemaOf<PerAdultAndCh
     childGuests: yup.number().required("Number of children is required"),
   });
 
+export const perAgeCohortBookingValidationSchema: yup.SchemaOf<PerAgeCohortBookingPriceDetails> =
+  yup.object({
+    guestsInCohorts: yup.object(),
+  });
+
 export const tieredBookingValidationSchema: yup.SchemaOf<TieredBookingPriceDetails> =
   yup.object().shape({
     tier: yup.string().required("Price tier is required"),
@@ -82,6 +102,9 @@ export const pricingStrategyValidators: Record<
   perAdultAndChild: yup.object({
     perAdultAndChild: perAdultAndChildBookingValidationSchema,
   }),
+  perAgeCohort: yup.object({
+    perAgeCohort: perAgeCohortBookingValidationSchema,
+  }),
   tiered: yup.object({ tiered: tieredBookingValidationSchema }),
 };
 
@@ -90,7 +113,13 @@ export const bookingValidationSchema = (
 ): yup.SchemaOf<
   Omit<
     BookingNoId,
-    "operator" | "status" | "service" | "paymentIntentId" | "paymentStatus" | "setupIntentId" | "stripeCustomerId"
+    | "operator"
+    | "status"
+    | "service"
+    | "paymentIntentId"
+    | "paymentStatus"
+    | "setupIntentId"
+    | "stripeCustomerId"
   >
 > =>
   yup.object().shape({

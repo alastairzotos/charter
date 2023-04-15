@@ -21,7 +21,7 @@ export const BookingPeoplePolicyFeedback: React.FC<Props> = ({
 
   useEffect(() => {
     setError(satisfies === "too-few" || satisfies === "too-many");
-  });
+  }, []);
 
   const peoplePolicyText =
     service.minPeople !== null && service.maxPeople !== null

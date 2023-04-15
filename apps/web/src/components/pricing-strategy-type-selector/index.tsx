@@ -24,6 +24,7 @@ export const PricingStrategyTypeSelector: React.FC<Props> = ({
         <MenuItem value="fixed">Fixed</MenuItem>
         <MenuItem value="perPerson">Per person</MenuItem>
         <MenuItem value="perAdultAndChild">Per adult and child</MenuItem>
+        <MenuItem value="perAgeCohort">Per age cohort</MenuItem>
         <MenuItem value="tiered">Tiered</MenuItem>
       </Select>
     </FormControl>

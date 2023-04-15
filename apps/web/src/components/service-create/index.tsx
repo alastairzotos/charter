@@ -56,7 +56,46 @@ export const ServiceCreate: React.FC<Props> = ({
             description: "",
             content: {},
             photos: [],
-            price: {},
+            price: {
+              fixed: {
+                price: 10,
+              },
+              perAdultAndChild: {
+                adultPrice: 50,
+                childPrice: 10,
+              },
+              perAgeCohort: {
+                ageCohorts: [
+                  {
+                    name: "Children",
+                    fromAge: 1,
+                    toAge: 10,
+                    price: 10,
+                  },
+                  {
+                    name: "Adults",
+                    fromAge: 11,
+                    toAge: 100,
+                    price: 50,
+                  },
+                ],
+              },
+              perPerson: {
+                price: 10,
+              },
+              tiered: {
+                tiers: [
+                  {
+                    name: "Single",
+                    rate: 10,
+                  },
+                  {
+                    name: "Double",
+                    rate: 20,
+                  },
+                ],
+              },
+            },
             maxPeople: null,
             minPeople: null,
             data: getDefaultValuesForServiceSchema(serviceSchema!),
