@@ -37,6 +37,10 @@ export const UserServiceView: React.FC<Props> = ({
   const priceDetails = getReadablePricingStringsForService(service);
 
   useEffect(() => {
+    if (!isDesktop && bookingModalOpen) {
+      window.scrollTo(0, 0);
+    }
+
     router.beforePopState(() => {
       if (bookingModalOpen) {
         window.history.pushState(null, "", router.asPath);
