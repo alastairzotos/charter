@@ -71,7 +71,6 @@ export const ImageGallery: React.FC<Props> = ({ items }) => {
         original: item,
         thumbnail: item,
         thumbnailHeight: 100,
-        originalHeight: 500,
         renderItem: (item) => (
           <ImageGalleryItem
             url={item.original}

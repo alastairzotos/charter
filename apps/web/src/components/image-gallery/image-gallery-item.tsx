@@ -11,8 +11,7 @@ export const ImageGalleryItem: React.FC<Props> = ({ url, alt, onClick }) => {
     <img
       src={url}
       alt={alt}
-      height={500}
-      style={{ width: "100%", objectFit: "contain" }}
+      style={{ width: "100%", maxHeight: 500, objectFit: "contain" }}
       onClick={onClick}
     />
   );
