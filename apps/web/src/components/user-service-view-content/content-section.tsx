@@ -4,10 +4,12 @@ import {
   AccordionDetails,
   AccordionSummary,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { ServiceDto, ServiceSchemaContentSectionDto } from "dtos";
-import React from "react";
+import React, { useState } from "react";
 
 import { MultilineText } from "src/components/multiline-text";
 
@@ -26,12 +28,20 @@ export const UserServiceViewContentSection: React.FC<Props> = ({
   service,
   contentSection,
 }) => {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+
+  const [expanded, setExpanded] = useState(isDesktop);
+
   if (!service.content?.[contentSection.key]) {
     return null;
   }
 
   return (
-    <Accordion>
+    <Accordion
+      expanded={expanded}
+      onChange={(_, isExpanded) => setExpanded(isExpanded)}
+    >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography>{contentSection.title}</Typography>
       </AccordionSummary>
