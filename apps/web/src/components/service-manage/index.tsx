@@ -3,7 +3,7 @@ import { Checkbox, FormControlLabel, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { ServiceNoId } from "dtos";
+import { defaultOpeningTimes, ServiceNoId } from "dtos";
 import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
@@ -12,6 +12,7 @@ import React from "react";
 import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
 import { MinMaxPeopleSelector } from "src/components/min-max-people-selector";
+import { OpeningTimesForm } from "src/components/opening-times-form";
 import { PriceForm } from "src/components/price-forms";
 import { SaveAndDelete } from "src/components/save-delete";
 import { ServiceFormFields } from "src/components/service-form-fields";
@@ -187,6 +188,23 @@ export const ManageServiceForm: React.FC<Props> = ({
                     <ServicePageContentEditor
                       values={values}
                       onChange={setValues}
+                    />
+                  ),
+                },
+                {
+                  label: "Opening times",
+                  content: (
+                    <OpeningTimesForm
+                      openingTimes={values.openingTimes || defaultOpeningTimes}
+                      setOpeningTimes={(openingTimes) => {
+                        setValues({
+                          ...values,
+                          openingTimes: {
+                            ...defaultOpeningTimes,
+                            ...openingTimes,
+                          },
+                        });
+                      }}
                     />
                   ),
                 },

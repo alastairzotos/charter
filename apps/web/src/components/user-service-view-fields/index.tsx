@@ -32,7 +32,6 @@ const getFieldView = (
 export const UserServiceViewFields: React.FC<Props> = ({ data, fields }) => {
   return (
     <KeyValues
-      sx={{ maxWidth: 600 }}
       kv={{
         ...fields.reduce(
           (acc, field) => ({

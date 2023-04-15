@@ -1,3 +1,4 @@
+import { OpeningTimesDto } from "./opening-times";
 import { OperatorDto } from "./operator";
 import { ServicePricingDto } from "./pricing";
 import { ServiceFieldValue, ServiceSchemaDto } from "./service-schema";
@@ -18,6 +19,7 @@ export interface ServiceDto {
   numberOfBookings: number;
   hidden: boolean;
   approveBookingBeforePayment: boolean;
+  openingTimes: OpeningTimesDto;
 }
 
 export type ServiceNoId = Omit<ServiceDto, '_id'>;

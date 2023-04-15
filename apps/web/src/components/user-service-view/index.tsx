@@ -1,5 +1,5 @@
 import ArrowBackIcon from "@mui/icons-material/ArrowBackIos";
-import { Box, Button, Modal } from "@mui/material";
+import { Box, Button, Modal, Paper } from "@mui/material";
 import { OperatorDto, ServiceDto } from "dtos";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -10,6 +10,7 @@ import { getReadablePricingStringsForService } from "utils";
 import { BookingForm } from "src/components/booking-form";
 import { ImageGallery } from "src/components/image-gallery";
 import { KeyValues } from "src/components/key-values";
+import { OpeningTimesView } from "src/components/opening-times";
 import { Titled } from "src/components/titled";
 import { UserServiceViewContent } from "src/components/user-service-view-content";
 import { UserServiceViewFields } from "src/components/user-service-view-fields";
@@ -62,12 +63,18 @@ export const UserServiceView: React.FC<Props> = ({
       <Titled title={service.name}>
         <UserServiceViewContent service={service} />
 
+        <Paper sx={{ p: 1, mt: 2 }}>
+          <KeyValues kv={priceDetails} />
+          <UserServiceViewFields data={service.data} fields={schema.fields} />
+          <OpeningTimesView openingTimes={service.openingTimes} />
+        </Paper>
+
         {!bookingView && (
           <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
             <Button
               variant="contained"
               color="success"
-              sx={{ mb: 2 }}
+              sx={{ mb: 2, p: 2, pl: 7, pr: 7, borderRadius: 1000 }}
               size="large"
               onClick={() => setBookingModalOpen(true)}
             >
@@ -75,9 +82,6 @@ export const UserServiceView: React.FC<Props> = ({
             </Button>
           </Box>
         )}
-
-        <KeyValues sx={{ maxWidth: 600 }} kv={priceDetails} />
-        <UserServiceViewFields data={service.data} fields={schema.fields} />
 
         {service.photos && service.photos.length > 0 && (
           <ImageGallery items={service.photos} />

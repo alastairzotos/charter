@@ -57,7 +57,12 @@ export const priceValidationSchema: yup.SchemaOf<
 export const serviceValidationSchema: yup.SchemaOf<
   Omit<
     ServiceNoId,
-    "type" | "operator" | "minPeople" | "maxPeople" | "numberOfBookings"
+    | "type"
+    | "operator"
+    | "minPeople"
+    | "maxPeople"
+    | "numberOfBookings"
+    | "openingTimes"
   >
 > = yup.object().shape({
   name: yup.string().required("Name is required"),

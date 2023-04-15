@@ -1,13 +1,13 @@
 import { FormLabel, Paper } from "@mui/material";
-import { Day, days, OperatorOpeningHoursDto } from "dtos";
+import { Day, days, OpeningHoursDto, OpeningTimesDto } from "dtos";
 import React from "react";
 
 import { KeyValues } from "src/components/key-values";
 import { OpeningTimesDayForm } from "src/components/opening-times-form/day-form";
 
 interface Props {
-  openingTimes: Record<Day, OperatorOpeningHoursDto>;
-  setOpeningTimes: (openingTimes: Record<Day, OperatorOpeningHoursDto>) => void;
+  openingTimes: Record<Day, OpeningHoursDto>;
+  setOpeningTimes: (openingTimes: OpeningTimesDto) => void;
 }
 
 export const OpeningTimesForm: React.FC<Props> = ({

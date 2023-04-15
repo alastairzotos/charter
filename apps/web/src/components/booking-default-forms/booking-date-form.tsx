@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
-import { dayNumberToDayMap, defaultOpeningTimes } from "dtos";
+import { isDateDisabled } from "dtos";
 import React from "react";
 
 import { BookingDefaultFormsProps } from "src/components/booking-default-forms/props";
@@ -24,12 +24,13 @@ export const BookingDateForm: React.FC<BookingDefaultFormsProps> = ({
       renderInput={(params) => (
         <TextField {...params} disabled={isSubmitting} />
       )}
-      shouldDisableDate={(day) => {
-        const openingTimesToday = (values.operator.openingTimes ||
-          defaultOpeningTimes)[dayNumberToDayMap[day.day()]];
-
-        return openingTimesToday.closed!;
-      }}
+      shouldDisableDate={(day) =>
+        isDateDisabled(
+          values.operator.openingTimes,
+          values.service.openingTimes,
+          day
+        )
+      }
     />
   );
 };

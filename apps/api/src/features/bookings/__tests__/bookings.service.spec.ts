@@ -56,6 +56,7 @@ const mockService: ServiceDto = {
   numberOfBookings: 0,
   hidden: false,
   approveBookingBeforePayment: false,
+  openingTimes: defaultOpeningTimes,
 };
 
 const mockBooking: BookingNoId = {

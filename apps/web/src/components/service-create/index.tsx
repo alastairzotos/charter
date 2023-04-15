@@ -1,5 +1,9 @@
 import { Typography } from "@mui/material";
-import { getDefaultValuesForServiceSchema, ServiceNoId } from "dtos";
+import {
+  defaultOpeningTimes,
+  getDefaultValuesForServiceSchema,
+  ServiceNoId,
+} from "dtos";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
@@ -104,6 +108,7 @@ export const ServiceCreate: React.FC<Props> = ({
             numberOfBookings: 0,
             hidden: false,
             approveBookingBeforePayment: false,
+            openingTimes: defaultOpeningTimes,
           }}
           onSave={handleCreateService}
           saveStatus={createServiceStatus}

@@ -1,12 +1,11 @@
 import { TextField } from "@mui/material";
-import dayjs from "dayjs";
 import {
-  dayNumberToDayMap,
   defaultOpeningDayTime,
-  defaultOpeningTimes,
-  OperatorOpeningHoursDto,
+  getOpeningTimesOnDay,
+  OpeningTimesDto,
+  timeIsOutOfOpeningHours,
 } from "dtos";
-import React from "react";
+import React, { useCallback } from "react";
 
 import { BookingDefaultFormsProps } from "src/components/booking-default-forms/props";
 import { formatTime } from "src/util/misc";
@@ -16,68 +15,30 @@ export const BookingTimeForm: React.FC<BookingDefaultFormsProps> = ({
   setValues,
   isSubmitting,
 }) => {
-  const getOpeningTimesOnDay = () => {
-    const openingTimes = values.operator.openingTimes || defaultOpeningTimes;
-    const openingTimesOnDay: OperatorOpeningHoursDto = {
-      ...defaultOpeningDayTime,
-      ...openingTimes[dayNumberToDayMap[dayjs(values.date).day()]],
-    };
+  const getHelperText = useCallback(
+    (openingTimes: OpeningTimesDto, type: "operator" | "service") => {
+      if (!timeIsOutOfOpeningHours(openingTimes, values.date, values.time)) {
+        return undefined;
+      }
 
-    return openingTimesOnDay;
-  };
+      const openingTimesOnDay = getOpeningTimesOnDay(openingTimes, values.date);
 
-  const timeIsOutOfOpeningHours = () => {
-    if (!values.operator.openingTimes) {
-      return false;
-    }
+      if (openingTimesOnDay.closed) {
+        return `${
+          type === "operator" ? "Operator" : "Service"
+        } is closed on this date`;
+      }
 
-    if (!values.date) {
-      return false;
-    }
-
-    const openingTimesOnDay = getOpeningTimesOnDay();
-
-    if (openingTimesOnDay.allDay) {
-      return false;
-    }
-
-    if (openingTimesOnDay.closed) {
-      return true;
-    }
-
-    const openingTime = dayjs(openingTimesOnDay.openingTime, "HH:mm");
-    const closingTime = dayjs(openingTimesOnDay.closingTime, "HH:mm");
-
-    const time = dayjs(values.time, "HH:mm");
-    const isAfterOpening =
-      time.hour() < openingTime.hour()
-        ? false
-        : time.minute() >= openingTime.minute();
-    const isBeforeClosing =
-      time.hour() > closingTime.hour()
-        ? false
-        : time.minute() <= openingTime.minute();
-
-    return !(isAfterOpening && isBeforeClosing);
-  };
-
-  const getHelperText = () => {
-    if (!timeIsOutOfOpeningHours()) {
-      return undefined;
-    }
-
-    const openingTimesOnDay = getOpeningTimesOnDay();
-
-    if (openingTimesOnDay.closed) {
-      return "Operator is closed on this date";
-    }
-
-    return `Opening hours are ${formatTime(
-      openingTimesOnDay.openingTime || defaultOpeningDayTime.openingTime!
-    )} to ${formatTime(
-      openingTimesOnDay.closingTime || defaultOpeningDayTime.closingTime!
-    )}`;
-  };
+      return `${
+        type === "operator" ? "Operator" : "Service"
+      } opening hours are ${formatTime(
+        openingTimesOnDay.openingTime || defaultOpeningDayTime.openingTime!
+      )} to ${formatTime(
+        openingTimesOnDay.closingTime || defaultOpeningDayTime.closingTime!
+      )}`;
+    },
+    [values.date, values.time]
+  );
 
   return (
     <TextField
@@ -85,10 +46,29 @@ export const BookingTimeForm: React.FC<BookingDefaultFormsProps> = ({
       type="time"
       value={values.time}
       onChange={(e) => setValues({ ...values, time: e.currentTarget.value })}
-      disabled={!!isSubmitting || getOpeningTimesOnDay().closed}
+      disabled={
+        !!isSubmitting ||
+        getOpeningTimesOnDay(values.operator.openingTimes, values.date)
+          .closed ||
+        getOpeningTimesOnDay(values.service.openingTimes, values.date).closed
+      }
       inputProps={{ step: 300 }}
-      error={timeIsOutOfOpeningHours()}
-      helperText={getHelperText()}
+      error={
+        timeIsOutOfOpeningHours(
+          values.operator.openingTimes,
+          values.date,
+          values.time
+        ) ||
+        timeIsOutOfOpeningHours(
+          values.service.openingTimes,
+          values.date,
+          values.time
+        )
+      }
+      helperText={
+        getHelperText(values.operator.openingTimes, "operator") ||
+        getHelperText(values.service.openingTimes, "service")
+      }
     />
   );
 };
