@@ -9,7 +9,7 @@ interface Props {
 
 export const BookButton: React.FC<Props> = ({ onClick }) => {
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+    <Box sx={{ display: "flex", justifyContent: "center", mt: 3, mb: 3 }}>
       <button className={styles.glowOnHover} onClick={onClick}>
         Book now
       </button>
