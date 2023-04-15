@@ -1,4 +1,4 @@
-import { BookingNoId, BookingPriceDetails, ServiceNoId } from 'dtos';
+import { BookingNoId, BookingPriceDetails, PricingStrategyType, ServiceNoId } from 'dtos';
 
 export type ExtractInterface<T> = Pick<T, keyof T>;
 
@@ -150,3 +150,6 @@ export const bookingSatisfiesPeoplePolicy = (booking: BookingNoId, service: Serv
 
   return 'okay';
 }
+
+export const pricingStrategyProvidesNumberOfPeople = (pricingStrategy: PricingStrategyType) =>
+  (['perAdultAndChild', 'perAgeCohort', 'perPerson'] as PricingStrategyType[]).includes(pricingStrategy);

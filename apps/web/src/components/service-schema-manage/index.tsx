@@ -121,6 +121,7 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
                 content: (
                   <>
                     <DefaultBookingFieldsSelector
+                      pricingStrategy={values.pricingStrategy}
                       defaultBookingFields={values.defaultBookingFields}
                       onChange={(defaultBookingFields) =>
                         setValues({ ...values, defaultBookingFields })

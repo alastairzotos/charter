@@ -2,13 +2,14 @@ import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { ServiceSchemaDto, ServiceSchemaNoId } from "dtos";
 import { ServiceSchemaRepository } from "features/service-schemas/service-schema.repository";
 import { ServicesService } from "features/services/services.service";
+import { pricingStrategyProvidesNumberOfPeople } from "utils";
 
 @Injectable()
 export class ServiceSchemaService {
   constructor(
     private readonly serviceSchemaRepository: ServiceSchemaRepository,
     @Inject(forwardRef(() => ServicesService)) private readonly servicesService: ServicesService,
-  ) {}
+  ) { }
 
   async getServiceSchemas() {
     return await this.serviceSchemaRepository.getServiceSchemas();
@@ -31,7 +32,13 @@ export class ServiceSchemaService {
   }
 
   async updateServiceSchema(id: string, newServiceSchema: Partial<ServiceSchemaDto>) {
-    await this.serviceSchemaRepository.updateServiceSchema(id, newServiceSchema);
+    await this.serviceSchemaRepository.updateServiceSchema(id, {
+      ...newServiceSchema,
+      defaultBookingFields: newServiceSchema.defaultBookingFields
+        .filter(field => (
+          field !== 'numberOfPeople' || !pricingStrategyProvidesNumberOfPeople(newServiceSchema.pricingStrategy)
+        ))
+    });
 
     const updatedSchema = await this.serviceSchemaRepository.getServiceSchemaById(id);
     await this.servicesService.updateServicesWithNewServiceSchema(updatedSchema);

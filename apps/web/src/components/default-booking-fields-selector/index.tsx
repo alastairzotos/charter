@@ -1,14 +1,19 @@
+import InfoIcon from "@mui/icons-material/Info";
 import {
   Checkbox,
   FormControlLabel,
   FormGroup,
   FormLabel,
   Paper,
+  Tooltip,
 } from "@mui/material";
-import { DefaultBookingFieldType } from "dtos";
+import { Box } from "@mui/system";
+import { DefaultBookingFieldType, PricingStrategyType } from "dtos";
 import React from "react";
+import { pricingStrategyProvidesNumberOfPeople } from "utils";
 
 interface Props {
+  pricingStrategy: PricingStrategyType;
   defaultBookingFields: DefaultBookingFieldType[];
   onChange: (fields: DefaultBookingFieldType[]) => void;
 }
@@ -20,6 +25,7 @@ const fields: Array<{ type: DefaultBookingFieldType; label: string }> = [
 ];
 
 export const DefaultBookingFieldsSelector: React.FC<Props> = ({
+  pricingStrategy,
   defaultBookingFields,
   onChange,
 }) => {
@@ -29,24 +35,40 @@ export const DefaultBookingFieldsSelector: React.FC<Props> = ({
 
       <FormGroup sx={{ width: "100%" }}>
         {fields.map(({ type, label }) => (
-          <FormControlLabel
-            key={type}
-            label={label}
-            control={
-              <Checkbox
-                checked={defaultBookingFields.includes(type)}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    onChange([...defaultBookingFields, type]);
-                  } else {
-                    onChange(
-                      defaultBookingFields.filter((field) => field !== type)
-                    );
+          <Box sx={{ display: "flex" }}>
+            <FormControlLabel
+              key={type}
+              label={label}
+              control={
+                <Checkbox
+                  disabled={
+                    type === "numberOfPeople" &&
+                    pricingStrategyProvidesNumberOfPeople(pricingStrategy)
                   }
-                }}
-              />
-            }
-          />
+                  checked={defaultBookingFields.includes(type)}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      onChange([...defaultBookingFields, type]);
+                    } else {
+                      onChange(
+                        defaultBookingFields.filter((field) => field !== type)
+                      );
+                    }
+                  }}
+                />
+              }
+            />
+
+            {type === "numberOfPeople" &&
+              pricingStrategyProvidesNumberOfPeople(pricingStrategy) && (
+                <Tooltip
+                  arrow
+                  title="We can determine the number of people from the pricing strategy"
+                >
+                  <InfoIcon sx={{ color: "gray", mt: 1 }} />
+                </Tooltip>
+              )}
+          </Box>
         ))}
       </FormGroup>
     </Paper>
