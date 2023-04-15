@@ -17,7 +17,6 @@ import { calculateBookingPrice, createPriceString } from "utils";
 
 import { BookingAdditionalForms } from "src/components/booking-additonal-forms";
 import { BookingDefaultForms } from "src/components/booking-default-forms";
-import { BookingModal } from "src/components/booking-modal";
 import { BookingPayLaterForm } from "src/components/booking-payment-forms/booking-pay-later-form";
 import { BookingPayNowForm } from "src/components/booking-payment-forms/booking-pay-now-form";
 import { BookingPeoplePolicyFeedback } from "src/components/booking-people-policy-feedback";
@@ -93,7 +92,7 @@ export const BookingForm: React.FC<Props> = ({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <BookingModal>
+      <>
         <Formik
           initialValues={initialValues}
           validationSchema={bookingValidationSchema(schema.pricingStrategy)}
@@ -241,7 +240,7 @@ export const BookingForm: React.FC<Props> = ({
             </ErrorBoundary>
           )}
         </Formik>
-      </BookingModal>
+      </>
     </LocalizationProvider>
   );
 };

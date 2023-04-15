@@ -6,6 +6,7 @@ import { getReadablePricingStringsForService } from "utils";
 
 import { BookButton } from "src/components/book-button";
 import { BookingForm } from "src/components/booking-form";
+import { BookingModal } from "src/components/booking-modal";
 import { ImageGallery } from "src/components/image-gallery";
 import { KeyValues } from "src/components/key-values";
 import { MultilineText } from "src/components/multiline-text";
@@ -14,6 +15,7 @@ import { OperatorViewMobile } from "src/components/operator-view";
 import { ReadMore } from "src/components/read-more";
 import { UserServiceViewContent } from "src/components/user-service-view-content";
 import { UserServiceViewFields } from "src/components/user-service-view-fields";
+import { useIsDesktop } from "src/hooks/use-is-desktop";
 
 interface Props {
   bookingView?: boolean;
@@ -27,6 +29,7 @@ export const UserServiceView: React.FC<Props> = ({
   operator,
 }) => {
   const router = useRouter();
+  const isDesktop = useIsDesktop();
 
   const schema = service.serviceSchema;
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -46,6 +49,18 @@ export const UserServiceView: React.FC<Props> = ({
 
     return () => router.beforePopState(() => true);
   }, [router, bookingModalOpen]);
+
+  if (!isDesktop && bookingModalOpen) {
+    return (
+      <Paper sx={{ p: 4, m: -1 }}>
+        <BookingForm
+          operator={operator}
+          service={service}
+          onClose={() => setBookingModalOpen(false)}
+        />
+      </Paper>
+    );
+  }
 
   return (
     <Box sx={{ mt: 2 }}>
@@ -88,13 +103,13 @@ export const UserServiceView: React.FC<Props> = ({
       </Grid>
 
       <Modal open={bookingModalOpen} onClose={() => setBookingModalOpen(false)}>
-        <div>
+        <BookingModal>
           <BookingForm
             operator={operator}
             service={service}
             onClose={() => setBookingModalOpen(false)}
           />
-        </div>
+        </BookingModal>
       </Modal>
     </Box>
   );

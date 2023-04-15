@@ -1,12 +1,12 @@
-import { useMediaQuery, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+
+import { useIsDesktop } from "src/hooks/use-is-desktop";
 
 export const BookingModal: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
-  const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const isDesktop = useIsDesktop();
 
   return (
     <Box
