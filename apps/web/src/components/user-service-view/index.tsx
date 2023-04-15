@@ -1,10 +1,7 @@
-import ArrowBackIcon from "@mui/icons-material/ArrowBackIos";
-import { Box, Button, Grid, Modal, Paper, Typography } from "@mui/material";
+import { Box, Grid, Modal, Paper, Typography } from "@mui/material";
 import { OperatorDto, ServiceDto } from "dtos";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { urls } from "urls";
 import { getReadablePricingStringsForService } from "utils";
 
 import { BookButton } from "src/components/book-button";
@@ -51,22 +48,12 @@ export const UserServiceView: React.FC<Props> = ({
   }, [router, bookingModalOpen]);
 
   return (
-    <>
-      {!bookingView && (
-        <Button
-          component={Link}
-          href={urls.user.operator(operator)}
-          sx={{ mb: 2 }}
-        >
-          <ArrowBackIcon />
-          Back to services
-        </Button>
-      )}
-
+    <Box sx={{ mt: 2 }}>
       <Typography variant="h4" sx={{ mb: 3 }}>
         {service.name}
       </Typography>
-      <OperatorViewMobile operator={operator} />
+
+      <OperatorViewMobile linkToOperatorPage operator={operator} />
 
       <Grid container spacing={2} sx={{ mt: 1 }}>
         <Grid item xs={12} md={6}>
@@ -109,6 +96,6 @@ export const UserServiceView: React.FC<Props> = ({
           />
         </div>
       </Modal>
-    </>
+    </Box>
   );
 };

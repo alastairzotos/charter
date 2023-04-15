@@ -8,17 +8,21 @@ import {
   AccordionSummary,
   Avatar,
   Box,
+  Button,
   Paper,
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import { OperatorDto } from "dtos";
+import Link from "next/link";
 import React, { useState } from "react";
+import { urls } from "urls";
 
 import { OpeningTimesView } from "src/components/opening-times";
 
 interface Props {
   operator: OperatorDto;
+  linkToOperatorPage?: boolean;
 }
 
 interface InnerProps extends Props {
@@ -35,7 +39,11 @@ const OperatorViewTitle: React.FC<Props> = ({ operator }) => (
   </Box>
 );
 
-const OperatorViewInner: React.FC<InnerProps> = ({ operator, showTitle }) => {
+const OperatorViewInner: React.FC<InnerProps> = ({
+  operator,
+  showTitle,
+  linkToOperatorPage,
+}) => {
   return (
     <>
       {showTitle && <OperatorViewTitle operator={operator} />}
@@ -59,13 +67,19 @@ const OperatorViewInner: React.FC<InnerProps> = ({ operator, showTitle }) => {
 
       <OpeningTimesView openingTimes={operator.openingTimes} />
 
-      <Box sx={{ mt: 4, ml: 1 }}>
+      <Box sx={{ mt: 4, mb: 1, ml: 1 }}>
         {operator.description.split("\n").map((line, index) => (
           <Typography key={index} variant="subtitle2">
             {line}
           </Typography>
         ))}
       </Box>
+
+      {linkToOperatorPage && (
+        <Button component={Link} href={urls.user.operator(operator)}>
+          View services
+        </Button>
+      )}
     </>
   );
 };
