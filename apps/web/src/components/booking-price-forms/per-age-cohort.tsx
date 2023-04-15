@@ -17,7 +17,7 @@ export const PerAgeCohortPriceDetails: React.FC<BookingPriceProps> = ({
           inputProps={{
             min: 0,
           }}
-          label={`Number of ${cohort.name.toLocaleLowerCase()}`}
+          label={`Number of ${cohort.name.toLocaleLowerCase()} (Ages ${cohort.fromAge} to ${cohort.toAge})`}
           value={priceDetails.perAgeCohort?.guestsInCohorts[cohort.name]}
           onChange={(e) =>
             setPriceDetails({
