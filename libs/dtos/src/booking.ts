@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { OperatorDto } from "./operator";
+import { ServicePricingDto } from "./pricing";
 import { ServiceDto } from "./service";
 import { ServiceSchemaDto } from "./service-schema";
 
@@ -30,7 +31,7 @@ export type BookingPriceDetails = Partial<{
   tiered: TieredBookingPriceDetails;
 }>;
 
-export const getDefaultBookingPriceDetails = (): BookingPriceDetails => ({
+export const getDefaultBookingPriceDetails = (price: ServicePricingDto): BookingPriceDetails => ({
   perPerson: {
     numberOfPeople: 1,
   },
@@ -39,7 +40,13 @@ export const getDefaultBookingPriceDetails = (): BookingPriceDetails => ({
     childGuests: 0,
   },
   perAgeCohort: {
-    guestsInCohorts: {},
+    guestsInCohorts: price.perAgeCohort?.ageCohorts?.reduce<Record<string, number>>(
+      (acc, cur) => ({
+        ...acc,
+        [cur.name]: 0
+      }),
+      {}
+    ) || {},
   },
   tiered: {
     tier: ''

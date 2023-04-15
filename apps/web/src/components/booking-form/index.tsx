@@ -62,6 +62,12 @@ export const BookingForm: React.FC<Props> = ({
     }
   }, [booking?._id]);
 
+  const handleSetNumberOfPeopleInvalid = (invalid: boolean) => {
+    if (invalid !== isNumberOfPeopleInvalid) {
+      setIsNumberOfPeopleInvalid(invalid);
+    }
+  };
+
   const handleSubmit = async (booking: Omit<BookingNoId, "status">) =>
     await createBooking({ ...booking, status: "pending" });
 
@@ -70,7 +76,7 @@ export const BookingForm: React.FC<Props> = ({
     service,
     name: loggedInUser?.givenName || "",
     email: loggedInUser?.email || "",
-    priceDetails: getDefaultBookingPriceDetails(),
+    priceDetails: getDefaultBookingPriceDetails(service.price),
     additionalFields: {},
     ...getDefaultDefaultBookingFields(schema),
   };
@@ -148,7 +154,7 @@ export const BookingForm: React.FC<Props> = ({
                           <BookingPeoplePolicyFeedback
                             booking={values}
                             service={service}
-                            setError={setIsNumberOfPeopleInvalid}
+                            setError={handleSetNumberOfPeopleInvalid}
                           />
                         </>
                       ),
