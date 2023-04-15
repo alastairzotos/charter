@@ -33,9 +33,11 @@ export const Titled: React.FC<React.PropsWithChildren<Props>> = ({
             <Typography variant="h6">{title}</Typography>
           </Box>
 
-          <IconButton onClick={onClose}>
-            <CloseIcon />
-          </IconButton>
+          <div>
+            <IconButton onClick={onClose}>
+              <CloseIcon />
+            </IconButton>
+          </div>
         </Box>
 
         <Box sx={{ mt: 1 }}>{children}</Box>
