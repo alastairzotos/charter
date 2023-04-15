@@ -3,7 +3,6 @@ import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 
 import { getServiceByIdWithOperator } from "src/clients/services.client";
-import { OperatorLayout } from "src/components/operator-layout";
 import { SeoHead } from "src/components/seo/head";
 import { UserLayoutContainer } from "src/components/user-layout/container";
 import { UserServiceView } from "src/components/user-service-view";
@@ -20,9 +19,8 @@ const ServicePage: NextPage<Props> = ({ service, operator }) => {
         subtitle={`${service.name} by ${operator.name}`}
         description={service.description}
       />
-      <OperatorLayout operator={operator}>
-        <UserServiceView service={service} operator={operator} />
-      </OperatorLayout>
+
+      <UserServiceView service={service} operator={operator} />
     </UserLayoutContainer>
   );
 };

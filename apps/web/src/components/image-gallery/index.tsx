@@ -1,6 +1,5 @@
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import ReactImageGallery from "react-image-gallery";
@@ -43,46 +42,44 @@ export const ImageGallery: React.FC<Props> = ({ items }) => {
   }, [router, isFullscreen]);
 
   return (
-    <Box sx={{ mt: 3 }}>
-      <ReactImageGallery
-        ref={ref as any}
-        showPlayButton={false}
-        showFullscreenButton={true}
-        useBrowserFullscreen={false}
-        onScreenChange={setIsFullscreen}
-        showThumbnails={items.length > 1}
-        renderLeftNav={(onClick, disabled) => (
-          <ImageGalleryNavBase
-            onClick={onClick}
-            disabled={disabled}
-            position="left"
-          >
-            <ChevronLeftIcon fontSize="large" />
-          </ImageGalleryNavBase>
-        )}
-        renderRightNav={(onClick, disabled) => (
-          <ImageGalleryNavBase
-            onClick={onClick}
-            disabled={disabled}
-            position="right"
-          >
-            <ChevronRightIcon fontSize="large" />
-          </ImageGalleryNavBase>
-        )}
-        items={items.map((item) => ({
-          original: item,
-          thumbnail: item,
-          thumbnailHeight: 100,
-          originalHeight: 500,
-          renderItem: (item) => (
-            <ImageGalleryItem
-              url={item.original}
-              alt={item.originalAlt || "Operator photo"}
-              onClick={enterFullscreen}
-            />
-          ),
-        }))}
-      />
-    </Box>
+    <ReactImageGallery
+      ref={ref as any}
+      showPlayButton={false}
+      showFullscreenButton={false}
+      useBrowserFullscreen={false}
+      onScreenChange={setIsFullscreen}
+      showThumbnails={false}
+      renderLeftNav={(onClick, disabled) => (
+        <ImageGalleryNavBase
+          onClick={onClick}
+          disabled={disabled}
+          position="left"
+        >
+          <ChevronLeftIcon fontSize="large" />
+        </ImageGalleryNavBase>
+      )}
+      renderRightNav={(onClick, disabled) => (
+        <ImageGalleryNavBase
+          onClick={onClick}
+          disabled={disabled}
+          position="right"
+        >
+          <ChevronRightIcon fontSize="large" />
+        </ImageGalleryNavBase>
+      )}
+      items={items.map((item) => ({
+        original: item,
+        thumbnail: item,
+        thumbnailHeight: 100,
+        originalHeight: 500,
+        renderItem: (item) => (
+          <ImageGalleryItem
+            url={item.original}
+            alt={item.originalAlt || "Operator photo"}
+            onClick={enterFullscreen}
+          />
+        ),
+      }))}
+    />
   );
 };

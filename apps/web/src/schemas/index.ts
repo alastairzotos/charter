@@ -63,17 +63,18 @@ export const serviceValidationSchema: yup.SchemaOf<
     | "maxPeople"
     | "numberOfBookings"
     | "openingTimes"
+    | "price"
   >
 > = yup.object().shape({
   name: yup.string().required("Name is required"),
   description: yup.string().required("Description is required"),
   content: yup.object(),
-  price: yup.object(), // TODO: Use this. It won't let me save when creating a service -> priceValidationSchema,
+  // price: yup.object(), // TODO: Use this. It won't let me save when creating a service -> priceValidationSchema,
   photos: yup.array().of(yup.string().required("Photo is required")),
   data: yup.object(),
   serviceSchema: yup.object(),
-  hidden: yup.boolean().required(),
-  approveBookingBeforePayment: yup.boolean().required(),
+  hidden: yup.boolean() as any,
+  approveBookingBeforePayment: yup.boolean() as any,
 });
 
 export const perPersonBookingValidationSchema: yup.SchemaOf<PerPersonBookingPriceDetails> =

@@ -1,11 +1,11 @@
 import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { defaultOpeningDayTime, OperatorOpeningHoursDto } from "dtos";
+import { defaultOpeningDayTime, OpeningHoursDto } from "dtos";
 import React from "react";
 
 interface Props {
-  openingTimes: OperatorOpeningHoursDto;
-  setOpeningTimes: (openingTimes: OperatorOpeningHoursDto) => void;
+  openingTimes: OpeningHoursDto;
+  setOpeningTimes: (openingTimes: OpeningHoursDto) => void;
 }
 
 export const OpeningTimesDayForm: React.FC<Props> = ({
