@@ -4,7 +4,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { BookingDto, ServiceDto } from "dtos";
 import React, { useEffect } from "react";
 
-import { BookingModal } from "src/components/booking-modal";
 import { PaymentForm } from "src/components/booking-payment-forms/payment-form";
 import { StatusSwitch } from "src/components/status-switch";
 import { useCreatePaymentIntent } from "src/state/payments";
@@ -37,22 +36,20 @@ export const BookingPayNowForm: React.FC<Props> = ({ booking, service }) => {
   }
 
   return (
-    <BookingModal>
-      <StatusSwitch
-        status={paymentIntentCreateStatus}
-        error={<Typography>There was an error setting up payments</Typography>}
-      >
-        <Elements options={{ clientSecret }} stripe={stripePromise}>
-          <PaymentForm
-            service={service}
-            isLoading={confirmPaymentStatus === "fetching"}
-            errorData={errorData}
-            onSubmit={(stripe, elements) =>
-              confirmPayment(stripe, elements, booking._id)
-            }
-          />
-        </Elements>
-      </StatusSwitch>
-    </BookingModal>
+    <StatusSwitch
+      status={paymentIntentCreateStatus}
+      error={<Typography>There was an error setting up payments</Typography>}
+    >
+      <Elements options={{ clientSecret }} stripe={stripePromise}>
+        <PaymentForm
+          service={service}
+          isLoading={confirmPaymentStatus === "fetching"}
+          errorData={errorData}
+          onSubmit={(stripe, elements) =>
+            confirmPayment(stripe, elements, booking._id)
+          }
+        />
+      </Elements>
+    </StatusSwitch>
   );
 };
