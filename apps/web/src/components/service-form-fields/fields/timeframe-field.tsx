@@ -34,10 +34,10 @@ export const TimeframeField: React.FC<ServiceFieldProps> = ({
       ...(values as any),
       data: {
         ...values.data,
-        [key]: `${number} ${timestep}`,
+        [key]: isAllDay ? "All day" : `${number} ${timestep}`,
       },
     });
-  }, [number, timestep]);
+  }, [number, timestep, isAllDay]);
 
   const handleAllDayCheckboxClick = (checked: boolean) => {
     setIsAllDay(checked);
