@@ -45,6 +45,26 @@ export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
       <MuiAppBar position="fixed" sx={sx}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
+            {logo}
+
+            <Box sx={{ ml: 2, display: { xs: "none", md: "flex" } }}>
+              {Array.from(pages.keys()).map((url) => (
+                <Link key={url} href={url} style={{ textDecoration: "none" }}>
+                  <Button sx={{ my: 2, color: "white", display: "block" }}>
+                    {pages.get(url)}
+                  </Button>
+                </Link>
+              ))}
+            </Box>
+
+            {children}
+
+            <Box sx={{ display: "flex", flexGrow: 1 }} />
+
+            <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+              <AppBarLoginLogout />
+            </Box>
+
             {Array.from(pages.keys()).length > 0 && (
               <Box sx={{ display: { xs: "flex", md: "none" } }}>
                 <IconButton
@@ -72,6 +92,9 @@ export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
                     display: { xs: "block", md: "none" },
                   }}
                 >
+                  <MenuItem>
+                    <AppBarLoginLogout />
+                  </MenuItem>
                   {Array.from(pages.keys()).map((url) => (
                     <MenuItem key={url} onClick={() => handleClickUrl(url)}>
                       <Typography>{pages.get(url)}</Typography>
@@ -80,26 +103,6 @@ export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
                 </Menu>
               </Box>
             )}
-
-            {logo}
-
-            <Box sx={{ ml: 2, display: { xs: "none", md: "flex" } }}>
-              {Array.from(pages.keys()).map((url) => (
-                <Link key={url} href={url} style={{ textDecoration: "none" }}>
-                  <Button sx={{ my: 2, color: "white", display: "block" }}>
-                    {pages.get(url)}
-                  </Button>
-                </Link>
-              ))}
-            </Box>
-
-            {children}
-
-            <Box sx={{ display: "flex", flexGrow: 1 }} />
-
-            <Box sx={{ display: "flex", flexGrow: 0 }}>
-              <AppBarLoginLogout />
-            </Box>
           </Toolbar>
         </Container>
       </MuiAppBar>

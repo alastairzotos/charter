@@ -28,7 +28,7 @@ export const UserAppBar: React.FC = () => {
         </Link>
       }
     >
-      <ServiceSearch sx={{ ml: 3, mr: 3, width: 600, minWidth: 200 }} />
+      <ServiceSearch sx={{ ml: 3, mr: 3, width: 600, minWidth: 150 }} />
     </AppBarBase>
   );
 };
