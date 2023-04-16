@@ -1,4 +1,5 @@
 import { IconButton } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
 
 interface Props {
@@ -13,20 +14,23 @@ export const ImageGalleryNavBase: React.FC<React.PropsWithChildren<Props>> = ({
   position,
   children,
 }) => (
-  <IconButton
-    onClick={onClick}
-    disabled={disabled}
-    size="large"
+  <Box
     sx={{
       position: "absolute",
       left: position === "left" ? 0 : undefined,
       right: position === "right" ? 0 : undefined,
-      top: "50%",
+      height: "100%",
       zIndex: 100,
-      color: "white",
-      transform: "translateY(-50%)",
+      cursor: "pointer",
     }}
+    onClick={onClick as any}
   >
-    {children}
-  </IconButton>
+    <IconButton
+      disabled={disabled}
+      size="large"
+      sx={{ color: "white", top: "calc(50% - 20px)" }}
+    >
+      {children}
+    </IconButton>
+  </Box>
 );
