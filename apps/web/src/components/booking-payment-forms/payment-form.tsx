@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import {
   useStripe,
   useElements,
@@ -6,7 +6,9 @@ import {
 } from "@stripe/react-stripe-js";
 import { Stripe, StripeElements } from "@stripe/stripe-js";
 import { ServiceDto } from "dtos";
-import React from "react";
+import React, { useState } from "react";
+
+import { ShinyButton } from "src/components/shiny-button";
 
 interface Props {
   service: ServiceDto;
@@ -24,6 +26,8 @@ export const PaymentForm: React.FC<Props> = ({
 }) => {
   const stripe = useStripe();
   const elements = useElements();
+
+  const [isComplete, setComplete] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -53,23 +57,26 @@ export const PaymentForm: React.FC<Props> = ({
           options={{
             readOnly: isLoading,
           }}
+          onChange={(e) => setComplete(e.complete)}
         />
 
-        <Button
-          sx={{ mt: 2 }}
-          type="submit"
-          color="success"
-          disabled={isLoading || !stripe || !elements}
-          variant="contained"
-        >
-          {isLoading ? (
-            <CircularProgress size={20} />
-          ) : service.approveBookingBeforePayment ? (
-            "Book now"
-          ) : (
-            "Pay now"
-          )}
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 3, mb: 3 }}>
+          <ShinyButton
+            sx={{ mt: 2 }}
+            type="submit"
+            color="success"
+            disabled={isLoading || !isComplete || !stripe || !elements}
+            variant="contained"
+          >
+            {isLoading ? (
+              <CircularProgress size={20} />
+            ) : service.approveBookingBeforePayment ? (
+              "Book now"
+            ) : (
+              "Pay now"
+            )}
+          </ShinyButton>
+        </Box>
 
         {service.approveBookingBeforePayment && (
           <Typography variant="caption" sx={{ textAlign: "center", mt: 1 }}>

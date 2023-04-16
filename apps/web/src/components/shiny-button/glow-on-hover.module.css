@@ -32,6 +32,10 @@
   border-radius: 1000px;
 }
 
+.glowOnHover:disabled:before {
+  background: none;
+}
+
 .glowOnHover:hover {
   box-shadow: 0px 0px 20px #fff;
 }
@@ -44,6 +48,15 @@
   opacity: 0;
 }
 
+.glowOnHover:disabled:hover:after {
+  opacity: 1;
+}
+
+.glowOnHover:disabled:active:after {
+  opacity: 1;
+}
+
+
 .glowOnHover:after {
   z-index: -1;
   content: '';
@@ -54,7 +67,11 @@
   top: 0;
   border-radius: 1000px;
   background-color: #fff;
-  transition: opacity 0.2s linear;
+  transition: opacity 0.2s linear, background-color 0.3s linear;
+}
+
+.glowOnHover:disabled:after {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 @keyframes glowing {
