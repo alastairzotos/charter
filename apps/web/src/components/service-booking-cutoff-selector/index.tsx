@@ -34,6 +34,7 @@ export const ServiceBookingCutoffSelector: React.FC<Props> = ({
         label="Cutoff days"
         size="small"
         disabled={!values.hasCutoffDays}
+        inputProps={{ min: 0 }}
         value={values.cutoffDays || 0}
         onChange={(e) =>
           setValues({ ...values, cutoffDays: parseInt(e.target.value, 10) })

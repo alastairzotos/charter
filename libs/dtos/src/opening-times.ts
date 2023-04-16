@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+import { BookingNoId } from "./booking";
+import { ServiceDto } from "./service";
 
 export interface OpeningHoursDto {
   allDay?: boolean;
@@ -40,14 +42,24 @@ export const defaultOpeningTimes: Record<Day, OpeningHoursDto> = {
   Sun: defaultOpeningDayTime,
 };
 
-export const isDateDisabled = (operatorOpeningTimes: OpeningTimesDto, serviceOpeningTimes: OpeningTimesDto, day: dayjs.Dayjs) => {
-  const operatorOpeningTimesToday =
-    (operatorOpeningTimes || defaultOpeningTimes)[dayNumberToDayMap[day.day()]];
+const isClosedOnDay = (openingTimes: OpeningTimesDto, day: dayjs.Dayjs) => {
+  openingTimes = openingTimes || defaultOpeningTimes;
 
-  const serviceOpeningTimesToday =
-    (serviceOpeningTimes || defaultOpeningTimes)[dayNumberToDayMap[day.day()]];
+  const openingTimesToday = openingTimes[dayNumberToDayMap[day.day()]];
 
-  return operatorOpeningTimesToday.closed! || serviceOpeningTimesToday.closed!;
+  return openingTimesToday.closed!;
+}
+
+export const isDateDisabled = (booking: Omit<BookingNoId, 'status'>, day: dayjs.Dayjs) => 
+  isClosedOnDay(booking.operator.openingTimes, day)
+  || isClosedOnDay(booking.service.openingTimes, day);
+
+export const getNextAvailableBookingDate = (service: ServiceDto) => {
+  if (service.hasCutoffDays && !!service.cutoffDays) {
+    return dayjs().add(service.cutoffDays, 'days');
+  }
+
+  return dayjs();
 }
 
 export const getOpeningTimesOnDay = (openingTimes: OpeningTimesDto | undefined, date: string | undefined) => {

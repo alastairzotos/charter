@@ -109,6 +109,8 @@ export const ServiceCreate: React.FC<Props> = ({
             hidden: false,
             approveBookingBeforePayment: false,
             openingTimes: defaultOpeningTimes,
+            hasCutoffDays: true,
+            cutoffDays: 1,
           }}
           onSave={handleCreateService}
           saveStatus={createServiceStatus}

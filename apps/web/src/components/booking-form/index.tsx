@@ -77,7 +77,7 @@ export const BookingForm: React.FC<Props> = ({
     email: loggedInUser?.email || "",
     priceDetails: getDefaultBookingPriceDetails(service.price),
     additionalFields: {},
-    ...getDefaultDefaultBookingFields(schema),
+    ...getDefaultDefaultBookingFields(service),
   };
 
   const isSubmitting = createBookingStatus === "fetching";

@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
+import { getNextAvailableBookingDate } from "./opening-times";
 import { OperatorDto } from "./operator";
 import { ServicePricingDto } from "./pricing";
 import { ServiceDto } from "./service";
-import { ServiceSchemaDto } from "./service-schema";
 
 export type BookingStatus = 'pending' | 'confirmed' | 'rejected';
 export type BookingPaymentStatus = 'pending' | 'succeeded' | 'failed' | 'cancelled';
@@ -61,9 +61,11 @@ export interface DefaultBookingFields {
 
 export type DefaultBookingFieldType = keyof DefaultBookingFields;
 
-export const getDefaultDefaultBookingFields = (schema: ServiceSchemaDto): DefaultBookingFields => {
+export const getDefaultDefaultBookingFields = (service: ServiceDto): DefaultBookingFields => {
+  const schema = service.serviceSchema;
+
   return {
-    date: schema.defaultBookingFields.includes('date') ? dayjs().add(1, "day").format("DD MMM YYYY") : undefined,
+    date: schema.defaultBookingFields.includes('date') ? getNextAvailableBookingDate(service).format("DD MMM YYYY") : undefined,
     time: schema.defaultBookingFields.includes('time') ? '09:00' : undefined,
     numberOfPeople: schema.defaultBookingFields.includes('numberOfPeople') ? 1 : 0,
   }
