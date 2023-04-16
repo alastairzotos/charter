@@ -29,17 +29,16 @@ export const ServiceBookingCutoffSelector: React.FC<Props> = ({
         }
       />
 
-      {values.hasCutoffDays && (
-        <TextField
-          type="number"
-          label="Cutoff days"
-          size="small"
-          value={values.cutoffDays || 0}
-          onChange={(e) =>
-            setValues({ ...values, cutoffDays: parseInt(e.target.value, 10) })
-          }
-        />
-      )}
+      <TextField
+        type="number"
+        label="Cutoff days"
+        size="small"
+        disabled={!values.hasCutoffDays}
+        value={values.cutoffDays || 0}
+        onChange={(e) =>
+          setValues({ ...values, cutoffDays: parseInt(e.target.value, 10) })
+        }
+      />
     </Box>
   );
 };
