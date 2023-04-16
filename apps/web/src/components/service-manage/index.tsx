@@ -15,6 +15,7 @@ import { MinMaxPeopleSelector } from "src/components/min-max-people-selector";
 import { OpeningTimesForm } from "src/components/opening-times-form";
 import { PriceForm } from "src/components/price-forms";
 import { SaveAndDelete } from "src/components/save-delete";
+import { ServiceBookingCutoffSelector } from "src/components/service-booking-cutoff-selector";
 import { ServiceFormFields } from "src/components/service-form-fields";
 import { ServicePageContentEditor } from "src/components/service-page-content-editor";
 import { TabsProvider, TabsView } from "src/components/tabs";
@@ -214,6 +215,11 @@ export const ManageServiceForm: React.FC<Props> = ({
                           }
                         />
                       </Box>
+
+                      <ServiceBookingCutoffSelector
+                        values={values}
+                        setValues={setValues}
+                      />
                     </>
                   ),
                 },

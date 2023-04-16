@@ -6,6 +6,7 @@ import {
   Checkbox,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { parseTimeFrame } from "dtos";
 import React, { useEffect, useState } from "react";
 
 import { ServiceFieldProps } from "src/components/service-form-fields/fields/props";
@@ -15,15 +16,11 @@ export const TimeframeField: React.FC<ServiceFieldProps> = ({
   values,
   setValues,
 }) => {
-  const value = (values.data[key] as string) || "";
-  let initialNumber = "1";
-  let initialTimestep = "Hours";
-
-  const initialIsAllDay = value.trim() === "All day";
-
-  if (!initialIsAllDay) {
-    [initialNumber, initialTimestep] = value.trim().split(" ");
-  }
+  const {
+    allDay: initialIsAllDay,
+    number: initialNumber,
+    timestep: initialTimestep,
+  } = parseTimeFrame(values.data[key] as string);
 
   const [number, setNumber] = useState(initialNumber);
   const [timestep, setTimestep] = useState(initialTimestep);

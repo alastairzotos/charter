@@ -75,6 +75,8 @@ export const serviceValidationSchema: yup.SchemaOf<
   serviceSchema: yup.object(),
   hidden: yup.boolean() as any,
   approveBookingBeforePayment: yup.boolean() as any,
+  hasCutoffDays: yup.boolean(),
+  cutoffDays: yup.number(),
 });
 
 export const perPersonBookingValidationSchema: yup.SchemaOf<PerPersonBookingPriceDetails> =

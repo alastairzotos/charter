@@ -20,6 +20,8 @@ export interface ServiceDto {
   hidden: boolean;
   approveBookingBeforePayment: boolean;
   openingTimes: OpeningTimesDto;
+  hasCutoffDays?: boolean;
+  cutoffDays?: number;
 }
 
 export type ServiceNoId = Omit<ServiceDto, '_id'>;

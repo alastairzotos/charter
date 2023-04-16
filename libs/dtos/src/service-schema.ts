@@ -60,3 +60,24 @@ export const getDefaultValuesForServiceSchema = (serviceSchema: ServiceSchemaDto
     {}
   )
 }
+
+export interface ParsedTimeframe {
+  allDay: boolean;
+  number: string;
+  timestep: string;
+}
+
+export const parseTimeFrame = (
+  str: string = ""
+): ParsedTimeframe => {
+  let number = "1";
+  let timestep = "Hours";
+
+  const allDay = str.trim() === "All day";
+
+  if (!allDay) {
+    [number, timestep] = str.trim().split(" ");
+  }
+
+  return { allDay, number, timestep };
+}

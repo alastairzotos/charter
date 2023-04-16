@@ -50,6 +50,12 @@ export class Service implements ServiceDto {
 
   @Prop({ type: Object })
   openingTimes: OpeningTimesDto;
+
+  @Prop()
+  hasCutoffDays?: boolean;
+
+  @Prop()
+  cutoffDays?: number;
 }
 
 export const ServiceSchema = SchemaFactory.createForClass(Service);
