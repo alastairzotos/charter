@@ -21,6 +21,7 @@ import { TabsProvider, TabsView } from "src/components/tabs";
 import { TabsPrevNextButtons } from "src/components/tabs/prev-next-buttons";
 import { useOperatorDashboard } from "src/contexts/operator-dashboard";
 import { serviceValidationSchema } from "src/schemas";
+import { SETTINGS_WIDTH } from "src/util/misc";
 
 interface Props {
   operatorId: string;
@@ -66,7 +67,7 @@ export const ManageServiceForm: React.FC<Props> = ({
         }
       >
         {({ isValid, isSubmitting, values, setValues }) => (
-          <FormBox title={title} maxWidth={600}>
+          <FormBox title={title} maxWidth={SETTINGS_WIDTH}>
             <TabsProvider
               tabs={[
                 {
@@ -78,41 +79,6 @@ export const ManageServiceForm: React.FC<Props> = ({
                         name="name"
                         label="Service name"
                       />
-
-                      <Box sx={{ display: "flex" }}>
-                        {service.serviceSchema.shouldPayNow && (
-                          <FormControlLabel
-                            label="Approve booking before payment"
-                            control={
-                              <Checkbox
-                                checked={values.approveBookingBeforePayment}
-                                onChange={(e) => {
-                                  setValues({
-                                    ...values,
-                                    approveBookingBeforePayment:
-                                      e.currentTarget.checked,
-                                  });
-                                }}
-                              />
-                            }
-                          />
-                        )}
-
-                        <FormControlLabel
-                          label="Hide service from users"
-                          control={
-                            <Checkbox
-                              checked={values.hidden}
-                              onChange={(e) => {
-                                setValues({
-                                  ...values,
-                                  hidden: e.currentTarget.checked,
-                                });
-                              }}
-                            />
-                          }
-                        />
-                      </Box>
 
                       <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
                         <MinMaxPeopleSelector
@@ -208,6 +174,47 @@ export const ManageServiceForm: React.FC<Props> = ({
                         });
                       }}
                     />
+                  ),
+                },
+                {
+                  label: "Settings",
+                  content: (
+                    <>
+                      <Box sx={{ display: "flex" }}>
+                        {service.serviceSchema.shouldPayNow && (
+                          <FormControlLabel
+                            label="Approve booking before payment"
+                            control={
+                              <Checkbox
+                                checked={values.approveBookingBeforePayment}
+                                onChange={(e) => {
+                                  setValues({
+                                    ...values,
+                                    approveBookingBeforePayment:
+                                      e.currentTarget.checked,
+                                  });
+                                }}
+                              />
+                            }
+                          />
+                        )}
+
+                        <FormControlLabel
+                          label="Hide service from users"
+                          control={
+                            <Checkbox
+                              checked={values.hidden}
+                              onChange={(e) => {
+                                setValues({
+                                  ...values,
+                                  hidden: e.currentTarget.checked,
+                                });
+                              }}
+                            />
+                          }
+                        />
+                      </Box>
+                    </>
                   ),
                 },
               ]}

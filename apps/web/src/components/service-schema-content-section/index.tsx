@@ -14,6 +14,8 @@ import {
 } from "dtos";
 import React, { useId } from "react";
 
+import { SETTINGS_WIDTH } from "src/util/misc";
+
 interface Props {
   section: ServiceSchemaContentSectionDto;
   onChange: (section: ServiceSchemaContentSectionDto) => void;
@@ -38,7 +40,7 @@ export const ServiceSchemaContentSection: React.FC<Props> = ({
       />
 
       <TextField
-        sx={{ width: 600 }}
+        sx={{ width: SETTINGS_WIDTH }}
         size="small"
         label="Title"
         value={section.title}

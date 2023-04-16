@@ -5,6 +5,7 @@ import { ServiceCreateButton } from "src/components/service-create-button";
 import { ServiceListItem } from "src/components/service-list-item";
 import { StatusSwitch } from "src/components/status-switch";
 import { useLoadServicesIncludingHidden } from "src/state/services";
+import { SETTINGS_WIDTH } from "src/util/misc";
 
 interface Props {
   operatorId: string;
@@ -31,7 +32,13 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
     >
       <ServiceCreateButton operatorId={operatorId} />
 
-      <List sx={{ width: "100%", maxWidth: 600, bgcolor: "background.paper" }}>
+      <List
+        sx={{
+          width: "100%",
+          maxWidth: SETTINGS_WIDTH,
+          bgcolor: "background.paper",
+        }}
+      >
         {services?.map((service) => (
           <ServiceListItem
             key={service._id}

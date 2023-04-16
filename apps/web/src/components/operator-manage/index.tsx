@@ -14,6 +14,7 @@ import { SaveAndDelete } from "src/components/save-delete";
 import { TabsProvider, TabsView } from "src/components/tabs";
 import { UserSearch } from "src/components/user-search";
 import { useOperatorDashboard } from "src/contexts/operator-dashboard";
+import { SETTINGS_WIDTH } from "src/util/misc";
 
 interface Props {
   title: string;
@@ -72,7 +73,7 @@ export const ManageOperatorForm: React.FC<Props> = ({
       onSubmit={onSave}
     >
       {({ isValid, isSubmitting, values, setValues }) => (
-        <FormBox title={title} maxWidth={600}>
+        <FormBox title={title} maxWidth={SETTINGS_WIDTH}>
           <TabsProvider
             tabs={[
               {

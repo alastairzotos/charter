@@ -7,6 +7,7 @@ import { getReadableBookingDetails } from "utils";
 
 import { KeyValues } from "src/components/key-values";
 import { useGetBookingPaymentStatus } from "src/state/bookings";
+import { SETTINGS_WIDTH } from "src/util/misc";
 
 interface Props {
   booking: BookingDto;
@@ -103,7 +104,7 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
 
         {paymentStatus === "succeeded" && (
           <KeyValues
-            sx={{ maxWidth: 600, mt: 3 }}
+            sx={{ maxWidth: SETTINGS_WIDTH, mt: 3 }}
             kv={getReadableBookingDetails(booking)}
           />
         )}

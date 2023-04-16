@@ -10,6 +10,7 @@ import { KeyValues } from "src/components/key-values";
 import { DeleteConfirmModal } from "src/components/modals/delete-confirm";
 import { Titled } from "src/components/titled";
 import { useSetBookingStatus } from "src/state/bookings";
+import { SETTINGS_WIDTH } from "src/util/misc";
 
 interface Props {
   booking: BookingDto;
@@ -37,7 +38,7 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
   return (
     <Titled title={booking.service.name}>
       <KeyValues
-        sx={{ maxWidth: 600 }}
+        sx={{ maxWidth: SETTINGS_WIDTH }}
         kv={getReadableBookingDetails(booking)}
       />
 

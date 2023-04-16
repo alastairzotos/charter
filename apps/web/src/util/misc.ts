@@ -3,6 +3,8 @@ import dayjs from "dayjs";
 
 export const APP_NAME = "Corfu Travel Guide";
 
+export const SETTINGS_WIDTH = 800;
+
 export const pluralize = (
   num: number,
   item: string | { singular: string; plural: string }

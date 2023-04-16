@@ -2,6 +2,7 @@ import { Box } from "@mui/system";
 import React from "react";
 
 import { useIsDesktop } from "src/hooks/use-is-desktop";
+import { SETTINGS_WIDTH } from "src/util/misc";
 
 export const BookingModal: React.FC<React.PropsWithChildren> = ({
   children,
@@ -21,7 +22,7 @@ export const BookingModal: React.FC<React.PropsWithChildren> = ({
         boxSizing: "border-box",
         height: isDesktop ? "auto" : "100vh",
         width: isDesktop ? "85%" : "100vw",
-        maxWidth: isDesktop ? 600 : undefined,
+        maxWidth: isDesktop ? SETTINGS_WIDTH : undefined,
         overflow: "scroll",
       }}
     >

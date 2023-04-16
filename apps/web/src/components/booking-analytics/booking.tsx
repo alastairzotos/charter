@@ -7,6 +7,7 @@ import { getReadableBookingDetails } from "utils";
 import { KeyValues } from "src/components/key-values";
 import { StatusSwitch } from "src/components/status-switch";
 import { useLoadBooking } from "src/state/bookings";
+import { SETTINGS_WIDTH } from "src/util/misc";
 
 interface Props {
   bookingId: string;
@@ -26,7 +27,7 @@ export const BookingAnalyticsBooking: React.FC<Props> = ({ bookingId }) => {
     >
       {booking && (
         <KeyValues
-          sx={{ maxWidth: 600 }}
+          sx={{ maxWidth: SETTINGS_WIDTH }}
           kv={{
             Service: (
               <Link href={urls.user.service(booking.service)}>

@@ -22,6 +22,7 @@ import { ServiceSchemaCategorySelector } from "src/components/service-schema-cat
 import { ServiceSchemaContentSectionsSelector } from "src/components/service-schema-content-sections-selector";
 import { ServiceSchemaFieldsSelector } from "src/components/service-schema-fields-selector";
 import { TabsProvider, TabsView } from "src/components/tabs";
+import { SETTINGS_WIDTH } from "src/util/misc";
 
 interface Props {
   title: string;
@@ -56,7 +57,7 @@ export const ManageServiceSchemaForm: React.FC<Props> = ({
   return (
     <Formik initialValues={serviceSchema} onSubmit={onSave}>
       {({ isValid, values, setValues }) => (
-        <FormBox title={title} maxWidth={600}>
+        <FormBox title={title} maxWidth={SETTINGS_WIDTH}>
           <TabsProvider
             tabs={[
               {

@@ -10,6 +10,7 @@ import { urls } from "urls";
 import { FileUpload } from "src/components/file-upload";
 import { FormBox } from "src/components/form-box";
 import { SaveAndDelete } from "src/components/save-delete";
+import { SETTINGS_WIDTH } from "src/util/misc";
 
 interface Props {
   title: string;
@@ -44,7 +45,7 @@ export const ServiceSchemaCategoryManage: React.FC<Props> = ({
   return (
     <Formik initialValues={serviceSchemaCategory} onSubmit={onSave}>
       {({ isSubmitting, isValid, values, setValues }) => (
-        <FormBox title={title} maxWidth={600}>
+        <FormBox title={title} maxWidth={SETTINGS_WIDTH}>
           <Field name="name" label="Name" component={TextField} />
 
           <Field name="pluralName" label="Plural name" component={TextField} />
