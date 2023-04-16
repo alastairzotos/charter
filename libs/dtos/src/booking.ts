@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { getNextAvailableBookingDate } from "./opening-times";
 import { OperatorDto } from "./operator";
 import { ServicePricingDto } from "./pricing";

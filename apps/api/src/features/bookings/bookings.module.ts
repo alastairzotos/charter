@@ -8,6 +8,7 @@ import { BookingsService } from 'features/bookings/bookings.service';
 import { OperatorsModule } from 'features/operators/operators.module';
 import { PaymentsModule } from 'features/payments/payments.module';
 import { ServicesModule } from 'features/services/services.module';
+import { TemplatesModule } from 'features/templates/templates.module';
 import { UsersModule } from 'features/users/users.module';
 import { EmailModule } from 'integrations/email/email.module';
 import { Booking, BookingSchema } from 'schemas/booking.schema';
@@ -22,6 +23,7 @@ import { Service, ServiceSchema } from 'schemas/service.schema';
     UsersModule,
     EmailModule,
     forwardRef(() => PaymentsModule),
+    TemplatesModule,
     MongooseModule.forFeature([
       { name: Booking.name, schema: BookingSchema },
       { name: Operator.name, schema: OperatorSchema },

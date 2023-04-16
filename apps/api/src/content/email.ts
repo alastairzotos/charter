@@ -4,11 +4,7 @@ import { urls } from 'urls';
 import { getReadableBookingDetails } from 'utils';
 
 import { EnvService } from 'environment/environment.service';
-
-export interface EmailData {
-  subject: string;
-  content: string;
-}
+import { EmailData } from 'integrations/email/email.models';
 
 export const emailContent = (env: EnvService) => ({
   bookingMadeOperator: (booking: BookingDto): EmailData => {
@@ -64,24 +60,6 @@ export const emailContent = (env: EnvService) => ({
     `,
     }
   },
-
-  bookingMadeUser: (booking: BookingDto): EmailData => ({
-    subject: `Your booking with ${booking.operator.name}`,
-    content: dedent`
-      <h3>Hello ${booking.name}!</h3>
-      <p>Your booking has been successfully made with
-        <a href="${env.get().frontendUrl}${urls.user.operator(
-      booking.operator,
-    )}">${booking.operator.name}</a>
-        for
-        <a href="${env.get().frontendUrl}${urls.user.service(booking.service)}">${booking.service.name
-      }</a>
-      </p>
-      <p>You can view <a href="${env.get().frontendUrl}${urls.user.booking(
-        booking._id,
-      )}">this page</a> to view the booking</p>
-    `,
-  }),
 
   bookingMadeUserPending: (booking: BookingDto): EmailData => ({
     subject: `Your booking with ${booking.operator.name}`,

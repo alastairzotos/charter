@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as sgMail from '@sendgrid/mail';
 
-import { EmailData } from 'content/email';
 import { EnvService } from 'environment/environment.service';
+import { EmailData } from 'integrations/email/email.models';
 
 @Injectable()
 export class EmailService {

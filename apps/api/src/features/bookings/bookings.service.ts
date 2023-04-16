@@ -8,12 +8,14 @@ import { OperatorsService } from 'features/operators/operators.service';
 import { EmailService } from 'integrations/email/email.service';
 import { ServicesService } from 'features/services/services.service';
 import { PaymentsService } from 'features/payments/payments.service';
+import { TemplatesService } from 'features/templates/templates.service';
 
 @Injectable()
 export class BookingsService {
   constructor(
     private readonly envService: EnvService,
     private readonly operatorsService: OperatorsService,
+    private readonly templatesService: TemplatesService,
     private readonly emailService: EmailService,
     private readonly servicesService: ServicesService,
     private readonly bookingsRepository: BookingsRepository,
@@ -62,7 +64,7 @@ export class BookingsService {
         ),
         this.emailService.sendEmail(
           createdBooking.email,
-          emailContent(this.envService).bookingMadeUser(createdBooking),
+          this.templatesService.bookingMadeUser(createdBooking),
         ),
       ]);
     }
