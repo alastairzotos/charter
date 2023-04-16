@@ -73,44 +73,46 @@ export const ManageServiceForm: React.FC<Props> = ({
                   label: "Basics",
                   content: (
                     <>
-                      {service.serviceSchema.shouldPayNow && (
-                        <FormControlLabel
-                          label="Approve booking before payment"
-                          control={
-                            <Checkbox
-                              checked={values.approveBookingBeforePayment}
-                              onChange={(e) => {
-                                setValues({
-                                  ...values,
-                                  approveBookingBeforePayment:
-                                    e.currentTarget.checked,
-                                });
-                              }}
-                            />
-                          }
-                        />
-                      )}
-
-                      <FormControlLabel
-                        label="Hide service from users"
-                        control={
-                          <Checkbox
-                            checked={values.hidden}
-                            onChange={(e) => {
-                              setValues({
-                                ...values,
-                                hidden: e.currentTarget.checked,
-                              });
-                            }}
-                          />
-                        }
-                      />
-
                       <Field
                         component={TextField}
                         name="name"
                         label="Service name"
                       />
+
+                      <Box sx={{ display: "flex" }}>
+                        {service.serviceSchema.shouldPayNow && (
+                          <FormControlLabel
+                            label="Approve booking before payment"
+                            control={
+                              <Checkbox
+                                checked={values.approveBookingBeforePayment}
+                                onChange={(e) => {
+                                  setValues({
+                                    ...values,
+                                    approveBookingBeforePayment:
+                                      e.currentTarget.checked,
+                                  });
+                                }}
+                              />
+                            }
+                          />
+                        )}
+
+                        <FormControlLabel
+                          label="Hide service from users"
+                          control={
+                            <Checkbox
+                              checked={values.hidden}
+                              onChange={(e) => {
+                                setValues({
+                                  ...values,
+                                  hidden: e.currentTarget.checked,
+                                });
+                              }}
+                            />
+                          }
+                        />
+                      </Box>
 
                       <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
                         <MinMaxPeopleSelector
