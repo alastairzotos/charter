@@ -6,6 +6,7 @@ import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { BookingsService } from 'features/bookings/bookings.service';
 import { OperatorsService } from 'features/operators/operators.service';
 import { PaymentsService } from 'features/payments/payments.service';
+import { QRCodeService } from 'features/qr-code/qr-code.service';
 import { ServicesService } from 'features/services/services.service';
 import { TemplatesService } from 'features/templates/templates.service';
 import { EmailService } from 'integrations/email/email.service';
@@ -116,6 +117,10 @@ const templatesServiceMock: Partial<ExtractInterface<TemplatesService>> = {
   bookingMadeUser: jest.fn(() => ({ subject: '', content: '' })),
 }
 
+const qrCodeServiceMock: Partial<ExtractInterface<QRCodeService>> = {
+  createQRCodeForBooking: jest.fn()
+}
+
 const bookingsRepoMock: Partial<
   ExtractInterface<BookingsRepository>
 > = {
@@ -152,6 +157,7 @@ describe('BookingService', () => {
         bookingsRepoMock,
         paymentsServiceMock,
         templatesServiceMock,
+        qrCodeServiceMock,
       );
       await bookingsService.createBooking(mockBooking);
 
@@ -164,6 +170,10 @@ describe('BookingService', () => {
         mockBooking,
       );
     });
+
+    it('should generate a QR code', () => {
+      expect(qrCodeServiceMock.createQRCodeForBooking).toHaveBeenCalled();
+    })
 
     it('should send emails', () => {
       expect(emailServiceMock.sendEmail).toHaveBeenCalledTimes(2);
@@ -183,6 +193,7 @@ const createService = async (
   bookingsRepoMock: Partial<ExtractInterface<BookingsRepository>>,
   paymentsServiceMock: Partial<ExtractInterface<PaymentsService>>,
   templatesServiceMock: Partial<ExtractInterface<TemplatesService>>,
+  qrCodeServiceMock: Partial<ExtractInterface<QRCodeService>>,
 ) => {
   const testingModule = await Test.createTestingModule({
     providers: [
@@ -214,6 +225,10 @@ const createService = async (
       {
         provide: TemplatesService,
         useValue: templatesServiceMock,
+      },
+      {
+        provide: QRCodeService,
+        useValue: qrCodeServiceMock,
       }
     ],
   }).compile();

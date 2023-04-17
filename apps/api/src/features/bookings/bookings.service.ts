@@ -1,7 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { BookingDto, BookingNoId, BookingPaymentStatus, BookingStatus, LoggedInUserDetails, UserDetails } from 'dtos';
 
-import { EnvService } from 'environment/environment.service';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { OperatorsService } from 'features/operators/operators.service';
 import { EmailService } from 'integrations/email/email.service';
@@ -22,9 +21,7 @@ export class BookingsService {
 
     @Inject(forwardRef(() => PaymentsService))
     private readonly paymentsService: PaymentsService,
-  ) {
-    this.qrCodeService.createQRCodeForBooking({ _id: '643d167800941208b636db60' } as any);
-  }
+  ) {}
 
   async createBooking(booking: BookingNoId) {
     const service = booking.service;
