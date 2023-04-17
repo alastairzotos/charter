@@ -101,7 +101,22 @@ export const UserServiceView: React.FC<Props> = ({
           </Paper>
 
           {!bookingView && (
-            <BookButton onClick={() => setBookingModalOpen(true)} />
+            <>
+              <BookButton onClick={() => setBookingModalOpen(true)} />
+              {service.approveBookingBeforePayment && (
+                <Typography
+                  variant="subtitle2"
+                  fontSize={12}
+                  sx={{
+                    textAlign: "center",
+                    mb: 2,
+                  }}
+                >
+                  Payment won't be taken until the operator has approved your
+                  booking
+                </Typography>
+              )}
+            </>
           )}
         </Grid>
       </Grid>
