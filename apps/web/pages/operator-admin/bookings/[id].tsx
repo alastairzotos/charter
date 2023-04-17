@@ -1,15 +1,17 @@
-import { NextPage } from "next";
-import { useRouter } from "next/router";
+import { BookingDto } from "dtos";
+import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 import { urls } from "urls";
 
+import { getBookingById } from "src/clients/bookings.client";
 import { Breadcrumbs } from "src/components/breadcrumbs";
 import { OperatorBooking } from "src/components/operator-booking";
 
-const OperatorBookingPage: NextPage = () => {
-  const router = useRouter();
-  const id = router.query.id as string;
+interface Props {
+  booking: BookingDto;
+}
 
+const OperatorBookingPage: NextPage<Props> = ({ booking }) => {
   return (
     <>
       <Breadcrumbs
@@ -21,11 +23,21 @@ const OperatorBookingPage: NextPage = () => {
         current="Booking"
       />
 
-      <OperatorBooking id={id} />
+      <OperatorBooking booking={booking} />
     </>
   );
 };
 
-OperatorBookingPage.getInitialProps = () => ({});
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  params,
+}) => {
+  const id = params?.id as string;
+
+  return {
+    props: {
+      booking: await getBookingById(id),
+    },
+  };
+};
 
 export default OperatorBookingPage;

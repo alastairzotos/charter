@@ -32,6 +32,7 @@ export class BookingsController {
   }
 
   @Get(':id')
+  @Roles('all')
   async getBookingById(@Param('id') id: string) {
     return await this.bookingsService.getBookingById(id);
   }
