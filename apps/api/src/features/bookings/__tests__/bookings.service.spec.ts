@@ -7,6 +7,7 @@ import { BookingsService } from 'features/bookings/bookings.service';
 import { OperatorsService } from 'features/operators/operators.service';
 import { PaymentsService } from 'features/payments/payments.service';
 import { ServicesService } from 'features/services/services.service';
+import { TemplatesService } from 'features/templates/templates.service';
 import { EmailService } from 'integrations/email/email.service';
 import { ExtractInterface } from 'utils';
 
@@ -77,6 +78,7 @@ const mockBooking: BookingNoId = {
 
 const envServiceMock: ExtractInterface<EnvService> = {
   get: jest.fn(() => ({
+    nodeEnv: '',
     frontendUrl: 'foo.com',
     dbConnectionString: '',
     jwtSigningKey: '',
@@ -106,8 +108,13 @@ const servicesServiceMock: Partial<
 };
 
 const emailServiceMock: Partial<ExtractInterface<EmailService>> = {
-  sendEmail: jest.fn(async (to, emailData) => { }),
+  sendEmail: jest.fn(async () => { }),
 };
+
+const templatesServiceMock: Partial<ExtractInterface<TemplatesService>> = {
+  bookingMadeOperator: jest.fn(() => ({ subject: '', content: '' })),
+  bookingMadeUser: jest.fn(() => ({ subject: '', content: '' })),
+}
 
 const bookingsRepoMock: Partial<
   ExtractInterface<BookingsRepository>
@@ -144,6 +151,7 @@ describe('BookingService', () => {
         servicesServiceMock,
         bookingsRepoMock,
         paymentsServiceMock,
+        templatesServiceMock,
       );
       await bookingsService.createBooking(mockBooking);
 
@@ -174,6 +182,7 @@ const createService = async (
   servicesServiceMock: Partial<ExtractInterface<ServicesService>>,
   bookingsRepoMock: Partial<ExtractInterface<BookingsRepository>>,
   paymentsServiceMock: Partial<ExtractInterface<PaymentsService>>,
+  templatesServiceMock: Partial<ExtractInterface<TemplatesService>>,
 ) => {
   const testingModule = await Test.createTestingModule({
     providers: [
@@ -201,6 +210,10 @@ const createService = async (
       {
         provide: PaymentsService,
         useValue: paymentsServiceMock,
+      },
+      {
+        provide: TemplatesService,
+        useValue: templatesServiceMock,
       }
     ],
   }).compile();

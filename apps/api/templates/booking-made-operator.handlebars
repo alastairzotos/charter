@@ -1,0 +1,22 @@
+{{> heading }}
+
+<h3>Hello {{ operator.name }}</h3>
+<p>You have a new booking for <a href="{{ service.url }}">{{ service.name }}</a> on <strong>{{ booking.date }}</strong></p>
+<p>Here are the details:</p>
+
+<table class="data-table">
+  <tbody>
+    {{#each booking.details}}
+      <tr>
+        <td>
+          <strong>{{ this.key }}</strong>
+        </td>
+        <td>{{ this.value }}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<div class="spacer" />
+
+<a class="cta" href="{{ booking.url }}">View the booking</a>

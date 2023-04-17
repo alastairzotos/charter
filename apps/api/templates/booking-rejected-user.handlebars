@@ -1,0 +1,15 @@
+{{> heading }}
+
+<p>Hello {{ user.name }},</p>
+
+<p>
+  Unfortunately the operator has rejected your booking for <a href="{{ service.url }}">{{ service.name }}</a>
+</p>
+
+<p>This is likely because they are overbooked, so don't hesitate to try again later!</p>
+
+<p>In the meantime you can always visit our website to browse more services that you can book.</p>
+
+<div class="spacer" />
+
+<a href="{{ site.url }}" class="cta">Browse services</a>

@@ -1,0 +1,15 @@
+{{> heading }}
+
+<h3>Hello {{ user.name }}!</h3>
+
+<p>
+  Your booking has been made with <a href="{{ operator.url }}">{{ operator.name }}</a> for <a href="{{ service.url }}">{{ service.name }}</a>
+</p>
+
+<p>You will receive an email when the operator responds.</p>
+
+<p><strong>Important!</strong> Payment will only be taken if the operator approves your booking.</p>
+
+<div class="spacer" />
+
+<a href="{{ booking.url }}" class="cta">View booking</a>

@@ -3,7 +3,6 @@ import { BookingDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 
 import { getBookingWithOperatorAndService } from "src/clients/bookings.client";
-import { OperatorLayout } from "src/components/operator-layout";
 import { SeoHead } from "src/components/seo/head";
 import { UserBookingView } from "src/components/user-booking-view";
 import { UserLayoutContainer } from "src/components/user-layout/container";
@@ -24,13 +23,11 @@ const BookingPage: NextPage<Props> = ({ booking }) => {
       <UserBookingView booking={booking} />
 
       <Box sx={{ mt: 3 }}>
-        <OperatorLayout operator={booking.operator}>
-          <UserServiceView
-            bookingView
-            operator={booking.operator}
-            service={booking.service}
-          />
-        </OperatorLayout>
+        <UserServiceView
+          bookingView
+          operator={booking.operator}
+          service={booking.service}
+        />
       </Box>
     </UserLayoutContainer>
   );

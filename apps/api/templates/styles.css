@@ -1,3 +1,46 @@
-p {
-  color: red;
+body {
+  padding: 20px;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2em;
+}
+
+li, td {
+  color: rgba(0, 0, 0, 0.87);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.data-table {
+  width: 400px;
+  border-collapse: collapse;
+}
+
+.data-table tr {
+  border-bottom: 1px solid #afafaf;
+}
+
+.data-table td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.spacer {
+  padding-top: 30px;
+}
+
+.cta {
+  padding: 12px 30px;
+  background-color: #5483cf;
+  border-radius: 1000px;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.3s linear;
 }

@@ -1,7 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { BookingDto, BookingNoId, BookingPaymentStatus, BookingStatus, LoggedInUserDetails, UserDetails } from 'dtos';
 
-import { emailContent } from 'content/email';
 import { EnvService } from 'environment/environment.service';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { OperatorsService } from 'features/operators/operators.service';
@@ -13,7 +12,6 @@ import { TemplatesService } from 'features/templates/templates.service';
 @Injectable()
 export class BookingsService {
   constructor(
-    private readonly envService: EnvService,
     private readonly operatorsService: OperatorsService,
     private readonly templatesService: TemplatesService,
     private readonly emailService: EmailService,
@@ -60,7 +58,7 @@ export class BookingsService {
         this.servicesService.addBookingToService(createdBooking.service._id),
         this.emailService.sendEmail(
           createdBooking.operator.email,
-          emailContent(this.envService).bookingMadeOperator(createdBooking),
+          this.templatesService.bookingMadeOperator(createdBooking),
         ),
         this.emailService.sendEmail(
           createdBooking.email,
@@ -116,8 +114,8 @@ export class BookingsService {
 
     const email =
       status === 'confirmed'
-        ? emailContent(this.envService).bookingConfirmedUser(booking)
-        : emailContent(this.envService).bookingRejectedUser(booking);
+        ? this.templatesService.bookingConfirmedUser(booking)
+        : this.templatesService.bookingRejectedUser(booking);
 
     await this.emailService.sendEmail(booking.email, email);
   }
@@ -126,11 +124,11 @@ export class BookingsService {
     await Promise.all([
       this.emailService.sendEmail(
         booking.email,
-        emailContent(this.envService).bookingMadeUserPending(booking)
+        this.templatesService.bookingMadeUserPending(booking),
       ),
       this.emailService.sendEmail(
         booking.operator.email,
-        emailContent(this.envService).bookingMadeOperatorActionRequired(booking),
+        this.templatesService.bookingMadeOperatorActionRequired(booking),
       )
     ])
   }
