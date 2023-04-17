@@ -6,6 +6,8 @@ import {
   TextField,
   Paper,
   IconButton,
+  Slider,
+  FormLabel,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { AgeCohortPrice } from "dtos";
@@ -76,40 +78,36 @@ export const PerAgeCohortPriceForm: React.FC<PriceFormProps> = ({
         {cohorts.map((cohort, index) => (
           <Box
             key={index}
-            sx={{ width: "100%", display: "flex", mt: 2, gap: 1 }}
+            sx={{ width: "100%", display: "flex", mt: 2, gap: 3 }}
           >
             <TextField
               label="Name"
+              size="small"
               value={cohort.name}
               onChange={(e) => renameCohort(index, e.currentTarget.value)}
               sx={{ flexGrow: 1 }}
             />
-            <TextField
-              label="From age"
-              type="number"
-              value={cohort.fromAge}
-              onChange={(e) =>
-                updateCohort(index, {
-                  fromAge: parseInt(e.currentTarget.value, 10),
-                })
-              }
-              sx={{ flexGrow: 0 }}
-            />
-            <TextField
-              label="To age"
-              type="number"
-              value={cohort.toAge}
-              onChange={(e) =>
-                updateCohort(index, {
-                  toAge: parseInt(e.currentTarget.value, 10),
-                })
-              }
-              sx={{ flexGrow: 0 }}
-            />
+            <Box sx={{ minWidth: 300, maxWidth: 300 }}>
+              <FormLabel sx={{ fontSize: "0.8em" }}>Age range</FormLabel>
+              <Slider
+                valueLabelDisplay="auto"
+                size="small"
+                value={[cohort.fromAge, cohort.toAge]}
+                sx={{ maxWidth: 300 }}
+                min={0}
+                max={100}
+                onChange={(_, value: number | number[]) => {
+                  const [fromAge, toAge] = value as number[];
+                  updateCohort(index, { fromAge, toAge });
+                }}
+              />
+            </Box>
             <TextField
               label="Price"
               type="number"
+              size="small"
               value={cohort.price}
+              inputProps={{ min: 1 }}
               onChange={(e) =>
                 updateCohort(index, {
                   price: parseFloat(e.currentTarget.value),
