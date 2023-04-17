@@ -41,7 +41,7 @@ export const ServiceSchemaCategorySelector: React.FC<Props> = ({
         <Select
           labelId="schema-category-label"
           label="Schema category"
-          value={value}
+          value={value?._id}
           onChange={(e) =>
             onChange(
               // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain

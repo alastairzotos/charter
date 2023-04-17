@@ -15,7 +15,7 @@ export class ServiceSchemaRepository {
   }
 
   async getServiceSchemaById(id: string) {
-    return await this.serviceSchemasModel.findById(id);
+    return await this.serviceSchemasModel.findById(id).populate('schemaCategory');
   }
 
   async getServicesSchemasByCategoryId(categoryId: string) {
