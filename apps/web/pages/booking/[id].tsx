@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { BookingDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 
@@ -6,7 +5,6 @@ import { getBookingWithOperatorAndService } from "src/clients/bookings.client";
 import { SeoHead } from "src/components/seo/head";
 import { UserBookingView } from "src/components/user-booking-view";
 import { UserLayoutContainer } from "src/components/user-layout/container";
-import { UserServiceView } from "src/components/user-service-view";
 
 interface Props {
   booking: BookingDto;
@@ -21,14 +19,6 @@ const BookingPage: NextPage<Props> = ({ booking }) => {
       />
 
       <UserBookingView booking={booking} />
-
-      <Box sx={{ mt: 3 }}>
-        <UserServiceView
-          bookingView
-          operator={booking.operator}
-          service={booking.service}
-        />
-      </Box>
     </UserLayoutContainer>
   );
 };

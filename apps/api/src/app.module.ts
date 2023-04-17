@@ -10,6 +10,7 @@ import { ImagesModule } from 'features/images/images.module';
 import { OAuth2Module } from 'features/oauth2/oauth2.module';
 import { OperatorsModule } from 'features/operators/operators.module';
 import { PaymentsModule } from 'features/payments/payments.module';
+import { QRCodeModule } from 'features/qr-code/qr-code.module';
 import { SearchModule } from 'features/search/search.module';
 import { ServiceSchemaCategoriesModule } from 'features/service-schema-categories/service-schema-categories.module';
 import { ServiceSchemaModule } from 'features/service-schemas/service-schema.module';
@@ -41,6 +42,7 @@ import { RawBodyMiddleware } from 'middleware/raw-body.middleware';
     SearchModule,
     OAuth2Module,
     TemplatesModule,
+    QRCodeModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],

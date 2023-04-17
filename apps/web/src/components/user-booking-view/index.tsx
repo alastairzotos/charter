@@ -1,12 +1,13 @@
-import { Box, Button, LinearProgress, Typography } from "@mui/material";
+import { Box, Button, LinearProgress, Paper, Typography } from "@mui/material";
 import { BookingDto } from "dtos";
 import Link from "next/link";
 import React, { useEffect, useRef } from "react";
 import { urls } from "urls";
-import { getReadableBookingDetails } from "utils";
+import { getQrCodeFilePath, getReadableBookingDetails } from "utils";
 
 import { KeyValues } from "src/components/key-values";
 import { useGetBookingPaymentStatus } from "src/state/bookings";
+import { getEnv } from "src/util/env";
 import { SETTINGS_WIDTH } from "src/util/misc";
 
 interface Props {
@@ -34,7 +35,7 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
   }, [paymentStatus]);
 
   return (
-    <>
+    <Paper sx={{ p: 3 }}>
       <Typography variant="h4">
         Your booking with {booking.operator.name}
       </Typography>
@@ -95,10 +96,29 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
             ))}
 
           {paymentStatus === "succeeded" && (
-            <Typography>
-              Your booking is a success! Get ready to enjoy{" "}
-              <strong>{booking.service.name}!</strong>
-            </Typography>
+            <>
+              <Typography>
+                Your booking is a success! Get ready to enjoy{" "}
+                <a href={urls.user.service(booking.service)} target="_blank">
+                  {booking.service.name}!
+                </a>
+              </Typography>
+
+              <Typography sx={{ mt: 2 }}>
+                Verify your booking with the operator by showing them the QR
+                code below.
+              </Typography>
+              <Typography>
+                You will also receive this in a confirmation email.
+              </Typography>
+              <img
+                src={`${getEnv().awsCloudfrontDomain}${getQrCodeFilePath(
+                  booking
+                )}`}
+                width="250"
+                height="250"
+              />
+            </>
           )}
         </Box>
 
@@ -109,6 +129,6 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
           />
         )}
       </Box>
-    </>
+    </Paper>
   );
 };

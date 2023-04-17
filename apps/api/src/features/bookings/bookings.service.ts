@@ -8,6 +8,7 @@ import { EmailService } from 'integrations/email/email.service';
 import { ServicesService } from 'features/services/services.service';
 import { PaymentsService } from 'features/payments/payments.service';
 import { TemplatesService } from 'features/templates/templates.service';
+import { QRCodeService } from 'features/qr-code/qr-code.service';
 
 @Injectable()
 export class BookingsService {
@@ -17,10 +18,13 @@ export class BookingsService {
     private readonly emailService: EmailService,
     private readonly servicesService: ServicesService,
     private readonly bookingsRepository: BookingsRepository,
+    private readonly qrCodeService: QRCodeService,
 
     @Inject(forwardRef(() => PaymentsService))
     private readonly paymentsService: PaymentsService,
-  ) { }
+  ) {
+    this.qrCodeService.createQRCodeForBooking({ _id: '643d167800941208b636db60' } as any);
+  }
 
   async createBooking(booking: BookingNoId) {
     const service = booking.service;
@@ -35,6 +39,8 @@ export class BookingsService {
     if (!service.serviceSchema.shouldPayNow) {
       await this.setBookingPaymentStatus(createdBooking._id, 'succeeded');
     }
+
+    await this.qrCodeService.createQRCodeForBooking(createdBooking);
     
     return createdBooking;
   }

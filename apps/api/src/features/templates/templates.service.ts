@@ -11,6 +11,7 @@ import { BookingDto } from 'dtos';
 import { urls } from 'urls';
 import { EmailData } from 'integrations/email/email.models';
 import { getReadableBookingDetails } from 'utils';
+import { QRCodeService } from 'features/qr-code/qr-code.service';
 
 @Injectable()
 export class TemplatesService {
@@ -18,7 +19,10 @@ export class TemplatesService {
   private styles = this.loadStyles();
   private templates = this.loadTemplates();
 
-  constructor(private readonly env: EnvService) { }
+  constructor(
+    private readonly env: EnvService,
+    private readonly qrCodeService: QRCodeService,
+  ) { }
 
   bookingMadeUser(booking: BookingDto): EmailData {
     return {
@@ -36,7 +40,8 @@ export class TemplatesService {
           url: this.link(urls.user.service(booking.service)),
         },
         booking: {
-          url: this.link(urls.user.booking(booking._id))
+          url: this.link(urls.user.booking(booking._id)),
+          qrCodeUrl: this.qrCodeService.getUrlForBookingQRCode(booking),
         }
       })
     }
@@ -76,7 +81,8 @@ export class TemplatesService {
           url: this.link(urls.user.service(booking.service)),
         },
         booking: {
-          url: this.link(urls.user.booking(booking._id))
+          url: this.link(urls.user.booking(booking._id)),
+          qrCodeUrl: this.qrCodeService.getUrlForBookingQRCode(booking),
         }
       })
     }

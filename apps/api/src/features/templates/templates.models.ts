@@ -12,6 +12,7 @@ export interface BookingMadeUserProps {
   };
   booking: {
     url: string;
+    qrCodeUrl: string;
   };
 }
 
@@ -72,6 +73,7 @@ export interface BookingConfirmedUserProps {
   };
   booking: {
     url: string;
+    qrCodeUrl: string;
   }
 }
 

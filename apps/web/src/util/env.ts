@@ -8,4 +8,6 @@ export const getEnv = () => ({
   fbAppId: getConfig().publicRuntimeConfig.NEXT_PUBLIC_FB_APP_ID as string,
   googleClientId: getConfig().publicRuntimeConfig
     .NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
+  awsCloudfrontDomain: getConfig().publicRuntimeConfig
+    .NEXT_PUBLIC_AWS_CLOUDFRONT_DOMAIN as string,
 });

@@ -1,4 +1,4 @@
-import { BookingNoId, BookingPriceDetails, PricingStrategyType, ServiceNoId } from 'dtos';
+import { BookingDto, BookingNoId, BookingPriceDetails, PricingStrategyType, ServiceNoId } from 'dtos';
 
 export type ExtractInterface<T> = Pick<T, keyof T>;
 
@@ -153,3 +153,6 @@ export const bookingSatisfiesPeoplePolicy = (booking: BookingNoId, service: Serv
 
 export const pricingStrategyProvidesNumberOfPeople = (pricingStrategy: PricingStrategyType) =>
   (['perAdultAndChild', 'perAgeCohort', 'perPerson'] as PricingStrategyType[]).includes(pricingStrategy);
+
+export const getQrCodeFilePath = (booking: BookingDto) =>
+  `qr-code:${booking._id}`;
