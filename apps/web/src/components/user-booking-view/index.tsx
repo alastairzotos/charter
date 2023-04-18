@@ -112,9 +112,9 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
                 You will also receive this in a confirmation email.
               </Typography>
               <img
-                src={`${getEnv().awsCloudfrontDomain}${getQrCodeFilePathForBooking(
-                  booking
-                )}`}
+                src={`${
+                  getEnv().awsCloudfrontDomain
+                }${getQrCodeFilePathForBooking(booking)}`}
                 width="250"
                 height="250"
               />
