@@ -80,6 +80,8 @@ const mockBooking: BookingNoId = {
 const envServiceMock: ExtractInterface<EnvService> = {
   get: jest.fn(() => ({
     nodeEnv: '',
+    server: '',
+    appName: '',
     frontendUrl: 'foo.com',
     dbConnectionString: '',
     jwtSigningKey: '',

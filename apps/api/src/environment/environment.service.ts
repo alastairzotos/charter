@@ -4,6 +4,8 @@ import { Injectable } from '@nestjs/common';
 export class EnvService {
   private readonly env_vars = {
     nodeEnv: process.env.NODE_ENV as string | undefined,
+    appName: process.env.APP_NAME as string,
+    server: process.env.SERVER as string,
     frontendUrl: process.env.FRONTEND_URL as string,
     dbConnectionString: process.env.DB_CONNECTION_STRING as string,
     jwtSigningKey: process.env.JWT_SIGNING_KEY as string,

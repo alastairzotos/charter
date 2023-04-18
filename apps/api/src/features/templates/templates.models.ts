@@ -89,3 +89,17 @@ export interface BookingRejectedUserProps {
     url: string;
   }
 }
+
+export interface OperatorPromotedProps {
+  operator: {
+    name: string;
+  };
+  site: {
+    url: string;
+    name: string;
+  };
+  app: {
+    url: string;
+    qrCodeUrl: string;
+  };
+}

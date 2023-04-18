@@ -2,8 +2,11 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { OperatorDto, OperatorNoId } from 'dtos';
 
 import { OperatorsRepository } from 'features/operators/operators.repository';
+import { QRCodeService } from 'features/qr-code/qr-code.service';
 import { ServicesService } from 'features/services/services.service';
+import { TemplatesService } from 'features/templates/templates.service';
 import { UsersService } from 'features/users/users.service';
+import { EmailService } from 'integrations/email/email.service';
 
 @Injectable()
 export class OperatorsService {
@@ -12,6 +15,9 @@ export class OperatorsService {
     private readonly servicesService: ServicesService,
     private readonly operatorsRepo: OperatorsRepository,
     private readonly usersService: UsersService,
+    private readonly emailService: EmailService,
+    private readonly templatesService: TemplatesService,
+    private readonly qrCodeService: QRCodeService,
   ) {}
 
   async getOperators() {
@@ -41,15 +47,39 @@ export class OperatorsService {
   }
 
   async createOperator(operator: OperatorNoId) {
-    return await this.operatorsRepo.createOperator(operator);
+    const createdOperator = await this.operatorsRepo.createOperator(operator);
+
+    if (!!operator.owner) {
+      if (await this.usersService.promoteBasicUserToOperator(operator.owner._id)) {
+        await this.emailOperatorAfterPromotion(operator as OperatorDto)
+      }
+    }
+
+    return createdOperator;
   }
 
   async updateOperator(id: string, newOperator: Partial<OperatorDto>) {
     await this.operatorsRepo.updateOperator(id, newOperator);
 
     if (!!newOperator.owner) {
-      await this.usersService.promoteBasicUserToOperator(newOperator.owner._id);
+      if (await this.usersService.promoteBasicUserToOperator(newOperator.owner._id)) {
+        await this.emailOperatorAfterPromotion(newOperator as OperatorDto);
+      }
     }
+  }
+
+  async emailOperatorAfterPromotion(operator: OperatorDto) {
+    await this.qrCodeService.createQRCodeForOperatorSignup(operator);
+    await Promise.all([
+      this.emailService.sendEmail(
+        operator.email,
+        this.templatesService.operatorPromoted(operator)
+      ),
+      this.emailService.sendEmail(
+        operator.owner.email,
+        this.templatesService.operatorPromoted(operator)
+      ),
+    ])
   }
 
   async deleteOperator(id: string) {

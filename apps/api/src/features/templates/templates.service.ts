@@ -6,11 +6,11 @@ import * as juice from 'juice';
 
 import { Injectable } from "@nestjs/common";
 import { EnvService } from "environment/environment.service";
-import { BookingConfirmedUserProps, BookingMadeOperatorActionRequiredProps, BookingMadeOperatorProps, BookingMadeUserPendingProps, BookingMadeUserProps, BookingRejectedUserProps } from 'features/templates/templates.models';
-import { BookingDto } from 'dtos';
+import { BookingConfirmedUserProps, BookingMadeOperatorActionRequiredProps, BookingMadeOperatorProps, BookingMadeUserPendingProps, BookingMadeUserProps, BookingRejectedUserProps, OperatorPromotedProps } from 'features/templates/templates.models';
+import { BookingDto, OperatorDto } from 'dtos';
 import { urls } from 'urls';
 import { EmailData } from 'integrations/email/email.models';
-import { getReadableBookingDetails } from 'utils';
+import { getQrCodeFilePathForOperatorSignup, getReadableBookingDetails } from 'utils';
 import { QRCodeService } from 'features/qr-code/qr-code.service';
 
 @Injectable()
@@ -154,6 +154,25 @@ export class TemplatesService {
     }
   }
 
+  operatorPromoted(operator: OperatorDto): EmailData {
+    return {
+      subject: `[ACTION REQUIRED] You have been made an operator on ${this.env.get().appName}`,
+      content: this.templates.operatorPromoted({
+        operator: {
+          name: operator.owner.givenName,
+        },
+        site: {
+          name: this.env.get().appName,
+          url: this.env.get().frontendUrl,
+        },
+        app: {
+          url: '',
+          qrCodeUrl: this.qrCodeService.getUrlForOperatorSignup(operator)
+        }
+      })
+    }
+  }
+
   private loadTemplates() {
     this.loadPartials();
 
@@ -164,6 +183,7 @@ export class TemplatesService {
       bookingRejectedUser: this.compileTemplate<BookingRejectedUserProps>('booking-rejected-user'),
       bookingMadeOperator: this.compileTemplate<BookingMadeOperatorProps>('booking-made-operator'),
       bookingMadeOperatorActionRequired: this.compileTemplate<BookingMadeOperatorActionRequiredProps>('booking-made-operator-action-required'),
+      operatorPromoted: this.compileTemplate<OperatorPromotedProps>('operator-promoted'),
     }
   }
 

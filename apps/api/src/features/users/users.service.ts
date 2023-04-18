@@ -39,9 +39,13 @@ export class UsersService {
   async promoteBasicUserToOperator(id: string) {
     const user = await this.usersRepository.getUserById(id);
 
-    if (!!user && (!user.role || user.role === 'user')) {
+    // if (!!user && (!user.role || user.role === 'user')) {
+    if (!!user) {
       await this.usersRepository.setUserRole(id, 'operator');
+      return true;
     }
+
+    return false;
   }
 
   async registerUser({
