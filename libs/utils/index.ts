@@ -62,6 +62,18 @@ export const getReadableBookingDetails = (booking: BookingNoId): Record<string, 
     Email: booking.email,
   };
 
+  if (schema.defaultBookingFields.includes('date')) {
+    obj['Date'] = booking.date!;
+  }
+
+  if (schema.defaultBookingFields.includes('time')) {
+    obj['Time'] = booking.time!;
+  }
+
+  if (schema.defaultBookingFields.includes('numberOfPeople')) {
+    obj['Number of people'] = `${booking.numberOfPeople!}`;
+  }
+
   switch (schema.pricingStrategy) {
     case 'onPremises': break
     case 'fixed': break;
@@ -87,22 +99,6 @@ export const getReadableBookingDetails = (booking: BookingNoId): Record<string, 
       break;
   }
 
-  if (schema.defaultBookingFields.includes('date')) {
-    obj['Date'] = booking.date!;
-  }
-
-  if (schema.defaultBookingFields.includes('time')) {
-    obj['Time'] = booking.time!;
-  }
-
-  if (schema.defaultBookingFields.includes('numberOfPeople')) {
-    obj['Number of people'] = `${booking.numberOfPeople!}`;
-  }
-
-  if (schema.shouldPayNow) {
-    obj['Price'] = createPriceString(calculateBookingPrice(booking.priceDetails, booking.service));
-  }
-
   if (!!booking.additionalFields) {
     Object.keys(booking.additionalFields).map(key => {
       const schemaField = booking.service.serviceSchema.additionalBookingFields.find(field => field.key === key);
@@ -114,6 +110,10 @@ export const getReadableBookingDetails = (booking: BookingNoId): Record<string, 
 
   if (!!booking.notes) {
     obj['Notes'] = booking.notes;
+  }
+
+  if (schema.shouldPayNow) {
+    obj['Price'] = createPriceString(calculateBookingPrice(booking.priceDetails, booking.service));
   }
 
   return obj;
