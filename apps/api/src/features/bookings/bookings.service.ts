@@ -8,6 +8,7 @@ import { ServicesService } from 'features/services/services.service';
 import { PaymentsService } from 'features/payments/payments.service';
 import { TemplatesService } from 'features/templates/templates.service';
 import { QRCodeService } from 'features/qr-code/qr-code.service';
+import { getReadableBookingDetails } from 'utils';
 
 @Injectable()
 export class BookingsService {
@@ -81,6 +82,16 @@ export class BookingsService {
 
   async getBookingById(id: string) {
     return await this.bookingsRepository.getBookingById(id);
+  }
+
+  async getReadableBookingById(id: string) {
+    const booking = await this.bookingsRepository.getBookingById(id);
+
+    if (!booking) {
+      return null;
+    }
+
+    return getReadableBookingDetails(booking);
   }
 
   async getBookingByPaymentIntentId(paymentIntentId: string) {

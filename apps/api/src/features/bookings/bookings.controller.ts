@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -35,6 +36,18 @@ export class BookingsController {
   @Roles('all')
   async getBookingById(@Param('id') id: string) {
     return await this.bookingsService.getBookingById(id);
+  }
+
+  @Get('readable/:id')
+  @Roles('all')
+  async getReadableBookingById(@Param('id') id: string) {
+    const readableBooking = await this.bookingsService.getReadableBookingById(id);
+
+    if (!readableBooking) {
+      throw new NotFoundException();
+    }
+
+    return readableBooking;
   }
 
   @Get('with-details/:id')
