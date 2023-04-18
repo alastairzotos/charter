@@ -8,7 +8,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { BookingDto, BookingStatus, LoggedInUserDetails, UserDetails } from 'dtos';
+import { BookingDto, BookingStatus, LoggedInUserDetails } from 'dtos';
 
 import { AuthGuard } from 'auth/auth.guard';
 import { Principal } from 'auth/principal.decorator';
