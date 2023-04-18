@@ -3,7 +3,7 @@ import { BookingDto } from "dtos";
 import Link from "next/link";
 import React, { useEffect, useRef } from "react";
 import { urls } from "urls";
-import { getQrCodeFilePath, getReadableBookingDetails } from "utils";
+import { getQrCodeFilePathForBooking, getReadableBookingDetails } from "utils";
 
 import { KeyValues } from "src/components/key-values";
 import { useGetBookingPaymentStatus } from "src/state/bookings";
@@ -112,7 +112,7 @@ export const UserBookingView: React.FC<Props> = ({ booking }) => {
                 You will also receive this in a confirmation email.
               </Typography>
               <img
-                src={`${getEnv().awsCloudfrontDomain}${getQrCodeFilePath(
+                src={`${getEnv().awsCloudfrontDomain}${getQrCodeFilePathForBooking(
                   booking
                 )}`}
                 width="250"
