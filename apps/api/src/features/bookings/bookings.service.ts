@@ -22,7 +22,7 @@ export class BookingsService {
 
     @Inject(forwardRef(() => PaymentsService))
     private readonly paymentsService: PaymentsService,
-  ) {}
+  ) { }
 
   async createBooking(booking: BookingNoId) {
     const service = booking.service;
@@ -39,7 +39,7 @@ export class BookingsService {
     }
 
     await this.qrCodeService.createQRCodeForBooking(createdBooking);
-    
+
     return createdBooking;
   }
 
@@ -59,17 +59,20 @@ export class BookingsService {
 
 
     if (paymentStatus === 'succeeded') {
-      await Promise.all([
-        this.servicesService.addBookingToService(createdBooking.service._id),
-        this.emailService.sendEmailToOperator(
-          createdBooking.operator,
-          this.templatesService.bookingMadeOperator(createdBooking),
-        ),
-        this.emailService.sendEmail(
-          createdBooking.email,
-          this.templatesService.bookingMadeUser(createdBooking),
-        ),
-      ]);
+      await this.servicesService.addBookingToService(createdBooking.service._id);
+
+      if (!createdBooking.service.approveBookingBeforePayment) {
+        await Promise.all([
+          this.emailService.sendEmailToOperator(
+            createdBooking.operator,
+            this.templatesService.bookingMadeOperator(createdBooking),
+          ),
+          this.emailService.sendEmail(
+            createdBooking.email,
+            this.templatesService.bookingMadeUser(createdBooking),
+          ),
+        ]);
+      }
     }
   }
 
