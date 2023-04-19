@@ -70,16 +70,7 @@ export class OperatorsService {
 
   async emailOperatorAfterPromotion(operator: OperatorDto) {
     await this.qrCodeService.createQRCodeForOperatorSignup(operator);
-    await Promise.all([
-      this.emailService.sendEmail(
-        operator.email,
-        this.templatesService.operatorPromoted(operator)
-      ),
-      this.emailService.sendEmail(
-        operator.owner.email,
-        this.templatesService.operatorPromoted(operator)
-      ),
-    ])
+    await this.emailService.sendEmailToOperator(operator, this.templatesService.operatorPromoted(operator));
   }
 
   async deleteOperator(id: string) {

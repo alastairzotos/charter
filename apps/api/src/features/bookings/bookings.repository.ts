@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { BookingNoId, BookingPaymentStatus, BookingStatus, OperatorDto } from 'dtos';
-import { Model } from 'mongoose';
+import { Document, Model, Query } from 'mongoose';
 
 import { Booking } from 'schemas/booking.schema';
 
@@ -33,64 +33,66 @@ export class BookingsRepository {
   }
 
   async getBookingById(id: string) {
-    return await this.bookingsModel.findById(id)
-      .populate('operator')
-      .populate({
-        path: 'service',
-        populate: {
-          path: 'serviceSchema'
-        }
-      })
+    return await this.populateOperatorAndService(this.bookingsModel.findById(id));
   }
 
   async getBookingByPaymentIntentId(paymentIntentId: string) {
-    return await this.bookingsModel.findOne({ paymentIntentId })
-      .populate('operator')
-      .populate({
-        path: 'service',
-        populate: {
-          path: 'serviceSchema'
-        }
-      });
+    return await this.populateOperatorAndService(this.bookingsModel.findOne({ paymentIntentId }));
   }
 
   async getBookingBySetupIntentId(setupIntentId: string) {
-    return await this.bookingsModel.findOne({ setupIntentId })
-      .populate('operator')
-      .populate({
-        path: 'service',
-        populate: {
-          path: 'serviceSchema'
-        }
-      });
+    return await this.populateOperatorAndService(this.bookingsModel.findOne({ setupIntentId }));
   }
 
   async getBookingWithOperatorAndService(id: string) {
-    return await this.bookingsModel.findById(id)
-      .populate('operator')
-      .populate({
-        path: 'service',
-        populate: {
-          path: 'serviceSchema'
-        }
-      });
+    return await this.populateOperatorAndService(this.bookingsModel.findById(id));
   }
 
   async getBookingsByOperator(operator: OperatorDto) {
-    return await this.bookingsModel.find({ operator }).populate('service');
+    return await this.populateService(this.bookingsModel.find({ operator }));
   }
 
   async getBookingsByOperatorId(id: string) {
-    return await this.bookingsModel.find({ operator: id, paymentStatus: 'succeeded' })
-      .populate({
-        path: 'service',
-        populate: {
-          path: 'serviceSchema'
-        }
-      });
+    return await this.populateService(this.bookingsModel.find({ operator: id, paymentStatus: 'succeeded' }));
   }
 
   async setBookingStatus(id: string, status: BookingStatus) {
     await this.bookingsModel.findOneAndUpdate({ _id: id }, { status, paymentStatus: status === 'rejected' && 'cancelled' });
+  }
+
+  private async populateService(
+    doc: Query<
+      (Document<unknown, any, Booking> & Booking & Required<{ _id: string; }>)[],
+      Document<unknown, any, Booking> & Booking & Required<{ _id: string; }>, {}, Booking
+    >
+  ) {
+    return await doc
+      .populate({
+        path: 'service',
+        populate: {
+          path: 'serviceSchema'
+        }
+      });
+  }
+
+  private async populateOperatorAndService(
+    doc: Query<
+      Document<unknown, any, Booking> & Booking & Required<{ _id: string; }>,
+      Document<unknown, any, Booking> & Booking & Required<{ _id: string; }>, {}, Booking
+    >
+  ) {
+    return  await doc
+      .populate({
+        path: 'operator',
+        populate: {
+          path: 'owner'
+        }
+      })
+      .populate({
+        path: 'service',
+        populate: {
+          path: 'serviceSchema'
+        }
+      });
   }
 }

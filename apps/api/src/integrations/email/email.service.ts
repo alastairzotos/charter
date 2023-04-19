@@ -6,6 +6,7 @@ import * as path from 'path';
 
 import { EnvService } from 'environment/environment.service';
 import { EmailData } from 'integrations/email/email.models';
+import { OperatorDto } from 'dtos';
 
 @Injectable()
 export class EmailService {
@@ -31,5 +32,17 @@ export class EmailService {
         html: content,
       });
     }
+  }
+
+  async sendEmailToOperator(operator: OperatorDto, emailData: EmailData) {
+    const emails = [operator.email];
+
+    if (operator.owner?.email && operator.email !== operator.owner?.email) {
+      emails.push(operator.owner.email);
+    }
+
+    await Promise.all(
+      emails.map(async email => await this.sendEmail(email, emailData))
+    )
   }
 }

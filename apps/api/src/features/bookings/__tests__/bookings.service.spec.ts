@@ -112,6 +112,7 @@ const servicesServiceMock: Partial<
 
 const emailServiceMock: Partial<ExtractInterface<EmailService>> = {
   sendEmail: jest.fn(async () => { }),
+  sendEmailToOperator: jest.fn(),
 };
 
 const templatesServiceMock: Partial<ExtractInterface<TemplatesService>> = {
@@ -178,7 +179,8 @@ describe('BookingService', () => {
     })
 
     it('should send emails', () => {
-      expect(emailServiceMock.sendEmail).toHaveBeenCalledTimes(2);
+      expect(emailServiceMock.sendEmail).toHaveBeenCalledTimes(1);
+      expect(emailServiceMock.sendEmailToOperator).toHaveBeenCalledTimes(1);
     });
 
     it('should increment the number of bookings on the service', () => {

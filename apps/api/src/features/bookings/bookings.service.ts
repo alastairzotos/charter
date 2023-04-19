@@ -57,11 +57,12 @@ export class BookingsService {
     const createdBooking =
       await this.bookingsRepository.getBookingWithOperatorAndService(id);
 
+
     if (paymentStatus === 'succeeded') {
       await Promise.all([
         this.servicesService.addBookingToService(createdBooking.service._id),
-        this.emailService.sendEmail(
-          createdBooking.operator.email,
+        this.emailService.sendEmailToOperator(
+          createdBooking.operator,
           this.templatesService.bookingMadeOperator(createdBooking),
         ),
         this.emailService.sendEmail(
@@ -140,8 +141,8 @@ export class BookingsService {
         booking.email,
         this.templatesService.bookingMadeUserPending(booking),
       ),
-      this.emailService.sendEmail(
-        booking.operator.email,
+      this.emailService.sendEmailToOperator(
+        booking.operator,
         this.templatesService.bookingMadeOperatorActionRequired(booking),
       )
     ])
