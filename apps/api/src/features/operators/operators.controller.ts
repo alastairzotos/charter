@@ -61,4 +61,11 @@ export class OperatorsController {
   async deleteOperator(@Body() { id }: { id: string }) {
     await this.operatorsService.deleteOperator(id);
   }
+
+  @Post('notification-token')
+  async setOperatorNotificationToken(
+    @Body() { id, token }: { id: string, token: string }
+  ) {
+    await this.operatorsService.setOperatorNotificationToken(id, token);
+  }
 }

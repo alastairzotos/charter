@@ -34,6 +34,9 @@ export class Operator implements OperatorDto {
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: User.name })
   owner?: LoggedInUserDetails;
+
+  @Prop({ select: false })
+  notificationsToken?: string;
 }
 
 export const OperatorSchema = SchemaFactory.createForClass(Operator);

@@ -45,4 +45,8 @@ export class OperatorsRepository {
   async searchOperators(term: string) {
     return await this.operatorsModel.find({ name: { $regex: new RegExp('^' + term, 'i') }}).populate('owner');
   }
+
+  async setOperatorNotificationToken(id: string, notificationToken: string | undefined) {
+    await this.operatorsModel.findOneAndUpdate({ _id: id }, { notificationToken });
+  }
 }
