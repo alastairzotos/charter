@@ -63,6 +63,7 @@ export class OperatorsController {
   }
 
   @Post('notification-token')
+  @Roles('all')
   async setOperatorNotificationToken(
     @Body() { id, token }: { id: string, token: string }
   ) {
