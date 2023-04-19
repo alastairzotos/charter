@@ -81,7 +81,7 @@ export class OperatorsService {
     return await this.operatorsRepo.searchOperators(term);
   }
 
-  async setOperatorNotificationToken(id: string, notificationToken: string | undefined) {
-    await this.operatorsRepo.setOperatorNotificationToken(id, notificationToken);
+  async setOperatorNotificationToken(id: string, token: string | undefined) {
+    await this.operatorsRepo.setOperatorNotificationToken(id, token);
   }
 }
