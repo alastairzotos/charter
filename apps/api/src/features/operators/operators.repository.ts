@@ -49,4 +49,8 @@ export class OperatorsRepository {
   async setOperatorNotificationToken(id: string, notificationsToken: string | undefined) {
     await this.operatorsModel.findOneAndUpdate({ _id: id }, { notificationsToken });
   }
+
+  async getOperatorNotificationToken(id: string) {
+    return (await this.operatorsModel.findOne({ _id: id }).select('notificationsToken')).notificationsToken;
+  }
 }

@@ -84,4 +84,8 @@ export class OperatorsService {
   async setOperatorNotificationToken(id: string, token: string | undefined) {
     await this.operatorsRepo.setOperatorNotificationToken(id, token);
   }
+
+  async getOperatorNotificationToken(id: string) {
+    return await this.operatorsRepo.getOperatorNotificationToken(id);
+  }
 }

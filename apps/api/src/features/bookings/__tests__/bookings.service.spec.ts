@@ -10,6 +10,7 @@ import { QRCodeService } from 'features/qr-code/qr-code.service';
 import { ServicesService } from 'features/services/services.service';
 import { TemplatesService } from 'features/templates/templates.service';
 import { EmailService } from 'integrations/email/email.service';
+import { NotificationsService } from 'integrations/notifications/notifications.service';
 import { ExtractInterface } from 'utils';
 
 const mockOperator: OperatorDto = {
@@ -101,7 +102,9 @@ const envServiceMock: ExtractInterface<EnvService> = {
 
 const operatorsServiceMock: Partial<
   ExtractInterface<OperatorsService>
-> = {};
+> = {
+  getOperatorNotificationToken: jest.fn(async () => 'foo')
+};
 
 const servicesServiceMock: Partial<
   ExtractInterface<ServicesService>
@@ -122,6 +125,10 @@ const templatesServiceMock: Partial<ExtractInterface<TemplatesService>> = {
 
 const qrCodeServiceMock: Partial<ExtractInterface<QRCodeService>> = {
   createQRCodeForBooking: jest.fn()
+}
+
+const notificationsServiceMock: Partial<ExtractInterface<NotificationsService>> = {
+  notifyOperatorOfBooking: jest.fn()
 }
 
 const bookingsRepoMock: Partial<
@@ -161,6 +168,7 @@ describe('BookingService', () => {
         paymentsServiceMock,
         templatesServiceMock,
         qrCodeServiceMock,
+        notificationsServiceMock,
       );
       await bookingsService.createBooking(mockBooking);
 
@@ -183,6 +191,10 @@ describe('BookingService', () => {
       expect(emailServiceMock.sendEmailToOperator).toHaveBeenCalledTimes(1);
     });
 
+    it('should send a notification to the operator', () => {
+      expect(notificationsServiceMock.notifyOperatorOfBooking).toHaveBeenCalled();
+    })
+
     it('should increment the number of bookings on the service', () => {
       expect(servicesServiceMock.addBookingToService).toHaveBeenCalled();
     })
@@ -198,6 +210,7 @@ const createService = async (
   paymentsServiceMock: Partial<ExtractInterface<PaymentsService>>,
   templatesServiceMock: Partial<ExtractInterface<TemplatesService>>,
   qrCodeServiceMock: Partial<ExtractInterface<QRCodeService>>,
+  notificationsServiceMock: Partial<ExtractInterface<NotificationsService>>,
 ) => {
   const testingModule = await Test.createTestingModule({
     providers: [
@@ -233,6 +246,10 @@ const createService = async (
       {
         provide: QRCodeService,
         useValue: qrCodeServiceMock,
+      },
+      {
+        provide: NotificationsService,
+        useValue: notificationsServiceMock,
       }
     ],
   }).compile();

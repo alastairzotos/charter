@@ -12,6 +12,7 @@ import { ServicesModule } from 'features/services/services.module';
 import { TemplatesModule } from 'features/templates/templates.module';
 import { UsersModule } from 'features/users/users.module';
 import { EmailModule } from 'integrations/email/email.module';
+import { NotificationsModule } from 'integrations/notifications/notifications.module';
 import { Booking, BookingSchema } from 'schemas/booking.schema';
 import { Operator, OperatorSchema } from 'schemas/operator.schema';
 import { Service, ServiceSchema } from 'schemas/service.schema';
@@ -26,6 +27,7 @@ import { Service, ServiceSchema } from 'schemas/service.schema';
     forwardRef(() => PaymentsModule),
     TemplatesModule,
     QRCodeModule,
+    NotificationsModule,
     MongooseModule.forFeature([
       { name: Booking.name, schema: BookingSchema },
       { name: Operator.name, schema: OperatorSchema },

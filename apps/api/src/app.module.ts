@@ -18,6 +18,7 @@ import { ServicesModule } from 'features/services/services.module';
 import { TemplatesModule } from 'features/templates/templates.module';
 import { UsersModule } from 'features/users/users.module';
 import { EmailModule } from 'integrations/email/email.module';
+import { NotificationsModule } from 'integrations/notifications/notifications.module';
 import { S3Module } from 'integrations/s3/s3.module';
 import { StripeModule } from 'integrations/stripe/stripe.module';
 import { JsonBodyMiddleware } from 'middleware/json-body.middleware';
@@ -43,6 +44,7 @@ import { RawBodyMiddleware } from 'middleware/raw-body.middleware';
     OAuth2Module,
     TemplatesModule,
     QRCodeModule,
+    NotificationsModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],
