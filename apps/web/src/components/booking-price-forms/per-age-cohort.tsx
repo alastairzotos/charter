@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import React from "react";
 
-import { BookingPriceProps } from "src/components/booking-price-forms/props";
+import { BookingPriceProps } from "components/booking-price-forms/props";
 
 export const PerAgeCohortPriceDetails: React.FC<BookingPriceProps> = ({
   pricing,

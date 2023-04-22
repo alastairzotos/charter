@@ -1,4 +1,4 @@
-import { httpClient } from "src/clients/http.client";
+import { httpClient } from "clients/http.client";
 
 export const uploadImage = async (file: File): Promise<string> => {
   const formData = new FormData();

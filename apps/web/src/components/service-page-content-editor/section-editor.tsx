@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import { ServiceSchemaContentSectionDto } from "dtos";
 import React from "react";
 
-import { ServiceContentBulletpointEditor } from "src/components/service-page-content-editor/bulletpoint-editor";
+import { ServiceContentBulletpointEditor } from "components/service-page-content-editor/bulletpoint-editor";
 
 interface Props {
   contentSection: ServiceSchemaContentSectionDto;

@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 import { urls } from "urls";
 
-import { OperatorBookingSummary } from "src/components/operator-booking-summary";
+import { OperatorBookingSummary } from "components/operator-booking-summary";
 
 interface Props {
   booking: BookingDto;

@@ -1,8 +1,8 @@
 import { Box } from "@mui/system";
 import React from "react";
 
-import { useIsDesktop } from "src/hooks/use-is-desktop";
-import { SETTINGS_WIDTH } from "src/util/misc";
+import { useIsDesktop } from "hooks/use-is-desktop";
+import { SETTINGS_WIDTH } from "util/misc";
 
 export const BookingModal: React.FC<React.PropsWithChildren> = ({
   children,

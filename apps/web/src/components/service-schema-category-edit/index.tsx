@@ -1,13 +1,13 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { ServiceSchemaCategoryManage } from "src/components/service-schema-category-manage";
-import { StatusSwitch } from "src/components/status-switch";
+import { ServiceSchemaCategoryManage } from "components/service-schema-category-manage";
+import { StatusSwitch } from "components/status-switch";
 import {
   useDeleteServiceSchemaCategory,
   useLoadServiceSchemaCategory,
   useUpdateServiceSchemaCategory,
-} from "src/state/service-schema-categories";
+} from "state/service-schema-categories";
 
 interface Props {
   id: string;

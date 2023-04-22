@@ -7,8 +7,8 @@ import { ServiceDto } from "dtos";
 import Link from "next/link";
 import React from "react";
 
-import { useOperatorDashboard } from "src/contexts/operator-dashboard";
-import { shortenText } from "src/util/misc";
+import { useOperatorDashboard } from "contexts/operator-dashboard";
+import { shortenText } from "util/misc";
 
 interface Props {
   operatorId: string;

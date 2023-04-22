@@ -1,10 +1,10 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { BookingAnalyticsList } from "src/components/booking-analytics/list";
-import { StatusSwitch } from "src/components/status-switch";
-import { useLoadBookingsByOperatorId } from "src/state/bookings";
-import { useLoadOperator } from "src/state/operators";
+import { BookingAnalyticsList } from "components/booking-analytics/list";
+import { StatusSwitch } from "components/status-switch";
+import { useLoadBookingsByOperatorId } from "state/bookings";
+import { useLoadOperator } from "state/operators";
 
 interface Props {
   operatorId: string;

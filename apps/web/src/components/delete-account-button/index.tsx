@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
 
-import { useUserState } from "src/state/users";
+import { useUserState } from "state/users";
 
 export const DeleteAccountButton: React.FC = () => {
   const router = useRouter();

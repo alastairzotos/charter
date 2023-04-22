@@ -7,8 +7,8 @@ import {
 } from "dtos";
 import React, { useCallback } from "react";
 
-import { BookingDefaultFormsProps } from "src/components/booking-default-forms/props";
-import { formatTime } from "src/util/misc";
+import { BookingDefaultFormsProps } from "components/booking-default-forms/props";
+import { formatTime } from "util/misc";
 
 export const BookingTimeForm: React.FC<BookingDefaultFormsProps> = ({
   values,

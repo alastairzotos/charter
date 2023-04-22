@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 
-import { APP_NAME } from "src/util/misc";
+import { APP_NAME } from "util/misc";
 
 interface Props {
   subtitle?: string;

@@ -2,8 +2,8 @@ import { FormLabel, Paper } from "@mui/material";
 import { Day, days, OpeningHoursDto, OpeningTimesDto } from "dtos";
 import React from "react";
 
-import { KeyValues } from "src/components/key-values";
-import { OpeningTimesDayForm } from "src/components/opening-times-form/day-form";
+import { KeyValues } from "components/key-values";
+import { OpeningTimesDayForm } from "components/opening-times-form/day-form";
 
 interface Props {
   openingTimes: Record<Day, OpeningHoursDto>;

@@ -2,8 +2,8 @@ import { Autocomplete, Box, TextField, Typography } from "@mui/material";
 import { OperatorDto } from "dtos";
 import React, { useEffect } from "react";
 
-import { StatusSwitch } from "src/components/status-switch";
-import { useLoadOperators } from "src/state/operators";
+import { StatusSwitch } from "components/status-switch";
+import { useLoadOperators } from "state/operators";
 
 interface Props {
   onSelectOperator: (operator: OperatorDto) => void;

@@ -7,7 +7,7 @@ import {
   getServicesForOperator,
   getServicesForOperatorIncludingHidden,
   updateService,
-} from "src/clients/services.client";
+} from "clients/services.client";
 
 export const useLoadServices = createQuery(getServicesForOperator);
 export const useLoadServicesIncludingHidden = createQuery(

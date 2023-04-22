@@ -4,7 +4,7 @@ import { Select } from "formik-mui";
 import React from "react";
 import { createPriceString } from "utils";
 
-import { BookingPriceProps } from "src/components/booking-price-forms/props";
+import { BookingPriceProps } from "components/booking-price-forms/props";
 
 export const TieredPriceDetails: React.FC<BookingPriceProps> = ({
   pricing,

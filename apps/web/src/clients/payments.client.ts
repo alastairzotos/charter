@@ -5,7 +5,7 @@ import {
   CreateSetupIntentDto,
 } from "dtos";
 
-import { httpClient } from "src/clients/http.client";
+import { httpClient } from "clients/http.client";
 
 export const createPaymentIntent = async (
   bookingId: string

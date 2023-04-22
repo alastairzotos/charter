@@ -1,7 +1,7 @@
 import { ServiceDto } from "dtos";
 import React from "react";
 
-import { UserServiceViewContentSection } from "src/components/user-service-view-content/content-section";
+import { UserServiceViewContentSection } from "components/user-service-view-content/content-section";
 
 interface Props {
   service: ServiceDto;

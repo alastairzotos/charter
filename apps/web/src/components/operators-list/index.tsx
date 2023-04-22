@@ -5,9 +5,9 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { urls } from "urls";
 
-import { OperatorListItem } from "src/components/operator-list-item";
-import { StatusSwitch } from "src/components/status-switch";
-import { useLoadOperators } from "src/state/operators";
+import { OperatorListItem } from "components/operator-list-item";
+import { StatusSwitch } from "components/status-switch";
+import { useLoadOperators } from "state/operators";
 
 export const OperatorsList: React.FC = () => {
   const [loadOperatorsStatus, loadOperators, operators] = useLoadOperators(

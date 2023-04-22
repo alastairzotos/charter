@@ -1,11 +1,11 @@
 import { PricingStrategyType } from "dtos";
 import React from "react";
 
-import { PerAdultAndChildPriceDetails } from "src/components/booking-price-forms/per-adult-and-child";
-import { PerAgeCohortPriceDetails } from "src/components/booking-price-forms/per-age-cohort";
-import { PerPersonPriceDetails } from "src/components/booking-price-forms/per-person";
-import { BookingPriceProps } from "src/components/booking-price-forms/props";
-import { TieredPriceDetails } from "src/components/booking-price-forms/tiered";
+import { PerAdultAndChildPriceDetails } from "components/booking-price-forms/per-adult-and-child";
+import { PerAgeCohortPriceDetails } from "components/booking-price-forms/per-age-cohort";
+import { PerPersonPriceDetails } from "components/booking-price-forms/per-person";
+import { BookingPriceProps } from "components/booking-price-forms/props";
+import { TieredPriceDetails } from "components/booking-price-forms/tiered";
 
 interface Props extends BookingPriceProps {
   pricingStrategy: PricingStrategyType;

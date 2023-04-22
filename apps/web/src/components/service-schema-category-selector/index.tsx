@@ -8,8 +8,8 @@ import {
 import { ServiceSchemaCategoryDto } from "dtos";
 import React, { useEffect } from "react";
 
-import { StatusSwitch } from "src/components/status-switch";
-import { useLoadServiceSchemaCategories } from "src/state/service-schema-categories";
+import { StatusSwitch } from "components/status-switch";
+import { useLoadServiceSchemaCategories } from "state/service-schema-categories";
 
 interface Props {
   value: ServiceSchemaCategoryDto | null;

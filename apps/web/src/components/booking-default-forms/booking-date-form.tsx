@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { getNextAvailableBookingDate, isDateDisabled } from "dtos";
 import React from "react";
 
-import { BookingDefaultFormsProps } from "src/components/booking-default-forms/props";
+import { BookingDefaultFormsProps } from "components/booking-default-forms/props";
 
 export const BookingDateForm: React.FC<BookingDefaultFormsProps> = ({
   values,

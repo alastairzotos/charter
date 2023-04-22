@@ -8,7 +8,7 @@ import {
   getOperatorByOwner,
   getOperators,
   updateOperator,
-} from "src/clients/operators.client";
+} from "clients/operators.client";
 
 export const useLoadOperators = createQuery(getOperators);
 export const useLoadOperator = createQuery(getOperator);

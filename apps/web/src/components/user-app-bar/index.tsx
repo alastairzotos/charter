@@ -3,9 +3,9 @@ import Link from "next/link";
 import * as React from "react";
 import { urls } from "urls";
 
-import { AppBarBase } from "src/components/app-bar-base";
-import { ServiceSearch } from "src/components/service-search";
-import { APP_NAME } from "src/util/misc";
+import { AppBarBase } from "components/app-bar-base";
+import { ServiceSearch } from "components/service-search";
+import { APP_NAME } from "util/misc";
 
 export const UserAppBar: React.FC = () => {
   const pages = new Map<string, string>([

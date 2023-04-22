@@ -2,9 +2,9 @@ import { Typography } from "@mui/material";
 import { OperatorDto } from "dtos";
 import React, { useEffect } from "react";
 
-import { StatusSwitch } from "src/components/status-switch";
-import { useLoadOperatorByOwner } from "src/state/operators";
-import { useUserState } from "src/state/users";
+import { StatusSwitch } from "components/status-switch";
+import { useLoadOperatorByOwner } from "state/operators";
+import { useUserState } from "state/users";
 
 interface Props {
   children: (operator: OperatorDto) => React.ReactNode;

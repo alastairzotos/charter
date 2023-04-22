@@ -1,6 +1,6 @@
 import { OperatorDto, OperatorNoId, ServiceDto } from "dtos";
 
-import { httpClient } from "src/clients/http.client";
+import { httpClient } from "clients/http.client";
 
 export const getOperators = async (): Promise<OperatorDto[]> => {
   const { data } = await httpClient.get<OperatorDto[]>("/operators");

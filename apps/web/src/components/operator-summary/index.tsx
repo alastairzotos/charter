@@ -3,8 +3,8 @@ import { OperatorDto } from "dtos";
 import Link from "next/link";
 import React from "react";
 
-import { Titled } from "src/components/titled";
-import { useOperatorDashboard } from "src/contexts/operator-dashboard";
+import { Titled } from "components/titled";
+import { useOperatorDashboard } from "contexts/operator-dashboard";
 
 interface Props {
   operator: OperatorDto;

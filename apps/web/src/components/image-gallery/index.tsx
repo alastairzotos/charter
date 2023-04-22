@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import ReactImageGallery from "react-image-gallery";
 
-import { ImageGalleryItem } from "src/components/image-gallery/image-gallery-item";
-import { ImageGalleryNavBase } from "src/components/image-gallery/image-gallery-nav-base";
+import { ImageGalleryItem } from "components/image-gallery/image-gallery-item";
+import { ImageGalleryNavBase } from "components/image-gallery/image-gallery-nav-base";
 
 interface Props {
   items: string[];

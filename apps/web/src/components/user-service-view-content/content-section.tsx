@@ -9,8 +9,8 @@ import { styled } from "@mui/system";
 import { ServiceDto, ServiceSchemaContentSectionDto } from "dtos";
 import React, { useState } from "react";
 
-import { MultilineText } from "src/components/multiline-text";
-import { useIsDesktop } from "src/hooks/use-is-desktop";
+import { MultilineText } from "components/multiline-text";
+import { useIsDesktop } from "hooks/use-is-desktop";
 
 const BulletList = styled("ul")(({ theme }) => ({
   "& li": {

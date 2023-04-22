@@ -1,11 +1,11 @@
 import { Divider, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { OperatorSummary } from "src/components/operator-summary";
-import { ServiceList } from "src/components/service-list";
-import { StatusSwitch } from "src/components/status-switch";
-import { Titled } from "src/components/titled";
-import { useLoadOperator } from "src/state/operators";
+import { OperatorSummary } from "components/operator-summary";
+import { ServiceList } from "components/service-list";
+import { StatusSwitch } from "components/status-switch";
+import { Titled } from "components/titled";
+import { useLoadOperator } from "state/operators";
 
 interface Props {
   id: string;

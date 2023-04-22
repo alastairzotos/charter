@@ -4,18 +4,18 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { getReadablePricingStringsForService } from "utils";
 
-import { BookButton } from "src/components/book-button";
-import { BookingForm } from "src/components/booking-form";
-import { BookingModal } from "src/components/booking-modal";
-import { ImageGallery } from "src/components/image-gallery";
-import { KeyValues } from "src/components/key-values";
-import { MultilineText } from "src/components/multiline-text";
-import { OpeningTimesView } from "src/components/opening-times";
-import { OperatorViewMobile } from "src/components/operator-view";
-import { ReadMore } from "src/components/read-more";
-import { UserServiceViewContent } from "src/components/user-service-view-content";
-import { UserServiceViewFields } from "src/components/user-service-view-fields";
-import { useIsDesktop } from "src/hooks/use-is-desktop";
+import { BookButton } from "components/book-button";
+import { BookingForm } from "components/booking-form";
+import { BookingModal } from "components/booking-modal";
+import { ImageGallery } from "components/image-gallery";
+import { KeyValues } from "components/key-values";
+import { MultilineText } from "components/multiline-text";
+import { OpeningTimesView } from "components/opening-times";
+import { OperatorViewMobile } from "components/operator-view";
+import { ReadMore } from "components/read-more";
+import { UserServiceViewContent } from "components/user-service-view-content";
+import { UserServiceViewFields } from "components/user-service-view-fields";
+import { useIsDesktop } from "hooks/use-is-desktop";
 
 interface Props {
   bookingView?: boolean;

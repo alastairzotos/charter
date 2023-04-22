@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect } from "react";
 import { urls } from "urls";
 
-import { useUserState } from "src/state/users";
+import { useUserState } from "state/users";
 
 interface Props {
   role: UserRole;

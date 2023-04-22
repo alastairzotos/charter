@@ -1,6 +1,6 @@
 import { createQuery } from "@bitmetro/create-query";
 
-import { uploadImage } from "src/clients/images.client";
+import { uploadImage } from "clients/images.client";
 
 export const useUploadImages = createQuery(
   async (files: File[], onDone: (urls: string[]) => void) => {

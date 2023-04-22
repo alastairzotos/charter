@@ -1,13 +1,13 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { ManageOperatorForm } from "src/components/operator-manage";
-import { StatusSwitch } from "src/components/status-switch";
+import { ManageOperatorForm } from "components/operator-manage";
+import { StatusSwitch } from "components/status-switch";
 import {
   useDeleteOperator,
   useLoadOperator,
   useUpdateOperator,
-} from "src/state/operators";
+} from "state/operators";
 
 interface Props {
   id: string;

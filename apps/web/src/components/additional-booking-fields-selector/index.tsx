@@ -2,7 +2,7 @@ import { Button, FormLabel, Paper } from "@mui/material";
 import { AdditionalBookingField } from "dtos";
 import React from "react";
 
-import { ServiceSchemaAdditionalBookingField } from "src/components/additional-booking-field";
+import { ServiceSchemaAdditionalBookingField } from "components/additional-booking-field";
 
 interface Props {
   fields: AdditionalBookingField[];

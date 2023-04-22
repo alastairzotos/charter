@@ -13,8 +13,8 @@ import { BookingDto } from "dtos";
 import React, { useEffect, useState } from "react";
 import { calculateBookingPrice, createPriceString } from "utils";
 
-import { BookingAnalyticsListItem } from "src/components/booking-analytics/list-item";
-import { KeyValues } from "src/components/key-values";
+import { BookingAnalyticsListItem } from "components/booking-analytics/list-item";
+import { KeyValues } from "components/key-values";
 
 interface Props {
   operatorId: string;

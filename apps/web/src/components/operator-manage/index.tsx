@@ -7,14 +7,14 @@ import { useRouter } from "next/router";
 import React from "react";
 import * as yup from "yup";
 
-import { FileUpload } from "src/components/file-upload";
-import { FormBox } from "src/components/form-box";
-import { OpeningTimesForm } from "src/components/opening-times-form";
-import { SaveAndDelete } from "src/components/save-delete";
-import { TabsProvider, TabsView } from "src/components/tabs";
-import { UserSearch } from "src/components/user-search";
-import { useOperatorDashboard } from "src/contexts/operator-dashboard";
-import { SETTINGS_WIDTH } from "src/util/misc";
+import { FileUpload } from "components/file-upload";
+import { FormBox } from "components/form-box";
+import { OpeningTimesForm } from "components/opening-times-form";
+import { SaveAndDelete } from "components/save-delete";
+import { TabsProvider, TabsView } from "components/tabs";
+import { UserSearch } from "components/user-search";
+import { useOperatorDashboard } from "contexts/operator-dashboard";
+import { SETTINGS_WIDTH } from "util/misc";
 
 interface Props {
   title: string;

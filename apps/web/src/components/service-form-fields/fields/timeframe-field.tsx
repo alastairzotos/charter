@@ -9,7 +9,7 @@ import { Box } from "@mui/system";
 import { parseTimeFrame } from "dtos";
 import React, { useEffect, useState } from "react";
 
-import { ServiceFieldProps } from "src/components/service-form-fields/fields/props";
+import { ServiceFieldProps } from "components/service-form-fields/fields/props";
 
 export const TimeframeField: React.FC<ServiceFieldProps> = ({
   field: { key, label },

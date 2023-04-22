@@ -9,10 +9,10 @@ import {
 import React, { useState } from "react";
 import { DropzoneDialog } from "react-mui-dropzone";
 
-import { FileUploadItem } from "src/components/file-upload/item";
-import { Titled } from "src/components/titled";
-import { useUploadImages } from "src/state/images";
-import { pluralize } from "src/util/misc";
+import { FileUploadItem } from "components/file-upload/item";
+import { Titled } from "components/titled";
+import { useUploadImages } from "state/images";
+import { pluralize } from "util/misc";
 
 interface Props {
   sx?: SxProps;

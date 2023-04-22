@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
 
-import { ManageServiceSchemaForm } from "src/components/service-schema-manage";
-import { useCreateServiceSchema } from "src/state/service-schemas";
+import { ManageServiceSchemaForm } from "components/service-schema-manage";
+import { useCreateServiceSchema } from "state/service-schemas";
 
 export const ServiceSchemaCreate: React.FC = () => {
   const router = useRouter();

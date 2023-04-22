@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import { ServiceNoId } from "dtos";
 import React from "react";
 
-import { ServiceContentSectionEditor } from "src/components/service-page-content-editor/section-editor";
+import { ServiceContentSectionEditor } from "components/service-page-content-editor/section-editor";
 
 interface Props {
   values: ServiceNoId;

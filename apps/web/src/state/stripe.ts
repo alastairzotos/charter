@@ -2,7 +2,7 @@ import { createQuery } from "@bitmetro/create-query";
 import { Stripe, StripeElements } from "@stripe/stripe-js";
 import { urls } from "urls";
 
-import { getEnv } from "src/util/env";
+import { getEnv } from "util/env";
 
 export const useConfirmPayment = createQuery(
   async (

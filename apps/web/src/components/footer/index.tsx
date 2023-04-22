@@ -6,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 import { urls } from "urls";
 
-import { APP_NAME } from "src/util/misc";
+import { APP_NAME } from "util/misc";
 
 export const Footer: React.FC = () => {
   return (

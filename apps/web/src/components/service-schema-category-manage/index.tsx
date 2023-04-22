@@ -7,10 +7,10 @@ import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
 
-import { FileUpload } from "src/components/file-upload";
-import { FormBox } from "src/components/form-box";
-import { SaveAndDelete } from "src/components/save-delete";
-import { SETTINGS_WIDTH } from "src/util/misc";
+import { FileUpload } from "components/file-upload";
+import { FormBox } from "components/form-box";
+import { SaveAndDelete } from "components/save-delete";
+import { SETTINGS_WIDTH } from "util/misc";
 
 interface Props {
   title: string;

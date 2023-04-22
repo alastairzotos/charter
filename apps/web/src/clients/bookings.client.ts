@@ -5,7 +5,7 @@ import {
   BookingStatus,
 } from "dtos";
 
-import { httpClient } from "src/clients/http.client";
+import { httpClient } from "clients/http.client";
 
 export const createBooking = async (
   booking: BookingNoId

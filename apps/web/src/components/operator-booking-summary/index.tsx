@@ -6,11 +6,11 @@ import React, { useState } from "react";
 import { urls } from "urls";
 import { getReadableBookingDetails } from "utils";
 
-import { KeyValues } from "src/components/key-values";
-import { DeleteConfirmModal } from "src/components/modals/delete-confirm";
-import { Titled } from "src/components/titled";
-import { useSetBookingStatus } from "src/state/bookings";
-import { SETTINGS_WIDTH } from "src/util/misc";
+import { KeyValues } from "components/key-values";
+import { DeleteConfirmModal } from "components/modals/delete-confirm";
+import { Titled } from "components/titled";
+import { useSetBookingStatus } from "state/bookings";
+import { SETTINGS_WIDTH } from "util/misc";
 
 interface Props {
   booking: BookingDto;

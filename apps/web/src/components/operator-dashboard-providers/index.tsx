@@ -1,7 +1,7 @@
 import React from "react";
 import { urls } from "urls";
 
-import { OperatorDashboardProvider } from "src/contexts/operator-dashboard";
+import { OperatorDashboardProvider } from "contexts/operator-dashboard";
 
 export const AdminOperatorDashboardProvider: React.FC<
   React.PropsWithChildren

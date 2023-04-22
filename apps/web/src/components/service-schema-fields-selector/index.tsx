@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 import { ServiceSchemaFieldDto } from "dtos";
 import React from "react";
 
-import { ServiceSchemaField } from "src/components/service-schema-field";
+import { ServiceSchemaField } from "components/service-schema-field";
 
 interface Props {
   fields: ServiceSchemaFieldDto[];

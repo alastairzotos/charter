@@ -1,9 +1,9 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { OperatorBookingList } from "src/components/operator-booking-list";
-import { StatusSwitch } from "src/components/status-switch";
-import { useLoadBookingsForUser } from "src/state/bookings";
+import { OperatorBookingList } from "components/operator-booking-list";
+import { StatusSwitch } from "components/status-switch";
+import { useLoadBookingsForUser } from "state/bookings";
 
 export const OperatorBookings: React.FC = () => {
   const [getBookingsForUserStatus, getBookingsForUser, userBookings] =

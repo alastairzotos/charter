@@ -3,7 +3,7 @@ import { Button, CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 
-import { DeleteConfirmModal } from "src/components/modals/delete-confirm";
+import { DeleteConfirmModal } from "components/modals/delete-confirm";
 
 interface Props {
   isValid: boolean;

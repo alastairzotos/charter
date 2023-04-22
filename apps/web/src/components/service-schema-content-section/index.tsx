@@ -14,7 +14,7 @@ import {
 } from "dtos";
 import React, { useId } from "react";
 
-import { SETTINGS_WIDTH } from "src/util/misc";
+import { SETTINGS_WIDTH } from "util/misc";
 
 interface Props {
   section: ServiceSchemaContentSectionDto;

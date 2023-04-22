@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 import { ServiceSchemaContentSectionDto } from "dtos";
 import React from "react";
 
-import { ServiceSchemaContentSection } from "src/components/service-schema-content-section";
+import { ServiceSchemaContentSection } from "components/service-schema-content-section";
 
 interface Props {
   sections: ServiceSchemaContentSectionDto[];

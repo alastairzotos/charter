@@ -9,8 +9,8 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { urls } from "urls";
 
-import { StatusSwitch } from "src/components/status-switch";
-import { useLoadServiceSchemaCategories } from "src/state/service-schema-categories";
+import { StatusSwitch } from "components/status-switch";
+import { useLoadServiceSchemaCategories } from "state/service-schema-categories";
 
 export const ServiceSchemaCategoryList: React.FC = () => {
   const {

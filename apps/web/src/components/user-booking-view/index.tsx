@@ -5,10 +5,10 @@ import React, { useEffect, useRef } from "react";
 import { urls } from "urls";
 import { getQrCodeFilePathForBooking, getReadableBookingDetails } from "utils";
 
-import { KeyValues } from "src/components/key-values";
-import { useGetBookingPaymentStatus } from "src/state/bookings";
-import { getEnv } from "src/util/env";
-import { SETTINGS_WIDTH } from "src/util/misc";
+import { KeyValues } from "components/key-values";
+import { useGetBookingPaymentStatus } from "state/bookings";
+import { getEnv } from "util/env";
+import { SETTINGS_WIDTH } from "util/misc";
 
 interface Props {
   booking: BookingDto;

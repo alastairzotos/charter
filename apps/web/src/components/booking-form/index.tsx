@@ -15,21 +15,21 @@ import { ErrorBoundary } from "react-error-boundary";
 import { urls } from "urls";
 import { calculateBookingPrice, createPriceString } from "utils";
 
-import { BookingAdditionalForms } from "src/components/booking-additonal-forms";
-import { BookingDefaultForms } from "src/components/booking-default-forms";
-import { BookingPayLaterForm } from "src/components/booking-payment-forms/booking-pay-later-form";
-import { BookingPayNowForm } from "src/components/booking-payment-forms/booking-pay-now-form";
-import { BookingPeoplePolicyFeedback } from "src/components/booking-people-policy-feedback";
-import { BookingPriceDetails } from "src/components/booking-price-forms";
-import { DefaultErrorFallback } from "src/components/default-error-fallback";
-import { FormBox } from "src/components/form-box";
-import { KeyValues } from "src/components/key-values";
-import { TAndCCheckbox } from "src/components/t-and-c-checkbox";
-import { TabsView, TabsProvider } from "src/components/tabs";
-import { TabsPrevNextButtons } from "src/components/tabs/prev-next-buttons";
-import { bookingValidationSchema } from "src/schemas";
-import { useCreateBooking } from "src/state/bookings";
-import { useUserState } from "src/state/users";
+import { BookingAdditionalForms } from "components/booking-additonal-forms";
+import { BookingDefaultForms } from "components/booking-default-forms";
+import { BookingPayLaterForm } from "components/booking-payment-forms/booking-pay-later-form";
+import { BookingPayNowForm } from "components/booking-payment-forms/booking-pay-now-form";
+import { BookingPeoplePolicyFeedback } from "components/booking-people-policy-feedback";
+import { BookingPriceDetails } from "components/booking-price-forms";
+import { DefaultErrorFallback } from "components/default-error-fallback";
+import { FormBox } from "components/form-box";
+import { KeyValues } from "components/key-values";
+import { TAndCCheckbox } from "components/t-and-c-checkbox";
+import { TabsView, TabsProvider } from "components/tabs";
+import { TabsPrevNextButtons } from "components/tabs/prev-next-buttons";
+import { bookingValidationSchema } from "schemas";
+import { useCreateBooking } from "state/bookings";
+import { useUserState } from "state/users";
 
 interface Props {
   operator: OperatorDto;

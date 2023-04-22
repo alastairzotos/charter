@@ -1,13 +1,13 @@
 import { ExtractInterface } from "utils";
 import { StoreApi, UseBoundStore } from "zustand";
 
-import { LocalStorageService } from "src/clients/localstorage.service";
-import { UserService } from "src/clients/user.service";
+import { LocalStorageService } from "clients/localstorage.service";
+import { UserService } from "clients/user.service";
 import {
   ACCESS_TOKEN_LOCALSTORAGE_KEY,
   UserState,
   createUserState,
-} from "src/state/users";
+} from "state/users";
 
 jest.mock("next/config", () => () => ({
   publicRuntimeConfig: {

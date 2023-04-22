@@ -9,20 +9,20 @@ import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
 
-import { FileUpload } from "src/components/file-upload";
-import { FormBox } from "src/components/form-box";
-import { MinMaxPeopleSelector } from "src/components/min-max-people-selector";
-import { OpeningTimesForm } from "src/components/opening-times-form";
-import { PriceForm } from "src/components/price-forms";
-import { SaveAndDelete } from "src/components/save-delete";
-import { ServiceBookingCutoffSelector } from "src/components/service-booking-cutoff-selector";
-import { ServiceFormFields } from "src/components/service-form-fields";
-import { ServicePageContentEditor } from "src/components/service-page-content-editor";
-import { TabsProvider, TabsView } from "src/components/tabs";
-import { TabsPrevNextButtons } from "src/components/tabs/prev-next-buttons";
-import { useOperatorDashboard } from "src/contexts/operator-dashboard";
-import { serviceValidationSchema } from "src/schemas";
-import { SETTINGS_WIDTH } from "src/util/misc";
+import { FileUpload } from "components/file-upload";
+import { FormBox } from "components/form-box";
+import { MinMaxPeopleSelector } from "components/min-max-people-selector";
+import { OpeningTimesForm } from "components/opening-times-form";
+import { PriceForm } from "components/price-forms";
+import { SaveAndDelete } from "components/save-delete";
+import { ServiceBookingCutoffSelector } from "components/service-booking-cutoff-selector";
+import { ServiceFormFields } from "components/service-form-fields";
+import { ServicePageContentEditor } from "components/service-page-content-editor";
+import { TabsProvider, TabsView } from "components/tabs";
+import { TabsPrevNextButtons } from "components/tabs/prev-next-buttons";
+import { useOperatorDashboard } from "contexts/operator-dashboard";
+import { serviceValidationSchema } from "schemas";
+import { SETTINGS_WIDTH } from "util/misc";
 
 interface Props {
   operatorId: string;

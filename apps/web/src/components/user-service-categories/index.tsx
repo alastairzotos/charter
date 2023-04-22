@@ -13,7 +13,7 @@ import Link from "next/link";
 import React from "react";
 import { urls } from "urls";
 
-import { Titled } from "src/components/titled";
+import { Titled } from "components/titled";
 
 interface Props {
   schemaCategories: ServiceSchemaCategoryDto[];

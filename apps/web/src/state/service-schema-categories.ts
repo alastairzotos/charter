@@ -6,7 +6,7 @@ import {
   getServiceSchemaCategories,
   getServiceSchemaCategoryById,
   updateServiceSchemaCategory,
-} from "src/clients/service-schema-categories.client";
+} from "clients/service-schema-categories.client";
 
 export const useLoadServiceSchemaCategories = createQuery(
   getServiceSchemaCategories

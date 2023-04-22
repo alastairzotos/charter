@@ -13,16 +13,16 @@ import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
 
-import { AdditionalBookingFieldsSelector } from "src/components/additional-booking-fields-selector";
-import { DefaultBookingFieldsSelector } from "src/components/default-booking-fields-selector";
-import { FormBox } from "src/components/form-box";
-import { PricingStrategyTypeSelector } from "src/components/pricing-strategy-type-selector";
-import { SaveAndDelete } from "src/components/save-delete";
-import { ServiceSchemaCategorySelector } from "src/components/service-schema-category-selector";
-import { ServiceSchemaContentSectionsSelector } from "src/components/service-schema-content-sections-selector";
-import { ServiceSchemaFieldsSelector } from "src/components/service-schema-fields-selector";
-import { TabsProvider, TabsView } from "src/components/tabs";
-import { SETTINGS_WIDTH } from "src/util/misc";
+import { AdditionalBookingFieldsSelector } from "components/additional-booking-fields-selector";
+import { DefaultBookingFieldsSelector } from "components/default-booking-fields-selector";
+import { FormBox } from "components/form-box";
+import { PricingStrategyTypeSelector } from "components/pricing-strategy-type-selector";
+import { SaveAndDelete } from "components/save-delete";
+import { ServiceSchemaCategorySelector } from "components/service-schema-category-selector";
+import { ServiceSchemaContentSectionsSelector } from "components/service-schema-content-sections-selector";
+import { ServiceSchemaFieldsSelector } from "components/service-schema-fields-selector";
+import { TabsProvider, TabsView } from "components/tabs";
+import { SETTINGS_WIDTH } from "util/misc";
 
 interface Props {
   title: string;

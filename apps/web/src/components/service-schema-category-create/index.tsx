@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
 
-import { ServiceSchemaCategoryManage } from "src/components/service-schema-category-manage";
-import { useCreateServiceSchemaCategory } from "src/state/service-schema-categories";
+import { ServiceSchemaCategoryManage } from "components/service-schema-category-manage";
+import { useCreateServiceSchemaCategory } from "state/service-schema-categories";
 
 export const ServiceSchemaCategoryCreate: React.FC = () => {
   const router = useRouter();

@@ -1,11 +1,11 @@
 import { List, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { ServiceCreateButton } from "src/components/service-create-button";
-import { ServiceListItem } from "src/components/service-list-item";
-import { StatusSwitch } from "src/components/status-switch";
-import { useLoadServicesIncludingHidden } from "src/state/services";
-import { SETTINGS_WIDTH } from "src/util/misc";
+import { ServiceCreateButton } from "components/service-create-button";
+import { ServiceListItem } from "components/service-list-item";
+import { StatusSwitch } from "components/status-switch";
+import { useLoadServicesIncludingHidden } from "state/services";
+import { SETTINGS_WIDTH } from "util/misc";
 
 interface Props {
   operatorId: string;

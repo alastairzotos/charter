@@ -11,7 +11,7 @@ import { Box } from "@mui/system";
 import { PriceTierDto } from "dtos";
 import React from "react";
 
-import { PriceFormProps } from "src/components/price-forms/props";
+import { PriceFormProps } from "components/price-forms/props";
 
 export const TieredPriceForm: React.FC<PriceFormProps> = ({
   pricing,

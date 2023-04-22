@@ -1,6 +1,6 @@
 import { SearchResponseDto } from "dtos";
 
-import { httpClient } from "src/clients/http.client";
+import { httpClient } from "clients/http.client";
 
 export const searchOperatorsAndServices = async (term: string) => {
   const { data } = await httpClient.get<SearchResponseDto>(

@@ -1,6 +1,6 @@
 import { ServiceSchemaDto, ServiceSchemaNoId } from "dtos";
 
-import { httpClient } from "src/clients/http.client";
+import { httpClient } from "clients/http.client";
 
 export const getServiceSchemas = async (): Promise<ServiceSchemaDto[]> => {
   const { data } = await httpClient.get<ServiceSchemaDto[]>("/service-schemas");

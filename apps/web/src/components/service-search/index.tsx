@@ -13,12 +13,12 @@ import { urls } from "urls";
 import {
   GroupHeader,
   GroupItems,
-} from "src/components/service-search/search-groups";
+} from "components/service-search/search-groups";
 import {
   OptionType,
   SearchResult,
-} from "src/components/service-search/search-result";
-import { useSearchOperatorsAndServices } from "src/state/search";
+} from "components/service-search/search-result";
+import { useSearchOperatorsAndServices } from "state/search";
 
 interface Props {
   sx?: SxProps;

@@ -1,6 +1,6 @@
 import { LoginResponse, OAuthUserInfo } from "dtos";
 
-import { httpClient } from "src/clients/http.client";
+import { httpClient } from "clients/http.client";
 
 export const login = async (details: OAuthUserInfo): Promise<string> => {
   const { data } = await httpClient.post<

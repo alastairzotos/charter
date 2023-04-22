@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 
-import { useTabs } from "src/components/tabs";
+import { useTabs } from "components/tabs";
 
 export const TabsPrevNextButtons: React.FC = () => {
   const { tabs, tabIndex, setTabIndex } = useTabs();

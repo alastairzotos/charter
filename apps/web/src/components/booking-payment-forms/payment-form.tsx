@@ -8,7 +8,7 @@ import { Stripe, StripeElements } from "@stripe/stripe-js";
 import { ServiceDto } from "dtos";
 import React, { useState } from "react";
 
-import { ShinyButton } from "src/components/shiny-button";
+import { ShinyButton } from "components/shiny-button";
 
 interface Props {
   service: ServiceDto;

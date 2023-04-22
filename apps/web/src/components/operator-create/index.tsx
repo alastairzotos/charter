@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
 
-import { ManageOperatorForm } from "src/components/operator-manage";
-import { useCreateOperator } from "src/state/operators";
+import { ManageOperatorForm } from "components/operator-manage";
+import { useCreateOperator } from "state/operators";
 
 export const OperatorCreate: React.FC = () => {
   const router = useRouter();

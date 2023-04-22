@@ -18,7 +18,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { urls } from "urls";
 
-import { OpeningTimesView } from "src/components/opening-times";
+import { OpeningTimesView } from "components/opening-times";
 
 interface Props {
   operator: OperatorDto;

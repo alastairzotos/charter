@@ -3,8 +3,8 @@ import { Box } from "@mui/system";
 import { ServiceDto } from "dtos";
 import React from "react";
 
-import { Titled } from "src/components/titled";
-import { UserServiceListItem } from "src/components/user-service-list-item";
+import { Titled } from "components/titled";
+import { UserServiceListItem } from "components/user-service-list-item";
 
 interface Props {
   groupByType?: boolean;

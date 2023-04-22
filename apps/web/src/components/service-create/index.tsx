@@ -7,11 +7,11 @@ import {
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 
-import { ManageServiceForm } from "src/components/service-manage";
-import { StatusSwitch } from "src/components/status-switch";
-import { useOperatorDashboard } from "src/contexts/operator-dashboard";
-import { useLoadServiceSchemaById } from "src/state/service-schemas";
-import { useCreateService } from "src/state/services";
+import { ManageServiceForm } from "components/service-manage";
+import { StatusSwitch } from "components/status-switch";
+import { useOperatorDashboard } from "contexts/operator-dashboard";
+import { useLoadServiceSchemaById } from "state/service-schemas";
+import { useCreateService } from "state/services";
 
 interface Props {
   serviceSchemaId: string;

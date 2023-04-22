@@ -4,10 +4,10 @@ import React, { useEffect } from "react";
 import { urls } from "urls";
 import { getReadableBookingDetails } from "utils";
 
-import { KeyValues } from "src/components/key-values";
-import { StatusSwitch } from "src/components/status-switch";
-import { useLoadBooking } from "src/state/bookings";
-import { SETTINGS_WIDTH } from "src/util/misc";
+import { KeyValues } from "components/key-values";
+import { StatusSwitch } from "components/status-switch";
+import { useLoadBooking } from "state/bookings";
+import { SETTINGS_WIDTH } from "util/misc";
 
 interface Props {
   bookingId: string;

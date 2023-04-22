@@ -4,11 +4,11 @@ import { loadStripe } from "@stripe/stripe-js";
 import { BookingDto, ServiceDto } from "dtos";
 import React, { useEffect } from "react";
 
-import { PaymentForm } from "src/components/booking-payment-forms/payment-form";
-import { StatusSwitch } from "src/components/status-switch";
-import { useCreatePaymentIntent } from "src/state/payments";
-import { useConfirmPayment } from "src/state/stripe";
-import { getEnv } from "src/util/env";
+import { PaymentForm } from "components/booking-payment-forms/payment-form";
+import { StatusSwitch } from "components/status-switch";
+import { useCreatePaymentIntent } from "state/payments";
+import { useConfirmPayment } from "state/stripe";
+import { getEnv } from "util/env";
 
 const stripePromise = loadStripe(getEnv().stripePublishableKey);
 

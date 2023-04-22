@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import { OperatorDto } from "dtos";
 import React from "react";
 
-import { OperatorView } from "src/components/operator-view";
+import { OperatorView } from "components/operator-view";
 
 interface Props {
   operator: OperatorDto;

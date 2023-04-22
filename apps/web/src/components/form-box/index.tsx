@@ -3,7 +3,7 @@ import { Form } from "formik";
 import { Router } from "next/router";
 import React, { useEffect } from "react";
 
-import { Titled } from "src/components/titled";
+import { Titled } from "components/titled";
 
 interface Props {
   dirty?: boolean;

@@ -12,14 +12,11 @@ import React, { useEffect, useState } from "react";
 import FacebookLogin, { ReactFacebookLoginInfo } from "react-facebook-login";
 import { urls } from "urls";
 
-import {
-  fetchFbUserInfo,
-  fetchGoogleUserInfo,
-} from "src/clients/oauth2.client";
-import { GoogleLoginButton } from "src/components/google-login-button";
-import { useOAuthLogin } from "src/state/oauth2";
-import { useUserState } from "src/state/users";
-import { getEnv } from "src/util/env";
+import { fetchFbUserInfo, fetchGoogleUserInfo } from "clients/oauth2.client";
+import { GoogleLoginButton } from "components/google-login-button";
+import { useOAuthLogin } from "state/oauth2";
+import { useUserState } from "state/users";
+import { getEnv } from "util/env";
 
 const LoginFormInner: React.FC = () => {
   const router = useRouter();

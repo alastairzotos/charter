@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
 
-import { OperatorSearch } from "src/components/operator-search";
-import { UserOperatorListItem } from "src/components/user-operator-list-item";
+import { OperatorSearch } from "components/operator-search";
+import { UserOperatorListItem } from "components/user-operator-list-item";
 
 interface Props {
   operators: OperatorDto[];

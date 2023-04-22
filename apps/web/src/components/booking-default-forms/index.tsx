@@ -1,10 +1,10 @@
 import { ServiceSchemaDto } from "dtos";
 import React from "react";
 
-import { BookingDateForm } from "src/components/booking-default-forms/booking-date-form";
-import { BookingNumberOfPeopleForm } from "src/components/booking-default-forms/booking-number-of-people-form";
-import { BookingTimeForm } from "src/components/booking-default-forms/booking-time-form";
-import { BookingDefaultFormsProps } from "src/components/booking-default-forms/props";
+import { BookingDateForm } from "components/booking-default-forms/booking-date-form";
+import { BookingNumberOfPeopleForm } from "components/booking-default-forms/booking-number-of-people-form";
+import { BookingTimeForm } from "components/booking-default-forms/booking-time-form";
+import { BookingDefaultFormsProps } from "components/booking-default-forms/props";
 
 interface Props extends BookingDefaultFormsProps {
   schema: ServiceSchemaDto;

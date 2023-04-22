@@ -9,8 +9,8 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { urls } from "urls";
 
-import { StatusSwitch } from "src/components/status-switch";
-import { useLoadServiceSchemas } from "src/state/service-schemas";
+import { StatusSwitch } from "components/status-switch";
+import { useLoadServiceSchemas } from "state/service-schemas";
 
 export const ServiceSchemaList: React.FC = () => {
   const { status, request, value } = useLoadServiceSchemas();

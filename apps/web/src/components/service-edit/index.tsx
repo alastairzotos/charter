@@ -1,13 +1,13 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { ManageServiceForm } from "src/components/service-manage";
-import { StatusSwitch } from "src/components/status-switch";
+import { ManageServiceForm } from "components/service-manage";
+import { StatusSwitch } from "components/status-switch";
 import {
   useDeleteService,
   useLoadService,
   useUpdateService,
-} from "src/state/services";
+} from "state/services";
 
 interface Props {
   id: string;

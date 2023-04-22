@@ -1,8 +1,8 @@
 import { ServiceFieldValue, ServiceSchemaFieldDto } from "dtos";
 import React from "react";
 
-import { KeyValues } from "src/components/key-values";
-import { MultilineText } from "src/components/multiline-text";
+import { KeyValues } from "components/key-values";
+import { MultilineText } from "components/multiline-text";
 
 interface Props {
   data: Record<string, ServiceFieldValue>;

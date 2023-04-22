@@ -2,9 +2,9 @@ import { Autocomplete, TextField, Typography } from "@mui/material";
 import { LoggedInUserDetails } from "dtos";
 import React, { useEffect } from "react";
 
-import { SearchResult } from "src/components/service-search/search-result";
-import { StatusSwitch } from "src/components/status-switch";
-import { useUserState } from "src/state/users";
+import { SearchResult } from "components/service-search/search-result";
+import { StatusSwitch } from "components/status-switch";
+import { useUserState } from "state/users";
 
 interface Props {
   owner?: LoggedInUserDetails;

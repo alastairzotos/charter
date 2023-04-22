@@ -1,11 +1,11 @@
 import { ServiceSchemaDto, ServiceSchemaFieldDto } from "dtos";
 import React from "react";
 
-import { MultilineTextField } from "src/components/service-form-fields/fields/multiline-text-field";
-import { StringField } from "src/components/service-form-fields/fields/string-field";
-import { TimeField } from "src/components/service-form-fields/fields/time-field";
-import { TimeframeField } from "src/components/service-form-fields/fields/timeframe-field";
-import { ServiceFieldsProps } from "src/components/service-form-fields/props";
+import { MultilineTextField } from "components/service-form-fields/fields/multiline-text-field";
+import { StringField } from "components/service-form-fields/fields/string-field";
+import { TimeField } from "components/service-form-fields/fields/time-field";
+import { TimeframeField } from "components/service-form-fields/fields/timeframe-field";
+import { ServiceFieldsProps } from "components/service-form-fields/props";
 
 interface Props extends ServiceFieldsProps {
   schema: ServiceSchemaDto;

@@ -4,7 +4,7 @@ import {
   createPaymentIntent,
   createSetupIntent,
   getOrCreateCustomer,
-} from "src/clients/payments.client";
+} from "clients/payments.client";
 
 export const useCreatePaymentIntent = createQuery(createPaymentIntent);
 export const useGetOrCreateCustomer = createQuery(getOrCreateCustomer);

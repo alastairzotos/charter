@@ -1,13 +1,13 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { ManageServiceSchemaForm } from "src/components/service-schema-manage";
-import { StatusSwitch } from "src/components/status-switch";
+import { ManageServiceSchemaForm } from "components/service-schema-manage";
+import { StatusSwitch } from "components/status-switch";
 import {
   useDeleteServiceSchema,
   useLoadServiceSchemaById,
   useUpdateServiceSchema,
-} from "src/state/service-schemas";
+} from "state/service-schemas";
 
 interface Props {
   id: string;

@@ -8,7 +8,7 @@ import {
   getBookingsByOperatorId,
   getBookingsForUser,
   setBookingStatus,
-} from "src/clients/bookings.client";
+} from "clients/bookings.client";
 
 export const useCreateBooking = createQuery(createBooking);
 export const useLoadBookingsForUser = createQuery(getBookingsForUser);

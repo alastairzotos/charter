@@ -1,6 +1,6 @@
 import { ServiceSchemaCategoryDto, ServiceSchemaCategoryNoId } from "dtos";
 
-import { httpClient } from "src/clients/http.client";
+import { httpClient } from "clients/http.client";
 
 export const getServiceSchemaCategories = async (): Promise<
   ServiceSchemaCategoryDto[]

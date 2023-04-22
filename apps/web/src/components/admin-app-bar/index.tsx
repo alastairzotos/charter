@@ -1,8 +1,8 @@
 import * as React from "react";
 import { urls } from "urls";
 
-import { AppBarBase } from "src/components/app-bar-base";
-import { CharterLogo } from "src/components/charter-logo";
+import { AppBarBase } from "components/app-bar-base";
+import { CharterLogo } from "components/charter-logo";
 
 export const AdminAppBar: React.FC = () => (
   <AppBarBase

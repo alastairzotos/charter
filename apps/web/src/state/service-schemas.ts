@@ -6,7 +6,7 @@ import {
   getServiceSchemaById,
   getServiceSchemas,
   updateServiceSchema,
-} from "src/clients/service-schemas.client";
+} from "clients/service-schemas.client";
 
 export const useLoadServiceSchemas = createQuery(getServiceSchemas);
 export const useLoadServiceSchemaById = createQuery(getServiceSchemaById);

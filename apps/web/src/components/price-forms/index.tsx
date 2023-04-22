@@ -1,12 +1,12 @@
 import { PricingStrategyType } from "dtos";
 import React from "react";
 
-import { FixedPriceForm } from "src/components/price-forms/fixed";
-import { PerAdultAndChildPriceForm } from "src/components/price-forms/per-adult-and-child";
-import { PerAgeCohortPriceForm } from "src/components/price-forms/per-age-cohort";
-import { PerPersonPriceForm } from "src/components/price-forms/per-person";
-import { PriceFormProps } from "src/components/price-forms/props";
-import { TieredPriceForm } from "src/components/price-forms/tiered";
+import { FixedPriceForm } from "components/price-forms/fixed";
+import { PerAdultAndChildPriceForm } from "components/price-forms/per-adult-and-child";
+import { PerAgeCohortPriceForm } from "components/price-forms/per-age-cohort";
+import { PerPersonPriceForm } from "components/price-forms/per-person";
+import { PriceFormProps } from "components/price-forms/props";
+import { TieredPriceForm } from "components/price-forms/tiered";
 
 interface Props extends PriceFormProps {
   pricingStrategyType: PricingStrategyType;

@@ -4,9 +4,9 @@ import { ServiceSchemaDto } from "dtos";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-import { StatusSwitch } from "src/components/status-switch";
-import { useOperatorDashboard } from "src/contexts/operator-dashboard";
-import { useLoadServiceSchemas } from "src/state/service-schemas";
+import { StatusSwitch } from "components/status-switch";
+import { useOperatorDashboard } from "contexts/operator-dashboard";
+import { useLoadServiceSchemas } from "state/service-schemas";
 
 interface Props {
   operatorId: string;

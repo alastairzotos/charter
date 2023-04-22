@@ -2,7 +2,7 @@ import { Field } from "formik";
 import { TextField } from "formik-mui";
 import React from "react";
 
-import { BookingPriceProps } from "src/components/booking-price-forms/props";
+import { BookingPriceProps } from "components/booking-price-forms/props";
 
 export const PerPersonPriceDetails: React.FC<BookingPriceProps> = () => {
   return (
