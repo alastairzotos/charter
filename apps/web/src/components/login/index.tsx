@@ -51,9 +51,7 @@ const LoginFormInner: React.FC = () => {
     },
   });
 
-  const handleFacebookLogin = (
-    response: ReactFacebookLoginInfo & { first_name: string }
-  ) => {
+  const handleFacebookLogin = (response: ReactFacebookLoginInfo) => {
     fetchFbUserInfo(response.accessToken)
       .then(loginOAuth)
       .then(() => router.push(urls.home()));
