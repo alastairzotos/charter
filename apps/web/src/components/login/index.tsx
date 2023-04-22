@@ -12,8 +12,12 @@ import React, { useEffect, useState } from "react";
 import FacebookLogin, { ReactFacebookLoginInfo } from "react-facebook-login";
 import { urls } from "urls";
 
+import {
+  fetchFbUserInfo,
+  fetchGoogleUserInfo,
+} from "src/clients/oauth2.client";
 import { GoogleLoginButton } from "src/components/google-login-button";
-import { useLoginWithFacebook, useLoginWithGoogle } from "src/state/oauth2";
+import { useOAuthLogin } from "src/state/oauth2";
 import { useUserState } from "src/state/users";
 import { getEnv } from "src/util/env";
 
@@ -25,13 +29,7 @@ const LoginFormInner: React.FC = () => {
 
   const [loginStatus, login] = useUserState((s) => [s.loginStatus, s.login]);
 
-  const [loginWithGoogleStatus, loginWithGoogle] = useLoginWithGoogle((s) => [
-    s.status,
-    s.request,
-  ]);
-  const [loginWithFacebookStatus, loginWithFacebook] = useLoginWithFacebook(
-    (s) => [s.status, s.request]
-  );
+  const { status: oauthLoginStatus, request: loginOAuth } = useOAuthLogin();
 
   useEffect(() => {
     if (loginStatus === "success") {
@@ -45,22 +43,24 @@ const LoginFormInner: React.FC = () => {
   };
 
   const handleGoogleLogin = useGoogleLogin({
-    flow: "auth-code",
+    flow: "implicit",
     onSuccess: (response) => {
-      loginWithGoogle(response).then(() => router.push(urls.home()));
+      fetchGoogleUserInfo(response.access_token)
+        .then(loginOAuth)
+        .then(() => router.push(urls.home()));
     },
   });
 
   const handleFacebookLogin = (
     response: ReactFacebookLoginInfo & { first_name: string }
   ) => {
-    loginWithFacebook(response).then(() => router.push(urls.home()));
+    fetchFbUserInfo(response.accessToken)
+      .then(loginOAuth)
+      .then(() => router.push(urls.home()));
   };
 
   const isLoggingIn =
-    loginStatus === "fetching" ||
-    loginWithGoogleStatus === "fetching" ||
-    loginWithFacebookStatus === "fetching";
+    loginStatus === "fetching" || oauthLoginStatus === "fetching";
 
   return (
     <Paper sx={{ p: 3, mt: 3 }}>
@@ -76,7 +76,10 @@ const LoginFormInner: React.FC = () => {
           Login
         </Typography>
 
-        <GoogleLoginButton disabled={isLoggingIn} onClick={handleGoogleLogin} />
+        <GoogleLoginButton
+          disabled={isLoggingIn}
+          onClick={() => handleGoogleLogin()}
+        />
         <FacebookLogin
           size="small"
           buttonStyle={{ width: "100%" }}
