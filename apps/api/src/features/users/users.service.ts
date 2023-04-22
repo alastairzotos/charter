@@ -5,7 +5,7 @@ import {
   UserDetails,
   RegisterDetails,
   LoginDetails,
-  UserRole,
+  OAuthUserInfo,
 } from 'dtos';
 import * as jwt from 'jsonwebtoken';
 
@@ -66,7 +66,7 @@ export class UsersService {
     };
   }
 
-  async createUserFromOAuth2(details: UserDetails) {
+  async createUserFromOAuth2(details: OAuthUserInfo) {
     return await this.usersRepository.createUserFromOAuth2(details);
   }
 
