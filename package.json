@@ -10,19 +10,24 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
+    "lint-stages": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "turbo run test",
     "prepare": "husky install"
   },
   "devDependencies": {
     "eslint-config-custom": "*",
+    "husky": ">=6",
+    "lint-staged": ">=10",
     "prettier": "latest",
-    "turbo": "1.5.5",
-    "husky": "^8.0.0"
+    "turbo": "1.5.5"
   },
   "engines": {
     "node": ">=14.0.0"
   },
   "dependencies": {},
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "lint-staged": {
+    "*.{ts,tsx,md}": "prettier --write"
+  }
 }
