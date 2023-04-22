@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { BookingDto } from "dtos";
-import { Expo, ExpoPushTicket } from "expo-server-sdk";
+import { Expo, ExpoPushReceipt, ExpoPushTicket } from "expo-server-sdk";
+import { backOff } from 'exponential-backoff';
 
 interface NotifyBookingProps {
   token: string,
@@ -60,9 +61,52 @@ export class NotificationsService {
 
       if (response === "DeviceNotRegistered") {
         await onRevoke();
+      } else {
+        await this.handleReceipt(response, onRevoke);
       }
 
       return response;
     }
+  }
+
+  private async handleReceipt(ticketId: string, onRevoke: () => Promise<void>) {
+    try {
+      const receipt = await backOff(
+        async () => await this.getReceipt(ticketId),
+        {
+          delayFirstAttempt: true,
+          startingDelay: 1000,
+          timeMultiple: 2,
+          numOfAttempts: 10,
+          maxDelay: 5 * 1000
+        }
+      );
+
+      if (receipt && receipt.status === "error" && receipt.details && receipt.details.error === "DeviceNotRegistered") {
+        onRevoke();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  private async getReceipt(ticketId: string) {
+    let receiptIdChunks = this.expo.chunkPushNotificationReceiptIds([ticketId]);
+
+    let receipt: { [id: string]: ExpoPushReceipt };
+
+    for (const chunk of receiptIdChunks) {
+        try {
+            receipt = await this.expo.getPushNotificationReceiptsAsync(chunk);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    if (!receipt) {
+      throw new Error('no receipt');
+    }
+
+    return receipt[ticketId];
   }
 }
