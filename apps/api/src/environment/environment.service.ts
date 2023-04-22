@@ -20,6 +20,9 @@ export class EnvService {
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET as string,
     googleClientId: process.env.GOOGLE_CLIENT_ID as string,
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    googleClientIdAndroid: process.env.GOOGLE_CLIENT_ID_ANDROID as string,
+    googleClientIdIOS: process.env.GOOGLE_CLIENT_ID_IOS as string,
+    fbAppId: process.env.FB_APP_ID as string,
   };
 
   get() {

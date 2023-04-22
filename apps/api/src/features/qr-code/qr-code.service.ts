@@ -37,6 +37,12 @@ export class QRCodeService {
           name: operator.owner.givenName,
           email: operator.owner.email,
         }
+      },
+      oauth2: {
+        fbAppId: this.env.get().fbAppId,
+        googleClientId: this.env.get().googleClientId,
+        googleClientIdAndroid: this.env.get().googleClientIdAndroid,
+        googleClientIdIOS: this.env.get().googleClientIdIOS,
       }
     })
 

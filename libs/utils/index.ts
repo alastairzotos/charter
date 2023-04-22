@@ -158,4 +158,4 @@ export const getQrCodeFilePathForBooking = (booking: BookingDto) =>
   `qr-code:${booking._id}`;
 
 export const getQrCodeFilePathForOperatorSignup = (operator: OperatorDto) =>
-  `qr-code:${operator._id}`;
+  `qr-code-operator-1:${operator._id}`;

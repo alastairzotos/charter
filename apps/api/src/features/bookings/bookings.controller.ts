@@ -69,7 +69,6 @@ export class BookingsController {
   }
 
   @Get('by-operator-id/:id')
-  @Roles('all')
   async getBookingsByOperatorId(@Param('id') id: string) {
     return await this.bookingsService.getBookingsByOperatorId(id);
   }

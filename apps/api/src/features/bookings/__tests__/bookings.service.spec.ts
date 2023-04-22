@@ -97,6 +97,9 @@ const envServiceMock: ExtractInterface<EnvService> = {
     stripeWebhookSecret: '',
     googleClientId: '',
     googleClientSecret: '',
+    googleClientIdAndroid: '',
+    googleClientIdIOS: '',
+    fbAppId: '',
   })),
 };
 
