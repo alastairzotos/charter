@@ -13,6 +13,7 @@ import {
   UserDetails,
   RegisterDetails,
   LoginDetails,
+  OAuthUserInfo,
 } from 'dtos';
 
 import { UsersService } from 'features/users/users.service';
@@ -57,5 +58,10 @@ export class UsersController {
     }
 
     return result;
+  }
+
+  @Post('login-oauth')
+  async loginImplicit(@Body() details: OAuthUserInfo) {
+    return await this.usersService.loginUserOAuth(details);
   }
 }

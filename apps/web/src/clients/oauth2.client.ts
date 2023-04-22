@@ -6,7 +6,7 @@ export const login = async (details: OAuthUserInfo): Promise<string> => {
   const { data } = await httpClient.post<
     OAuthUserInfo,
     { data: LoginResponse }
-  >("/oauth2/implicit", details);
+  >("/users/login-oauth", details);
   return data.accessToken;
 };
 

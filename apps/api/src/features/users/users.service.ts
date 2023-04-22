@@ -91,6 +91,18 @@ export class UsersService {
     };
   }
 
+  async loginUserOAuth(details: OAuthUserInfo): Promise<LoginResponse> {
+    let user = await this.getUserByEmail(details.email);
+
+    if (!user) {
+      user = await this.createUserFromOAuth2(details);
+    }
+
+    return {
+      accessToken: this.generateAccessToken(user),
+    };
+  }
+
   generateAccessToken({ _id, email, givenName, role }: User) {
     return jwt.sign(
       { _id, email, givenName, role },
