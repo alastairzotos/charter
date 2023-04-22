@@ -5,8 +5,6 @@ import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 
 import { getServiceSchemaCategories } from "clients/service-schema-categories.client";
-import { getPopularServices } from "clients/services.client";
-import { PopularServices } from "components/popular-services";
 import { SeoHead } from "components/seo/head";
 import { UserLayoutContainer } from "components/user-layout/container";
 import { ServiceCategories } from "components/user-service-categories";
@@ -14,10 +12,9 @@ import { APP_NAME, capitalise } from "util/misc";
 
 interface Props {
   schemaCategories: ServiceSchemaCategoryDto[];
-  popularServices: ServiceDto[];
 }
 
-const Home: NextPage<Props> = ({ schemaCategories, popularServices }) => {
+const Home: NextPage<Props> = ({ schemaCategories }) => {
   const serviceList = capitalise(
     schemaCategories
       .map((category) => category.pluralName.toLocaleLowerCase())
@@ -74,10 +71,6 @@ const Home: NextPage<Props> = ({ schemaCategories, popularServices }) => {
       <UserLayoutContainer>
         <ServiceCategories schemaCategories={schemaCategories} />
       </UserLayoutContainer>
-
-      <UserLayoutContainer alternative>
-        <PopularServices services={popularServices} />
-      </UserLayoutContainer>
     </>
   );
 };
@@ -86,7 +79,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
   return {
     props: {
       schemaCategories: await getServiceSchemaCategories(),
-      popularServices: await getPopularServices(),
     },
   };
 };
