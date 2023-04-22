@@ -27,18 +27,18 @@ const LoginFormInner: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [loginStatus, login] = useUserState((s) => [s.loginStatus, s.login]);
+  const { loginStatus: basicLoginStatus, login: basicLogin } = useUserState();
 
   const { status: oauthLoginStatus, request: loginOAuth } = useOAuthLogin();
 
   useEffect(() => {
-    if (loginStatus === "success") {
+    if (basicLoginStatus === "success") {
       router.push(urls.home());
     }
-  }, [loginStatus]);
+  }, [basicLoginStatus]);
 
   const handleEmailPasswordLogin = async () => {
-    await login(email, password);
+    await basicLogin(email, password);
     router.push(urls.home());
   };
 
@@ -58,7 +58,7 @@ const LoginFormInner: React.FC = () => {
   };
 
   const isLoggingIn =
-    loginStatus === "fetching" || oauthLoginStatus === "fetching";
+    basicLoginStatus === "fetching" || oauthLoginStatus === "fetching";
 
   return (
     <Paper sx={{ p: 3, mt: 3 }}>
@@ -121,7 +121,7 @@ const LoginFormInner: React.FC = () => {
           {isLoggingIn ? <CircularProgress size={20} /> : "Login"}
         </Button>
 
-        {loginStatus === "error" && (
+        {basicLoginStatus === "error" && (
           <Typography>
             There was an error logging you in. Please ensure you have the
             correct email and password
