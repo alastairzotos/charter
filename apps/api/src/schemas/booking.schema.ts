@@ -1,5 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { AdditionalBookingFieldContent, BookingDto, BookingPaymentStatus, BookingPriceDetails, BookingStatus, OperatorDto } from 'dtos';
+import {
+  AdditionalBookingFieldContent,
+  BookingDto,
+  BookingPaymentStatus,
+  BookingPriceDetails,
+  BookingStatus,
+  OperatorDto,
+} from 'dtos';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
 import { Operator } from 'schemas/operator.schema';
@@ -58,6 +65,9 @@ export class Booking implements BookingDto {
 
   @Prop(String)
   status: BookingStatus;
+
+  @Prop()
+  fulfilled: boolean;
 }
 
 export const BookingSchema = SchemaFactory.createForClass(Booking);

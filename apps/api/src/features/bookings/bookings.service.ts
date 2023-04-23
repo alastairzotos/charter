@@ -25,6 +25,7 @@ export interface ReadableBooking {
   };
   data: Record<string, string>;
   status: 'pending' | 'confirmed' | 'rejected';
+  fulfilled: boolean;
 }
 
 @Injectable()
@@ -50,6 +51,7 @@ export class BookingsService {
       ...booking,
       paymentStatus: 'pending',
       status: service.approveBookingBeforePayment ? 'pending' : 'confirmed',
+      fulfilled: false,
     });
 
     if (!service.serviceSchema.shouldPayNow) {
@@ -138,6 +140,7 @@ export class BookingsService {
       },
       data,
       status: booking.status,
+      fulfilled: booking.fulfilled,
     };
   }
 
@@ -211,5 +214,9 @@ export class BookingsService {
           undefined,
         ),
     });
+  }
+
+  async setBookingFulfillment(id: string, fulfilled: boolean) {
+    await this.bookingsRepository.setBookingFulfillment(id, fulfilled);
   }
 }

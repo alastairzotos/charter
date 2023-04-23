@@ -1,4 +1,12 @@
-import { Button, CircularProgress, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  Paper,
+  Tooltip,
+  Typography,
+} from "@mui/material";
+import DoneIcon from "@mui/icons-material/Done";
 import { Box } from "@mui/system";
 import { BookingDto } from "dtos";
 import { useRouter } from "next/router";
@@ -9,7 +17,7 @@ import { getReadableBookingDetails } from "utils";
 import { KeyValues } from "components/key-values";
 import { DeleteConfirmModal } from "components/modals/delete-confirm";
 import { Titled } from "components/titled";
-import { useSetBookingStatus } from "state/bookings";
+import { useSetBookingFulfillment, useSetBookingStatus } from "state/bookings";
 import { SETTINGS_WIDTH } from "util/misc";
 
 interface Props {
@@ -25,6 +33,9 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
     (s) => [s.status, s.request]
   );
 
+  const [setBookingFulfillmentStatus, setBookingFulfillment] =
+    useSetBookingFulfillment((s) => [s.status, s.request]);
+
   const rejectBooking = async () => {
     await setBookingStatus(booking._id, "rejected");
     router.push(urls.operators.bookings());
@@ -37,6 +48,12 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
 
   return (
     <Titled title={booking.service.name}>
+      {booking.fulfilled && (
+        <Alert sx={{ width: SETTINGS_WIDTH, mb: 2 }} severity="info">
+          This booking has been fulfilled
+        </Alert>
+      )}
+
       <KeyValues
         sx={{ maxWidth: SETTINGS_WIDTH }}
         kv={getReadableBookingDetails(booking)}
@@ -75,6 +92,28 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
               </Typography>
             )}
           </>
+        )}
+
+        {!booking.fulfilled && (
+          <Tooltip title="By fulfilling the booking you can be notified if the customer tries to use their QR code more than once">
+            <Button
+              sx={{ mt: 2 }}
+              variant="outlined"
+              onClick={() => setBookingFulfillment(booking._id, true)}
+              disabled={
+                setBookingFulfillmentStatus === "fetching" ||
+                setBookingFulfillmentStatus === "success"
+              }
+            >
+              {!setBookingFulfillmentStatus && "Fulfill booking"}
+              {setBookingFulfillmentStatus === "fetching" && (
+                <CircularProgress size={20} />
+              )}
+              {setBookingFulfillmentStatus === "success" && <DoneIcon />}
+              {setBookingFulfillmentStatus === "error" &&
+                "There was an error. Please try again"}
+            </Button>
+          </Tooltip>
         )}
       </Box>
 

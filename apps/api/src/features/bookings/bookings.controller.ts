@@ -75,4 +75,12 @@ export class BookingsController {
   async getBookingsByOperatorId(@Param('id') id: string) {
     return await this.bookingsService.getBookingsByOperatorId(id);
   }
+
+  @Post('fulfillment')
+  @Roles('admin', 'operator')
+  async setBookingFulfillment(
+    @Body() { id, fulfilled }: { id: string; fulfilled: boolean },
+  ) {
+    await this.bookingsService.setBookingFulfillment(id, fulfilled);
+  }
 }

@@ -1,5 +1,12 @@
 import { Test } from '@nestjs/testing';
-import { BookingNoId, defaultOpeningTimes, OperatorDto, ServiceDto, ServiceSchemaCategoryDto, ServiceSchemaDto } from 'dtos';
+import {
+  BookingNoId,
+  defaultOpeningTimes,
+  OperatorDto,
+  ServiceDto,
+  ServiceSchemaCategoryDto,
+  ServiceSchemaDto,
+} from 'dtos';
 
 import { EnvService } from 'environment/environment.service';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
@@ -30,7 +37,7 @@ const mockServiceSchemaCategory: ServiceSchemaCategoryDto = {
   pluralName: 'Trips',
   description: '',
   photo: '',
-}
+};
 
 const mockServiceSchema: ServiceSchemaDto = {
   _id: '',
@@ -42,7 +49,7 @@ const mockServiceSchema: ServiceSchemaDto = {
   fields: [],
   contentSections: [],
   additionalBookingFields: [],
-}
+};
 
 const mockService: ServiceDto = {
   _id: '',
@@ -76,6 +83,7 @@ const mockBooking: BookingNoId = {
   paymentStatus: 'pending',
   paymentIntentId: 'paymentintent',
   setupIntentId: 'setupintent',
+  fulfilled: false,
 };
 
 const envServiceMock: ExtractInterface<EnvService> = {
@@ -103,45 +111,42 @@ const envServiceMock: ExtractInterface<EnvService> = {
   })),
 };
 
-const operatorsServiceMock: Partial<
-  ExtractInterface<OperatorsService>
-> = {
-  getOperatorNotificationToken: jest.fn(async () => 'foo')
+const operatorsServiceMock: Partial<ExtractInterface<OperatorsService>> = {
+  getOperatorNotificationToken: jest.fn(async () => 'foo'),
 };
 
-const servicesServiceMock: Partial<
-  ExtractInterface<ServicesService>
-> = {
+const servicesServiceMock: Partial<ExtractInterface<ServicesService>> = {
   addBookingToService: jest.fn(),
   getService: jest.fn(() => Promise.resolve(mockService as any)),
 };
 
 const emailServiceMock: Partial<ExtractInterface<EmailService>> = {
-  sendEmail: jest.fn(async () => { }),
+  sendEmail: jest.fn(async () => {}),
   sendEmailToOperator: jest.fn(),
 };
 
 const templatesServiceMock: Partial<ExtractInterface<TemplatesService>> = {
   bookingMadeOperator: jest.fn(() => ({ subject: '', content: '' })),
   bookingMadeUser: jest.fn(() => ({ subject: '', content: '' })),
-}
+};
 
 const qrCodeServiceMock: Partial<ExtractInterface<QRCodeService>> = {
-  createQRCodeForBooking: jest.fn()
-}
+  createQRCodeForBooking: jest.fn(),
+};
 
-const notificationsServiceMock: Partial<ExtractInterface<NotificationsService>> = {
-  notifyOperatorOfBooking: jest.fn()
-}
-
-const bookingsRepoMock: Partial<
-  ExtractInterface<BookingsRepository>
+const notificationsServiceMock: Partial<
+  ExtractInterface<NotificationsService>
 > = {
+  notifyOperatorOfBooking: jest.fn(),
+};
+
+const bookingsRepoMock: Partial<ExtractInterface<BookingsRepository>> = {
   createBooking: jest.fn(
     async () => new Promise((resolve) => resolve({ _id: '123' } as any)),
   ),
   getBookingByPaymentIntentId: jest.fn(
-    async () => new Promise(resolve => resolve({ _id: '123', ...mockBooking } as any))
+    async () =>
+      new Promise((resolve) => resolve({ _id: '123', ...mockBooking } as any)),
   ),
   setBookingPaymentStatus: jest.fn(),
   getBookingWithOperatorAndService: jest.fn(
@@ -175,8 +180,12 @@ describe('BookingService', () => {
       );
       await bookingsService.createBooking(mockBooking);
 
-      const retrievedBooking = await bookingsService.getBookingByPaymentIntentId('paymentintent');
-      await bookingsService.setBookingPaymentStatus(retrievedBooking._id, 'succeeded');
+      const retrievedBooking =
+        await bookingsService.getBookingByPaymentIntentId('paymentintent');
+      await bookingsService.setBookingPaymentStatus(
+        retrievedBooking._id,
+        'succeeded',
+      );
     });
 
     it('should create the booking', () => {
@@ -187,7 +196,7 @@ describe('BookingService', () => {
 
     it('should generate a QR code', () => {
       expect(qrCodeServiceMock.createQRCodeForBooking).toHaveBeenCalled();
-    })
+    });
 
     it('should send emails', () => {
       expect(emailServiceMock.sendEmail).toHaveBeenCalledTimes(1);
@@ -195,12 +204,14 @@ describe('BookingService', () => {
     });
 
     it('should send a notification to the operator', () => {
-      expect(notificationsServiceMock.notifyOperatorOfBooking).toHaveBeenCalled();
-    })
+      expect(
+        notificationsServiceMock.notifyOperatorOfBooking,
+      ).toHaveBeenCalled();
+    });
 
     it('should increment the number of bookings on the service', () => {
       expect(servicesServiceMock.addBookingToService).toHaveBeenCalled();
-    })
+    });
   });
 });
 
@@ -253,7 +264,7 @@ const createService = async (
       {
         provide: NotificationsService,
         useValue: notificationsServiceMock,
-      }
+      },
     ],
   }).compile();
 

@@ -3,8 +3,12 @@ import { OperatorDto } from "./operator";
 import { ServicePricingDto } from "./pricing";
 import { ServiceDto } from "./service";
 
-export type BookingStatus = 'pending' | 'confirmed' | 'rejected';
-export type BookingPaymentStatus = 'pending' | 'succeeded' | 'failed' | 'cancelled';
+export type BookingStatus = "pending" | "confirmed" | "rejected";
+export type BookingPaymentStatus =
+  | "pending"
+  | "succeeded"
+  | "failed"
+  | "cancelled";
 
 export interface PerPersonBookingPriceDetails {
   numberOfPeople: number;
@@ -30,7 +34,9 @@ export type BookingPriceDetails = Partial<{
   tiered: TieredBookingPriceDetails;
 }>;
 
-export const getDefaultBookingPriceDetails = (price: ServicePricingDto): BookingPriceDetails => ({
+export const getDefaultBookingPriceDetails = (
+  price: ServicePricingDto
+): BookingPriceDetails => ({
   perPerson: {
     numberOfPeople: 1,
   },
@@ -39,18 +45,19 @@ export const getDefaultBookingPriceDetails = (price: ServicePricingDto): Booking
     childGuests: 0,
   },
   perAgeCohort: {
-    guestsInCohorts: price.perAgeCohort?.ageCohorts?.reduce<Record<string, number>>(
-      (acc, cur) => ({
-        ...acc,
-        [cur.name]: 0
-      }),
-      {}
-    ) || {},
+    guestsInCohorts:
+      price.perAgeCohort?.ageCohorts?.reduce<Record<string, number>>(
+        (acc, cur) => ({
+          ...acc,
+          [cur.name]: 0,
+        }),
+        {}
+      ) || {},
   },
   tiered: {
-    tier: ''
+    tier: "",
   },
-})
+});
 
 export interface DefaultBookingFields {
   date?: string;
@@ -60,15 +67,21 @@ export interface DefaultBookingFields {
 
 export type DefaultBookingFieldType = keyof DefaultBookingFields;
 
-export const getDefaultDefaultBookingFields = (service: ServiceDto): DefaultBookingFields => {
+export const getDefaultDefaultBookingFields = (
+  service: ServiceDto
+): DefaultBookingFields => {
   const schema = service.serviceSchema;
 
   return {
-    date: schema.defaultBookingFields.includes('date') ? getNextAvailableBookingDate(service).format("DD MMM YYYY") : undefined,
-    time: schema.defaultBookingFields.includes('time') ? '09:00' : undefined,
-    numberOfPeople: schema.defaultBookingFields.includes('numberOfPeople') ? 1 : 0,
-  }
-}
+    date: schema.defaultBookingFields.includes("date")
+      ? getNextAvailableBookingDate(service).format("DD MMM YYYY")
+      : undefined,
+    time: schema.defaultBookingFields.includes("time") ? "09:00" : undefined,
+    numberOfPeople: schema.defaultBookingFields.includes("numberOfPeople")
+      ? 1
+      : 0,
+  };
+};
 
 export type AdditionalBookingFieldContent = string;
 
@@ -87,6 +100,7 @@ export interface BookingDto extends DefaultBookingFields {
   stripeCustomerId?: string;
   paymentStatus?: BookingPaymentStatus;
   status: BookingStatus;
+  fulfilled: boolean;
 }
 
-export type BookingNoId = Omit<BookingDto, '_id'>;
+export type BookingNoId = Omit<BookingDto, "_id">;
