@@ -1,10 +1,13 @@
 import * as qrcode from 'qrcode';
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 import { EnvService } from 'environment/environment.service';
 import { S3Service } from 'integrations/s3/s3.service';
 import { BookingDto, OperatorDto } from 'dtos';
 import { urls } from 'urls';
-import { getQrCodeFilePathForBooking, getQrCodeFilePathForOperatorSignup } from 'utils';
+import {
+  getQrCodeFilePathForBooking,
+  getQrCodeFilePathForOperatorSignup,
+} from 'utils';
 
 @Injectable()
 export class QRCodeService {
@@ -14,20 +17,25 @@ export class QRCodeService {
   ) {}
 
   async createQRCodeForBooking(booking: BookingDto) {
-    const url = `${this.env.get().frontendUrl}${urls.operators.booking(booking._id)}`;
+    const url = `${this.env.get().frontendUrl}${urls.operators.booking(
+      booking._id,
+    )}`;
 
     await this.s3Service.store(
       getQrCodeFilePathForBooking(booking),
-      await qrcode.toBuffer(url)
-    )
+      await qrcode.toBuffer(url),
+    );
   }
 
   getUrlForBookingQRCode(booking: BookingDto) {
-    return `${this.env.get().awsCloudfrontDomain}${getQrCodeFilePathForBooking(booking)}`;
+    return `${this.env.get().awsCloudfrontDomain}${getQrCodeFilePathForBooking(
+      booking,
+    )}`;
   }
 
   async createQRCodeForOperatorSignup(operator: OperatorDto) {
     const data = JSON.stringify({
+      id: `${this.env.get().server}-${operator._id}`,
       server: this.env.get().server,
       operator: {
         id: operator._id,
@@ -36,23 +44,25 @@ export class QRCodeService {
         owner: {
           name: operator.owner.givenName,
           email: operator.owner.email,
-        }
+        },
       },
       oauth2: {
         fbAppId: this.env.get().fbAppId,
         googleClientId: this.env.get().googleClientId,
         googleClientIdAndroid: this.env.get().googleClientIdAndroid,
         googleClientIdIOS: this.env.get().googleClientIdIOS,
-      }
-    })
+      },
+    });
 
     await this.s3Service.store(
       getQrCodeFilePathForOperatorSignup(operator),
-      await qrcode.toBuffer(data)
-    )
+      await qrcode.toBuffer(data),
+    );
   }
 
   getUrlForOperatorSignup(operator: OperatorDto) {
-    return `${this.env.get().awsCloudfrontDomain}${getQrCodeFilePathForOperatorSignup(operator)}`;
+    return `${
+      this.env.get().awsCloudfrontDomain
+    }${getQrCodeFilePathForOperatorSignup(operator)}`;
   }
 }
