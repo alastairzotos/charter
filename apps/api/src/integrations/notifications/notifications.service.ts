@@ -1,12 +1,12 @@
-import { Injectable } from "@nestjs/common";
-import { BookingDto } from "dtos";
-import { Expo, ExpoPushReceipt, ExpoPushTicket } from "expo-server-sdk";
+import { Injectable } from '@nestjs/common';
+import { BookingDto } from 'dtos';
+import { Expo, ExpoPushReceipt, ExpoPushTicket } from 'expo-server-sdk';
 import { backOff } from 'exponential-backoff';
 
 interface NotifyBookingProps {
-  token: string,
-  booking: BookingDto,
-  onRevoke: () => Promise<void>,
+  token: string;
+  booking: BookingDto;
+  onRevoke: () => Promise<void>;
 }
 
 @Injectable()
@@ -28,10 +28,10 @@ export class NotificationsService {
           to: token,
           body: `You have a new booking`,
           data: {
-            screen: 'booking',
-            params: { bookingId: booking._id.toString() }
-          }
-        }
+            screen: 'newBooking',
+            params: { bookingId: booking._id.toString() },
+          },
+        },
       ]);
 
       const tickets: ExpoPushTicket[] = [];
@@ -45,21 +45,24 @@ export class NotificationsService {
         }
       }
 
-      let response = "";
+      let response = '';
 
       for (const ticket of tickets) {
-        if (ticket.status === "error") {
-          if (ticket.details && ticket.details.error === "DeviceNotRegistered") {
-            response = "DeviceNotRegistered";
+        if (ticket.status === 'error') {
+          if (
+            ticket.details &&
+            ticket.details.error === 'DeviceNotRegistered'
+          ) {
+            response = 'DeviceNotRegistered';
           }
         }
 
-        if (ticket.status === "ok") {
+        if (ticket.status === 'ok') {
           response = ticket.id;
         }
       }
 
-      if (response === "DeviceNotRegistered") {
+      if (response === 'DeviceNotRegistered') {
         await onRevoke();
       } else {
         await this.handleReceipt(response, onRevoke);
@@ -78,11 +81,16 @@ export class NotificationsService {
           startingDelay: 1000,
           timeMultiple: 2,
           numOfAttempts: 10,
-          maxDelay: 5 * 1000
-        }
+          maxDelay: 5 * 1000,
+        },
       );
 
-      if (receipt && receipt.status === "error" && receipt.details && receipt.details.error === "DeviceNotRegistered") {
+      if (
+        receipt &&
+        receipt.status === 'error' &&
+        receipt.details &&
+        receipt.details.error === 'DeviceNotRegistered'
+      ) {
         onRevoke();
       }
     } catch (e) {
@@ -96,11 +104,11 @@ export class NotificationsService {
     let receipt: { [id: string]: ExpoPushReceipt };
 
     for (const chunk of receiptIdChunks) {
-        try {
-            receipt = await this.expo.getPushNotificationReceiptsAsync(chunk);
-        } catch (e) {
-            console.error(e);
-        }
+      try {
+        receipt = await this.expo.getPushNotificationReceiptsAsync(chunk);
+      } catch (e) {
+        console.error(e);
+      }
     }
 
     if (!receipt) {

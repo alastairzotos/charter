@@ -1,5 +1,12 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { BookingDto, BookingNoId, BookingPaymentStatus, BookingStatus, LoggedInUserDetails, UserDetails } from 'dtos';
+import {
+  BookingDto,
+  BookingNoId,
+  BookingPaymentStatus,
+  BookingStatus,
+  LoggedInUserDetails,
+  UserDetails,
+} from 'dtos';
 
 import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { OperatorsService } from 'features/operators/operators.service';
@@ -10,6 +17,15 @@ import { TemplatesService } from 'features/templates/templates.service';
 import { QRCodeService } from 'features/qr-code/qr-code.service';
 import { getReadableBookingDetails } from 'utils';
 import { NotificationsService } from 'integrations/notifications/notifications.service';
+
+export interface ReadableBooking {
+  service: {
+    id: string;
+    name: string;
+  };
+  data: Record<string, string>;
+  status: 'pending' | 'confirmed' | 'rejected';
+}
 
 @Injectable()
 export class BookingsService {
@@ -24,7 +40,7 @@ export class BookingsService {
 
     @Inject(forwardRef(() => PaymentsService))
     private readonly paymentsService: PaymentsService,
-  ) { }
+  ) {}
 
   async createBooking(booking: BookingNoId) {
     const service = booking.service;
@@ -33,7 +49,7 @@ export class BookingsService {
       bookingDate: new Date(),
       ...booking,
       paymentStatus: 'pending',
-      status: service.approveBookingBeforePayment ? "pending" : "confirmed"
+      status: service.approveBookingBeforePayment ? 'pending' : 'confirmed',
     });
 
     if (!service.serviceSchema.shouldPayNow) {
@@ -46,22 +62,37 @@ export class BookingsService {
   }
 
   async setBookingPaymentIntentId(bookingId: string, paymentIntentId: string) {
-    await this.bookingsRepository.setBookingPaymentIntentId(bookingId, paymentIntentId);
+    await this.bookingsRepository.setBookingPaymentIntentId(
+      bookingId,
+      paymentIntentId,
+    );
   }
 
-  async setBookingSetupIntentIdAndStripeCustomerId(bookingId: string, setupIntentId: string, stripeCustomerId: string) {
-    await this.bookingsRepository.setBookingSetupIntentIdAndStripeCustomerId(bookingId, setupIntentId, stripeCustomerId);
+  async setBookingSetupIntentIdAndStripeCustomerId(
+    bookingId: string,
+    setupIntentId: string,
+    stripeCustomerId: string,
+  ) {
+    await this.bookingsRepository.setBookingSetupIntentIdAndStripeCustomerId(
+      bookingId,
+      setupIntentId,
+      stripeCustomerId,
+    );
   }
 
-  async setBookingPaymentStatus(id: string, paymentStatus: BookingPaymentStatus) {
+  async setBookingPaymentStatus(
+    id: string,
+    paymentStatus: BookingPaymentStatus,
+  ) {
     await this.bookingsRepository.setBookingPaymentStatus(id, paymentStatus);
 
     const createdBooking =
       await this.bookingsRepository.getBookingWithOperatorAndService(id);
 
-
     if (paymentStatus === 'succeeded') {
-      await this.servicesService.addBookingToService(createdBooking.service._id);
+      await this.servicesService.addBookingToService(
+        createdBooking.service._id,
+      );
 
       if (!createdBooking.service.approveBookingBeforePayment) {
         await Promise.all([
@@ -91,22 +122,35 @@ export class BookingsService {
     return await this.bookingsRepository.getBookingById(id);
   }
 
-  async getReadableBookingById(id: string) {
+  async getReadableBookingById(id: string): Promise<ReadableBooking> {
     const booking = await this.bookingsRepository.getBookingById(id);
 
     if (!booking) {
       return null;
     }
 
-    return getReadableBookingDetails(booking);
+    const data = getReadableBookingDetails(booking);
+
+    return {
+      service: {
+        id: booking.service._id,
+        name: booking.service.name,
+      },
+      data,
+      status: booking.status,
+    };
   }
 
   async getBookingByPaymentIntentId(paymentIntentId: string) {
-    return await this.bookingsRepository.getBookingByPaymentIntentId(paymentIntentId);
+    return await this.bookingsRepository.getBookingByPaymentIntentId(
+      paymentIntentId,
+    );
   }
 
   async getBookingBySetupIntentId(paymentIntentId: string) {
-    return await this.bookingsRepository.getBookingBySetupIntentId(paymentIntentId);
+    return await this.bookingsRepository.getBookingBySetupIntentId(
+      paymentIntentId,
+    );
   }
 
   async getBookingsForUser(user: LoggedInUserDetails) {
@@ -123,9 +167,8 @@ export class BookingsService {
   }
 
   async setBookingStatus(id: string, status: BookingStatus) {
-    const booking = await this.bookingsRepository.getBookingWithOperatorAndService(
-      id,
-    );
+    const booking =
+      await this.bookingsRepository.getBookingWithOperatorAndService(id);
 
     if (status === 'confirmed' && booking.service.approveBookingBeforePayment) {
       await this.paymentsService.chargeUserOffSession(booking);
@@ -152,15 +195,21 @@ export class BookingsService {
         this.templatesService.bookingMadeOperatorActionRequired(booking),
       ),
       this.sendPushNotificationToOperatorForBooking(booking),
-    ])
+    ]);
   }
 
   async sendPushNotificationToOperatorForBooking(booking: BookingDto) {
-    const token = await this.operatorsService.getOperatorNotificationToken(booking.operator._id);
+    const token = await this.operatorsService.getOperatorNotificationToken(
+      booking.operator._id,
+    );
     this.notificationsService.notifyOperatorOfBooking({
       token,
       booking,
-      onRevoke: async () => await this.operatorsService.setOperatorNotificationToken(booking.operator._id, undefined),
-    })
+      onRevoke: async () =>
+        await this.operatorsService.setOperatorNotificationToken(
+          booking.operator._id,
+          undefined,
+        ),
+    });
   }
 }
