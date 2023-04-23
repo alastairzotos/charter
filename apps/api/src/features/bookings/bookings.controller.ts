@@ -41,7 +41,9 @@ export class BookingsController {
   @Get('readable/:id')
   @Roles('all')
   async getReadableBookingById(@Param('id') id: string) {
-    const readableBooking = await this.bookingsService.getReadableBookingById(id);
+    const readableBooking = await this.bookingsService.getReadableBookingById(
+      id,
+    );
 
     if (!readableBooking) {
       throw new NotFoundException();
@@ -64,6 +66,7 @@ export class BookingsController {
   }
 
   @Get('payment-status/:id')
+  @Roles('all')
   async getBookingPaymentStatus(@Param('id') id: string) {
     return await this.bookingsService.getBookingPaymentStatus(id);
   }
