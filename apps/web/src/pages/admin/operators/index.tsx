@@ -3,9 +3,12 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "components/breadcrumbs";
-import { OperatorsList } from "components/operators-list";
+import { useRouter } from "next/router";
+import { OperatorSearch } from "components/operator-search";
 
 const OperatorsPage: NextPage = () => {
+  const router = useRouter();
+
   return (
     <>
       <Breadcrumbs
@@ -16,7 +19,11 @@ const OperatorsPage: NextPage = () => {
         current="Operators"
       />
 
-      <OperatorsList />
+      <OperatorSearch
+        onSelectOperator={(operator) =>
+          router.push(urls.admin.operator(operator._id))
+        }
+      />
     </>
   );
 };
