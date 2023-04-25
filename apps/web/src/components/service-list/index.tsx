@@ -1,7 +1,7 @@
 import { List, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { ServiceCreateButton } from "components/service-create-button";
+import { ServiceCreateInput } from "components/service-create-input";
 import { ServiceListItem } from "components/service-list-item";
 import { StatusSwitch } from "components/status-switch";
 import { useLoadServicesIncludingHidden } from "state/services";
@@ -30,7 +30,7 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
         </Typography>
       }
     >
-      <ServiceCreateButton operatorId={operatorId} />
+      <ServiceCreateInput operatorId={operatorId} />
 
       <List
         sx={{

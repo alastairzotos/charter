@@ -1,4 +1,5 @@
 import { Box, TextField, Typography, Autocomplete } from "@mui/material";
+import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import { ServiceSchemaDto } from "dtos";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
@@ -11,7 +12,7 @@ interface Props {
   operatorId: string;
 }
 
-export const ServiceCreateButton: React.FC<Props> = ({ operatorId }) => {
+export const ServiceCreateInput: React.FC<Props> = ({ operatorId }) => {
   const router = useRouter();
   const { getServiceCreateUrl } = useOperatorDashboard();
 
@@ -45,6 +46,16 @@ export const ServiceCreateButton: React.FC<Props> = ({ operatorId }) => {
             sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
             {...props}
           >
+            {option.schemaCategory?.photo ? (
+              <img
+                loading="lazy"
+                width="20"
+                src={option.schemaCategory?.photo}
+                alt={option.name}
+              />
+            ) : (
+              <InsertPhotoIcon sx={{ width: 20, height: 20, mr: 2 }} />
+            )}
             {option.name}
           </Box>
         )}
