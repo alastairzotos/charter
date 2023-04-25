@@ -1,8 +1,7 @@
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { Button, Menu, MenuItem, Typography } from "@mui/material";
+import { Box, TextField, Typography, Autocomplete } from "@mui/material";
 import { ServiceSchemaDto } from "dtos";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { StatusSwitch } from "components/status-switch";
 import { useOperatorDashboard } from "contexts/operator-dashboard";
@@ -19,14 +18,11 @@ export const ServiceCreateButton: React.FC<Props> = ({ operatorId }) => {
   const [loadServiceSchemasStatus, loadServiceSchemas, serviceSchemas] =
     useLoadServiceSchemas((s) => [s.status, s.request, s.value]);
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
   useEffect(() => {
     loadServiceSchemas();
   }, []);
 
   const handleServiceSchemaClick = (schema: ServiceSchemaDto) => {
-    setAnchorEl(null);
     router.push(getServiceCreateUrl(operatorId, schema._id));
   };
 
@@ -37,28 +33,25 @@ export const ServiceCreateButton: React.FC<Props> = ({ operatorId }) => {
         <Typography>There was an error loading the service schemas</Typography>
       }
     >
-      <Button
-        variant="contained"
-        onClick={(e) => setAnchorEl(e.currentTarget)}
-        sx={{ mt: 3 }}
-      >
-        Add service &nbsp;
-        <KeyboardArrowDownIcon />
-      </Button>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-      >
-        {serviceSchemas?.map((schema) => (
-          <MenuItem
-            key={schema._id}
-            onClick={() => handleServiceSchemaClick(schema)}
+      <Autocomplete
+        sx={{ width: 300 }}
+        freeSolo
+        options={serviceSchemas || []}
+        getOptionLabel={(option) => (option as ServiceSchemaDto).name}
+        onChange={(_, v) => handleServiceSchemaClick(v as ServiceSchemaDto)}
+        renderOption={(props, option) => (
+          <Box
+            component="li"
+            sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+            {...props}
           >
-            {schema.name}
-          </MenuItem>
-        ))}
-      </Menu>
+            {option.name}
+          </Box>
+        )}
+        renderInput={(params) => (
+          <TextField {...params} label="Add new service" />
+        )}
+      />
     </StatusSwitch>
   );
 };
