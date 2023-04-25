@@ -14,39 +14,36 @@ import { urls } from "urls";
 import { Titled } from "components/titled";
 
 interface Props {
-  title: string;
   bookings?: BookingDto[];
 }
 
-export const OperatorBookingList: React.FC<Props> = ({ title, bookings }) => {
+export const OperatorBookingList: React.FC<Props> = ({ bookings }) => {
   return (
     <Box sx={{ mb: 3 }}>
-      <Titled title={title}>
-        {bookings && bookings.length ? (
-          <List dense>
-            {bookings
-              .slice()
-              .reverse()
-              .map((booking) => (
-                <ListItem key={booking._id}>
-                  <ListItemButton
-                    component={Link}
-                    href={urls.operators.booking(booking._id)}
-                  >
-                    <ListItemText
-                      primary={booking.service?.name || "<Unknown service>"}
-                      secondary={booking.date}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-          </List>
-        ) : (
-          <Typography color="text.secondary">
-            There are no bookings in this list
-          </Typography>
-        )}
-      </Titled>
+      {bookings && bookings.length ? (
+        <List dense>
+          {bookings
+            .slice()
+            .reverse()
+            .map((booking) => (
+              <ListItem key={booking._id}>
+                <ListItemButton
+                  component={Link}
+                  href={urls.operators.booking(booking._id)}
+                >
+                  <ListItemText
+                    primary={booking.service?.name || "<Unknown service>"}
+                    secondary={booking.date}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+        </List>
+      ) : (
+        <Typography color="text.secondary">
+          There are no bookings in this list
+        </Typography>
+      )}
     </Box>
   );
 };

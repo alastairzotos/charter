@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { OperatorBookingList } from "components/operator-booking-list";
 import { StatusSwitch } from "components/status-switch";
 import { useLoadBookingsForUser } from "state/bookings";
+import { TabsProvider, TabsView } from "components/tabs";
 
 export const OperatorBookings: React.FC = () => {
   const [getBookingsForUserStatus, getBookingsForUser, userBookings] =
@@ -36,20 +37,24 @@ export const OperatorBookings: React.FC = () => {
         </Typography>
       }
     >
-      <OperatorBookingList
-        title="Pending bookings"
-        bookings={pendingBookings}
-      />
-
-      <OperatorBookingList
-        title="Confirmed bookings"
-        bookings={confirmedBookings}
-      />
-
-      <OperatorBookingList
-        title="Rejected bookings"
-        bookings={rejectedBookings}
-      />
+      <TabsProvider
+        tabs={[
+          {
+            label: "Pending bookings",
+            content: <OperatorBookingList bookings={pendingBookings} />,
+          },
+          {
+            label: "Confirmed bookings",
+            content: <OperatorBookingList bookings={confirmedBookings} />,
+          },
+          {
+            label: "Rejected bookings",
+            content: <OperatorBookingList bookings={rejectedBookings} />,
+          },
+        ]}
+      >
+        <TabsView />
+      </TabsProvider>
     </StatusSwitch>
   );
 };
