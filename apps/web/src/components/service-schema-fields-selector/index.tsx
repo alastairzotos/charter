@@ -23,19 +23,25 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
             field: "key",
             headerName: "Key",
             editable: true,
+            sortable: false,
+            hideable: false,
           },
           {
             width: 250,
             field: "label",
             headerName: "Label",
             editable: true,
+            sortable: false,
+            hideable: false,
           },
           {
             width: 150,
             field: "type",
             headerName: "Field type",
             type: "singleSelect",
+            hideable: false,
             editable: true,
+            sortable: false,
             valueOptions: [
               {
                 value: "string",
@@ -59,6 +65,8 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
             field: "delete",
             headerName: "Actions",
             type: "actions",
+            sortable: false,
+            hideable: false,
             getActions: (params) => {
               return [
                 <GridActionsCellItem
