@@ -1,6 +1,5 @@
 import { FetchStatus } from "@bitmetro/create-query";
 import { Checkbox, FormControlLabel, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { defaultOpeningTimes, ServiceNoId } from "dtos";
@@ -81,28 +80,6 @@ export const ManageServiceForm: React.FC<Props> = ({
                         label="Service name"
                       />
 
-                      <Box sx={{ display: "flex", gap: 1, width: "100%" }}>
-                        <MinMaxPeopleSelector
-                          label="Minimum people"
-                          checkboxLabel="Set minimum people"
-                          defaultValue={1}
-                          value={values.minPeople}
-                          setValue={(minPeople) =>
-                            setValues({ ...values, minPeople })
-                          }
-                        />
-
-                        <MinMaxPeopleSelector
-                          label="Maximum people"
-                          checkboxLabel="Set maximum people"
-                          defaultValue={10}
-                          value={values.maxPeople}
-                          setValue={(maxPeople) =>
-                            setValues({ ...values, maxPeople })
-                          }
-                        />
-                      </Box>
-
                       <FileUpload
                         title="Photos"
                         filesLimit={100}
@@ -181,44 +158,62 @@ export const ManageServiceForm: React.FC<Props> = ({
                   label: "Settings",
                   content: (
                     <>
-                      <Box sx={{ display: "flex" }}>
-                        {service.serviceSchema.shouldPayNow && (
-                          <FormControlLabel
-                            label="Approve booking before payment"
-                            control={
-                              <Checkbox
-                                checked={values.approveBookingBeforePayment}
-                                onChange={(e) => {
-                                  setValues({
-                                    ...values,
-                                    approveBookingBeforePayment:
-                                      e.currentTarget.checked,
-                                  });
-                                }}
-                              />
-                            }
-                          />
-                        )}
-
+                      {service.serviceSchema.shouldPayNow && (
                         <FormControlLabel
-                          label="Hide service from users"
+                          label="Approve booking before payment"
                           control={
                             <Checkbox
-                              checked={values.hidden}
+                              checked={values.approveBookingBeforePayment}
                               onChange={(e) => {
                                 setValues({
                                   ...values,
-                                  hidden: e.currentTarget.checked,
+                                  approveBookingBeforePayment:
+                                    e.currentTarget.checked,
                                 });
                               }}
                             />
                           }
                         />
-                      </Box>
+                      )}
+
+                      <FormControlLabel
+                        label="Hide service from users"
+                        control={
+                          <Checkbox
+                            checked={values.hidden}
+                            onChange={(e) => {
+                              setValues({
+                                ...values,
+                                hidden: e.currentTarget.checked,
+                              });
+                            }}
+                          />
+                        }
+                      />
 
                       <ServiceBookingCutoffSelector
                         values={values}
                         setValues={setValues}
+                      />
+
+                      <MinMaxPeopleSelector
+                        label="Minimum people"
+                        checkboxLabel="Set minimum people"
+                        defaultValue={1}
+                        value={values.minPeople}
+                        setValue={(minPeople) =>
+                          setValues({ ...values, minPeople })
+                        }
+                      />
+
+                      <MinMaxPeopleSelector
+                        label="Maximum people"
+                        checkboxLabel="Set maximum people"
+                        defaultValue={10}
+                        value={values.maxPeople}
+                        setValue={(maxPeople) =>
+                          setValues({ ...values, maxPeople })
+                        }
                       />
                     </>
                   ),

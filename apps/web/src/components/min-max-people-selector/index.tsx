@@ -1,9 +1,4 @@
-import {
-  FormControlLabel,
-  FormGroup,
-  Checkbox,
-  TextField,
-} from "@mui/material";
+import { FormControlLabel, Checkbox, TextField, Box } from "@mui/material";
 import React from "react";
 
 interface Props {
@@ -22,7 +17,7 @@ export const MinMaxPeopleSelector: React.FC<Props> = ({
   setValue,
 }) => {
   return (
-    <FormGroup sx={{ width: "100%" }}>
+    <Box sx={{ display: "flex" }}>
       <FormControlLabel
         label={checkboxLabel}
         control={
@@ -39,15 +34,15 @@ export const MinMaxPeopleSelector: React.FC<Props> = ({
         }
       />
 
-      {value !== null && (
-        <TextField
-          label={label}
-          type="number"
-          value={value}
-          onChange={(e) => setValue(parseInt(e.currentTarget.value, 10))}
-          inputProps={{ min: 1 }}
-        />
-      )}
-    </FormGroup>
+      <TextField
+        type="number"
+        placeholder={label}
+        size="small"
+        disabled={value === null}
+        inputProps={{ min: 1 }}
+        value={value}
+        onChange={(e) => setValue(parseInt(e.currentTarget.value, 10))}
+      />
+    </Box>
   );
 };
