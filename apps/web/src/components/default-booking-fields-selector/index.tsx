@@ -42,8 +42,9 @@ export const DefaultBookingFieldsSelector: React.FC<Props> = ({
               control={
                 <Checkbox
                   disabled={
-                    type === "numberOfPeople" &&
-                    pricingStrategyProvidesNumberOfPeople(pricingStrategy)
+                    type === "date" ||
+                    (type === "numberOfPeople" &&
+                      pricingStrategyProvidesNumberOfPeople(pricingStrategy))
                   }
                   checked={defaultBookingFields.includes(type)}
                   onChange={(e) => {
