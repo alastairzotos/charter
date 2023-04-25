@@ -1,5 +1,8 @@
 import { FetchStatus } from "@bitmetro/create-query";
 import dayjs from "dayjs";
+import customeParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customeParseFormat);
 
 export const APP_NAME = "Corfu Travel Guide";
 
