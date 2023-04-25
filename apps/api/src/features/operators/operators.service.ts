@@ -7,6 +7,7 @@ import { ServicesService } from 'features/services/services.service';
 import { TemplatesService } from 'features/templates/templates.service';
 import { UsersService } from 'features/users/users.service';
 import { EmailService } from 'integrations/email/email.service';
+import { createOperatorSlug } from 'urls';
 
 @Injectable()
 export class OperatorsService {
@@ -28,6 +29,10 @@ export class OperatorsService {
     return await this.operatorsRepo.getOperatorById(id);
   }
 
+  async getOperatorBySlug(slug: string) {
+    return await this.operatorsRepo.getOperatorBySlug(slug);
+  }
+
   async getOperatorByOwnerId(id: string) {
     return await this.operatorsRepo.getOperatorByOwnerId(id);
   }
@@ -36,9 +41,11 @@ export class OperatorsService {
     return await this.operatorsRepo.getOperatorByEmail(email);
   }
 
-  async getOperatorWithServicesById(id: string) {
-    const operator = await this.getOperatorById(id);
-    const services = await this.servicesService.getServicesForOperator(id);
+  async getOperatorWithServicesBySlug(slug: string) {
+    const operator = await this.getOperatorBySlug(slug);
+    const services = await this.servicesService.getServicesForOperator(
+      operator._id,
+    );
 
     return {
       operator,
@@ -47,11 +54,16 @@ export class OperatorsService {
   }
 
   async createOperator(operator: OperatorNoId) {
-    const createdOperator = await this.operatorsRepo.createOperator(operator);
+    const createdOperator = await this.operatorsRepo.createOperator({
+      ...operator,
+      slug: createOperatorSlug(operator),
+    });
 
     if (!!operator.owner) {
-      if (await this.usersService.promoteBasicUserToOperator(operator.owner._id)) {
-        await this.emailOperatorAfterPromotion(operator as OperatorDto)
+      if (
+        await this.usersService.promoteBasicUserToOperator(operator.owner._id)
+      ) {
+        await this.emailOperatorAfterPromotion(operator as OperatorDto);
       }
     }
 
@@ -59,10 +71,17 @@ export class OperatorsService {
   }
 
   async updateOperator(id: string, newOperator: Partial<OperatorDto>) {
-    await this.operatorsRepo.updateOperator(id, newOperator);
+    await this.operatorsRepo.updateOperator(id, {
+      ...newOperator,
+      slug: createOperatorSlug(newOperator),
+    });
 
     if (!!newOperator.owner) {
-      if (await this.usersService.promoteBasicUserToOperator(newOperator.owner._id)) {
+      if (
+        await this.usersService.promoteBasicUserToOperator(
+          newOperator.owner._id,
+        )
+      ) {
         await this.emailOperatorAfterPromotion(newOperator as OperatorDto);
       }
     }
@@ -70,7 +89,10 @@ export class OperatorsService {
 
   async emailOperatorAfterPromotion(operator: OperatorDto) {
     await this.qrCodeService.createQRCodeForOperatorSignup(operator);
-    await this.emailService.sendEmailToOperator(operator, this.templatesService.operatorPromoted(operator));
+    await this.emailService.sendEmailToOperator(
+      operator,
+      this.templatesService.operatorPromoted(operator),
+    );
   }
 
   async deleteOperator(id: string) {

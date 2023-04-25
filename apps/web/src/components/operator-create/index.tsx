@@ -23,6 +23,7 @@ export const OperatorCreate: React.FC = () => {
       title="Create operator"
       operator={{
         name: "",
+        slug: "",
         email: "",
         phoneNumber: "",
         address: "",

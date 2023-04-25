@@ -57,6 +57,7 @@ export const ServiceCreate: React.FC<Props> = ({
           operatorId={operatorId}
           service={{
             name: "",
+            slug: "",
             description: "",
             content: {},
             photos: [],

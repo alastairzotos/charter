@@ -20,13 +20,11 @@ import { useIsDesktop } from "hooks/use-is-desktop";
 interface Props {
   bookingView?: boolean;
   service: ServiceDto;
-  operator: OperatorDto;
 }
 
 export const UserServiceView: React.FC<Props> = ({
   bookingView = false,
   service,
-  operator,
 }) => {
   const router = useRouter();
   const isDesktop = useIsDesktop();
@@ -58,7 +56,6 @@ export const UserServiceView: React.FC<Props> = ({
     return (
       <Paper sx={{ p: 4, m: -1 }}>
         <BookingForm
-          operator={operator}
           service={service}
           onClose={() => setBookingModalOpen(false)}
         />
@@ -72,7 +69,7 @@ export const UserServiceView: React.FC<Props> = ({
         {service.name}
       </Typography>
 
-      <OperatorViewMobile linkToOperatorPage operator={operator} />
+      <OperatorViewMobile linkToOperatorPage operator={service.operator} />
 
       <Grid container spacing={2} sx={{ mt: 1 }}>
         <Grid item xs={12} md={6}>
@@ -124,7 +121,6 @@ export const UserServiceView: React.FC<Props> = ({
       <Modal open={bookingModalOpen} onClose={() => setBookingModalOpen(false)}>
         <BookingModal>
           <BookingForm
-            operator={operator}
             service={service}
             onClose={() => setBookingModalOpen(false)}
           />

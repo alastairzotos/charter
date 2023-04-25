@@ -15,6 +15,9 @@ export class Operator implements OperatorDto {
   name: string;
 
   @Prop()
+  slug: string;
+
+  @Prop()
   email: string;
 
   @Prop()

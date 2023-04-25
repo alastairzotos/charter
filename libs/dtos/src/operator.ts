@@ -5,6 +5,7 @@ export interface OperatorDto {
   _id: string;
   name: string;
   email: string;
+  slug: string;
   phoneNumber: string;
   address: string;
   photo: string;
@@ -13,4 +14,4 @@ export interface OperatorDto {
   owner?: LoggedInUserDetails;
 }
 
-export type OperatorNoId = Omit<OperatorDto, '_id'>;
+export type OperatorNoId = Omit<OperatorDto, "_id">;

@@ -28,13 +28,10 @@ export const getService = async (id: string): Promise<ServiceDto> => {
   return data;
 };
 
-export const getServiceByIdWithOperator = async (
-  id: string
-): Promise<{ service: ServiceDto; operator: OperatorDto }> => {
-  const { data } = await httpClient.get<{
-    service: ServiceDto;
-    operator: OperatorDto;
-  }>(`/services/with-operator/${id}`);
+export const getServiceBySlug = async (slug: string): Promise<ServiceDto> => {
+  const { data } = await httpClient.get<ServiceDto>(
+    `/services/by-slug/${slug}`
+  );
 
   return data;
 };

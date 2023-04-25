@@ -57,6 +57,7 @@ export const priceValidationSchema: yup.SchemaOf<
 export const serviceValidationSchema: yup.SchemaOf<
   Omit<
     ServiceNoId,
+    | "slug"
     | "type"
     | "operator"
     | "minPeople"

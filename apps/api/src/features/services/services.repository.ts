@@ -14,38 +14,39 @@ export class ServicesRepository {
   async addBookingToService(serviceId: string) {
     await this.servicesModel.findOneAndUpdate(
       { _id: serviceId },
-      { $inc: { numberOfBookings: 1  } },
+      { $inc: { numberOfBookings: 1 } },
     );
   }
 
   async getServicesForOperator(operatorId: string) {
-    return await this.servicesModel.find({
-      operator: operatorId,
+    return await this.servicesModel
+      .find({
+        operator: operatorId,
 
-      // Handle all falsy values
-      $or: [
-        { hidden: false },
-        { hidden: undefined },
-        { hidden: null },
-        { hidden: 0 },
-      ]
-    })
+        // Handle all falsy values
+        $or: [
+          { hidden: false },
+          { hidden: undefined },
+          { hidden: null },
+          { hidden: 0 },
+        ],
+      })
+      .populate('operator')
       .populate({
         path: 'serviceSchema',
         populate: {
-          path: 'schemaCategory'
-        }
+          path: 'schemaCategory',
+        },
       });
   }
 
   async getServicesForOperatorIncludingHidden(operatorId: string) {
-    return await this.servicesModel.find({ operator: operatorId })
-      .populate({
-        path: 'serviceSchema',
-        populate: {
-          path: 'schemaCategory'
-        }
-      });
+    return await this.servicesModel.find({ operator: operatorId }).populate({
+      path: 'serviceSchema',
+      populate: {
+        path: 'schemaCategory',
+      },
+    });
   }
 
   async getServices() {
@@ -57,37 +58,53 @@ export class ServicesRepository {
   }
 
   async getService(id: string) {
-    return await this.servicesModel.findOne({ _id: id }).populate('serviceSchema');
+    return await this.servicesModel
+      .findOne({ _id: id })
+      .populate('serviceSchema');
+  }
+
+  async getServiceBySlug(slug: string) {
+    return await this.servicesModel
+      .findOne({ slug })
+      .populate('operator')
+      .populate('serviceSchema');
   }
 
   async getServicesWithOperatorsBySchemaId(schemaId: string) {
-    return await this.servicesModel.find({ serviceSchema: schemaId })
+    return await this.servicesModel
+      .find({ serviceSchema: schemaId })
       .populate('operator')
       .populate({
         path: 'serviceSchema',
         populate: {
-          path: 'schemaCategory'
-        }
-      })
+          path: 'schemaCategory',
+        },
+      });
   }
 
   async getServicesWithOperatorsBySchemaIds(schemaIds: string[]) {
-    return await this.servicesModel.find({ serviceSchema: { $in: schemaIds } })
+    return await this.servicesModel
+      .find({ serviceSchema: { $in: schemaIds } })
       .populate('operator')
       .populate({
         path: 'serviceSchema',
         populate: {
-          path: 'schemaCategory'
-        }
-      })
+          path: 'schemaCategory',
+        },
+      });
   }
 
   async getServicesBySchemaIds(schemaIds: string[]) {
-    return await this.servicesModel.find({ serviceSchema: { $in: schemaIds } }).populate('operator');
+    return await this.servicesModel
+      .find({ serviceSchema: { $in: schemaIds } })
+      .populate('operator');
   }
 
   async createService(service: ServiceNoId) {
-    const { _id } = await this.servicesModel.create({ ...service, numberOfBookings: 0 });
+    const { _id } = await this.servicesModel.create({
+      ...service,
+      numberOfBookings: 0,
+    });
 
     return _id;
   }
@@ -105,6 +122,8 @@ export class ServicesRepository {
   }
 
   async searchServices(term: string) {
-    return await this.servicesModel.find({ name: { $regex: new RegExp('^' + term, 'i') }}).populate('operator');
+    return await this.servicesModel
+      .find({ name: { $regex: new RegExp('^' + term, 'i') } })
+      .populate('operator');
   }
 }

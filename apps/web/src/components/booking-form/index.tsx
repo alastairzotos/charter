@@ -32,17 +32,12 @@ import { useCreateBooking } from "state/bookings";
 import { useUserState } from "state/users";
 
 interface Props {
-  operator: OperatorDto;
   service: ServiceDto;
 
   onClose: () => void;
 }
 
-export const BookingForm: React.FC<Props> = ({
-  operator,
-  service,
-  onClose,
-}) => {
+export const BookingForm: React.FC<Props> = ({ service, onClose }) => {
   const schema = service.serviceSchema;
 
   const [isNumberOfPeopleInvalid, setIsNumberOfPeopleInvalid] = useState(false);
@@ -71,7 +66,7 @@ export const BookingForm: React.FC<Props> = ({
     await createBooking({ ...booking, status: "pending" });
 
   const initialValues: Omit<BookingNoId, "status"> = {
-    operator,
+    operator: service.operator,
     service,
     name: loggedInUser?.givenName || "",
     email: loggedInUser?.email || "",
@@ -80,6 +75,8 @@ export const BookingForm: React.FC<Props> = ({
     fulfilled: false,
     ...getDefaultDefaultBookingFields(service),
   };
+
+  console.log(initialValues);
 
   const isSubmitting = createBookingStatus === "fetching";
 
@@ -106,7 +103,7 @@ export const BookingForm: React.FC<Props> = ({
               resetKeys={[initialValues]}
             >
               <FormBox
-                title={`Book ${service.name} by ${operator.name}`}
+                title={`Book ${service.name} by ${service.operator.name}`}
                 onClose={onClose}
               >
                 <TabsProvider

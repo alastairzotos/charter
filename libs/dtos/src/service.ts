@@ -3,12 +3,12 @@ import { OperatorDto } from "./operator";
 import { ServicePricingDto } from "./pricing";
 import { ServiceFieldValue, ServiceSchemaDto } from "./service-schema";
 
-
 export interface ServiceDto {
   _id: string;
   operator: OperatorDto;
   serviceSchema: ServiceSchemaDto;
   name: string;
+  slug: string;
   description: string;
   content: Record<string, string | string[]>;
   price: ServicePricingDto;
@@ -24,4 +24,4 @@ export interface ServiceDto {
   cutoffDays?: number;
 }
 
-export type ServiceNoId = Omit<ServiceDto, '_id'>;
+export type ServiceNoId = Omit<ServiceDto, "_id">;

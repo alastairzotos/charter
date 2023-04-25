@@ -38,10 +38,10 @@ export class OperatorsController {
     return await this.operatorsService.getOperatorById(id);
   }
 
-  @Get('with-services/:id')
+  @Get('with-services-by-slug/:slug')
   @Roles('all')
-  async getOperatorWithServicesById(@Param('id') id: string) {
-    return await this.operatorsService.getOperatorWithServicesById(id);
+  async getOperatorWithServicesBySlug(@Param('slug') slug: string) {
+    return await this.operatorsService.getOperatorWithServicesBySlug(slug);
   }
 
   @Post()
@@ -64,7 +64,7 @@ export class OperatorsController {
 
   @Post('notification-token')
   async setOperatorNotificationToken(
-    @Body() { id, token }: { id: string, token: string }
+    @Body() { id, token }: { id: string; token: string },
   ) {
     await this.operatorsService.setOperatorNotificationToken(id, token);
   }

@@ -1,5 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { OpeningTimesDto, ServiceDto, ServiceFieldValue, ServicePricingDto, ServiceSchemaDto } from 'dtos';
+import {
+  OpeningTimesDto,
+  ServiceDto,
+  ServiceFieldValue,
+  ServicePricingDto,
+  ServiceSchemaDto,
+} from 'dtos';
 import { Schema as MongooseSchema } from 'mongoose';
 
 import { Operator } from 'schemas/operator.schema';
@@ -17,6 +23,9 @@ export class Service implements ServiceDto {
 
   @Prop()
   name: string;
+
+  @Prop()
+  slug: string;
 
   @Prop()
   description: string;

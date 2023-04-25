@@ -2,25 +2,24 @@ import { OperatorDto, ServiceDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 
-import { getServiceByIdWithOperator } from "clients/services.client";
+import { getServiceBySlug } from "clients/services.client";
 import { SeoHead } from "components/seo/head";
 import { UserLayoutContainer } from "components/user-layout/container";
 import { UserServiceView } from "components/user-service-view";
 
 interface Props {
   service: ServiceDto;
-  operator: OperatorDto;
 }
 
-const ServicePage: NextPage<Props> = ({ service, operator }) => {
+const ServicePage: NextPage<Props> = ({ service }) => {
   return (
     <UserLayoutContainer>
       <SeoHead
-        subtitle={`${service.name} by ${operator.name}`}
+        subtitle={`${service.name} by ${service.operator.name}`}
         description={service.description}
       />
 
-      <UserServiceView service={service} operator={operator} />
+      <UserServiceView service={service} />
     </UserLayoutContainer>
   );
 };
@@ -28,21 +27,18 @@ const ServicePage: NextPage<Props> = ({ service, operator }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   params,
 }) => {
-  const id = params?.id as string;
+  const slug = params?.slug as string;
 
-  if (!id) {
+  if (!slug) {
     return {
       notFound: true,
     };
   }
 
   try {
-    const { service, operator } = await getServiceByIdWithOperator(id);
-
     return {
       props: {
-        service,
-        operator,
+        service: await getServiceBySlug(slug),
       },
     };
   } catch {

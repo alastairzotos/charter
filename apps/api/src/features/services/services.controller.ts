@@ -29,8 +29,12 @@ export class ServicesController {
 
   @Get('all')
   @Roles('all')
-  async getServicesForOperatorIncludingHidden(@Query('operatorId') operatorId: string) {
-    return await this.servicesService.getServicesForOperatorIncludingHidden(operatorId);
+  async getServicesForOperatorIncludingHidden(
+    @Query('operatorId') operatorId: string,
+  ) {
+    return await this.servicesService.getServicesForOperatorIncludingHidden(
+      operatorId,
+    );
   }
 
   @Get('popular')
@@ -45,11 +49,11 @@ export class ServicesController {
     return await this.servicesService.getService(id);
   }
 
-  @Get('with-operator/:id')
+  @Get('by-slug/:slug')
   @Roles('all')
-  async getServiceByIdWithOperator(@Param('id') id: string) {
+  async getServiceBySlug(@Param('slug') slug: string) {
     try {
-      return await this.servicesService.getServiceByIdWithOperator(id);
+      return await this.servicesService.getServiceBySlug(slug);
     } catch {
       throw new NotFoundException();
     }
@@ -57,14 +61,22 @@ export class ServicesController {
 
   @Get('by-schema-id/:schemaId')
   @Roles('all')
-  async getServicesWithOperatorsBySchemaId(@Param('schemaId') schemaId: string) {
-    return await this.servicesService.getServicesWithOperatorsBySchemaId(schemaId);
+  async getServicesWithOperatorsBySchemaId(
+    @Param('schemaId') schemaId: string,
+  ) {
+    return await this.servicesService.getServicesWithOperatorsBySchemaId(
+      schemaId,
+    );
   }
 
   @Get('by-schema-category-id/:categoryId')
   @Roles('all')
-  async getServicesWithOperatorsBySchemaCategoryId(@Param('categoryId') categoryId: string) {
-    return await this.servicesService.getServicesWithOperatorsBySchemaCategoryId(categoryId);
+  async getServicesWithOperatorsBySchemaCategoryId(
+    @Param('categoryId') categoryId: string,
+  ) {
+    return await this.servicesService.getServicesWithOperatorsBySchemaCategoryId(
+      categoryId,
+    );
   }
 
   @Post()

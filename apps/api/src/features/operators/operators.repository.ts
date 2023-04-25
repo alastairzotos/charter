@@ -20,8 +20,14 @@ export class OperatorsRepository {
     return await this.operatorsModel.findById(id).populate('owner');
   }
 
+  async getOperatorBySlug(slug: string) {
+    return await this.operatorsModel.findOne({ slug }).populate('owner');
+  }
+
   async getOperatorByOwnerId(id: string) {
-    return await this.operatorsModel.findOne({ owner: { _id: id }}).populate('owner');
+    return await this.operatorsModel
+      .findOne({ owner: { _id: id } })
+      .populate('owner');
   }
 
   async getOperatorByEmail(email: string) {
@@ -43,14 +49,26 @@ export class OperatorsRepository {
   }
 
   async searchOperators(term: string) {
-    return await this.operatorsModel.find({ name: { $regex: new RegExp('^' + term, 'i') }}).populate('owner');
+    return await this.operatorsModel
+      .find({ name: { $regex: new RegExp('^' + term, 'i') } })
+      .populate('owner');
   }
 
-  async setOperatorNotificationToken(id: string, notificationsToken: string | undefined) {
-    await this.operatorsModel.findOneAndUpdate({ _id: id }, { notificationsToken });
+  async setOperatorNotificationToken(
+    id: string,
+    notificationsToken: string | undefined,
+  ) {
+    await this.operatorsModel.findOneAndUpdate(
+      { _id: id },
+      { notificationsToken },
+    );
   }
 
   async getOperatorNotificationToken(id: string) {
-    return (await this.operatorsModel.findOne({ _id: id }).select('notificationsToken')).notificationsToken;
+    return (
+      await this.operatorsModel
+        .findOne({ _id: id })
+        .select('notificationsToken')
+    ).notificationsToken;
   }
 }

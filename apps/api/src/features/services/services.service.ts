@@ -1,11 +1,18 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { getDefaultValueForServiceSchemaFieldType, ServiceDto, ServiceFieldValue, ServiceNoId, ServiceSchemaDto } from 'dtos';
+import {
+  getDefaultValueForServiceSchemaFieldType,
+  ServiceDto,
+  ServiceFieldValue,
+  ServiceNoId,
+  ServiceSchemaDto,
+} from 'dtos';
 
 import { OperatorsService } from 'features/operators/operators.service';
 import { ServiceSchemaCategoryService } from 'features/service-schema-categories/service-schema-categories.service';
 import { ServiceSchemaService } from 'features/service-schemas/service-schema.service';
 import { ServicesRepository } from 'features/services/services.repository';
 import { uniqBy } from 'lodash';
+import { createServiceSlug } from 'urls';
 
 @Injectable()
 export class ServicesService {
@@ -15,29 +22,24 @@ export class ServicesService {
     private readonly serviceSchemaService: ServiceSchemaService,
     private readonly categoriesService: ServiceSchemaCategoryService,
     private readonly servicesRepository: ServicesRepository,
-  ) { }
+  ) {}
 
   async getServicesForOperator(operatorId: string) {
     return await this.servicesRepository.getServicesForOperator(operatorId);
   }
 
   async getServicesForOperatorIncludingHidden(operatorId: string) {
-    return await this.servicesRepository.getServicesForOperatorIncludingHidden(operatorId);
+    return await this.servicesRepository.getServicesForOperatorIncludingHidden(
+      operatorId,
+    );
   }
 
   async getService(id: string) {
     return await this.servicesRepository.getService(id);
   }
 
-  async getServiceByIdWithOperator(id: string) {
-    const service = await this.servicesRepository.getService(id);
-
-    return {
-      service,
-      operator: await this.operatorsService.getOperatorById(
-        service.operator as unknown as string,
-      ),
-    };
+  async getServiceBySlug(slug: string) {
+    return await this.servicesRepository.getServiceBySlug(slug);
   }
 
   async addBookingToService(serviceId: string) {
@@ -45,20 +47,33 @@ export class ServicesService {
   }
 
   async getServicesWithOperatorsBySchemaId(schemaId: string) {
-    return await this.servicesRepository.getServicesWithOperatorsBySchemaId(schemaId);
+    return await this.servicesRepository.getServicesWithOperatorsBySchemaId(
+      schemaId,
+    );
   }
 
   async getServicesWithOperatorsBySchemaCategoryId(categoryId: string) {
-    const schemas = await this.serviceSchemaService.getServicesSchemasByCategoryId(categoryId);
-    return await this.servicesRepository.getServicesWithOperatorsBySchemaIds(schemas.map(schema => schema._id));
+    const schemas =
+      await this.serviceSchemaService.getServicesSchemasByCategoryId(
+        categoryId,
+      );
+    return await this.servicesRepository.getServicesWithOperatorsBySchemaIds(
+      schemas.map((schema) => schema._id),
+    );
   }
 
   async createService(service: ServiceNoId) {
-    return await this.servicesRepository.createService(service);
+    return await this.servicesRepository.createService({
+      ...service,
+      slug: await this.createServiceSlug(service),
+    });
   }
 
   async updateService(id: string, newService: Partial<ServiceDto>) {
-    return await this.servicesRepository.updateService(id, newService);
+    return await this.servicesRepository.updateService(id, {
+      ...newService,
+      slug: await this.createServiceSlug(newService),
+    });
   }
 
   async deleteService(id: string) {
@@ -66,30 +81,38 @@ export class ServicesService {
   }
 
   async updateServicesWithNewServiceSchema(updatedSchema: ServiceSchemaDto) {
-    const services = await this.servicesRepository.getServicesBySchema(updatedSchema._id);
+    const services = await this.servicesRepository.getServicesBySchema(
+      updatedSchema._id,
+    );
 
-    for (const service of services.map(s => s.toObject())) {
-      const serviceFields = Object.keys(service.data)
-      const schemaFields = updatedSchema.fields.map(field => field.label);
+    for (const service of services.map((s) => s.toObject())) {
+      const serviceFields = Object.keys(service.data);
+      const schemaFields = updatedSchema.fields.map((field) => field.label);
 
-      const missingFieldsNames = schemaFields.filter(field => !serviceFields.includes(field));
-      const missingFields = updatedSchema.fields.filter(field => missingFieldsNames.includes(field.label));
+      const missingFieldsNames = schemaFields.filter(
+        (field) => !serviceFields.includes(field),
+      );
+      const missingFields = updatedSchema.fields.filter((field) =>
+        missingFieldsNames.includes(field.label),
+      );
 
-      const addedDefaults = missingFields.reduce<Record<string, ServiceFieldValue>>((acc, cur) => ({
-        ...acc,
-        [cur.label]: getDefaultValueForServiceSchemaFieldType(cur.type),
-      }), {});
+      const addedDefaults = missingFields.reduce<
+        Record<string, ServiceFieldValue>
+      >(
+        (acc, cur) => ({
+          ...acc,
+          [cur.label]: getDefaultValueForServiceSchemaFieldType(cur.type),
+        }),
+        {},
+      );
 
-      await this.servicesRepository.updateService(
-        service._id,
-        {
-          ...service,
-          data: {
-            ...service.data,
-            ...addedDefaults,
-          }
-        }
-      )
+      await this.servicesRepository.updateService(service._id, {
+        ...service,
+        data: {
+          ...service.data,
+          ...addedDefaults,
+        },
+      });
     }
   }
 
@@ -102,35 +125,32 @@ export class ServicesService {
   }
 
   async searchServices(term: string) {
-    const [
-      servicesSearchedByName,
-      categories,
-      serviceSchemas,
-    ] = await Promise.all([
-      this.servicesRepository.searchServices(term),
-      this.categoriesService.searchServiceSchemaCategories(term),
-      this.serviceSchemaService.searchServiceSchemas(term),
-    ])
+    const [servicesSearchedByName, categories, serviceSchemas] =
+      await Promise.all([
+        this.servicesRepository.searchServices(term),
+        this.categoriesService.searchServiceSchemaCategories(term),
+        this.serviceSchemaService.searchServiceSchemas(term),
+      ]);
 
-    const schemasByCategories = await this.serviceSchemaService.getServiceSchemasByCategoryIds(categories.map(category => category._id));
+    const schemasByCategories =
+      await this.serviceSchemaService.getServiceSchemasByCategoryIds(
+        categories.map((category) => category._id),
+      );
 
     const allSchemasToSearch = uniqBy(
-      [
-        ...serviceSchemas,
-        ...schemasByCategories,
-      ],
-      schema => schema._id.toString()
-    )
+      [...serviceSchemas, ...schemasByCategories],
+      (schema) => schema._id.toString(),
+    );
 
-    const servicesBySchemas = await this.servicesRepository.getServicesBySchemaIds(allSchemasToSearch.map(schema => schema._id));
+    const servicesBySchemas =
+      await this.servicesRepository.getServicesBySchemaIds(
+        allSchemasToSearch.map((schema) => schema._id),
+      );
 
     const allServices = uniqBy(
-      [
-        ...servicesSearchedByName,
-        ...servicesBySchemas,
-      ],
-      service => service._id.toString()
-    )
+      [...servicesSearchedByName, ...servicesBySchemas],
+      (service) => service._id.toString(),
+    );
 
     return this.sortServicesByPopularity(allServices);
   }
@@ -140,5 +160,15 @@ export class ServicesService {
       .sort((a, b) => a.numberOfBookings - b.numberOfBookings)
       .slice()
       .reverse();
+  }
+
+  private async createServiceSlug(service: Partial<ServiceDto>) {
+    const operator = await this.operatorsService.getOperatorById(
+      service.operator as unknown as string,
+    );
+    return createServiceSlug({
+      ...service,
+      operator,
+    });
   }
 }
