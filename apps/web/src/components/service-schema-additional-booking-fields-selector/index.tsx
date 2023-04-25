@@ -102,27 +102,4 @@ export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
       </div>
     </Paper>
   );
-  // return (
-  //   <Paper sx={{ p: 3 }}>
-  //     <FormLabel>Additional booking fields</FormLabel>
-
-  //     {fields.map((field, index) => (
-  //       <ServiceSchemaAdditionalBookingField
-  //         key={index}
-  //         field={field}
-  //         onChange={(newField) =>
-  //           onChange(
-  //             fields.map((field, newFieldIndex) =>
-  //               newFieldIndex === index ? newField : field
-  //             )
-  //           )
-  //         }
-  //         onDelete={() => onChange(fields.filter((_, i) => i !== index))}
-  //       />
-  //     ))}
-
-  //     <div />
-
-  //   </Paper>
-  // );
 };

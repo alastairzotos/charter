@@ -1,8 +1,8 @@
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { ServiceSchemaContentSectionDto } from "dtos";
 import React from "react";
 
-import { ServiceSchemaContentSection } from "components/service-schema-content-section";
+import { DataGrid, GridActionsCellItem, GridCloseIcon } from "@mui/x-data-grid";
 
 interface Props {
   sections: ServiceSchemaContentSectionDto[];
@@ -14,39 +14,97 @@ export const ServiceSchemaContentSectionsSelector: React.FC<Props> = ({
   onChange,
 }) => {
   return (
-    <Box sx={{ p: 3 }}>
-      {sections.map((section, index) => (
-        <ServiceSchemaContentSection
-          key={index}
-          section={section}
-          onChange={(newSection) =>
-            onChange(
-              sections.map((s, newSectionIndex) =>
-                newSectionIndex === index ? newSection : s
-              )
-            )
-          }
-          onDelete={() => onChange(sections.filter((_, i) => i !== index))}
-        />
-      ))}
-
-      <div />
-
-      <Button
-        variant="outlined"
-        onClick={() =>
-          onChange([
-            ...sections,
-            {
-              key: "key",
-              title: "New section",
-              type: "text",
+    <>
+      <DataGrid
+        columns={[
+          {
+            width: 200,
+            field: "key",
+            headerName: "Key",
+            editable: true,
+            sortable: false,
+            hideable: false,
+          },
+          {
+            width: 250,
+            field: "title",
+            headerName: "Title",
+            editable: true,
+            sortable: false,
+            hideable: false,
+          },
+          {
+            width: 150,
+            field: "type",
+            headerName: "Field type",
+            type: "singleSelect",
+            hideable: false,
+            editable: true,
+            sortable: false,
+            valueOptions: [
+              {
+                value: "text",
+                label: "Text",
+              },
+              {
+                value: "bullets",
+                label: "Bulletpoints",
+              },
+            ],
+          },
+          {
+            field: "delete",
+            headerName: "Actions",
+            type: "actions",
+            sortable: false,
+            hideable: false,
+            getActions: (params) => {
+              return [
+                <GridActionsCellItem
+                  icon={<GridCloseIcon />}
+                  label="Delete"
+                  onClick={() =>
+                    onChange(
+                      sections.filter((section) => section.key !== params.id)
+                    )
+                  }
+                />,
+              ];
             },
-          ])
-        }
-      >
-        Add section
-      </Button>
-    </Box>
+          },
+        ]}
+        rows={sections}
+        getRowId={(row) => row.key}
+        processRowUpdate={(newRow, oldRow) => {
+          onChange(
+            sections.map((section) =>
+              section.key === oldRow.key ? newRow : section
+            )
+          );
+
+          return newRow;
+        }}
+        hideFooter
+      />
+
+      <div>
+        <Button
+          sx={{ mt: 2 }}
+          variant="outlined"
+          onClick={() =>
+            onChange([
+              ...sections,
+              {
+                key: "key",
+                type: "text",
+                title: "New section",
+              },
+            ])
+          }
+        >
+          Add content section
+        </Button>
+      </div>
+    </>
   );
 };
