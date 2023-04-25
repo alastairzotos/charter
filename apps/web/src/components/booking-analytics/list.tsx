@@ -30,8 +30,10 @@ export const BookingAnalyticsList: React.FC<Props> = ({
 
   useEffect(() => {
     setFilteredBookings(
-      bookings?.filter((booking) =>
-        dayjs(booking.date).isAfter(dayjs().subtract(days, "days"))
+      bookings?.filter(
+        (booking) =>
+          !!booking.service &&
+          dayjs(booking.date).isAfter(dayjs().subtract(days, "days"))
       ) || []
     );
   }, [days]);
