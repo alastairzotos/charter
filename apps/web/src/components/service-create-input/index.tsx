@@ -43,18 +43,19 @@ export const ServiceCreateInput: React.FC<Props> = ({ operatorId }) => {
         renderOption={(props, option) => (
           <Box
             component="li"
-            sx={{ "& > img": { mr: 2, flexShrink: 0 } }}
+            sx={{
+              "& > img, svg": { mr: 2, flexShrink: 0, width: 20, height: 20 },
+            }}
             {...props}
           >
             {option.schemaCategory?.photo ? (
               <img
                 loading="lazy"
-                width="20"
                 src={option.schemaCategory?.photo}
                 alt={option.name}
               />
             ) : (
-              <InsertPhotoIcon sx={{ width: 20, height: 20, mr: 2 }} />
+              <InsertPhotoIcon />
             )}
             {option.name}
           </Box>
