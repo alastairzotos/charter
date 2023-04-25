@@ -1,5 +1,6 @@
 import {
   BookingNoId,
+  OperatorNoId,
   PerAdultAndChildBookingPriceDetails,
   PerAdultAndChildPriceDto,
   PerAgeCohortBookingPriceDetails,
@@ -13,6 +14,21 @@ import {
   TieredPriceDto,
 } from "dtos";
 import * as yup from "yup";
+
+export const operatorValidationSchema: yup.SchemaOf<
+  Omit<OperatorNoId, "owner" | "slug">
+> = yup.object().shape({
+  name: yup.string().required("Name is required"),
+  address: yup.string().required("Address is required"),
+  email: yup
+    .string()
+    .required("Email is required")
+    .email("Enter a valid email"),
+  phoneNumber: yup.string().required("Phone number is required"),
+  description: yup.string().required("Description is required"),
+  photo: yup.string().required("Photo is required"),
+  openingTimes: yup.object(),
+});
 
 export const basicPriceValidationSchema: yup.SchemaOf<PriceDto> = yup
   .object()

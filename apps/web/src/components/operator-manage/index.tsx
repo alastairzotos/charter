@@ -5,7 +5,6 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
-import * as yup from "yup";
 
 import { FileUpload } from "components/file-upload";
 import { FormBox } from "components/form-box";
@@ -15,6 +14,7 @@ import { TabsProvider, TabsView } from "components/tabs";
 import { UserSearch } from "components/user-search";
 import { useOperatorDashboard } from "contexts/operator-dashboard";
 import { SETTINGS_WIDTH } from "util/misc";
+import { operatorValidationSchema } from "schemas";
 
 interface Props {
   title: string;
@@ -26,21 +26,6 @@ interface Props {
   onDelete?: () => Promise<void>;
   deleteStatus?: FetchStatus;
 }
-
-const validationSchema: yup.SchemaOf<Omit<OperatorNoId, "owner">> = yup
-  .object()
-  .shape({
-    name: yup.string().required("Name is required"),
-    address: yup.string().required("Address is required"),
-    email: yup
-      .string()
-      .required("Email is required")
-      .email("Enter a valid email"),
-    phoneNumber: yup.string().required("Phone number is required"),
-    description: yup.string().required("Description is required"),
-    photo: yup.string().required("Photo is required"),
-    openingTimes: yup.object(),
-  });
 
 export const ManageOperatorForm: React.FC<Props> = ({
   title,
@@ -69,7 +54,7 @@ export const ManageOperatorForm: React.FC<Props> = ({
   return (
     <Formik
       initialValues={operator}
-      validationSchema={validationSchema}
+      validationSchema={operatorValidationSchema}
       onSubmit={onSave}
     >
       {({ isValid, isSubmitting, values, setValues }) => (
