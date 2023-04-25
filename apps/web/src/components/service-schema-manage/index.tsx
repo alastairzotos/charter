@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { urls } from "urls";
 
-import { AdditionalBookingFieldsSelector } from "components/additional-booking-fields-selector";
+import { AdditionalBookingFieldsSelector } from "components/schema-service-additional-booking-fields-selector";
 import { DefaultBookingFieldsSelector } from "components/default-booking-fields-selector";
 import { FormBox } from "components/form-box";
 import { PricingStrategyTypeSelector } from "components/pricing-strategy-type-selector";

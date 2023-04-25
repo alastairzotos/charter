@@ -1,22 +1,24 @@
-import { Button } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { ServiceSchemaFieldDto } from "dtos";
+import { Button, FormLabel, Paper } from "@mui/material";
+import { AdditionalBookingField } from "dtos";
 import React from "react";
 
-import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, GridCloseIcon } from "@mui/x-data-grid";
 
 interface Props {
-  fields: ServiceSchemaFieldDto[];
-  onChange: (fields: ServiceSchemaFieldDto[]) => void;
+  fields: AdditionalBookingField[];
+  onChange: (fields: AdditionalBookingField[]) => void;
 }
 
-export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
+export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
   fields,
   onChange,
 }) => {
   return (
-    <>
+    <Paper sx={{ p: 3 }}>
+      <FormLabel>Additional booking fields</FormLabel>
+
       <DataGrid
+        sx={{ mt: 2 }}
         columns={[
           {
             width: 200,
@@ -28,8 +30,8 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
           },
           {
             width: 250,
-            field: "label",
-            headerName: "Label",
+            field: "title",
+            headerName: "Title",
             editable: true,
             sortable: false,
             hideable: false,
@@ -47,18 +49,6 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
                 value: "string",
                 label: "String",
               },
-              {
-                value: "multiline-text",
-                label: "Multiline Text",
-              },
-              {
-                value: "time",
-                label: "Time",
-              },
-              {
-                value: "timeframe",
-                label: "Timeframe",
-              },
             ],
           },
           {
@@ -70,7 +60,7 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
             getActions: (params) => {
               return [
                 <GridActionsCellItem
-                  icon={<CloseIcon />}
+                  icon={<GridCloseIcon />}
                   label="Delete"
                   onClick={() =>
                     onChange(fields.filter((field) => field.key !== params.id))
@@ -94,21 +84,45 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
 
       <div>
         <Button
+          sx={{ mt: 2 }}
           variant="outlined"
           onClick={() =>
             onChange([
               ...fields,
               {
                 key: "key",
-                label: "New field",
                 type: "string",
+                title: "New field",
               },
             ])
           }
         >
-          Add field
+          Add booking field
         </Button>
       </div>
-    </>
+    </Paper>
   );
+  // return (
+  //   <Paper sx={{ p: 3 }}>
+  //     <FormLabel>Additional booking fields</FormLabel>
+
+  //     {fields.map((field, index) => (
+  //       <ServiceSchemaAdditionalBookingField
+  //         key={index}
+  //         field={field}
+  //         onChange={(newField) =>
+  //           onChange(
+  //             fields.map((field, newFieldIndex) =>
+  //               newFieldIndex === index ? newField : field
+  //             )
+  //           )
+  //         }
+  //         onDelete={() => onChange(fields.filter((_, i) => i !== index))}
+  //       />
+  //     ))}
+
+  //     <div />
+
+  //   </Paper>
+  // );
 };
