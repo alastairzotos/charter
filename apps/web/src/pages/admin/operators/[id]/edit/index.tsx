@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/breadcrumbs";
-import { AdminOperatorDashboardProvider } from "components/operator-dashboard-providers";
-import { OperatorEdit } from "components/operator-edit";
+import { Breadcrumbs } from "components/screens/backend/lib/breadcrumbs";
+import { AdminOperatorDashboardProvider } from "components/screens/backend/screens/operator/screens/dashboard/screens/operator/lib/operator-dashboard-providers";
+import { OperatorEdit } from "components/screens/backend/screens/operator/screens/dashboard/screens/operator/screens/operator-edit";
 
 const OperatorPage: NextPage = () => {
   const router = useRouter();

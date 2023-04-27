@@ -3,11 +3,11 @@ import type { AppProps } from "next/app";
 import * as React from "react";
 import CookieConsent from "react-cookie-consent";
 
-import { AdminLayout } from "components/admin-layout";
-import { OperatorsLayout } from "components/operators-layout";
-import { PageWrapper } from "components/page-wrapper";
-import { UserLayout } from "components/user-layout";
+import { AdminLayout } from "components/screens/backend/screens/admin/lib/admin-layout";
+import { OperatorsLayout } from "components/screens/backend/screens/operator/lib/operators-layout";
+import { PageWrapper } from "components/lib/page-wrapper";
 import { useUserState } from "state/users";
+import { UserLayout } from "components/screens/site/lib/user-layout";
 
 function Inner({ Component, pageProps, router }: AppProps) {
   const [initLocalStorage, initialised] = useUserState((s) => [

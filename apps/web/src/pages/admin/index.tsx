@@ -5,7 +5,7 @@ import Link from "next/link";
 import * as React from "react";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/breadcrumbs";
+import { Breadcrumbs } from "components/screens/backend/lib/breadcrumbs";
 
 const AdminPage: NextPage = () => {
   return (

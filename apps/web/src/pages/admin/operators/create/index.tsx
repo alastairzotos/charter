@@ -2,8 +2,8 @@ import { NextPage } from "next";
 import * as React from "react";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/breadcrumbs";
-import { OperatorCreate } from "components/operator-create";
+import { Breadcrumbs } from "components/screens/backend/lib/breadcrumbs";
+import { OperatorCreate } from "components/screens/backend/screens/operator/screens/dashboard/screens/operator/screens/operator-create";
 
 const CreateOperatorPage: NextPage = () => {
   return (

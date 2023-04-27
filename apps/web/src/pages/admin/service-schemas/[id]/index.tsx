@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/breadcrumbs";
-import { ServiceSchemaEdit } from "components/service-schema-edit";
+import { Breadcrumbs } from "components/screens/backend/lib/breadcrumbs";
+import { ServiceSchemaEdit } from "components/screens/backend/screens/admin/screens/schemas/screens/service-schema-edit";
 
 const ServiceSchemaEditPage: NextPage = () => {
   const router = useRouter();

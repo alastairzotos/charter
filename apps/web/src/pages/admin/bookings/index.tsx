@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/breadcrumbs";
-import { OperatorSearch } from "components/operator-search";
+import { Breadcrumbs } from "components/screens/backend/lib/breadcrumbs";
+import { OperatorSearch } from "components/screens/backend/screens/admin/screens/operators/screens/operator-search";
 
 const BookingsPage: NextPage = () => {
   const router = useRouter();

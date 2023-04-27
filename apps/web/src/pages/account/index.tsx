@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
 import { NextPage } from "next";
 
-import { AccountDetails } from "components/account-details";
-import { UserLayoutContainer } from "components/user-layout/container";
+import { AccountDetails } from "components/screens/site/screens/account-details/screens/account-details";
+import { UserLayoutContainer } from "components/screens/site/lib/user-layout-container";
 
 const AccountPage: NextPage = () => {
   return (

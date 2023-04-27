@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import React from "react";
 
-import { UserLayoutContainer } from "components/user-layout/container";
+import { UserLayoutContainer } from "components/screens/site/lib/user-layout-container";
 
 const TermsPage: NextPage = () => {
   return (

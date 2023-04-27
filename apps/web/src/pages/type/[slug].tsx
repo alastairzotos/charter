@@ -5,10 +5,10 @@ import React from "react";
 
 import { getServiceSchemaCategoryById } from "clients/service-schema-categories.client";
 import { getServicesWithOperatorsBySchemaCategoryId } from "clients/services.client";
-import { SeoHead } from "components/seo/head";
-import { Titled } from "components/titled";
-import { UserLayoutContainer } from "components/user-layout/container";
-import { UserServicesView } from "components/user-services-view";
+import { SeoHead } from "components/screens/site/lib/seo-head";
+import { Titled } from "components/lib/titled";
+import { UserLayoutContainer } from "components/screens/site/lib/user-layout-container";
+import { UserServicesView } from "components/screens/site/lib/user-services-view";
 
 interface Props {
   schemaCategory: ServiceSchemaCategoryDto;

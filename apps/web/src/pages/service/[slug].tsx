@@ -3,9 +3,9 @@ import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 
 import { getServiceBySlug } from "clients/services.client";
-import { SeoHead } from "components/seo/head";
-import { UserLayoutContainer } from "components/user-layout/container";
-import { UserServiceView } from "components/user-service-view";
+import { SeoHead } from "components/screens/site/lib/seo-head";
+import { UserLayoutContainer } from "components/screens/site/lib/user-layout-container";
+import { UserServiceView } from "components/screens/site/screens/service/screens/service";
 
 interface Props {
   service: ServiceDto;

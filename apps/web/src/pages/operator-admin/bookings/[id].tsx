@@ -4,8 +4,8 @@ import React from "react";
 import { urls } from "urls";
 
 import { getBookingById } from "clients/bookings.client";
-import { Breadcrumbs } from "components/breadcrumbs";
-import { OperatorBooking } from "components/operator-booking";
+import { Breadcrumbs } from "components/screens/backend/lib/breadcrumbs";
+import { OperatorBooking } from "components/screens/backend/screens/operator/screens/bookings/screens/operator-booking";
 
 interface Props {
   booking: BookingDto;

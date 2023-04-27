@@ -1,7 +1,6 @@
+import { UserLayoutContainer } from "components/screens/site/lib/user-layout-container";
 import { NextPage } from "next";
 import React from "react";
-
-import { UserLayoutContainer } from "components/user-layout/container";
 
 const PrivacyPage: NextPage = () => {
   return (

@@ -3,10 +3,10 @@ import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 
 import { getOperators } from "clients/operators.client";
-import { SeoHead } from "components/seo/head";
-import { Titled } from "components/titled";
-import { UserLayoutContainer } from "components/user-layout/container";
-import { UserOperatorsList } from "components/user-operators-list";
+import { SeoHead } from "components/screens/site/lib/seo-head";
+import { Titled } from "components/lib/titled";
+import { UserLayoutContainer } from "components/screens/site/lib/user-layout-container";
+import { UserOperatorsList } from "components/screens/site/screens/operators/screens/operarors";
 
 interface Props {
   operators: OperatorDto[];
