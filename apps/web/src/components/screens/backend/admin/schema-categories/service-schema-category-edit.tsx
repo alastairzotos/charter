@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
+import { StatusSwitch } from "ui";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { ServiceSchemaCategoryManage } from "components/lib/backend/admin/schema-categories/service-schema-category-manage";
 import {
   useDeleteServiceSchemaCategory,

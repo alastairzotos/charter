@@ -1,8 +1,8 @@
 import { Autocomplete, TextField, Typography } from "@mui/material";
 import { LoggedInUserDetails } from "dtos";
 import React, { useEffect } from "react";
+import { StatusSwitch } from "ui";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { SearchResult } from "components/lib/site/_core/service-search/search-result";
 import { useUserState } from "state/users";
 

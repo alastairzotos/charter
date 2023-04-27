@@ -14,8 +14,8 @@ import {
   OpeningTimesDto,
 } from "dtos";
 import React, { useState } from "react";
+import { KeyValues } from "ui";
 
-import { KeyValues } from "components/lib/_core/key-values";
 import { formatTime } from "util/misc";
 
 interface Props {

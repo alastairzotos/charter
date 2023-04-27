@@ -10,11 +10,10 @@ import { Box } from "@mui/system";
 import { BookingDto } from "dtos";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { Titled, KeyValues } from "ui";
 import { urls } from "urls";
 import { getReadableBookingDetails } from "utils";
 
-import { KeyValues } from "components/lib/_core/key-values";
-import { Titled } from "components/lib/_core/titled";
 import { DeleteConfirmModal } from "components/lib/backend/_core/delete-confirm-modal";
 import { useSetBookingFulfillment, useSetBookingStatus } from "state/bookings";
 import { SETTINGS_WIDTH } from "util/misc";

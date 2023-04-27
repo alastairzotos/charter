@@ -7,9 +7,9 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import React, { useEffect } from "react";
+import { StatusSwitch } from "ui";
 import { urls } from "urls";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { useLoadServiceSchemaCategories } from "state/service-schema-categories";
 
 export const ServiceSchemaCategoryList: React.FC = () => {

@@ -1,11 +1,10 @@
 import { Typography } from "@mui/material";
 import Link from "next/link";
 import React, { useEffect } from "react";
+import { KeyValues, StatusSwitch } from "ui";
 import { urls } from "urls";
 import { getReadableBookingDetails } from "utils";
 
-import { KeyValues } from "components/lib/_core/key-values";
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { useLoadBooking } from "state/bookings";
 import { SETTINGS_WIDTH } from "util/misc";
 

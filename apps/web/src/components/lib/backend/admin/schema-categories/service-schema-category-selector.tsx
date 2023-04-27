@@ -7,8 +7,8 @@ import {
 } from "@mui/material";
 import { ServiceSchemaCategoryDto } from "dtos";
 import React, { useEffect } from "react";
+import { StatusSwitch } from "ui";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { useLoadServiceSchemaCategories } from "state/service-schema-categories";
 
 interface Props {

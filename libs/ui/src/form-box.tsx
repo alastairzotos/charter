@@ -2,8 +2,7 @@ import { Box } from "@mui/system";
 import { Form } from "formik";
 import { Router } from "next/router";
 import React, { useEffect } from "react";
-
-import { Titled } from "components/lib/_core/titled";
+import { Titled } from "./titled";
 
 interface Props {
   dirty?: boolean;

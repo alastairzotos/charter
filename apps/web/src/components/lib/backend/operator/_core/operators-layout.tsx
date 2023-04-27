@@ -1,7 +1,7 @@
 import * as React from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { DefaultErrorFallback } from "ui";
 
-import { DefaultErrorFallback } from "components/lib/_core/default-error-fallback";
 import { AdminFooter } from "components/lib/backend/_core/admin-footer";
 import { ResponsiveLayout } from "components/lib/backend/_core/responsive-layout";
 import { RoleRoute } from "components/lib/backend/_core/role-route";

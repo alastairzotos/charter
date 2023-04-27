@@ -5,9 +5,8 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
+import { FormBox, TabsProvider, TabsView } from "ui";
 
-import { FormBox } from "components/lib/_core/form-box";
-import { TabsProvider, TabsView } from "components/lib/_core/tabs";
 import { FileUpload } from "components/lib/backend/_core/file-upload";
 import { SaveAndDelete } from "components/lib/backend/_core/save-delete";
 import { OpeningTimesForm } from "components/lib/backend/operator/_core/opening-times-form";

@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
+import { StatusSwitch } from "ui";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { ManageServiceSchemaForm } from "components/lib/backend/admin/schemas/service-schema-manage";
 import {
   useDeleteServiceSchema,

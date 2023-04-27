@@ -11,10 +11,9 @@ import { Formik, Field } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
+import { FormBox, TabsProvider, TabsView } from "ui";
 import { urls } from "urls";
 
-import { FormBox } from "components/lib/_core/form-box";
-import { TabsProvider, TabsView } from "components/lib/_core/tabs";
 import { SaveAndDelete } from "components/lib/backend/_core/save-delete";
 import { ServiceSchemaCategorySelector } from "components/lib/backend/admin/schema-categories/service-schema-category-selector";
 import { DefaultBookingFieldsSelector } from "components/lib/backend/admin/schemas/default-booking-fields-selector";

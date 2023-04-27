@@ -5,9 +5,9 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
+import { FormBox } from "ui";
 import { urls } from "urls";
 
-import { FormBox } from "components/lib/_core/form-box";
 import { FileUpload } from "components/lib/backend/_core/file-upload";
 import { SaveAndDelete } from "components/lib/backend/_core/save-delete";
 import { SETTINGS_WIDTH } from "util/misc";

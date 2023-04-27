@@ -11,9 +11,8 @@ import {
 import { ServiceSchemaCategoryDto } from "dtos";
 import Link from "next/link";
 import React from "react";
+import { Titled } from "ui";
 import { urls } from "urls";
-
-import { Titled } from "components/lib/_core/titled";
 
 interface Props {
   schemaCategories: ServiceSchemaCategoryDto[];

@@ -1,7 +1,7 @@
 import { List, Typography } from "@mui/material";
 import React, { useEffect } from "react";
+import { StatusSwitch } from "ui";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { ServiceCreateInput } from "components/lib/backend/operator/dashboard/services/service-create-input";
 import { ServiceListItem } from "components/lib/backend/operator/dashboard/services/service-list-item";
 import { useLoadServicesIncludingHidden } from "state/services";

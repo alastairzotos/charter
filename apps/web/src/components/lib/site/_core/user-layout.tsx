@@ -1,8 +1,8 @@
 import { Box } from "@mui/system";
 import * as React from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { DefaultErrorFallback } from "ui";
 
-import { DefaultErrorFallback } from "components/lib/_core/default-error-fallback";
 import { Footer } from "components/lib/site/_core/footer";
 import { SeoHead } from "components/lib/site/_core/seo-head";
 import { UserAppBar } from "components/lib/site/_core/user-app-bar";

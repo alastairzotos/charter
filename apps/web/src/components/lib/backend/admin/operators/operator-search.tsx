@@ -1,8 +1,8 @@
 import { Autocomplete, Box, TextField, Typography } from "@mui/material";
 import { OperatorDto } from "dtos";
 import React, { useEffect } from "react";
+import { StatusSwitch } from "ui";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { useLoadOperators } from "state/operators";
 
 interface Props {

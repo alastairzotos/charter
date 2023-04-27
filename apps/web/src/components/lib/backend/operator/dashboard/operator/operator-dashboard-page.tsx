@@ -1,8 +1,8 @@
 import { Typography } from "@mui/material";
 import { OperatorDto } from "dtos";
 import React, { useEffect } from "react";
+import { StatusSwitch } from "ui";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { useLoadOperatorByOwner } from "state/operators";
 import { useUserState } from "state/users";
 

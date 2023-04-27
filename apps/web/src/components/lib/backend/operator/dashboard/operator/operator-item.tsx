@@ -1,8 +1,7 @@
 import { Divider, Typography } from "@mui/material";
 import React, { useEffect } from "react";
+import { StatusSwitch, Titled } from "ui";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
-import { Titled } from "components/lib/_core/titled";
 import { OperatorSummary } from "components/lib/backend/operator/dashboard/operator/operator-summary";
 import { ServiceList } from "components/lib/backend/operator/dashboard/services/service-list";
 import { useLoadOperator } from "state/operators";

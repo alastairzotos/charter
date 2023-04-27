@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
+import { StatusSwitch } from "ui";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { BookingAnalyticsList } from "components/lib/backend/admin/bookings/booking-analytics-list";
 import { useLoadBookingsByOperatorId } from "state/bookings";
 import { useLoadOperator } from "state/operators";

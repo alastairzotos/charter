@@ -1,6 +1,7 @@
 import { Tab, Tabs as MuiTabs } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { createContext, useContext, useState } from "react";
+import { useTabs } from "./provider";
 
 interface TabPanelProps {
   hidden: boolean;
@@ -26,42 +27,6 @@ const TabPanel: React.FC<React.PropsWithChildren<TabPanelProps>> = ({
         </Box>
       )}
     </>
-  );
-};
-
-interface TabData {
-  label: string;
-  content: React.ReactNode;
-}
-
-interface Props {
-  tabs: TabData[];
-  tabIndex: number;
-  setTabIndex: (index: number) => void;
-}
-
-export const TabsContext = createContext<Props>({
-  tabs: [],
-  tabIndex: 0,
-  setTabIndex: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
-});
-export const useTabs = () => useContext(TabsContext);
-
-export const TabsProvider: React.FC<
-  React.PropsWithChildren<{ tabs: TabData[] }>
-> = ({ tabs, children }) => {
-  const [tabIndex, setTabIndex] = useState(0);
-
-  return (
-    <TabsContext.Provider
-      value={{
-        tabs,
-        tabIndex,
-        setTabIndex,
-      }}
-    >
-      {children}
-    </TabsContext.Provider>
   );
 };
 

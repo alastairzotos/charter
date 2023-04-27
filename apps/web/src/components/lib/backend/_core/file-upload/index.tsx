@@ -8,8 +8,8 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { DropzoneDialog } from "react-mui-dropzone";
+import { Titled } from "ui";
 
-import { Titled } from "components/lib/_core/titled";
 import { FileUploadItem } from "components/lib/backend/_core/file-upload/item";
 import { useUploadImages } from "state/images";
 import { pluralize } from "util/misc";

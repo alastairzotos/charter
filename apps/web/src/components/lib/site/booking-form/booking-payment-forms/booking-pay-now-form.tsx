@@ -3,8 +3,8 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { BookingDto, ServiceDto } from "dtos";
 import React, { useEffect } from "react";
+import { StatusSwitch } from "ui";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { PaymentForm } from "components/lib/site/booking-form/booking-payment-forms/payment-form";
 import { useCreatePaymentIntent } from "state/payments";
 import { useConfirmPayment } from "state/stripe";

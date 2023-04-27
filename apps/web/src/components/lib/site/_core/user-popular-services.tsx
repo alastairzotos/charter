@@ -1,8 +1,8 @@
 import { List } from "@mui/material";
 import { ServiceDto } from "dtos";
 import React from "react";
+import { Titled } from "ui";
 
-import { Titled } from "components/lib/_core/titled";
 import { UserServiceListItem } from "components/lib/site/_core/user-service-list-item";
 
 interface Props {

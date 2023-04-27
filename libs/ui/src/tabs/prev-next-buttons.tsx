@@ -3,8 +3,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-
-import { useTabs } from "components/lib/_core/tabs";
+import { useTabs } from "./provider";
 
 export const TabsPrevNextButtons: React.FC = () => {
   const { tabs, tabIndex, setTabIndex } = useTabs();

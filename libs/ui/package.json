@@ -1,0 +1,24 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "main": "./index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"No tests specified\"",
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.0",
+    "@mui/styles": "^5.11.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "urls": "*"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
+}

@@ -3,8 +3,8 @@ import { Box, TextField, Typography, Autocomplete } from "@mui/material";
 import { ServiceSchemaDto } from "dtos";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import { StatusSwitch } from "ui";
 
-import { StatusSwitch } from "components/lib/_core/status-switch";
 import { useOperatorDashboard } from "contexts/operator-dashboard";
 import { useLoadServiceSchemas } from "state/service-schemas";
 

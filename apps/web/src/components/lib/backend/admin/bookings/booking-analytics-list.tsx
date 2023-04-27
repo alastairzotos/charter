@@ -11,9 +11,9 @@ import { Box } from "@mui/system";
 import dayjs from "dayjs";
 import { BookingDto } from "dtos";
 import React, { useEffect, useState } from "react";
+import { KeyValues } from "ui";
 import { calculateBookingPrice, createPriceString } from "utils";
 
-import { KeyValues } from "components/lib/_core/key-values";
 import { BookingAnalyticsListItem } from "components/lib/backend/admin/bookings/booking-analytics-list-item";
 
 interface Props {

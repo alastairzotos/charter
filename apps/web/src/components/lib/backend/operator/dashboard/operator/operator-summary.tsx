@@ -2,8 +2,8 @@ import { Avatar, Button, Typography } from "@mui/material";
 import { OperatorDto } from "dtos";
 import Link from "next/link";
 import React from "react";
+import { Titled } from "ui";
 
-import { Titled } from "components/lib/_core/titled";
 import { useOperatorDashboard } from "contexts/operator-dashboard";
 
 interface Props {

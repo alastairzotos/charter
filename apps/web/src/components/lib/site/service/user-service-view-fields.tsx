@@ -1,7 +1,7 @@
 import { ServiceFieldValue, ServiceSchemaFieldDto } from "dtos";
 import React from "react";
+import { KeyValues } from "ui";
 
-import { KeyValues } from "components/lib/_core/key-values";
 import { MultilineText } from "components/lib/site/_core/multiline-text";
 
 interface Props {
