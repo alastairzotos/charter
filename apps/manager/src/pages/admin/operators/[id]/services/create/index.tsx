@@ -5,7 +5,7 @@ import { urls } from "urls";
 
 import { Breadcrumbs } from "components/_core/breadcrumbs";
 import { AdminOperatorDashboardProvider } from "components/operator/dashboard/operator/operator-dashboard-providers";
-import { ServiceCreate } from "screens/operator/dashboard/services/service-create";
+import { ServiceCreate } from "components/operator/dashboard/services/service-create";
 
 const CreateServicePage: NextPage = () => {
   const router = useRouter();

@@ -5,7 +5,7 @@ import { urls } from "urls";
 import { Breadcrumbs } from "components/_core/breadcrumbs";
 import { OperatorDashboardPage } from "components/operator/dashboard/operator/operator-dashboard-page";
 import { OwnerOperatorDashboardProvider } from "components/operator/dashboard/operator/operator-dashboard-providers";
-import { OperatorEdit } from "screens/operator/dashboard/operator/operator-edit";
+import { OperatorEdit } from "components/operator/dashboard/operator/operator-edit";
 
 const OperatorPage: NextPage = () => {
   return (

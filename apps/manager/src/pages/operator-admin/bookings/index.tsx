@@ -3,7 +3,7 @@ import React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "components/_core/breadcrumbs";
-import { OperatorBookings } from "screens/operator/bookings/operator-bookings";
+import { OperatorBookings } from "components/operator/bookings/operator-bookings";
 
 const OperatorsBookingPage: NextPage = () => {
   return (

@@ -5,7 +5,7 @@ import { urls } from "urls";
 
 import { getBookingById } from "clients/bookings.client";
 import { Breadcrumbs } from "components/_core/breadcrumbs";
-import { OperatorBooking } from "screens/operator/bookings/operator-booking";
+import { OperatorBooking } from "components/operator/bookings/operator-booking";
 
 interface Props {
   booking: BookingDto;

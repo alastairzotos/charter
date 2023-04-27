@@ -4,7 +4,7 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "components/_core/breadcrumbs";
-import { BookingAnalytics } from "screens/admin/bookings/booking-analytics";
+import { BookingAnalytics } from "components/admin/bookings/booking-analytics";
 
 const OperatorBookingsPage: NextPage = () => {
   const router = useRouter();

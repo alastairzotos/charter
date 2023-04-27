@@ -3,7 +3,7 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "components/_core/breadcrumbs";
-import { ServiceSchemaCreate } from "screens/admin/schemas/service-schema-create";
+import { ServiceSchemaCreate } from "components/admin/schemas/service-schema-create";
 
 const ServiceSchemaCreatePage: NextPage = () => {
   return (

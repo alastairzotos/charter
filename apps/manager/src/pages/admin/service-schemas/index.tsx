@@ -3,7 +3,7 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "components/_core/breadcrumbs";
-import { ServiceSchemaList } from "screens/admin/schemas/service-schema-list";
+import { ServiceSchemaList } from "components/admin/schemas/service-schema-list";
 
 const ServiceSchemasPage: NextPage = () => {
   return (

@@ -8,13 +8,13 @@ import { getReadablePricingStringsForService } from "utils";
 import { MultilineText } from "components/_core/multiline-text";
 import { OpeningTimesView } from "components/_core/opening-times-view";
 import { ReadMore } from "components/_core/read-more";
+import { BookingForm } from "components/booking-form/booking-form";
 import { BookingModal } from "components/booking-form/booking-modal";
 import { OperatorCardMobile } from "components/operators/operator-card";
 import { BookButton } from "components/service/book-button";
 import { ImageGallery } from "components/service/image-gallery";
 import { UserServiceViewContent } from "components/service/user-service-view-content";
 import { UserServiceViewFields } from "components/service/user-service-view-fields";
-import { BookingForm } from "components/booking-form/booking-form";
 import { useIsDesktop } from "hooks/use-is-desktop";
 
 interface Props {

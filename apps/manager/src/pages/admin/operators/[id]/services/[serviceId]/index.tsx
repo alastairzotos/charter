@@ -5,7 +5,7 @@ import { urls } from "urls";
 
 import { Breadcrumbs } from "components/_core/breadcrumbs";
 import { AdminOperatorDashboardProvider } from "components/operator/dashboard/operator/operator-dashboard-providers";
-import { ServiceEdit } from "screens/operator/dashboard/services/service-edit";
+import { ServiceEdit } from "components/operator/dashboard/services/service-edit";
 
 const EditServicePage: NextPage = () => {
   const router = useRouter();

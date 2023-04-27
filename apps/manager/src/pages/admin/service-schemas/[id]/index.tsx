@@ -4,7 +4,7 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "components/_core/breadcrumbs";
-import { ServiceSchemaEdit } from "screens/admin/schemas/service-schema-edit";
+import { ServiceSchemaEdit } from "components/admin/schemas/service-schema-edit";
 
 const ServiceSchemaEditPage: NextPage = () => {
   const router = useRouter();

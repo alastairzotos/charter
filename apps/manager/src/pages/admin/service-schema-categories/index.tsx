@@ -3,7 +3,7 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "components/_core/breadcrumbs";
-import { ServiceSchemaCategoryList } from "screens/admin/schema-categories/service-schema-categories-list";
+import { ServiceSchemaCategoryList } from "components/admin/schema-categories/service-schema-categories-list";
 
 const ServiceSchemaCategoriesPage: NextPage = () => {
   return (

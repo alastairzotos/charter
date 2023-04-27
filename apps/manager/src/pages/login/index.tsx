@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import * as React from "react";
 
 import { SeoHead } from "components/_core/seo-head";
-import { LoginForm } from "screens/login";
+import { LoginForm } from "components/login";
 
 const LoginPage: NextPage = () => {
   return (

@@ -6,7 +6,7 @@ import { Titled } from "ui";
 import { getOperators } from "clients/operators.client";
 import { SeoHead } from "components/_core/seo-head";
 import { UserLayoutContainer } from "components/_core/user-layout-container";
-import { UserOperatorsList } from "screens/operarors";
+import { UserOperatorsList } from "components/operators/operarors";
 
 interface Props {
   operators: OperatorDto[];

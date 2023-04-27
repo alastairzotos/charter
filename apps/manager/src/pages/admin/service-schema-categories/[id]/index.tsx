@@ -4,7 +4,7 @@ import * as React from "react";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "components/_core/breadcrumbs";
-import { ServiceSchemaCategoryEdit } from "screens/admin/schema-categories/service-schema-category-edit";
+import { ServiceSchemaCategoryEdit } from "components/admin/schema-categories/service-schema-category-edit";
 
 const ServiceSchemaCategoryEditPage: NextPage = () => {
   const router = useRouter();

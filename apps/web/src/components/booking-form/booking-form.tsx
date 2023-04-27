@@ -23,6 +23,7 @@ import { urls } from "urls";
 import { calculateBookingPrice, createPriceString } from "utils";
 
 import { BookingAdditionalForms } from "components/booking-form/booking-additonal-forms";
+import { BookingDefaultForms } from "components/booking-form/booking-default-forms";
 import { BookingPayLaterForm } from "components/booking-form/booking-payment-forms/booking-pay-later-form";
 import { BookingPayNowForm } from "components/booking-form/booking-payment-forms/booking-pay-now-form";
 import { BookingPeoplePolicyFeedback } from "components/booking-form/booking-people-policy-feedback";
@@ -30,7 +31,6 @@ import { BookingPriceDetails } from "components/booking-form/booking-price-forms
 import { TAndCCheckbox } from "components/booking-form/t-and-c-checkbox";
 import { bookingValidationSchema } from "schemas";
 import { useCreateBooking } from "state/bookings";
-import { BookingDefaultForms } from "components/booking-form/booking-default-forms";
 
 interface Props {
   service: ServiceDto;

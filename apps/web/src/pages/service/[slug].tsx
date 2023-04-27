@@ -5,7 +5,7 @@ import React from "react";
 import { getServiceBySlug } from "clients/services.client";
 import { SeoHead } from "components/_core/seo-head";
 import { UserLayoutContainer } from "components/_core/user-layout-container";
-import { UserServiceView } from "screens/service";
+import { UserServiceView } from "components/service/service";
 
 interface Props {
   service: ServiceDto;
