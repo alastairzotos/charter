@@ -2,8 +2,8 @@ import Container from "@mui/material/Container";
 import { NextPage } from "next";
 import * as React from "react";
 
-import { SeoHead } from "components/lib/backend/_core/seo-head";
-import { LoginForm } from "components/screens/login";
+import { SeoHead } from "components/_core/seo-head";
+import { LoginForm } from "screens/login";
 
 const LoginPage: NextPage = () => {
   return (

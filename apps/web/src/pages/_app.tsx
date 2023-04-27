@@ -4,7 +4,7 @@ import * as React from "react";
 import CookieConsent from "react-cookie-consent";
 import { PageWrapper } from "ui";
 
-import { UserLayout } from "components/lib/site/_core/user-layout";
+import { UserLayout } from "components/_core/user-layout";
 
 function Inner({ Component, pageProps }: AppProps) {
   return (

@@ -5,7 +5,7 @@ import * as React from "react";
 import { OperatorSearch } from "ui";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/lib/backend/_core/breadcrumbs";
+import { Breadcrumbs } from "components/_core/breadcrumbs";
 import { useLoadOperators } from "state/operators";
 
 const BookingsPage: NextPage = () => {

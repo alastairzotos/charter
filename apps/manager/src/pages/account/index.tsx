@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import React from "react";
 import { KeyValues } from "ui";
 
-import { DeleteAccountButton } from "components/lib/backend/_core/delete-account-button";
+import { DeleteAccountButton } from "components/_core/delete-account-button";
 import { useUserState } from "state/users";
 import { SETTINGS_WIDTH } from "util/misc";
 

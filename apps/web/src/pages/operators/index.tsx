@@ -4,9 +4,9 @@ import React from "react";
 import { Titled } from "ui";
 
 import { getOperators } from "clients/operators.client";
-import { SeoHead } from "components/lib/site/_core/seo-head";
-import { UserLayoutContainer } from "components/lib/site/_core/user-layout-container";
-import { UserOperatorsList } from "components/screens/site/operators/operarors";
+import { SeoHead } from "components/_core/seo-head";
+import { UserLayoutContainer } from "components/_core/user-layout-container";
+import { UserOperatorsList } from "screens/operarors";
 
 interface Props {
   operators: OperatorDto[];

@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/lib/backend/_core/breadcrumbs";
-import { BookingAnalytics } from "components/screens/backend/admin/bookings/booking-analytics";
+import { Breadcrumbs } from "components/_core/breadcrumbs";
+import { BookingAnalytics } from "screens/admin/bookings/booking-analytics";
 
 const OperatorBookingsPage: NextPage = () => {
   const router = useRouter();

@@ -4,9 +4,9 @@ import * as React from "react";
 import CookieConsent from "react-cookie-consent";
 import { PageWrapper } from "ui";
 
-import { BaseLayout } from "components/lib/backend/_core/base-layout";
-import { AdminLayout } from "components/lib/backend/admin/_core/admin-layout";
-import { OperatorsLayout } from "components/lib/backend/operator/_core/operators-layout";
+import { BaseLayout } from "components/_core/base-layout";
+import { AdminLayout } from "components/admin/_core/admin-layout";
+import { OperatorsLayout } from "components/operator/_core/operators-layout";
 import { useUserState } from "state/users";
 
 function Inner({ Component, pageProps, router }: AppProps) {

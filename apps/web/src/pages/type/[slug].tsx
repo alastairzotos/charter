@@ -6,9 +6,9 @@ import { Titled } from "ui";
 
 import { getServiceSchemaCategoryById } from "clients/service-schema-categories.client";
 import { getServicesWithOperatorsBySchemaCategoryId } from "clients/services.client";
-import { SeoHead } from "components/lib/site/_core/seo-head";
-import { UserLayoutContainer } from "components/lib/site/_core/user-layout-container";
-import { UserServicesView } from "components/lib/site/_core/user-services-view";
+import { SeoHead } from "components/_core/seo-head";
+import { UserLayoutContainer } from "components/_core/user-layout-container";
+import { UserServicesView } from "components/_core/user-services-view";
 
 interface Props {
   schemaCategory: ServiceSchemaCategoryDto;

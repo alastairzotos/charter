@@ -2,9 +2,9 @@ import { ServiceSchemaCategoryDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 
 import { getServiceSchemaCategories } from "clients/service-schema-categories.client";
-import { SeoHead } from "components/lib/site/_core/seo-head";
-import { UserLayoutContainer } from "components/lib/site/_core/user-layout-container";
-import { ServiceCategories } from "components/lib/site/_core/user-service-categories";
+import { SeoHead } from "components/_core/seo-head";
+import { UserLayoutContainer } from "components/_core/user-layout-container";
+import { ServiceCategories } from "components/_core/user-service-categories";
 
 interface Props {
   schemaCategories: ServiceSchemaCategoryDto[];

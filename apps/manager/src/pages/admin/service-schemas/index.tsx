@@ -2,8 +2,8 @@ import { NextPage } from "next";
 import * as React from "react";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/lib/backend/_core/breadcrumbs";
-import { ServiceSchemaList } from "components/screens/backend/admin/schemas/service-schema-list";
+import { Breadcrumbs } from "components/_core/breadcrumbs";
+import { ServiceSchemaList } from "screens/admin/schemas/service-schema-list";
 
 const ServiceSchemasPage: NextPage = () => {
   return (

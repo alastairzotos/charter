@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/lib/backend/_core/breadcrumbs";
-import { AdminOperatorDashboardProvider } from "components/lib/backend/operator/dashboard/operator/operator-dashboard-providers";
-import { ServiceEdit } from "components/screens/backend/operator/dashboard/services/service-edit";
+import { Breadcrumbs } from "components/_core/breadcrumbs";
+import { AdminOperatorDashboardProvider } from "components/operator/dashboard/operator/operator-dashboard-providers";
+import { ServiceEdit } from "screens/operator/dashboard/services/service-edit";
 
 const EditServicePage: NextPage = () => {
   const router = useRouter();
