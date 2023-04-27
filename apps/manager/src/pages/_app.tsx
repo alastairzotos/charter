@@ -7,6 +7,7 @@ import { useUserState } from "state/users";
 import { PageWrapper } from "ui";
 import { AdminLayout } from "components/lib/backend/admin/_core/admin-layout";
 import { OperatorsLayout } from "components/lib/backend/operator/_core/operators-layout";
+import { BaseLayout } from "components/lib/backend/_core/base-layout";
 
 function Inner({ Component, pageProps, router }: AppProps) {
   const [initLocalStorage, initialised] = useUserState((s) => [
@@ -34,7 +35,11 @@ function Inner({ Component, pageProps, router }: AppProps) {
     );
   }
 
-  return <Component {...pageProps} />;
+  return (
+    <BaseLayout>
+      <Component {...pageProps} />
+    </BaseLayout>
+  );
 }
 
 function AppPage(props: AppProps) {
