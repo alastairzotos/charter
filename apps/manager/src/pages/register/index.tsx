@@ -1,8 +1,8 @@
 import Container from "@mui/material/Container";
 import * as React from "react";
 
-import { RegisterForm } from "components/screens/register";
 import { SeoHead } from "components/lib/backend/_core/seo-head";
+import { RegisterForm } from "components/screens/register";
 
 const RegisterPage: React.FC = () => {
   return (

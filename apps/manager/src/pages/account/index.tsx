@@ -1,9 +1,9 @@
 import { Typography } from "@mui/material";
-import { DeleteAccountButton } from "components/lib/backend/_core/delete-account-button";
 import React from "react";
-import { useUserState } from "state/users";
 import { KeyValues } from "ui";
 
+import { DeleteAccountButton } from "components/lib/backend/_core/delete-account-button";
+import { useUserState } from "state/users";
 import { SETTINGS_WIDTH } from "util/misc";
 
 export const AccountDetails: React.FC = () => {

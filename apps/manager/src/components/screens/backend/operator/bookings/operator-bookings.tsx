@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
-
 import { StatusSwitch, TabsProvider, TabsView } from "ui";
+
 import { OperatorBookingList } from "components/lib/backend/operator/bookings/operator-booking-list";
 import { useLoadBookingsForUser } from "state/bookings";
 

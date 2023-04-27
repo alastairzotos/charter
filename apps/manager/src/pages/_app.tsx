@@ -2,12 +2,12 @@ import "styles/globals.css";
 import type { AppProps } from "next/app";
 import * as React from "react";
 import CookieConsent from "react-cookie-consent";
-
-import { useUserState } from "state/users";
 import { PageWrapper } from "ui";
+
+import { BaseLayout } from "components/lib/backend/_core/base-layout";
 import { AdminLayout } from "components/lib/backend/admin/_core/admin-layout";
 import { OperatorsLayout } from "components/lib/backend/operator/_core/operators-layout";
-import { BaseLayout } from "components/lib/backend/_core/base-layout";
+import { useUserState } from "state/users";
 
 function Inner({ Component, pageProps, router }: AppProps) {
   const [initLocalStorage, initialised] = useUserState((s) => [

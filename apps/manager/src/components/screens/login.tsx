@@ -13,10 +13,10 @@ import FacebookLogin, { ReactFacebookLoginInfo } from "react-facebook-login";
 import { urls } from "urls";
 
 import { fetchFbUserInfo, fetchGoogleUserInfo } from "clients/oauth2.client";
+import { GoogleLoginButton } from "components/lib/backend/_core/google-login-button";
 import { useOAuthLogin } from "state/oauth2";
 import { useUserState } from "state/users";
 import { getEnv } from "util/env";
-import { GoogleLoginButton } from "components/lib/backend/_core/google-login-button";
 
 const LoginFormInner: React.FC = () => {
   const router = useRouter();

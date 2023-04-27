@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
-
 import { StatusSwitch } from "ui";
+
 import { ManageOperatorForm } from "components/lib/backend/operator/dashboard/operator/operator-manage";
 import {
   useDeleteOperator,

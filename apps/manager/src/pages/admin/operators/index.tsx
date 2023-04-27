@@ -1,10 +1,10 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
+import { OperatorSearch } from "ui";
 import { urls } from "urls";
 
 import { Breadcrumbs } from "components/lib/backend/_core/breadcrumbs";
-import { OperatorSearch } from "ui";
 import { useLoadOperators } from "state/operators";
 
 const OperatorsPage: NextPage = () => {

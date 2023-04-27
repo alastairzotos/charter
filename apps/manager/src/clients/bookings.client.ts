@@ -1,9 +1,4 @@
-import {
-  BookingDto,
-  BookingNoId,
-  BookingPaymentStatus,
-  BookingStatus,
-} from "dtos";
+import { BookingDto, BookingStatus } from "dtos";
 
 import { httpClient } from "clients/http.client";
 

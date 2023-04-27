@@ -2,8 +2,8 @@ import { Autocomplete, TextField, Typography } from "@mui/material";
 import { LoggedInUserDetails } from "dtos";
 import React, { useEffect } from "react";
 import { StatusSwitch } from "ui";
-
 import { SearchResult } from "ui";
+
 import { useUserState } from "state/users";
 
 interface Props {

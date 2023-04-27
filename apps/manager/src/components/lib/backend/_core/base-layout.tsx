@@ -1,15 +1,14 @@
+import { UserRole } from "dtos";
 import * as React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { DefaultErrorFallback } from "ui";
 
 import { AdminFooter } from "components/lib/backend/_core/admin-footer";
+import { BaseAppBar } from "components/lib/backend/_core/app-bar/base-app-bar";
 import { ResponsiveLayout } from "components/lib/backend/_core/responsive-layout";
 import { RoleRoute } from "components/lib/backend/_core/role-route";
-import { VerticalLayout } from "components/lib/backend/_core/vertical-layout";
-import { AdminAppBar } from "components/lib/backend/admin/_core/admin-app-bar";
 import { SeoHead } from "components/lib/backend/_core/seo-head";
-import { UserRole } from "dtos";
-import { BaseAppBar } from "components/lib/backend/_core/app-bar/base-app-bar";
+import { VerticalLayout } from "components/lib/backend/_core/vertical-layout";
 
 interface Props {
   role?: UserRole;

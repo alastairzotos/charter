@@ -4,7 +4,6 @@ import {
   createService,
   deleteService,
   getService,
-  getServicesForOperator,
   getServicesForOperatorIncludingHidden,
   updateService,
 } from "clients/services.client";

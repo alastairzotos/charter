@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
-
 import { StatusSwitch } from "ui";
+
 import { ManageServiceForm } from "components/lib/backend/operator/dashboard/services/service-manage";
 import {
   useDeleteService,

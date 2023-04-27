@@ -6,8 +6,8 @@ import {
 } from "dtos";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
-
 import { StatusSwitch } from "ui";
+
 import { ManageServiceForm } from "components/lib/backend/operator/dashboard/services/service-manage";
 import { useOperatorDashboard } from "contexts/operator-dashboard";
 import { useLoadServiceSchemaById } from "state/service-schemas";

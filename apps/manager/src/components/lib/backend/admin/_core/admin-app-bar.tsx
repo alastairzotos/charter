@@ -1,9 +1,9 @@
 import * as React from "react";
+import { AppBarBase } from "ui";
 import { urls } from "urls";
 
-import { AppBarBase } from "ui";
-import { CharterLogo } from "components/lib/backend/_core/charter-logo";
 import { AppBarLoginLogout } from "components/lib/backend/_core/app-bar/app-bar-login-logout";
+import { CharterLogo } from "components/lib/backend/_core/charter-logo";
 
 export const AdminAppBar: React.FC = () => (
   <AppBarBase
