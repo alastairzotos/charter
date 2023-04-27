@@ -3,8 +3,8 @@ import { Box } from "@mui/system";
 import Link from "next/link";
 import { urls } from "urls";
 
-import { SeoHead } from "components/screens/site/lib/seo-head";
-import { UserLayoutContainer } from "components/screens/site/lib/user-layout-container";
+import { SeoHead } from "components/lib/site/_core/seo-head";
+import { UserLayoutContainer } from "components/lib/site/_core/user-layout-container";
 
 export default function Page404() {
   return (

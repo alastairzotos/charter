@@ -1,9 +1,9 @@
 import Container from "@mui/material/Container";
 import * as React from "react";
 
-import { SeoHead } from "components/screens/site/lib/seo-head";
-import { UserLayoutContainer } from "components/screens/site/lib/user-layout-container";
-import { RegisterForm } from "components/screens/site/screens/register";
+import { SeoHead } from "components/lib/site/_core/seo-head";
+import { UserLayoutContainer } from "components/lib/site/_core/user-layout-container";
+import { RegisterForm } from "components/screens/register";
 
 const RegisterPage: React.FC = () => {
   return (

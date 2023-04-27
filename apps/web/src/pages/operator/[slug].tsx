@@ -4,10 +4,10 @@ import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 
 import { getOperatorWithServicesBySlug } from "clients/operators.client";
-import { SeoHead } from "components/screens/site/lib/seo-head";
-import { UserLayoutContainer } from "components/screens/site/lib/user-layout-container";
-import { OperatorCard } from "components/screens/site/screens/operators/lib/operator-card";
-import { UserServicesView } from "components/screens/site/lib/user-services-view";
+import { SeoHead } from "components/lib/site/_core/seo-head";
+import { UserLayoutContainer } from "components/lib/site/_core/user-layout-container";
+import { UserServicesView } from "components/lib/site/_core/user-services-view";
+import { OperatorCard } from "components/lib/site/operators/operator-card";
 
 interface Props {
   operator: OperatorDto;

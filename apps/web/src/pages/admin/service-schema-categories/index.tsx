@@ -2,8 +2,8 @@ import { NextPage } from "next";
 import * as React from "react";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/screens/backend/lib/breadcrumbs";
-import { ServiceSchemaCategoryList } from "components/screens/backend/screens/admin/screens/schema-categories/screens/service-schema-categories-list";
+import { Breadcrumbs } from "components/lib/backend/_core/breadcrumbs";
+import { ServiceSchemaCategoryList } from "components/screens/backend/admin/schema-categories/service-schema-categories-list";
 
 const ServiceSchemaCategoriesPage: NextPage = () => {
   return (

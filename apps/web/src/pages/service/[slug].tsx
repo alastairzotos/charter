@@ -1,11 +1,11 @@
-import { OperatorDto, ServiceDto } from "dtos";
+import { ServiceDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 
 import { getServiceBySlug } from "clients/services.client";
-import { SeoHead } from "components/screens/site/lib/seo-head";
-import { UserLayoutContainer } from "components/screens/site/lib/user-layout-container";
-import { UserServiceView } from "components/screens/site/screens/service/screens/service";
+import { SeoHead } from "components/lib/site/_core/seo-head";
+import { UserLayoutContainer } from "components/lib/site/_core/user-layout-container";
+import { UserServiceView } from "components/screens/site/service/service";
 
 interface Props {
   service: ServiceDto;

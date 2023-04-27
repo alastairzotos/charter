@@ -1,4 +1,4 @@
-import { OperatorDto, ServiceDto, ServiceNoId } from "dtos";
+import { ServiceDto, ServiceNoId } from "dtos";
 
 import { httpClient } from "clients/http.client";
 

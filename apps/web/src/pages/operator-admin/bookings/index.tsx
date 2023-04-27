@@ -2,8 +2,8 @@ import { NextPage } from "next";
 import React from "react";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/screens/backend/lib/breadcrumbs";
-import { OperatorBookings } from "components/screens/backend/screens/operator/screens/bookings/screens/operator-bookings";
+import { Breadcrumbs } from "components/lib/backend/_core/breadcrumbs";
+import { OperatorBookings } from "components/screens/backend/operator/bookings/operator-bookings";
 
 const OperatorsBookingPage: NextPage = () => {
   return (
