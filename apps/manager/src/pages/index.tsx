@@ -1,29 +1,23 @@
-import { TabsPrevNextButtons, TabsProvider, TabsView } from "ui";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useUserState } from "state/users";
+import { urls } from "urls";
 
 export default function Home() {
-  return (
-    <>
-      <p>hello</p>
+  const router = useRouter();
+  const { initialised, loggedInUser } = useUserState();
 
-      <TabsProvider
-        tabs={[
-          {
-            label: "Tab 1",
-            content: <p>the first tab</p>,
-          },
-          {
-            label: "Tab 2",
-            content: <p>the second tab</p>,
-          },
-          {
-            label: "Tab 3",
-            content: <p>the third tab</p>,
-          },
-        ]}
-      >
-        <TabsView />
-        <TabsPrevNextButtons />
-      </TabsProvider>
-    </>
-  );
+  useEffect(() => {
+    if (initialised) {
+      if (!loggedInUser) {
+        router.push(urls.login());
+      } else if (loggedInUser.role === "admin") {
+        router.push(urls.admin.home());
+      } else if (loggedInUser.role === "operator") {
+        router.push(urls.operators.home());
+      }
+    }
+  }, [initialised, loggedInUser]);
+
+  return null;
 }
