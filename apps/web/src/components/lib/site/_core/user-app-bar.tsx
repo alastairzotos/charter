@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
+import { AppBarBase } from "ui";
 import { urls } from "urls";
 
-import { AppBarBase } from "components/lib/_core/app-bar/app-bar-base";
 import { ServiceSearch } from "components/lib/site/_core/service-search";
 import { APP_NAME } from "util/misc";
 

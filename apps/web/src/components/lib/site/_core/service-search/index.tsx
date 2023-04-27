@@ -8,16 +8,13 @@ import {
 import { debounce } from "lodash";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
+import { OptionType, SearchResult } from "ui";
 import { urls } from "urls";
 
 import {
   GroupHeader,
   GroupItems,
 } from "components/lib/site/_core/service-search/search-groups";
-import {
-  OptionType,
-  SearchResult,
-} from "components/lib/site/_core/service-search/search-result";
 import { useSearchOperatorsAndServices } from "state/search";
 
 interface Props {

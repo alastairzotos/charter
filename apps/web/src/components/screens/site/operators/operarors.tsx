@@ -2,10 +2,11 @@ import { List } from "@mui/material";
 import { OperatorDto } from "dtos";
 import { useRouter } from "next/router";
 import React from "react";
+import { OperatorSearch } from "ui";
 import { urls } from "urls";
 
-import { OperatorSearch } from "components/lib/backend/admin/operators/operator-search";
 import { UserOperatorListItem } from "components/lib/site/operators/user-operator-list-item";
+import { useLoadOperators } from "state/operators";
 
 interface Props {
   operators: OperatorDto[];
@@ -13,10 +14,12 @@ interface Props {
 
 export const UserOperatorsList: React.FC<Props> = ({ operators }) => {
   const router = useRouter();
+  const state = useLoadOperators();
 
   return (
     <>
       <OperatorSearch
+        state={state}
         onSelectOperator={(operator) =>
           router.push(urls.user.operator(operator))
         }

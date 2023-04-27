@@ -4,7 +4,7 @@ import { GetServerSideProps, NextPage } from "next";
 import { getBookingWithOperatorAndService } from "clients/bookings.client";
 import { SeoHead } from "components/lib/site/_core/seo-head";
 import { UserLayoutContainer } from "components/lib/site/_core/user-layout-container";
-import { UserBookingView } from "components/screens/booking";
+import { UserBookingView } from "components/screens/site/booking";
 
 interface Props {
   booking: BookingDto;
