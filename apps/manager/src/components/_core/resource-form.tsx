@@ -1,8 +1,21 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import { Card, CardContent, CardActions, FormLabel, Box } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardActions,
+  FormLabel,
+  Box,
+  SxProps,
+} from "@mui/material";
 import { Formik, FormikProps, FormikValues } from "formik";
 import React from "react";
-import { TabData, TabsPrevNextButtons, TabsProvider, TabsView } from "ui";
+import {
+  TabData,
+  TabsPrevNextButtons,
+  TabsProvider,
+  TabsView,
+  useIsDesktop,
+} from "ui";
 import { AnyObjectSchema } from "yup";
 
 import { SaveAndDelete } from "components/_core/save-delete";
@@ -40,6 +53,21 @@ export const ResourceForm = <T extends unknown>({
   deleteModalText,
   tabs,
 }: Props<T>): React.ReactElement => {
+  const isDesktop = useIsDesktop();
+
+  const sx: SxProps = isDesktop
+    ? {
+        p: 1,
+        pt: 2,
+        mb: 2,
+      }
+    : {
+        m: -1,
+        mb: 2,
+        p: -2,
+        pt: 1,
+      };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -48,14 +76,7 @@ export const ResourceForm = <T extends unknown>({
     >
       {(props) => (
         <Box sx={{ maxWidth: SETTINGS_WIDTH }}>
-          <Card
-            elevation={3}
-            sx={{
-              p: 1,
-              pt: 2,
-              mb: 2,
-            }}
-          >
+          <Card elevation={isDesktop ? 3 : 0} sx={sx}>
             <FormLabel sx={{ fontSize: "1.3em", m: 2 }}>{title}</FormLabel>
 
             <TabsProvider tabs={tabs(props)}>

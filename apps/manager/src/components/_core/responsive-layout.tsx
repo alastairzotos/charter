@@ -1,6 +1,7 @@
 import { Paper } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React from "react";
+import { useIsDesktop } from "ui";
 
 interface Props {
   noPaper?: boolean;
@@ -10,9 +11,11 @@ export const ResponsiveLayout: React.FC<React.PropsWithChildren<Props>> = ({
   noPaper,
   children,
 }) => {
+  const isDesktop = useIsDesktop();
+
   return (
     <div>
-      <Box sx={{ display: { xs: "none", md: "block" } }}>
+      {isDesktop && (
         <Container maxWidth="xl">
           {noPaper && <Box sx={{ p: 3, mt: 3, mb: 3 }}>{children}</Box>}
           {!noPaper && (
@@ -21,17 +24,18 @@ export const ResponsiveLayout: React.FC<React.PropsWithChildren<Props>> = ({
             </Paper>
           )}
         </Container>
-      </Box>
-      <Box
-        sx={{
-          display: { xs: "block", md: "none" },
-          height: "100%",
-          backgroundColor: "white",
-          p: 3,
-        }}
-      >
-        {children}
-      </Box>
+      )}
+      {!isDesktop && (
+        <Box
+          sx={{
+            height: "100%",
+            backgroundColor: "white",
+            p: 1,
+          }}
+        >
+          {children}
+        </Box>
+      )}
     </div>
   );
 };

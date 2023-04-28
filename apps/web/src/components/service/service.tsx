@@ -2,7 +2,7 @@ import { Box, Grid, Modal, Paper, Typography } from "@mui/material";
 import { ServiceDto } from "dtos";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { KeyValues } from "ui";
+import { KeyValues, useIsDesktop } from "ui";
 import { getReadablePricingStringsForService } from "utils";
 
 import { MultilineText } from "components/_core/multiline-text";
@@ -15,7 +15,6 @@ import { BookButton } from "components/service/book-button";
 import { ImageGallery } from "components/service/image-gallery";
 import { UserServiceViewContent } from "components/service/user-service-view-content";
 import { UserServiceViewFields } from "components/service/user-service-view-fields";
-import { useIsDesktop } from "hooks/use-is-desktop";
 
 interface Props {
   bookingView?: boolean;
