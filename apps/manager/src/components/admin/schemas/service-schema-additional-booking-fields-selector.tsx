@@ -2,6 +2,7 @@ import { Button, FormLabel } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridCloseIcon } from "@mui/x-data-grid";
 import { AdditionalBookingField } from "dtos";
 import React from "react";
+import { useIsDesktop } from "ui";
 
 import { Surface } from "components/_core/surface";
 
@@ -14,6 +15,8 @@ export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
   fields,
   onChange,
 }) => {
+  const isDesktop = useIsDesktop();
+
   return (
     <Surface sx={{ p: 3 }}>
       <FormLabel>Additional booking fields</FormLabel>
@@ -22,7 +25,7 @@ export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
         sx={{ mt: 2 }}
         columns={[
           {
-            width: 200,
+            width: isDesktop ? 200 : 100,
             field: "key",
             headerName: "Key",
             editable: true,
@@ -30,7 +33,7 @@ export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
             hideable: false,
           },
           {
-            width: 250,
+            width: isDesktop ? 250 : 200,
             field: "title",
             headerName: "Title",
             editable: true,
@@ -38,7 +41,7 @@ export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
             hideable: false,
           },
           {
-            width: 150,
+            width: isDesktop ? 150 : 80,
             field: "type",
             headerName: "Field type",
             type: "singleSelect",
@@ -53,6 +56,7 @@ export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
             ],
           },
           {
+            width: 75,
             field: "delete",
             headerName: "Actions",
             type: "actions",

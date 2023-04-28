@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridCloseIcon } from "@mui/x-data-grid";
 import { ServiceSchemaContentSectionDto } from "dtos";
 import React from "react";
+import { useIsDesktop } from "ui";
 
 interface Props {
   sections: ServiceSchemaContentSectionDto[];
@@ -12,12 +13,14 @@ export const ServiceSchemaContentSectionsSelector: React.FC<Props> = ({
   sections,
   onChange,
 }) => {
+  const isDesktop = useIsDesktop();
+
   return (
     <>
       <DataGrid
         columns={[
           {
-            width: 200,
+            width: isDesktop ? 200 : 100,
             field: "key",
             headerName: "Key",
             editable: true,
@@ -25,7 +28,7 @@ export const ServiceSchemaContentSectionsSelector: React.FC<Props> = ({
             hideable: false,
           },
           {
-            width: 250,
+            width: isDesktop ? 250 : 250,
             field: "title",
             headerName: "Title",
             editable: true,
@@ -33,7 +36,7 @@ export const ServiceSchemaContentSectionsSelector: React.FC<Props> = ({
             hideable: false,
           },
           {
-            width: 150,
+            width: isDesktop ? 150 : 100,
             field: "type",
             headerName: "Field type",
             type: "singleSelect",
@@ -52,6 +55,7 @@ export const ServiceSchemaContentSectionsSelector: React.FC<Props> = ({
             ],
           },
           {
+            width: 75,
             field: "delete",
             headerName: "Actions",
             type: "actions",

@@ -7,6 +7,7 @@ import {
   OpeningTimesDto,
 } from "dtos";
 import React from "react";
+import { useIsDesktop } from "ui";
 
 import { TimeEditor } from "components/operator/_core/opening-times-form/time-editor";
 
@@ -19,11 +20,13 @@ export const OpeningTimesForm: React.FC<Props> = ({
   openingTimes,
   setOpeningTimes,
 }) => {
+  const isDesktop = useIsDesktop();
+
   return (
     <DataGrid
       columns={[
         {
-          width: 180,
+          width: isDesktop ? 180 : 30,
           field: "day",
           headerName: "Day",
           editable: false,
@@ -31,7 +34,7 @@ export const OpeningTimesForm: React.FC<Props> = ({
           hideable: false,
         },
         {
-          width: 180,
+          width: isDesktop ? 180 : 100,
           field: "openingTime",
           headerName: "Opening Time",
           sortable: false,
@@ -41,7 +44,7 @@ export const OpeningTimesForm: React.FC<Props> = ({
           renderEditCell: (params) => <TimeEditor {...params} />,
         },
         {
-          width: 180,
+          width: isDesktop ? 180 : 100,
           field: "closingTime",
           headerName: "Closing Time",
           sortable: false,
@@ -51,6 +54,7 @@ export const OpeningTimesForm: React.FC<Props> = ({
           renderEditCell: (params) => <TimeEditor {...params} />,
         },
         {
+          width: 75,
           field: "allDay",
           headerName: "All day",
           sortable: false,
@@ -72,6 +76,7 @@ export const OpeningTimesForm: React.FC<Props> = ({
           ),
         },
         {
+          width: 75,
           field: "closed",
           headerName: "Closed",
           sortable: false,

@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import { ServiceSchemaFieldDto } from "dtos";
 import React from "react";
+import { useIsDesktop } from "ui";
 
 interface Props {
   fields: ServiceSchemaFieldDto[];
@@ -13,12 +14,14 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
   fields,
   onChange,
 }) => {
+  const isDesktop = useIsDesktop();
+
   return (
     <>
       <DataGrid
         columns={[
           {
-            width: 200,
+            width: isDesktop ? 200 : 100,
             field: "key",
             headerName: "Key",
             editable: true,
@@ -26,7 +29,7 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
             hideable: false,
           },
           {
-            width: 250,
+            width: isDesktop ? 250 : 100,
             field: "label",
             headerName: "Label",
             editable: true,
@@ -34,7 +37,7 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
             hideable: false,
           },
           {
-            width: 150,
+            width: isDesktop ? 150 : 100,
             field: "type",
             headerName: "Field type",
             type: "singleSelect",
@@ -61,6 +64,7 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
             ],
           },
           {
+            width: 75,
             field: "delete",
             headerName: "Actions",
             type: "actions",
