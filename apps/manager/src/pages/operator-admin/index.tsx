@@ -5,16 +5,9 @@ import Link from "next/link";
 import * as React from "react";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/_core/breadcrumbs";
-
 const OperatorsAdminPage: NextPage = () => {
   return (
     <>
-      <Breadcrumbs
-        list={[{ href: urls.home(), title: "Home" }]}
-        current="Operator"
-      />
-
       <Box
         sx={{
           display: "flex",

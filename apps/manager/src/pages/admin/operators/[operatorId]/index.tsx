@@ -1,28 +1,17 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { urls } from "urls";
 
-import { Breadcrumbs } from "components/_core/breadcrumbs";
 import { AdminOperatorDashboardProvider } from "components/operator/dashboard/operator/operator-dashboard-providers";
 import { OperatorItem } from "components/operator/dashboard/operator/operator-item";
 
 const OperatorPage: NextPage = () => {
   const router = useRouter();
-  const id = router.query.id as string;
+  const operatorId = router.query.operatorId as string;
 
   return (
     <AdminOperatorDashboardProvider>
-      <Breadcrumbs
-        list={[
-          { href: urls.home(), title: "Home" },
-          { href: urls.admin.home(), title: "Admin" },
-          { href: urls.admin.operators(), title: "Operators" },
-        ]}
-        current="Operator"
-      />
-
-      <OperatorItem id={id} />
+      <OperatorItem id={operatorId} />
     </AdminOperatorDashboardProvider>
   );
 };

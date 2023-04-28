@@ -1,31 +1,14 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { urls } from "urls";
 
-import { Breadcrumbs } from "components/_core/breadcrumbs";
 import { BookingAnalyticsBooking } from "components/admin/bookings/booking-analytics-booking";
 
 const OperatorBookingPage: NextPage = () => {
   const router = useRouter();
-  const operatorId = router.query.operatorId as string;
   const bookingId = router.query.bookingId as string;
 
-  return (
-    <>
-      <Breadcrumbs
-        list={[
-          { href: urls.home(), title: "Home" },
-          { href: urls.admin.home(), title: "Admin" },
-          { href: urls.admin.bookings(), title: "Bookings" },
-          { href: urls.admin.operatorBookings(operatorId), title: "Operator" },
-        ]}
-        current="Booking"
-      />
-
-      <BookingAnalyticsBooking bookingId={bookingId} />
-    </>
-  );
+  return <BookingAnalyticsBooking bookingId={bookingId} />;
 };
 
 OperatorBookingPage.getInitialProps = () => ({});

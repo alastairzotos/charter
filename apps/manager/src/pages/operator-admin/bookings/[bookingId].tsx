@@ -1,10 +1,8 @@
 import { BookingDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
-import { urls } from "urls";
 
 import { getBookingById } from "clients/bookings.client";
-import { Breadcrumbs } from "components/_core/breadcrumbs";
 import { OperatorBooking } from "components/operator/bookings/operator-booking";
 
 interface Props {
@@ -12,30 +10,17 @@ interface Props {
 }
 
 const OperatorBookingPage: NextPage<Props> = ({ booking }) => {
-  return (
-    <>
-      <Breadcrumbs
-        list={[
-          { href: urls.home(), title: "Home" },
-          { href: urls.operators.home(), title: "Operator" },
-          { href: urls.operators.bookings(), title: "Bookings" },
-        ]}
-        current="Booking"
-      />
-
-      <OperatorBooking booking={booking} />
-    </>
-  );
+  return <OperatorBooking booking={booking} />;
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   params,
 }) => {
-  const id = params?.id as string;
+  const bookingId = params?.bookingId as string;
 
   return {
     props: {
-      booking: await getBookingById(id),
+      booking: await getBookingById(bookingId),
     },
   };
 };

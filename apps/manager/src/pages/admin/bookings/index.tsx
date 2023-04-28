@@ -5,7 +5,6 @@ import * as React from "react";
 import { OperatorSearch } from "ui";
 import { urls } from "urls";
 
-import { Breadcrumbs } from "components/_core/breadcrumbs";
 import { useLoadOperators } from "state/operators";
 
 const BookingsPage: NextPage = () => {
@@ -18,17 +17,7 @@ const BookingsPage: NextPage = () => {
   };
 
   return (
-    <>
-      <Breadcrumbs
-        list={[
-          { href: urls.home(), title: "Home" },
-          { href: urls.admin.home(), title: "Admin" },
-        ]}
-        current="Bookings"
-      />
-
-      <OperatorSearch state={state} onSelectOperator={handleSelectOperator} />
-    </>
+    <OperatorSearch state={state} onSelectOperator={handleSelectOperator} />
   );
 };
 
