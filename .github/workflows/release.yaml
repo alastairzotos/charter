@@ -58,3 +58,30 @@ jobs:
           tags: bitmetro/charter-web:${{ github.ref_name }}
           build-args: |
             SCOPE=web
+
+  manager:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: |
+          yarn --frozen-lockfile
+          yarn global add turbo@1.5.5
+
+      - name: Test
+        run: turbo run test --scope=manager
+
+      - name: Docker login
+        run: docker login -u bitmetro -p ${{ secrets.DOCKER_PASSWORD }} docker.io
+
+      - name: Build and push manager app
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          context: .
+          file: Dockerfile.manager
+          tags: bitmetro/charter-manager:${{ github.ref_name }}
+          build-args: |
+            SCOPE=manager
