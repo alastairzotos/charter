@@ -3,6 +3,7 @@ FROM node:16-alpine as builder
 WORKDIR /app
 
 ARG SCOPE
+ARG PORT
 
 COPY . .
 RUN yarn global add turbo@1.5.5 && \
@@ -15,6 +16,7 @@ RUN yarn global add turbo@1.5.5 && \
 FROM node:16-alpine as app
 
 ARG SCOPE
+ARG PORT
 
 ENV NODE_ENV=production
 
@@ -23,5 +25,5 @@ COPY --chown=node:node --from=builder /app/out .
 
 WORKDIR /app/apps/${SCOPE}
 
-EXPOSE 3001
+EXPOSE ${PORT}
 CMD yarn start

@@ -4,10 +4,11 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile.app
+      dockerfile: Dockerfile
       args:
         SCOPE: api
-    image: bitmetro/charter
+        PORT: 3001
+    image: bitmetro/charter-api
     container_name: charter-api
     ports:
       - 3001:3001
@@ -15,11 +16,24 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile.web
+      dockerfile: Dockerfile
       args:
         SCOPE: web
-    image: bitmetro/charter
+        PORT: 3000
+    image: bitmetro/charter-web
     container_name: charter-web
+    ports:
+      - 3000:3000
+    env_file: ./.env.docker
+  manager:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SCOPE: manager
+        PORT: 3003
+    image: bitmetro/charter-manager
+    container_name: charter-manager
     ports:
       - 3000:3000
     env_file: ./.env.docker

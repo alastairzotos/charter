@@ -39,7 +39,12 @@ export const TabsView: React.FC = () => {
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <MuiTabs value={tabIndex} onChange={handleChange}>
+        <MuiTabs
+          value={tabIndex}
+          onChange={handleChange}
+          variant="scrollable"
+          scrollButtons="auto"
+        >
           {tabs.map((tab, index) => (
             <Tab key={index} label={tab.label} />
           ))}

@@ -28,10 +28,11 @@ jobs:
         with:
           push: true
           context: .
-          file: Dockerfile.api
+          file: Dockerfile
           tags: bitmetro/charter-api:${{ github.ref_name }}
           build-args: |
             SCOPE=api
+            PORT=3001
   web:
     runs-on: ubuntu-latest
 
@@ -54,10 +55,11 @@ jobs:
         with:
           push: true
           context: .
-          file: Dockerfile.web
+          file: Dockerfile
           tags: bitmetro/charter-web:${{ github.ref_name }}
           build-args: |
             SCOPE=web
+            PORT=3000
 
   manager:
     runs-on: ubuntu-latest
@@ -81,7 +83,8 @@ jobs:
         with:
           push: true
           context: .
-          file: Dockerfile.manager
+          file: Dockerfile
           tags: bitmetro/charter-manager:${{ github.ref_name }}
           build-args: |
             SCOPE=manager
+            PORT=3003
