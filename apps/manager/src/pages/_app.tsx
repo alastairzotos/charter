@@ -36,7 +36,7 @@ function Inner({ Component, pageProps, router }: AppProps) {
   }
 
   return (
-    <BaseLayout>
+    <BaseLayout noPaper>
       <Component {...pageProps} />
     </BaseLayout>
   );

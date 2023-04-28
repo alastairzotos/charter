@@ -5,7 +5,7 @@ import { ErrorMessage, Field, Formik } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
-import { FormBox, TabsProvider, TabsView } from "ui";
+import { FormBox, TabsPrevNextButtons, TabsProvider, TabsView } from "ui";
 
 import { FileUpload } from "components/_core/file-upload";
 import { SaveAndDelete } from "components/_core/save-delete";
@@ -142,6 +142,7 @@ export const ManageOperatorForm: React.FC<Props> = ({
             ]}
           >
             <TabsView />
+            <TabsPrevNextButtons />
           </TabsProvider>
 
           <SaveAndDelete

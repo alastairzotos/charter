@@ -2,14 +2,20 @@ import { Paper } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React from "react";
 
-export const ResponsiveLayout: React.FC<React.PropsWithChildren> = ({
+interface Props {
+  noPaper?: boolean;
+}
+
+export const ResponsiveLayout: React.FC<React.PropsWithChildren<Props>> = ({
+  noPaper,
   children,
 }) => {
   return (
     <div>
       <Box sx={{ display: { xs: "none", md: "block" } }}>
         <Container maxWidth="xl">
-          <Paper sx={{ p: 3, mt: 3, mb: 6 }}>{children}</Paper>
+          {noPaper && <Box sx={{ p: 3, mt: 3, mb: 3 }}>{children}</Box>}
+          {!noPaper && <Paper sx={{ p: 3, mt: 3, mb: 6 }}>{children}</Paper>}
         </Container>
       </Box>
       <Box

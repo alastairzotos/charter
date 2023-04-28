@@ -13,11 +13,13 @@ import { VerticalLayout } from "components/_core/vertical-layout";
 interface Props {
   role?: UserRole;
   appBar?: React.ReactNode;
+  noPaper?: boolean;
 }
 
 export const BaseLayout: React.FC<React.PropsWithChildren<Props>> = ({
   role = "user",
   appBar = <BaseAppBar />,
+  noPaper,
   children,
 }) => {
   return (
@@ -25,7 +27,7 @@ export const BaseLayout: React.FC<React.PropsWithChildren<Props>> = ({
       <SeoHead subtitle="Charter manager" description="Charter manager" />
       {appBar}
       <VerticalLayout>
-        <ResponsiveLayout>
+        <ResponsiveLayout noPaper={noPaper}>
           <ErrorBoundary FallbackComponent={DefaultErrorFallback}>
             {children}
           </ErrorBoundary>
