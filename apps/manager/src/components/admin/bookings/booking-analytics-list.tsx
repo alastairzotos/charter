@@ -50,7 +50,7 @@ export const BookingAnalyticsList: React.FC<Props> = ({
     .reduce((acc, cur) => acc + cur, 0);
 
   return (
-    <Box sx={{ width: 400 }}>
+    <Box sx={{ maxWidth: 400 }}>
       <FormControl sx={{ mb: 3, width: "100%" }}>
         <InputLabel id="select-label">Time frame</InputLabel>
         <Select
