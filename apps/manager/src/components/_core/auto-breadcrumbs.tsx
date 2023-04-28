@@ -54,14 +54,6 @@ const buildBreadcrumbsFromParts = async (
   return links;
 };
 
-const buildBreadcrumbsFromPartsWithLinks = async (
-  parts: string[],
-  params: Record<string, string>
-): Promise<BreadcrumbLink[]> =>
-  buildBreadcrumbsFromParts(parts, params, async (part, id) =>
-    paramResolvers[part](id)
-  );
-
 export const AutoBreadcrumbs: React.FC = () => {
   const router = useRouter();
 
@@ -75,7 +67,11 @@ export const AutoBreadcrumbs: React.FC = () => {
 
     buildBreadcrumbsFromParts(parts, params, async () => LOADING_BREADCRUMB)
       .then(setCrumbs)
-      .then(() => buildBreadcrumbsFromPartsWithLinks(parts, params))
+      .then(() =>
+        buildBreadcrumbsFromParts(parts, params, async (part, id) =>
+          paramResolvers[part](id)
+        )
+      )
       .then(setCrumbs);
   }, [router.route]);
 
