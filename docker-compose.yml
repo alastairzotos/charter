@@ -35,5 +35,5 @@ services:
     image: bitmetro/charter-manager
     container_name: charter-manager
     ports:
-      - 3000:3000
+      - 3003:3003
     env_file: ./.env.docker
