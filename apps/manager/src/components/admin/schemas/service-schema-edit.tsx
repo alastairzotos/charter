@@ -41,7 +41,7 @@ export const ServiceSchemaEdit: React.FC<Props> = ({ id }) => {
     >
       <ManageServiceSchemaForm
         title="Edit service schema"
-        serviceSchema={schema!}
+        initialValues={schema!}
         onSave={(newSchema) => updateSchema(id, newSchema)}
         saveStatus={updateSchemaStatus}
         onDelete={() => deleteSchema(id)}

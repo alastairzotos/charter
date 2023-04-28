@@ -1,16 +1,17 @@
-import { FetchStatus } from "@bitmetro/create-query";
-import { Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Checkbox, FormControlLabel } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { defaultOpeningTimes, ServiceNoId } from "dtos";
-import { ErrorMessage, Field, Formik } from "formik";
+import { ErrorMessage, Field } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
-import { FormBox, TabsProvider, TabsPrevNextButtons, TabsView } from "ui";
 
 import { FileUpload } from "components/_core/file-upload";
-import { SaveAndDelete } from "components/_core/save-delete";
+import {
+  ResourceForm,
+  ResourceFormProps,
+} from "components/_core/resource-form";
 import { OpeningTimesForm } from "components/operator/_core/opening-times-form";
 import { MinMaxPeopleSelector } from "components/operator/dashboard/services/min-max-people-selector";
 import { PriceForm } from "components/operator/dashboard/services/price-forms";
@@ -19,226 +20,171 @@ import { ServiceFormFields } from "components/operator/dashboard/services/servic
 import { ServicePageContentEditor } from "components/operator/dashboard/services/service-page-content-editor";
 import { useOperatorDashboard } from "contexts/operator-dashboard";
 import { serviceValidationSchema } from "schemas";
-import { SETTINGS_WIDTH } from "util/misc";
 
-interface Props {
+interface Props extends ResourceFormProps<ServiceNoId> {
   operatorId: string;
-  title: string;
-
-  service: ServiceNoId;
-  onSave: (service: ServiceNoId) => void;
-  saveStatus?: FetchStatus;
-
-  onDelete?: () => Promise<void>;
-  deleteStatus?: FetchStatus;
 }
 
-export const ManageServiceForm: React.FC<Props> = ({
-  operatorId,
-  title,
-  service,
-  onSave,
-  saveStatus,
-  onDelete,
-  deleteStatus,
-}) => {
+export const ManageServiceForm: React.FC<Props> = (props) => {
   const router = useRouter();
 
   const { getServiceDeletedRedirectUrl } = useOperatorDashboard();
 
   const handleDeleteService =
-    onDelete &&
+    props.onDelete &&
     (async () => {
-      if (!!onDelete) {
-        await onDelete();
-        router.push(getServiceDeletedRedirectUrl(operatorId));
+      if (!!props.onDelete) {
+        await props.onDelete();
+        router.push(getServiceDeletedRedirectUrl(props.operatorId));
       }
     });
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Formik
-        initialValues={service}
+      <ResourceForm
+        {...props}
         validationSchema={serviceValidationSchema}
-        onSubmit={(values) =>
-          onSave({ ...values, operator: operatorId as any })
-        }
-      >
-        {({ isValid, isSubmitting, values, setValues }) => (
-          <FormBox title={title} maxWidth={SETTINGS_WIDTH}>
-            <TabsProvider
-              tabs={[
-                {
-                  label: "Basics",
-                  content: (
-                    <>
-                      <Field
-                        component={TextField}
-                        name="name"
-                        label="Service name"
-                      />
+        onDelete={handleDeleteService}
+        deleteModalTitle="Delete service?"
+        deleteModalText="Are you sure you want to delete this service?"
+        tabs={({ values, setValues, isSubmitting }) => [
+          {
+            label: "Basics",
+            content: (
+              <>
+                <Field component={TextField} name="name" label="Service name" />
 
-                      <FileUpload
-                        title="Photos"
-                        filesLimit={100}
-                        acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
-                        disabled={isSubmitting}
-                        value={values.photos || []}
-                        onChange={(photos) =>
+                <FileUpload
+                  title="Photos"
+                  filesLimit={100}
+                  acceptedFiles={["image/jpeg", "image/png", "image/bmp"]}
+                  disabled={isSubmitting}
+                  value={values.photos || []}
+                  onChange={(photos) =>
+                    setValues({
+                      ...(values as any),
+                      photos: [...(values.photos || []), ...photos],
+                    })
+                  }
+                  onDelete={(item) =>
+                    setValues({
+                      ...(values as any),
+                      photos: values.photos.filter((photo) => photo !== item),
+                    })
+                  }
+                />
+                <ErrorMessage name="photos" />
+              </>
+            ),
+          },
+          {
+            label: "Service details",
+            content: (
+              <ServiceFormFields
+                schema={props.initialValues.serviceSchema}
+                isSubmitting={isSubmitting}
+                values={values}
+                setValues={setValues}
+              />
+            ),
+          },
+          {
+            label: "Pricing",
+            content: (
+              <PriceForm
+                pricingStrategyType={
+                  props.initialValues.serviceSchema.pricingStrategy
+                }
+                pricing={values.price}
+                setPricing={(price) => setValues({ ...values, price })}
+              />
+            ),
+          },
+          {
+            label: "Content",
+            content: (
+              <ServicePageContentEditor values={values} onChange={setValues} />
+            ),
+          },
+          {
+            label: "Opening times",
+            content: (
+              <OpeningTimesForm
+                openingTimes={values.openingTimes || defaultOpeningTimes}
+                setOpeningTimes={(openingTimes) => {
+                  setValues({
+                    ...values,
+                    openingTimes: {
+                      ...defaultOpeningTimes,
+                      ...openingTimes,
+                    },
+                  });
+                }}
+              />
+            ),
+          },
+          {
+            label: "Settings",
+            content: (
+              <>
+                {props.initialValues.serviceSchema.shouldPayNow && (
+                  <FormControlLabel
+                    label="Approve booking before payment"
+                    control={
+                      <Checkbox
+                        checked={values.approveBookingBeforePayment}
+                        onChange={(e) => {
                           setValues({
-                            ...(values as any),
-                            photos: [...(values.photos || []), ...photos],
-                          })
-                        }
-                        onDelete={(item) =>
-                          setValues({
-                            ...(values as any),
-                            photos: values.photos.filter(
-                              (photo) => photo !== item
-                            ),
-                          })
-                        }
+                            ...values,
+                            approveBookingBeforePayment:
+                              e.currentTarget.checked,
+                          });
+                        }}
                       />
-                      <ErrorMessage name="photos" />
-                    </>
-                  ),
-                },
-                {
-                  label: "Service details",
-                  content: (
-                    <ServiceFormFields
-                      schema={service.serviceSchema}
-                      isSubmitting={isSubmitting}
-                      values={values}
-                      setValues={setValues}
-                    />
-                  ),
-                },
-                {
-                  label: "Pricing",
-                  content: (
-                    <PriceForm
-                      pricingStrategyType={
-                        service.serviceSchema.pricingStrategy
-                      }
-                      pricing={values.price}
-                      setPricing={(price) => setValues({ ...values, price })}
-                    />
-                  ),
-                },
-                {
-                  label: "Content",
-                  content: (
-                    <ServicePageContentEditor
-                      values={values}
-                      onChange={setValues}
-                    />
-                  ),
-                },
-                {
-                  label: "Opening times",
-                  content: (
-                    <OpeningTimesForm
-                      openingTimes={values.openingTimes || defaultOpeningTimes}
-                      setOpeningTimes={(openingTimes) => {
+                    }
+                  />
+                )}
+
+                <FormControlLabel
+                  label="Hide service from users"
+                  control={
+                    <Checkbox
+                      checked={values.hidden}
+                      onChange={(e) => {
                         setValues({
                           ...values,
-                          openingTimes: {
-                            ...defaultOpeningTimes,
-                            ...openingTimes,
-                          },
+                          hidden: e.currentTarget.checked,
                         });
                       }}
                     />
-                  ),
-                },
-                {
-                  label: "Settings",
-                  content: (
-                    <>
-                      {service.serviceSchema.shouldPayNow && (
-                        <FormControlLabel
-                          label="Approve booking before payment"
-                          control={
-                            <Checkbox
-                              checked={values.approveBookingBeforePayment}
-                              onChange={(e) => {
-                                setValues({
-                                  ...values,
-                                  approveBookingBeforePayment:
-                                    e.currentTarget.checked,
-                                });
-                              }}
-                            />
-                          }
-                        />
-                      )}
+                  }
+                />
 
-                      <FormControlLabel
-                        label="Hide service from users"
-                        control={
-                          <Checkbox
-                            checked={values.hidden}
-                            onChange={(e) => {
-                              setValues({
-                                ...values,
-                                hidden: e.currentTarget.checked,
-                              });
-                            }}
-                          />
-                        }
-                      />
+                <ServiceBookingCutoffSelector
+                  values={values}
+                  setValues={setValues}
+                />
 
-                      <ServiceBookingCutoffSelector
-                        values={values}
-                        setValues={setValues}
-                      />
+                <MinMaxPeopleSelector
+                  label="Minimum people"
+                  checkboxLabel="Set minimum people"
+                  defaultValue={1}
+                  value={values.minPeople}
+                  setValue={(minPeople) => setValues({ ...values, minPeople })}
+                />
 
-                      <MinMaxPeopleSelector
-                        label="Minimum people"
-                        checkboxLabel="Set minimum people"
-                        defaultValue={1}
-                        value={values.minPeople}
-                        setValue={(minPeople) =>
-                          setValues({ ...values, minPeople })
-                        }
-                      />
-
-                      <MinMaxPeopleSelector
-                        label="Maximum people"
-                        checkboxLabel="Set maximum people"
-                        defaultValue={10}
-                        value={values.maxPeople}
-                        setValue={(maxPeople) =>
-                          setValues({ ...values, maxPeople })
-                        }
-                      />
-                    </>
-                  ),
-                },
-              ]}
-            >
-              <TabsView />
-              <TabsPrevNextButtons />
-            </TabsProvider>
-
-            <SaveAndDelete
-              isValid={isValid}
-              saveStatus={saveStatus}
-              onDelete={handleDeleteService}
-              deleteStatus={deleteStatus}
-              deleteModalTitle="Delete service?"
-              deleteModalText="Are you sure you want to delete this service?"
-            />
-
-            {saveStatus === "error" && (
-              <Typography>
-                There was an error saving the service data
-              </Typography>
-            )}
-          </FormBox>
-        )}
-      </Formik>
+                <MinMaxPeopleSelector
+                  label="Maximum people"
+                  checkboxLabel="Set maximum people"
+                  defaultValue={10}
+                  value={values.maxPeople}
+                  setValue={(maxPeople) => setValues({ ...values, maxPeople })}
+                />
+              </>
+            ),
+          },
+        ]}
+      />
     </LocalizationProvider>
   );
 };

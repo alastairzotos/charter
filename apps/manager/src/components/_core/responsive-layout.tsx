@@ -15,7 +15,11 @@ export const ResponsiveLayout: React.FC<React.PropsWithChildren<Props>> = ({
       <Box sx={{ display: { xs: "none", md: "block" } }}>
         <Container maxWidth="xl">
           {noPaper && <Box sx={{ p: 3, mt: 3, mb: 3 }}>{children}</Box>}
-          {!noPaper && <Paper sx={{ p: 3, mt: 3, mb: 6 }}>{children}</Paper>}
+          {!noPaper && (
+            <Paper variant="outlined" sx={{ p: 3, mt: 3, mb: 6 }}>
+              {children}
+            </Paper>
+          )}
         </Container>
       </Box>
       <Box

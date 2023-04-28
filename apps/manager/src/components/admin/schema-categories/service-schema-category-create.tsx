@@ -23,7 +23,7 @@ export const ServiceSchemaCategoryCreate: React.FC = () => {
       title="Create service schema category"
       onSave={handleCreateServiceSchemaCategory}
       saveStatus={status}
-      serviceSchemaCategory={{
+      initialValues={{
         name: "Restaurant",
         pluralName: "Restaurants",
         description: "",

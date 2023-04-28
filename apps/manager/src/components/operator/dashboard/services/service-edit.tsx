@@ -43,7 +43,7 @@ export const ServiceEdit: React.FC<Props> = ({ id, operatorId }) => {
       <ManageServiceForm
         title="Edit service"
         operatorId={operatorId}
-        service={service!}
+        initialValues={service!}
         onSave={(newService) => updateService(id, newService)}
         saveStatus={updateServiceStatus}
         onDelete={() => deleteService(id)}

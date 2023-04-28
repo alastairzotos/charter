@@ -1,7 +1,9 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Button, FormLabel, IconButton, Paper, TextField } from "@mui/material";
+import { Button, FormLabel, IconButton, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+
+import { Surface } from "components/_core/surface";
 
 interface Props {
   title: string;
@@ -15,7 +17,7 @@ export const ServiceContentBulletpointEditor: React.FC<Props> = ({
   onChange,
 }) => {
   return (
-    <Paper sx={{ p: 3 }}>
+    <Surface sx={{ p: 3 }}>
       <FormLabel>{title}</FormLabel>
 
       <Box>
@@ -46,6 +48,6 @@ export const ServiceContentBulletpointEditor: React.FC<Props> = ({
       <Button onClick={() => onChange([...bullets, ""])}>
         Add bullet point
       </Button>
-    </Paper>
+    </Surface>
   );
 };

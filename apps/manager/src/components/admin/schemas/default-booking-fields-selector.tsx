@@ -4,13 +4,14 @@ import {
   FormControlLabel,
   FormGroup,
   FormLabel,
-  Paper,
   Tooltip,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { DefaultBookingFieldType, PricingStrategyType } from "dtos";
 import React from "react";
 import { pricingStrategyProvidesNumberOfPeople } from "utils";
+
+import { Surface } from "components/_core/surface";
 
 interface Props {
   pricingStrategy: PricingStrategyType;
@@ -30,7 +31,7 @@ export const DefaultBookingFieldsSelector: React.FC<Props> = ({
   onChange,
 }) => {
   return (
-    <Paper sx={{ p: 3 }}>
+    <Surface sx={{ p: 3 }}>
       <FormLabel>Required booking fields</FormLabel>
 
       <FormGroup sx={{ width: "100%" }}>
@@ -72,6 +73,6 @@ export const DefaultBookingFieldsSelector: React.FC<Props> = ({
           </Box>
         ))}
       </FormGroup>
-    </Paper>
+    </Surface>
   );
 };

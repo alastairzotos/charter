@@ -36,7 +36,7 @@ export const ServiceSchemaCategoryEdit: React.FC<Props> = ({ id }) => {
     >
       <ServiceSchemaCategoryManage
         title="Edit service schema category"
-        serviceSchemaCategory={schemaCategory!}
+        initialValues={schemaCategory!}
         onSave={(newSchemaCategory) =>
           updateSchemaCategory(id, newSchemaCategory)
         }

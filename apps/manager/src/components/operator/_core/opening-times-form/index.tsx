@@ -23,7 +23,7 @@ export const OpeningTimesForm: React.FC<Props> = ({
     <DataGrid
       columns={[
         {
-          width: 200,
+          width: 180,
           field: "day",
           headerName: "Day",
           editable: false,
@@ -31,7 +31,7 @@ export const OpeningTimesForm: React.FC<Props> = ({
           hideable: false,
         },
         {
-          width: 200,
+          width: 180,
           field: "openingTime",
           headerName: "Opening Time",
           sortable: false,
@@ -41,7 +41,7 @@ export const OpeningTimesForm: React.FC<Props> = ({
           renderEditCell: (params) => <TimeEditor {...params} />,
         },
         {
-          width: 200,
+          width: 180,
           field: "closingTime",
           headerName: "Closing Time",
           sortable: false,

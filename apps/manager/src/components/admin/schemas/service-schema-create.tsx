@@ -23,7 +23,7 @@ export const ServiceSchemaCreate: React.FC = () => {
       title="Create service schema"
       onSave={handleCreateServiceSchema}
       saveStatus={status}
-      serviceSchema={{
+      initialValues={{
         name: "Restaurant",
         schemaCategory: null,
         defaultBookingFields: [],

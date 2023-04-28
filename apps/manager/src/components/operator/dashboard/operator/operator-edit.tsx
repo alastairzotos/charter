@@ -41,7 +41,7 @@ export const OperatorEdit: React.FC<Props> = ({ id }) => {
     >
       <ManageOperatorForm
         title="Edit operator"
-        operator={operator!}
+        initialValues={operator!}
         onSave={(newOperator) => updateOperator(id, newOperator)}
         saveStatus={updateOperatorStatus}
         onDelete={() => deleteOperator(id)}

@@ -2,7 +2,6 @@ import {
   Button,
   CircularProgress,
   ImageList,
-  Paper,
   SxProps,
   Typography,
 } from "@mui/material";
@@ -11,6 +10,7 @@ import { DropzoneDialog } from "react-mui-dropzone";
 import { Titled } from "ui";
 
 import { FileUploadItem } from "components/_core/file-upload/item";
+import { Surface } from "components/_core/surface";
 import { useUploadImages } from "state/images";
 import { pluralize } from "util/misc";
 
@@ -45,7 +45,7 @@ export const FileUpload: React.FC<Props> = ({
   ]);
 
   return (
-    <Paper sx={{ ...sx, p: 2 }}>
+    <Surface sx={{ ...sx, p: 2 }}>
       <Titled title={title}>
         {uploadStatus === "fetching" && <CircularProgress />}
 
@@ -84,6 +84,6 @@ export const FileUpload: React.FC<Props> = ({
           }}
         />
       </Titled>
-    </Paper>
+    </Surface>
   );
 };

@@ -1,7 +1,9 @@
-import { Button, FormLabel, Paper } from "@mui/material";
+import { Button, FormLabel } from "@mui/material";
 import { DataGrid, GridActionsCellItem, GridCloseIcon } from "@mui/x-data-grid";
 import { AdditionalBookingField } from "dtos";
 import React from "react";
+
+import { Surface } from "components/_core/surface";
 
 interface Props {
   fields: AdditionalBookingField[];
@@ -13,7 +15,7 @@ export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
   onChange,
 }) => {
   return (
-    <Paper sx={{ p: 3 }}>
+    <Surface sx={{ p: 3 }}>
       <FormLabel>Additional booking fields</FormLabel>
 
       <DataGrid
@@ -99,6 +101,6 @@ export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
           Add booking field
         </Button>
       </div>
-    </Paper>
+    </Surface>
   );
 };

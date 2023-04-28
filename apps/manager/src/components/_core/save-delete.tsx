@@ -1,5 +1,5 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import { Button, CircularProgress } from "@mui/material";
+import { Button, CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 
@@ -47,6 +47,8 @@ export const SaveAndDelete: React.FC<Props> = ({
             Delete
           </Button>
         )}
+
+        {saveStatus === "error" && <Typography>There was an error</Typography>}
       </Box>
 
       <DeleteConfirmModal

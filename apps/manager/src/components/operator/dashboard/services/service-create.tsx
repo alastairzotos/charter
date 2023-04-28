@@ -55,7 +55,7 @@ export const ServiceCreate: React.FC<Props> = ({
         <ManageServiceForm
           title="Create service"
           operatorId={operatorId}
-          service={{
+          initialValues={{
             name: "",
             slug: "",
             description: "",

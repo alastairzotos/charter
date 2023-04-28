@@ -1,175 +1,134 @@
-import { FetchStatus } from "@bitmetro/create-query";
-import {
-  FormControlLabel,
-  Typography,
-  Checkbox,
-  Paper,
-  FormLabel,
-} from "@mui/material";
+import { FormControlLabel, Checkbox, FormLabel } from "@mui/material";
 import { ServiceSchemaNoId } from "dtos";
-import { Formik, Field } from "formik";
+import { Field } from "formik";
 import { TextField } from "formik-mui";
 import { useRouter } from "next/router";
 import React from "react";
-import { FormBox, TabsPrevNextButtons, TabsProvider, TabsView } from "ui";
 import { urls } from "urls";
 
-import { SaveAndDelete } from "components/_core/save-delete";
+import {
+  ResourceForm,
+  ResourceFormProps,
+} from "components/_core/resource-form";
+import { Surface } from "components/_core/surface";
 import { ServiceSchemaCategorySelector } from "components/admin/schema-categories/service-schema-category-selector";
 import { DefaultBookingFieldsSelector } from "components/admin/schemas/default-booking-fields-selector";
 import { PricingStrategyTypeSelector } from "components/admin/schemas/pricing-strategy-type-selector";
 import { AdditionalBookingFieldsSelector } from "components/admin/schemas/service-schema-additional-booking-fields-selector";
 import { ServiceSchemaContentSectionsSelector } from "components/admin/schemas/service-schema-content-sections-selector";
 import { ServiceSchemaFieldsSelector } from "components/admin/schemas/service-schema-fields-selector";
-import { SETTINGS_WIDTH } from "util/misc";
 
-interface Props {
-  title: string;
-
-  serviceSchema: ServiceSchemaNoId;
-  onSave: (serviceSchema: ServiceSchemaNoId) => void;
-  saveStatus?: FetchStatus;
-
-  onDelete?: () => Promise<void>;
-  deleteStatus?: FetchStatus;
-}
-
-export const ManageServiceSchemaForm: React.FC<Props> = ({
-  title,
-  serviceSchema,
-  onSave,
-  saveStatus,
-  onDelete,
-  deleteStatus,
-}) => {
+export const ManageServiceSchemaForm: React.FC<
+  ResourceFormProps<ServiceSchemaNoId>
+> = (props) => {
   const router = useRouter();
 
   const handleDeleteServiceSchema =
-    onDelete &&
+    props.onDelete &&
     (async () => {
-      if (!!onDelete) {
-        await onDelete();
+      if (!!props.onDelete) {
+        await props.onDelete();
         router.push(urls.admin.serviceSchemas());
       }
     });
 
   return (
-    <Formik initialValues={serviceSchema} onSubmit={onSave}>
-      {({ isValid, values, setValues }) => (
-        <FormBox title={title} maxWidth={SETTINGS_WIDTH}>
-          <TabsProvider
-            tabs={[
-              {
-                label: "Basics",
-                content: (
-                  <>
-                    <Field component={TextField} name="name" label="Name" />
+    <ResourceForm
+      {...props}
+      onDelete={handleDeleteServiceSchema}
+      deleteModalTitle="Delete service schema?"
+      deleteModalText="Are you sure you want to delete this service schema?"
+      tabs={({ values, setValues }) => [
+        {
+          label: "Basics",
+          content: (
+            <>
+              <Field component={TextField} name="name" label="Name" />
 
-                    <ServiceSchemaCategorySelector
-                      value={values.schemaCategory}
-                      onChange={(schemaCategory) =>
-                        setValues({ ...values, schemaCategory })
+              <ServiceSchemaCategorySelector
+                value={values.schemaCategory}
+                onChange={(schemaCategory) =>
+                  setValues({ ...values, schemaCategory })
+                }
+              />
+
+              <Surface
+                sx={{
+                  p: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                }}
+              >
+                <FormLabel>Pricing</FormLabel>
+
+                <PricingStrategyTypeSelector
+                  pricingStrategy={values.pricingStrategy}
+                  onChange={(pricingStrategy) =>
+                    setValues({ ...values, pricingStrategy })
+                  }
+                />
+
+                <FormControlLabel
+                  label="Should pay now"
+                  control={
+                    <Checkbox
+                      checked={values.shouldPayNow}
+                      onChange={(e) =>
+                        setValues({
+                          ...values,
+                          shouldPayNow: e.target.checked,
+                        })
                       }
                     />
+                  }
+                />
+              </Surface>
+            </>
+          ),
+        },
+        {
+          label: "Service fields",
+          content: (
+            <ServiceSchemaFieldsSelector
+              fields={values.fields}
+              onChange={(fields) => setValues({ ...values, fields })}
+            />
+          ),
+        },
+        {
+          label: "Booking fields",
+          content: (
+            <>
+              <DefaultBookingFieldsSelector
+                pricingStrategy={values.pricingStrategy}
+                defaultBookingFields={values.defaultBookingFields}
+                onChange={(defaultBookingFields) =>
+                  setValues({ ...values, defaultBookingFields })
+                }
+              />
 
-                    <Paper
-                      sx={{
-                        p: 2,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 2,
-                      }}
-                    >
-                      <FormLabel>Pricing</FormLabel>
-
-                      <PricingStrategyTypeSelector
-                        pricingStrategy={values.pricingStrategy}
-                        onChange={(pricingStrategy) =>
-                          setValues({ ...values, pricingStrategy })
-                        }
-                      />
-
-                      <FormControlLabel
-                        label="Should pay now"
-                        control={
-                          <Checkbox
-                            checked={values.shouldPayNow}
-                            onChange={(e) =>
-                              setValues({
-                                ...values,
-                                shouldPayNow: e.target.checked,
-                              })
-                            }
-                          />
-                        }
-                      />
-                    </Paper>
-                  </>
-                ),
-              },
-              {
-                label: "Service fields",
-                content: (
-                  <ServiceSchemaFieldsSelector
-                    fields={values.fields}
-                    onChange={(fields) => setValues({ ...values, fields })}
-                  />
-                ),
-              },
-              {
-                label: "Booking fields",
-                content: (
-                  <>
-                    <DefaultBookingFieldsSelector
-                      pricingStrategy={values.pricingStrategy}
-                      defaultBookingFields={values.defaultBookingFields}
-                      onChange={(defaultBookingFields) =>
-                        setValues({ ...values, defaultBookingFields })
-                      }
-                    />
-
-                    <AdditionalBookingFieldsSelector
-                      fields={values.additionalBookingFields || []}
-                      onChange={(additionalBookingFields) =>
-                        setValues({ ...values, additionalBookingFields })
-                      }
-                    />
-                  </>
-                ),
-              },
-              {
-                label: "Content sections",
-                content: (
-                  <ServiceSchemaContentSectionsSelector
-                    sections={values.contentSections || []}
-                    onChange={(contentSections) =>
-                      setValues({ ...values, contentSections })
-                    }
-                  />
-                ),
-              },
-            ]}
-          >
-            <TabsView />
-            <TabsPrevNextButtons />
-          </TabsProvider>
-
-          <SaveAndDelete
-            isValid={isValid}
-            saveStatus={saveStatus}
-            onDelete={handleDeleteServiceSchema}
-            deleteStatus={deleteStatus}
-            deleteModalTitle="Delete service schema?"
-            deleteModalText="Are you sure you want to delete this service schema?"
-          />
-
-          {saveStatus === "error" && (
-            <Typography>
-              There was an error saving the service schema data
-            </Typography>
-          )}
-        </FormBox>
-      )}
-    </Formik>
+              <AdditionalBookingFieldsSelector
+                fields={values.additionalBookingFields || []}
+                onChange={(additionalBookingFields) =>
+                  setValues({ ...values, additionalBookingFields })
+                }
+              />
+            </>
+          ),
+        },
+        {
+          label: "Content sections",
+          content: (
+            <ServiceSchemaContentSectionsSelector
+              sections={values.contentSections || []}
+              onChange={(contentSections) =>
+                setValues({ ...values, contentSections })
+              }
+            />
+          ),
+        },
+      ]}
+    />
   );
 };

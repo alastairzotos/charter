@@ -21,7 +21,7 @@ export const OperatorCreate: React.FC = () => {
   return (
     <ManageOperatorForm
       title="Create operator"
-      operator={{
+      initialValues={{
         name: "",
         slug: "",
         email: "",
