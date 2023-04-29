@@ -1,6 +1,7 @@
 import { Tab, Tabs as MuiTabs } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { createContext, useContext, useState } from "react";
+import React from "react";
+import SwipeableViews from "react-swipeable-views";
 import { useTabs } from "./provider";
 
 interface TabPanelProps {
@@ -51,11 +52,17 @@ export const TabsView: React.FC = () => {
         </MuiTabs>
       </Box>
 
-      {tabs.map((tab, index) => (
-        <TabPanel key={index} hidden={index !== tabIndex}>
-          {tab.content}
-        </TabPanel>
-      ))}
+      <SwipeableViews
+        enableMouseEvents
+        index={tabIndex}
+        onChangeIndex={setTabIndex}
+      >
+        {tabs.map((tab, index) => (
+          <TabPanel key={index} hidden={index !== tabIndex}>
+            {tab.content}
+          </TabPanel>
+        ))}
+      </SwipeableViews>
     </Box>
   );
 };

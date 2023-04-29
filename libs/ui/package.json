@@ -15,13 +15,15 @@
     "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.0",
     "@mui/styles": "^5.11.7",
+    "dtos": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "dtos": "*",
-    "utils": "*",
-    "urls": "*"
+    "react-swipeable-views": "^0.14.0",
+    "urls": "*",
+    "utils": "*"
   },
   "devDependencies": {
+    "@types/react-swipeable-views": "^0.13.1",
     "typescript": "^4.9.5"
   }
 }
