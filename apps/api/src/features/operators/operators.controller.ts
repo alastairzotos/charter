@@ -9,10 +9,10 @@ import {
   Param,
 } from '@nestjs/common';
 import {
+  InstanceDto,
   LoggedInUserDetails,
   OperatorDto,
   OperatorNoId,
-  UserDetails,
 } from 'dtos';
 
 import { AuthGuard } from 'auth/auth.guard';
@@ -52,12 +52,12 @@ export class OperatorsController {
 
   @Post()
   async createOperator(
-    @Principal() user: UserDetails,
+    @Instance() instance: InstanceDto,
     @Body() operator: OperatorNoId,
   ) {
     return await this.operatorsService.createOperator({
       ...operator,
-      instance: user.instance,
+      instance,
     });
   }
 

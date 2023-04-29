@@ -1,17 +1,18 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { ServiceSchemaCategoryDto, ServiceSchemaCategoryNoId } from "dtos";
-import { Model } from "mongoose";
-import { ServiceSchemaCategory } from "schemas/service-schema-category.schema";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { ServiceSchemaCategoryDto, ServiceSchemaCategoryNoId } from 'dtos';
+import { Model } from 'mongoose';
+import { ServiceSchemaCategory } from 'schemas/service-schema-category.schema';
 
 @Injectable()
 export class ServiceSchemaCategoryRepository {
   constructor(
-    @InjectModel(ServiceSchemaCategory.name) private readonly model: Model<ServiceSchemaCategory>,
+    @InjectModel(ServiceSchemaCategory.name)
+    private readonly model: Model<ServiceSchemaCategory>,
   ) {}
 
-  async getServiceSchemaCategories() {
-    return await this.model.find();
+  async getServiceSchemaCategories(instance: string) {
+    return await this.model.find({ instance });
   }
 
   async getServiceSchemaCategoryById(id: string) {
@@ -24,7 +25,10 @@ export class ServiceSchemaCategoryRepository {
     return _id;
   }
 
-  async updateServiceSchemaCategory(id: string, newSchemaServiceCategory: Partial<ServiceSchemaCategoryDto>) {
+  async updateServiceSchemaCategory(
+    id: string,
+    newSchemaServiceCategory: Partial<ServiceSchemaCategoryDto>,
+  ) {
     await this.model.findOneAndUpdate({ _id: id }, newSchemaServiceCategory);
   }
 
@@ -33,6 +37,8 @@ export class ServiceSchemaCategoryRepository {
   }
 
   async searchServiceSchemaCategories(term: string) {
-    return await this.model.find({ pluralName: { $regex: new RegExp(term, 'i') }});
+    return await this.model.find({
+      pluralName: { $regex: new RegExp(term, 'i') },
+    });
   }
 }

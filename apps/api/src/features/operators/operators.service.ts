@@ -21,7 +21,7 @@ export class OperatorsService {
     private readonly qrCodeService: QRCodeService,
   ) {}
 
-  async getOperators(instance?: string) {
+  async getOperators(instance: string) {
     return await this.operatorsRepo.getOperators(instance);
   }
 

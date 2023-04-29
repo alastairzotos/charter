@@ -1,3 +1,4 @@
+import { InstanceDto } from "./instance";
 
 export interface ServiceSchemaCategoryDto {
   _id: string;
@@ -5,6 +6,7 @@ export interface ServiceSchemaCategoryDto {
   pluralName: string;
   description: string;
   photo: string;
+  instance?: InstanceDto;
 }
 
-export type ServiceSchemaCategoryNoId = Omit<ServiceSchemaCategoryDto, '_id'>;
+export type ServiceSchemaCategoryNoId = Omit<ServiceSchemaCategoryDto, "_id">;

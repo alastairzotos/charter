@@ -12,7 +12,7 @@ export class OperatorsRepository {
     private readonly operatorsModel: Model<Operator>,
   ) {}
 
-  async getOperators(instance?: string) {
+  async getOperators(instance: string) {
     return await this.operatorsModel.find({ instance }).populate('owner');
   }
 

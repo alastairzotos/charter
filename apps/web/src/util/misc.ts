@@ -23,8 +23,8 @@ export const pluralize = (
 export const shortenText = (text: string, length: number) =>
   text.length <= length ? text : text.substring(0, length) + "...";
 
-export const capitalise = (text: string) =>
-  text[0].toLocaleUpperCase() + text.substring(1);
+export const capitalise = (text = "") =>
+  text[0]?.toLocaleUpperCase() + text.substring(1);
 
 export const formatTime = (time: string) =>
   dayjs(time, "HH:mm").format("h:mma");

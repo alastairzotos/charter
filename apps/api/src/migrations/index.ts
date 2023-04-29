@@ -138,7 +138,7 @@ export const migrateChangeFieldToKey = async (app: INestApplication) => {
 
 export const migrateAddSlugs = async (app: INestApplication) => {
   const operatorsRepo = await app.get<OperatorsRepository>(OperatorsRepository);
-  const operators = await operatorsRepo.getOperators();
+  const operators = await operatorsRepo.getOperators('');
 
   const servicesRepo = await app.get<ServicesRepository>(ServicesRepository);
   const services = await servicesRepo.getServices();
