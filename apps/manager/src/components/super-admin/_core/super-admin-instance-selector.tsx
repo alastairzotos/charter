@@ -26,7 +26,7 @@ export const SuperAdminInstanceSelector: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (instances) {
+    if (typeof window !== "undefined" && instances) {
       init(instances);
     }
   }, [instances]);

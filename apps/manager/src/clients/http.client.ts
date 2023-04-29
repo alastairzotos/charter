@@ -1,9 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
-import {
-  INSTANCE_STORAGE_KEY,
-  useCurrentInstance,
-} from "state/current-instance";
+import { INSTANCE_STORAGE_KEY } from "state/current-instance";
 import { useUserState } from "state/users";
 import { getEnv } from "util/env";
 
