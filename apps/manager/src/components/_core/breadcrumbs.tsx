@@ -1,4 +1,5 @@
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import Box from "@mui/material/Box";
 import MuiBreadcrumbs from "@mui/material/Breadcrumbs";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -31,16 +32,30 @@ export const Breadcrumbs: React.FC<Props> = ({ current, list }) => {
   if (!isDesktop) {
     if (last) {
       return (
-        <div>
+        <Box sx={{ display: "flex" }}>
           <Button
             variant="text"
             component={NextLink}
             href={last.href}
-            sx={{ mb: 1 }}
+            sx={{ mb: 1, mr: 1 }}
           >
             <ChevronLeftIcon /> {getNodeForBreadcrumbTitle(last.title)}
           </Button>
-        </div>
+
+          <Box sx={{ display: "flex", mt: 0.8, maxWidth: 200 }}>
+            <Typography sx={{ mr: 2 }}>/</Typography>
+
+            <Typography
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {getNodeForBreadcrumbTitle(current)}
+            </Typography>
+          </Box>
+        </Box>
       );
     } else {
       return null;
