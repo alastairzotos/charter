@@ -1,6 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { LoggedInUserDetails, UserRole } from 'dtos';
+import { Schema as MongooseSchema } from 'mongoose';
+import { InstanceDto, LoggedInUserDetails, UserRole } from 'dtos';
 import { Document } from 'mongoose';
+import { Instance } from 'schemas/instance.schema';
 
 export type UserDocument = User & Document;
 
@@ -19,6 +21,9 @@ export class User implements LoggedInUserDetails {
 
   @Prop()
   role: UserRole;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Instance.name })
+  instance?: InstanceDto;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

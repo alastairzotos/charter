@@ -47,8 +47,10 @@ export const ManageOperatorForm: React.FC<ResourceFormProps<OperatorNoId>> = (
             <>
               {isOwnerSearchAvailable() && (
                 <UserSearch
-                  owner={values.owner}
+                  value={values.owner}
                   onSelectUser={(owner) => setValues({ ...values, owner })}
+                  inputLabel="Owner"
+                  inputPlaceholder="You can set this later if the operator hasn't signed up yet"
                 />
               )}
 

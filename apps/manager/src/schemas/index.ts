@@ -20,6 +20,7 @@ export const instanceValidationSchema: yup.SchemaOf<InstanceNoId> = yup
   .object()
   .shape({
     name: yup.string().required("Name is required"),
+    admins: yup.array().of(yup.object()).notRequired(),
   });
 
 export const operatorValidationSchema: yup.SchemaOf<

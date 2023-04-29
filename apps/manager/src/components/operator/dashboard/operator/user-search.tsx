@@ -1,4 +1,4 @@
-import { Autocomplete, TextField, Typography } from "@mui/material";
+import { Autocomplete, SxProps, TextField, Typography } from "@mui/material";
 import { LoggedInUserDetails } from "dtos";
 import React, { useEffect } from "react";
 import { StatusSwitch } from "ui";
@@ -7,11 +7,22 @@ import { SearchResult } from "ui";
 import { useUserState } from "state/users";
 
 interface Props {
-  owner?: LoggedInUserDetails;
+  sx?: SxProps;
+  value?: LoggedInUserDetails;
+  filterUsers?: (user: LoggedInUserDetails) => boolean;
   onSelectUser: (user: LoggedInUserDetails | undefined) => void;
+  inputLabel: string;
+  inputPlaceholder?: string;
 }
 
-export const UserSearch: React.FC<Props> = ({ owner, onSelectUser }) => {
+export const UserSearch: React.FC<Props> = ({
+  sx,
+  value,
+  filterUsers = () => true,
+  onSelectUser,
+  inputLabel,
+  inputPlaceholder,
+}) => {
   const [getUserListStatus, getUsers, userList] = useUserState((s) => [
     s.getUserListStatus,
     s.getUsers,
@@ -31,10 +42,11 @@ export const UserSearch: React.FC<Props> = ({ owner, onSelectUser }) => {
     >
       {userList && (
         <Autocomplete
+          sx={sx}
           disablePortal
-          options={userList}
+          options={userList.filter(filterUsers)}
           getOptionLabel={(opt) => opt.email}
-          value={owner}
+          value={value}
           renderOption={(props, user) => (
             <SearchResult
               key={user._id}
@@ -45,8 +57,8 @@ export const UserSearch: React.FC<Props> = ({ owner, onSelectUser }) => {
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Owner"
-              placeholder="You can set this later if the operator hasn't signed up yet"
+              label={inputLabel}
+              placeholder={inputPlaceholder}
             />
           )}
           onChange={(_, user) => onSelectUser(user || undefined)}

@@ -1,3 +1,5 @@
+import { InstanceDto } from "./instance";
+
 export type UserRole = "user" | "operator" | "admin" | "super-admin";
 
 export interface LoginDetails {
@@ -12,6 +14,7 @@ export interface OAuthUserInfo {
 
 export interface UserDetails extends OAuthUserInfo {
   role?: UserRole;
+  instance?: InstanceDto;
 }
 
 export interface RegisterDetails extends UserDetails {

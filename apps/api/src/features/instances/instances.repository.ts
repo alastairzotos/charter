@@ -15,7 +15,7 @@ export class InstancesRepository {
   }
 
   async getInstanceById(id: string) {
-    return await this.instanceModel.findById(id);
+    return await this.instanceModel.findById(id).populate('admins');
   }
 
   async createInstance(instance: InstanceNoId) {

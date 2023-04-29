@@ -10,7 +10,7 @@ import { OperatorsLayout } from "components/operator/_core/operators-layout";
 import { SuperAdminLayout } from "components/super-admin/_core/super-admin-layout";
 import { useUserState } from "state/users";
 
-function Inner({ Component, pageProps, router }: AppProps) {
+function Inner({ Component, pageProps }: AppProps) {
   const [initLocalStorage, initialised, user] = useUserState((s) => [
     s.initLocalStorage,
     s.initialised,

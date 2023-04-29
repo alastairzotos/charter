@@ -52,11 +52,7 @@ export const TabsView: React.FC = () => {
         </MuiTabs>
       </Box>
 
-      <SwipeableViews
-        enableMouseEvents
-        index={tabIndex}
-        onChangeIndex={setTabIndex}
-      >
+      <SwipeableViews index={tabIndex} onChangeIndex={setTabIndex}>
         {tabs.map((tab, index) => (
           <TabPanel key={index} hidden={index !== tabIndex}>
             {tab.content}

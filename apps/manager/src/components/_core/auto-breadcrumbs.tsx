@@ -1,5 +1,7 @@
+import { UserDetails, UserRole } from "dtos";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
+import { urls } from "urls";
 
 import { getBookingById } from "clients/bookings.client";
 import { getInstanceById } from "clients/instances.client";
@@ -12,13 +14,11 @@ import {
   Breadcrumbs,
   LOADING_BREADCRUMB,
 } from "components/_core/breadcrumbs";
-import { capitalise } from "util/misc";
 import { useUserState } from "state/users";
-import { UserDetails, UserRole } from "dtos";
-import { urls } from "urls";
+import { capitalise } from "util/misc";
 
 const extractKey = (key: string) => key.substring(1, key.length - 1);
-const removeHyphens = (text: string) => text.split("-").join(" ");
+const removeHyphens = (text = "") => text.split("-").join(" ");
 
 const paramResolvers: Record<string, (id: string) => Promise<string>> = {
   "[serviceId]": async (id) => (await getService(id)).name,
