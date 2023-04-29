@@ -99,8 +99,8 @@ export class OperatorsService {
     await this.operatorsRepo.deleteOperator(id);
   }
 
-  async searchOperators(term: string) {
-    return await this.operatorsRepo.searchOperators(term);
+  async searchOperators(term: string, instance: string) {
+    return await this.operatorsRepo.searchOperators(term, instance);
   }
 
   async setOperatorNotificationToken(id: string, token: string | undefined) {

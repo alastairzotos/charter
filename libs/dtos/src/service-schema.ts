@@ -1,8 +1,13 @@
 import { DefaultBookingFieldType } from "./booking";
+import { InstanceDto } from "./instance";
 import { PricingStrategyType } from "./pricing";
 import { ServiceSchemaCategoryDto } from "./service-schema-category";
 
-export type ServiceSchemaFieldType = 'string' | 'multiline-text' | 'time' | 'timeframe';
+export type ServiceSchemaFieldType =
+  | "string"
+  | "multiline-text"
+  | "time"
+  | "timeframe";
 
 export interface ServiceSchemaFieldDto {
   key: string;
@@ -10,7 +15,7 @@ export interface ServiceSchemaFieldDto {
   label: string;
 }
 
-export type ServiceSchemaContentSectionType = 'text' | 'bullets';
+export type ServiceSchemaContentSectionType = "text" | "bullets";
 
 export interface ServiceSchemaContentSectionDto {
   key: string;
@@ -18,7 +23,7 @@ export interface ServiceSchemaContentSectionDto {
   title: string;
 }
 
-export type AdditionalBookingFieldType = 'string';
+export type AdditionalBookingFieldType = "string";
 
 export interface AdditionalBookingField {
   key: string;
@@ -36,30 +41,39 @@ export interface ServiceSchemaDto {
   shouldPayNow: boolean;
   fields: ServiceSchemaFieldDto[];
   contentSections: ServiceSchemaContentSectionDto[];
+  instance?: InstanceDto;
 }
 
-export type ServiceSchemaNoId = Omit<ServiceSchemaDto, '_id'>;
+export type ServiceSchemaNoId = Omit<ServiceSchemaDto, "_id">;
 
 export type ServiceFieldValue = string | string[];
 
-export const getDefaultValueForServiceSchemaFieldType = (schemaFieldType: ServiceSchemaFieldType): ServiceFieldValue => {
+export const getDefaultValueForServiceSchemaFieldType = (
+  schemaFieldType: ServiceSchemaFieldType
+): ServiceFieldValue => {
   switch (schemaFieldType) {
-    case 'string': return '';
-    case 'multiline-text': return '';
-    case 'time': return '09:00';
-    case 'timeframe': return '1 Hours';
+    case "string":
+      return "";
+    case "multiline-text":
+      return "";
+    case "time":
+      return "09:00";
+    case "timeframe":
+      return "1 Hours";
   }
-}
+};
 
-export const getDefaultValuesForServiceSchema = (serviceSchema: ServiceSchemaDto): Record<string, ServiceFieldValue> => {
+export const getDefaultValuesForServiceSchema = (
+  serviceSchema: ServiceSchemaDto
+): Record<string, ServiceFieldValue> => {
   return serviceSchema.fields.reduce<Record<string, ServiceFieldValue>>(
     (acc, cur) => ({
       ...acc,
-      [cur.key]: getDefaultValueForServiceSchemaFieldType(cur.type)
+      [cur.key]: getDefaultValueForServiceSchemaFieldType(cur.type),
     }),
     {}
-  )
-}
+  );
+};
 
 export interface ParsedTimeframe {
   allDay: boolean;
@@ -67,9 +81,7 @@ export interface ParsedTimeframe {
   timestep: string;
 }
 
-export const parseTimeFrame = (
-  str: string = ""
-): ParsedTimeframe => {
+export const parseTimeFrame = (str: string = ""): ParsedTimeframe => {
   let number = "1";
   let timestep = "Hours";
 
@@ -80,4 +92,4 @@ export const parseTimeFrame = (
   }
 
   return { allDay, number, timestep };
-}
+};

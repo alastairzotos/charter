@@ -1,8 +1,8 @@
-import { Injectable } from "@nestjs/common";
-import { SearchResponseDto } from "dtos";
-import { OperatorsService } from "features/operators/operators.service";
-import { ServiceSchemaCategoryService } from "features/service-schema-categories/service-schema-categories.service";
-import { ServicesService } from "features/services/services.service";
+import { Injectable } from '@nestjs/common';
+import { SearchResponseDto } from 'dtos';
+import { OperatorsService } from 'features/operators/operators.service';
+import { ServiceSchemaCategoryService } from 'features/service-schema-categories/service-schema-categories.service';
+import { ServicesService } from 'features/services/services.service';
 
 @Injectable()
 export class SearchService {
@@ -11,18 +11,21 @@ export class SearchService {
     private readonly servicesService: ServicesService,
   ) {}
 
-  async searchOperatorsAndServices(term: string): Promise<SearchResponseDto> {
+  async searchOperatorsAndServices(
+    term: string,
+    instance: string,
+  ): Promise<SearchResponseDto> {
     const trimmedTerm = term.trim();
 
     if (trimmedTerm.length === 0) {
-      return { operators: [], services: [] }
+      return { operators: [], services: [] };
     }
 
     const [operators, services] = await Promise.all([
-      this.operatorsService.searchOperators(trimmedTerm),
-      this.servicesService.searchServices(trimmedTerm),
-    ])
+      this.operatorsService.searchOperators(trimmedTerm, instance),
+      this.servicesService.searchServices(trimmedTerm, instance),
+    ]);
 
-    return { operators, services }
+    return { operators, services };
   }
 }

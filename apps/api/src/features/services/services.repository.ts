@@ -121,9 +121,11 @@ export class ServicesRepository {
     return await this.servicesModel.find({ serviceSchema: schemaId });
   }
 
-  async searchServices(term: string) {
+  async searchServices(term: string, instance: string) {
     return await this.servicesModel
-      .find({ name: { $regex: new RegExp('^' + term, 'i') } })
+      .find({
+        $and: [{ instance }, { name: { $regex: new RegExp('^' + term, 'i') } }],
+      })
       .populate('operator');
   }
 }

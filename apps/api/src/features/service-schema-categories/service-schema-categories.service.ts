@@ -32,7 +32,7 @@ export class ServiceSchemaCategoryService {
     return await this.repo.deleteServiceSchemaCategory(id);
   }
 
-  async searchServiceSchemaCategories(term: string) {
-    return await this.repo.searchServiceSchemaCategories(term);
+  async searchServiceSchemaCategories(term: string, instance: string) {
+    return await this.repo.searchServiceSchemaCategories(term, instance);
   }
 }

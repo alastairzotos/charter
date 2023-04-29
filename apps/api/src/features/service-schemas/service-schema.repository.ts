@@ -11,8 +11,10 @@ export class ServiceSchemaRepository {
     private readonly serviceSchemasModel: Model<ServiceSchema>,
   ) {}
 
-  async getServiceSchemas() {
-    return await this.serviceSchemasModel.find().populate('schemaCategory');
+  async getServiceSchemas(instance: string) {
+    return await this.serviceSchemasModel
+      .find({ instance })
+      .populate('schemaCategory');
   }
 
   async getServiceSchemaById(id: string) {
@@ -21,13 +23,20 @@ export class ServiceSchemaRepository {
       .populate('schemaCategory');
   }
 
-  async getServicesSchemasByCategoryId(categoryId: string) {
-    return await this.serviceSchemasModel.find({ schemaCategory: categoryId });
+  async getServicesSchemasByCategoryId(categoryId: string, instance: string) {
+    return await this.serviceSchemasModel.find({
+      schemaCategory: categoryId,
+      instance,
+    });
   }
 
-  async getServicesSchemasByCategoryIds(categoryIds: string[]) {
+  async getServicesSchemasByCategoryIds(
+    categoryIds: string[],
+    instance: string,
+  ) {
     return await this.serviceSchemasModel.find({
       schemaCategory: { $in: categoryIds },
+      instance,
     });
   }
 
@@ -51,9 +60,10 @@ export class ServiceSchemaRepository {
     await this.serviceSchemasModel.findOneAndDelete({ _id: id });
   }
 
-  async searchServiceSchemas(term: string) {
+  async searchServiceSchemas(term: string, instance: string) {
     return await this.serviceSchemasModel.find({
       name: { $regex: new RegExp(term, 'i') },
+      instance,
     });
   }
 }

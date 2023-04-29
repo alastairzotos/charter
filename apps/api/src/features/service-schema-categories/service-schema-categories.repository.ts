@@ -36,9 +36,9 @@ export class ServiceSchemaCategoryRepository {
     await this.model.findOneAndDelete({ _id: id });
   }
 
-  async searchServiceSchemaCategories(term: string) {
+  async searchServiceSchemaCategories(term: string, instance: string) {
     return await this.model.find({
-      pluralName: { $regex: new RegExp(term, 'i') },
+      $and: [{ instance }, { pluralName: { $regex: new RegExp(term, 'i') } }],
     });
   }
 }

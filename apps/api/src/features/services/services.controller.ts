@@ -15,6 +15,7 @@ import { ServiceDto, ServiceNoId } from 'dtos';
 import { AuthGuard } from 'auth/auth.guard';
 import { Roles } from 'auth/roles.decorator';
 import { ServicesService } from 'features/services/services.service';
+import { Instance } from 'decorators/instance.decorator';
 
 @Controller('services')
 @UseGuards(AuthGuard)
@@ -72,10 +73,12 @@ export class ServicesController {
   @Get('by-schema-category-id/:categoryId')
   @Roles('all')
   async getServicesWithOperatorsBySchemaCategoryId(
+    @Instance() instance: string,
     @Param('categoryId') categoryId: string,
   ) {
     return await this.servicesService.getServicesWithOperatorsBySchemaCategoryId(
       categoryId,
+      instance,
     );
   }
 

@@ -48,9 +48,11 @@ export class OperatorsRepository {
     await this.operatorsModel.deleteOne({ _id: id });
   }
 
-  async searchOperators(term: string) {
+  async searchOperators(term: string, instance: string) {
     return await this.operatorsModel
-      .find({ name: { $regex: new RegExp('^' + term, 'i') } })
+      .find({
+        $and: [{ instance }, { name: { $regex: new RegExp('^' + term, 'i') } }],
+      })
       .populate('owner');
   }
 

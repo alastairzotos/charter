@@ -1,7 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
-import { DefaultBookingFieldType, PricingStrategyType, ServiceSchemaContentSectionDto, ServiceSchemaCategoryDto, ServiceSchemaDto, ServiceSchemaFieldDto, AdditionalBookingField } from 'dtos';
+import {
+  DefaultBookingFieldType,
+  PricingStrategyType,
+  ServiceSchemaContentSectionDto,
+  ServiceSchemaCategoryDto,
+  ServiceSchemaDto,
+  ServiceSchemaFieldDto,
+  AdditionalBookingField,
+  InstanceDto,
+} from 'dtos';
 import { ServiceSchemaCategory } from 'schemas/service-schema-category.schema';
+import { Instance } from 'decorators/instance.decorator';
 
 @Schema({ collection: 'service_schemas' })
 export class ServiceSchema implements ServiceSchemaDto {
@@ -10,7 +20,10 @@ export class ServiceSchema implements ServiceSchemaDto {
   @Prop()
   name: string;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: ServiceSchemaCategory.name })
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: ServiceSchemaCategory.name,
+  })
   schemaCategory: ServiceSchemaCategoryDto | null;
 
   @Prop({ type: Array })
@@ -30,6 +43,9 @@ export class ServiceSchema implements ServiceSchemaDto {
 
   @Prop({ type: Array })
   contentSections: ServiceSchemaContentSectionDto[];
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Instance.name })
+  instance?: InstanceDto;
 }
 
 export const ServiceSchemaSchema = SchemaFactory.createForClass(ServiceSchema);

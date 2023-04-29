@@ -52,10 +52,14 @@ export class ServicesService {
     );
   }
 
-  async getServicesWithOperatorsBySchemaCategoryId(categoryId: string) {
+  async getServicesWithOperatorsBySchemaCategoryId(
+    categoryId: string,
+    instance: string,
+  ) {
     const schemas =
       await this.serviceSchemaService.getServicesSchemasByCategoryId(
         categoryId,
+        instance,
       );
     return await this.servicesRepository.getServicesWithOperatorsBySchemaIds(
       schemas.map((schema) => schema._id),
@@ -124,17 +128,18 @@ export class ServicesService {
     return this.sortServicesByPopularity(services).slice(0, maxServices);
   }
 
-  async searchServices(term: string) {
+  async searchServices(term: string, instance: string) {
     const [servicesSearchedByName, categories, serviceSchemas] =
       await Promise.all([
-        this.servicesRepository.searchServices(term),
-        this.categoriesService.searchServiceSchemaCategories(term),
-        this.serviceSchemaService.searchServiceSchemas(term),
+        this.servicesRepository.searchServices(term, instance),
+        this.categoriesService.searchServiceSchemaCategories(term, instance),
+        this.serviceSchemaService.searchServiceSchemas(term, instance),
       ]);
 
     const schemasByCategories =
       await this.serviceSchemaService.getServiceSchemasByCategoryIds(
         categories.map((category) => category._id),
+        instance,
       );
 
     const allSchemasToSearch = uniqBy(
