@@ -7,6 +7,7 @@ import { PageWrapper } from "ui";
 import { BaseLayout } from "components/_core/base-layout";
 import { AdminLayout } from "components/admin/_core/admin-layout";
 import { OperatorsLayout } from "components/operator/_core/operators-layout";
+import { SuperAdminLayout } from "components/super-admin/_core/super-admin-layout";
 import { useUserState } from "state/users";
 
 function Inner({ Component, pageProps, router }: AppProps) {
@@ -32,6 +33,14 @@ function Inner({ Component, pageProps, router }: AppProps) {
       <OperatorsLayout>
         {initialised && <Component {...pageProps} />}
       </OperatorsLayout>
+    );
+  }
+
+  if (router.route.startsWith("/super-admin")) {
+    return (
+      <SuperAdminLayout>
+        {initialised && <Component {...pageProps} />}
+      </SuperAdminLayout>
     );
   }
 

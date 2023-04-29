@@ -58,6 +58,12 @@ export const urls = {
     servicesCreate: (_: string, schemaId: string) =>
       `/operator-admin/dashboard/services/create?schemaId=${schemaId}`,
   },
+  superAdmin: {
+    home: () => "/super-admin",
+    instances: () => "/super-admin/instances",
+    instance: (id: string) => `/super-admin/instances/${id}`,
+    instanceCreate: () => "/super-admin/instances/create",
+  },
 } satisfies Urls;
 
 export const createOperatorSlug = (operator: Partial<OperatorDto>) =>

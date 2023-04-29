@@ -1,4 +1,4 @@
-import { UserRole } from "dtos";
+import { UserDetails, UserRole } from "dtos";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect } from "react";
 import { urls } from "urls";
@@ -19,10 +19,26 @@ export const RoleRoute: React.FC<PropsWithChildren<Props>> = ({
     s.loggedInUser,
   ]);
 
+  const shouldRedirect = (
+    role: UserRole,
+    initialised: boolean,
+    user: UserDetails | undefined
+  ) => {
+    if (!initialised) {
+      return false;
+    }
+
+    if (user?.role === "super-admin") {
+      return false;
+    }
+
+    return !user || user?.role !== role;
+  };
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (role !== "user") {
-        if (initialised && (!user || user?.role !== role)) {
+        if (shouldRedirect(role, initialised, user)) {
           router.push(urls.home());
         }
       }
@@ -33,7 +49,7 @@ export const RoleRoute: React.FC<PropsWithChildren<Props>> = ({
     return <>{children}</>;
   }
 
-  if (initialised && (!user || user?.role !== role)) {
+  if (shouldRedirect(role, initialised, user)) {
     return null;
   }
 

@@ -7,6 +7,7 @@ import { EnvService } from 'environment/environment.service';
 import { BookingsModule } from 'features/bookings/bookings.module';
 import { HealthModule } from 'features/health/health.module';
 import { ImagesModule } from 'features/images/images.module';
+import { InstancesModule } from 'features/instances/instances.module';
 import { OperatorsModule } from 'features/operators/operators.module';
 import { PaymentsModule } from 'features/payments/payments.module';
 import { QRCodeModule } from 'features/qr-code/qr-code.module';
@@ -43,6 +44,7 @@ import { RawBodyMiddleware } from 'middleware/raw-body.middleware';
     TemplatesModule,
     QRCodeModule,
     NotificationsModule,
+    InstancesModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],

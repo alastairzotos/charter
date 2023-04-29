@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
 import { getBookingById } from "clients/bookings.client";
+import { getInstanceById } from "clients/instances.client";
 import { getOperator } from "clients/operators.client";
 import { getServiceSchemaCategoryById } from "clients/service-schema-categories.client";
 import { getServiceSchemaById } from "clients/service-schemas.client";
@@ -22,6 +23,7 @@ const paramResolvers: Record<string, (id: string) => Promise<string>> = {
   "[scId]": async (id) => (await getServiceSchemaById(id)).name,
   "[sccId]": async (id) => (await getServiceSchemaCategoryById(id)).name,
   "[bookingId]": async (id) => (await getBookingById(id)).service.name,
+  "[instanceId]": async (id) => (await getInstanceById(id)).name,
 };
 
 const buildBreadcrumbsFromParts = async (

@@ -1,5 +1,6 @@
 import {
   BookingNoId,
+  InstanceNoId,
   OperatorNoId,
   PerAdultAndChildBookingPriceDetails,
   PerAdultAndChildPriceDto,
@@ -14,6 +15,12 @@ import {
   TieredPriceDto,
 } from "dtos";
 import * as yup from "yup";
+
+export const instanceValidationSchema: yup.SchemaOf<InstanceNoId> = yup
+  .object()
+  .shape({
+    name: yup.string().required("Name is required"),
+  });
 
 export const operatorValidationSchema: yup.SchemaOf<
   Omit<OperatorNoId, "owner" | "slug">

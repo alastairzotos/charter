@@ -16,6 +16,8 @@ export default function Home() {
         router.push(urls.admin.home());
       } else if (loggedInUser.role === "operator") {
         router.push(urls.operators.home());
+      } else if (loggedInUser.role === "super-admin") {
+        router.push(urls.superAdmin.home());
       }
     }
   }, [initialised, loggedInUser]);

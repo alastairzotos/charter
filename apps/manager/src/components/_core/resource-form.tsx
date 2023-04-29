@@ -1,6 +1,6 @@
 import { FetchStatus } from "@bitmetro/create-query";
 import { FormLabel, Box, SxProps } from "@mui/material";
-import { Formik, FormikProps, FormikValues } from "formik";
+import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React from "react";
 import { TabData, TabsProvider, TabsView, useIsDesktop } from "ui";
 import { AnyObjectSchema } from "yup";
@@ -22,8 +22,8 @@ export interface ResourceFormProps<T> {
 }
 
 interface Props<T> extends ResourceFormProps<T> {
-  deleteModalTitle: string;
-  deleteModalText: string;
+  deleteModalTitle?: string;
+  deleteModalText?: string;
 
   tabs: (props: FormikProps<FormikValues & T>) => TabData[];
 }
@@ -64,24 +64,26 @@ export const ResourceForm = <T extends unknown>({
       onSubmit={onSave}
     >
       {(props) => (
-        <Box sx={{ maxWidth: SETTINGS_WIDTH }}>
-          <Surface sx={sx}>
-            <FormLabel sx={{ fontSize: "1.3em", m: 2 }}>{title}</FormLabel>
+        <Form>
+          <Box sx={{ maxWidth: SETTINGS_WIDTH }}>
+            <Surface sx={sx}>
+              <FormLabel sx={{ fontSize: "1.3em", m: 2 }}>{title}</FormLabel>
 
-            <TabsProvider tabs={tabs(props)}>
-              <TabsView />
-            </TabsProvider>
-          </Surface>
+              <TabsProvider tabs={tabs(props)}>
+                <TabsView />
+              </TabsProvider>
+            </Surface>
 
-          <SaveAndDelete
-            isValid={props.isValid}
-            saveStatus={saveStatus}
-            onDelete={onDelete}
-            deleteStatus={deleteStatus}
-            deleteModalTitle={deleteModalTitle}
-            deleteModalText={deleteModalText}
-          />
-        </Box>
+            <SaveAndDelete
+              isValid={props.isValid}
+              saveStatus={saveStatus}
+              onDelete={onDelete}
+              deleteStatus={deleteStatus}
+              deleteModalTitle={deleteModalTitle || ""}
+              deleteModalText={deleteModalText || ""}
+            />
+          </Box>
+        </Form>
       )}
     </Formik>
   );
