@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Instance } from 'decorators/instance.decorator';
 import {
+  InstanceDto,
   OpeningTimesDto,
   ServiceDto,
   ServiceFieldValue,
@@ -65,6 +67,9 @@ export class Service implements ServiceDto {
 
   @Prop()
   cutoffDays?: number;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Instance.name })
+  instance?: InstanceDto;
 }
 
 export const ServiceSchema = SchemaFactory.createForClass(Service);

@@ -49,12 +49,14 @@ export class ServicesRepository {
     });
   }
 
-  async getServices() {
-    return await this.servicesModel.find().populate('serviceSchema');
+  async getServices(instance: string) {
+    return await this.servicesModel
+      .find({ instance })
+      .populate('serviceSchema');
   }
 
-  async getServicesWithOperator() {
-    return await this.servicesModel.find().populate('operator');
+  async getServicesWithOperator(instance: string) {
+    return await this.servicesModel.find({ instance }).populate('operator');
   }
 
   async getService(id: string) {
@@ -70,9 +72,9 @@ export class ServicesRepository {
       .populate('serviceSchema');
   }
 
-  async getServicesWithOperatorsBySchemaId(schemaId: string) {
+  async getServicesWithOperatorsBySchemaId(schemaId: string, instance: string) {
     return await this.servicesModel
-      .find({ serviceSchema: schemaId })
+      .find({ instance, serviceSchema: schemaId })
       .populate('operator')
       .populate({
         path: 'serviceSchema',
@@ -82,9 +84,12 @@ export class ServicesRepository {
       });
   }
 
-  async getServicesWithOperatorsBySchemaIds(schemaIds: string[]) {
+  async getServicesWithOperatorsBySchemaIds(
+    schemaIds: string[],
+    instance: string,
+  ) {
     return await this.servicesModel
-      .find({ serviceSchema: { $in: schemaIds } })
+      .find({ instance, serviceSchema: { $in: schemaIds } })
       .populate('operator')
       .populate({
         path: 'serviceSchema',
@@ -94,9 +99,9 @@ export class ServicesRepository {
       });
   }
 
-  async getServicesBySchemaIds(schemaIds: string[]) {
+  async getServicesBySchemaIds(schemaIds: string[], instance: string) {
     return await this.servicesModel
-      .find({ serviceSchema: { $in: schemaIds } })
+      .find({ instance, serviceSchema: { $in: schemaIds } })
       .populate('operator');
   }
 

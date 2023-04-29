@@ -10,7 +10,7 @@ import {
   UseGuards,
   NotFoundException,
 } from '@nestjs/common';
-import { ServiceDto, ServiceNoId } from 'dtos';
+import { InstanceDto, ServiceDto, ServiceNoId } from 'dtos';
 
 import { AuthGuard } from 'auth/auth.guard';
 import { Roles } from 'auth/roles.decorator';
@@ -40,8 +40,8 @@ export class ServicesController {
 
   @Get('popular')
   @Roles('all')
-  async getPopularServices() {
-    return await this.servicesService.getPopularServices();
+  async getPopularServices(@Instance() instance: string) {
+    return await this.servicesService.getPopularServices(instance);
   }
 
   @Get(':id')
@@ -63,10 +63,12 @@ export class ServicesController {
   @Get('by-schema-id/:schemaId')
   @Roles('all')
   async getServicesWithOperatorsBySchemaId(
+    @Instance() instance: string,
     @Param('schemaId') schemaId: string,
   ) {
     return await this.servicesService.getServicesWithOperatorsBySchemaId(
       schemaId,
+      instance,
     );
   }
 
@@ -83,8 +85,14 @@ export class ServicesController {
   }
 
   @Post()
-  async createService(@Body() service: ServiceNoId) {
-    return await this.servicesService.createService(service);
+  async createService(
+    @Instance() instance: InstanceDto,
+    @Body() service: ServiceNoId,
+  ) {
+    return await this.servicesService.createService({
+      ...service,
+      instance,
+    });
   }
 
   @Patch()

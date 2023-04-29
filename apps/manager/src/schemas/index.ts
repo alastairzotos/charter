@@ -89,6 +89,7 @@ export const serviceValidationSchema: yup.SchemaOf<
     | "numberOfBookings"
     | "openingTimes"
     | "price"
+    | "instance"
   >
 > = yup.object().shape({
   name: yup.string().required("Name is required"),

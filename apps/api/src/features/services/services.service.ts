@@ -46,9 +46,10 @@ export class ServicesService {
     await this.servicesRepository.addBookingToService(serviceId);
   }
 
-  async getServicesWithOperatorsBySchemaId(schemaId: string) {
+  async getServicesWithOperatorsBySchemaId(schemaId: string, instance: string) {
     return await this.servicesRepository.getServicesWithOperatorsBySchemaId(
       schemaId,
+      instance,
     );
   }
 
@@ -63,6 +64,7 @@ export class ServicesService {
       );
     return await this.servicesRepository.getServicesWithOperatorsBySchemaIds(
       schemas.map((schema) => schema._id),
+      instance,
     );
   }
 
@@ -120,8 +122,10 @@ export class ServicesService {
     }
   }
 
-  async getPopularServices() {
-    const services = await this.servicesRepository.getServicesWithOperator();
+  async getPopularServices(instance: string) {
+    const services = await this.servicesRepository.getServicesWithOperator(
+      instance,
+    );
 
     const maxServices = 10;
 
@@ -150,6 +154,7 @@ export class ServicesService {
     const servicesBySchemas =
       await this.servicesRepository.getServicesBySchemaIds(
         allSchemasToSearch.map((schema) => schema._id),
+        instance,
       );
 
     const allServices = uniqBy(

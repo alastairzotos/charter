@@ -1,3 +1,4 @@
+import { InstanceDto } from "./instance";
 import { OpeningTimesDto } from "./opening-times";
 import { OperatorDto } from "./operator";
 import { ServicePricingDto } from "./pricing";
@@ -22,6 +23,7 @@ export interface ServiceDto {
   openingTimes: OpeningTimesDto;
   hasCutoffDays?: boolean;
   cutoffDays?: number;
+  instance?: InstanceDto;
 }
 
 export type ServiceNoId = Omit<ServiceDto, "_id">;
