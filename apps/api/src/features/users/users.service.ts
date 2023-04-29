@@ -103,9 +103,9 @@ export class UsersService {
     };
   }
 
-  generateAccessToken({ _id, email, givenName, role }: User) {
+  generateAccessToken({ _id, email, givenName, role, instance }: User) {
     return jwt.sign(
-      { _id, email, givenName, role },
+      { _id, email, givenName, role, instance: instance?.toString() },
       this.env.get().jwtSigningKey,
     );
   }

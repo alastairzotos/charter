@@ -1,4 +1,5 @@
 import { LoggedInUserDetails } from "./auth";
+import { InstanceDto } from "./instance";
 import { OpeningTimesDto } from "./opening-times";
 
 export interface OperatorDto {
@@ -12,6 +13,7 @@ export interface OperatorDto {
   description: string;
   openingTimes: OpeningTimesDto;
   owner?: LoggedInUserDetails;
+  instance?: InstanceDto;
 }
 
 export type OperatorNoId = Omit<OperatorDto, "_id">;

@@ -11,7 +11,7 @@ import {
 import { BookingDto, BookingStatus, LoggedInUserDetails } from 'dtos';
 
 import { AuthGuard } from 'auth/auth.guard';
-import { Principal } from 'auth/principal.decorator';
+import { Principal } from 'decorators/principal.decorator';
 import { Roles } from 'auth/roles.decorator';
 import { BookingsService } from 'features/bookings/bookings.service';
 

@@ -12,8 +12,8 @@ export class OperatorsRepository {
     private readonly operatorsModel: Model<Operator>,
   ) {}
 
-  async getOperators() {
-    return await this.operatorsModel.find().populate('owner');
+  async getOperators(instance?: string) {
+    return await this.operatorsModel.find({ instance }).populate('owner');
   }
 
   async getOperatorById(id: string) {

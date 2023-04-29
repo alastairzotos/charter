@@ -24,7 +24,7 @@ export const instanceValidationSchema: yup.SchemaOf<InstanceNoId> = yup
   });
 
 export const operatorValidationSchema: yup.SchemaOf<
-  Omit<OperatorNoId, "owner" | "slug">
+  Omit<OperatorNoId, "owner" | "slug" | "instance">
 > = yup.object().shape({
   name: yup.string().required("Name is required"),
   address: yup.string().required("Address is required"),

@@ -8,12 +8,18 @@ import {
   UseGuards,
   Param,
 } from '@nestjs/common';
-import { LoggedInUserDetails, OperatorDto, OperatorNoId } from 'dtos';
+import {
+  LoggedInUserDetails,
+  OperatorDto,
+  OperatorNoId,
+  UserDetails,
+} from 'dtos';
 
 import { AuthGuard } from 'auth/auth.guard';
 import { Roles } from 'auth/roles.decorator';
 import { OperatorsService } from 'features/operators/operators.service';
-import { Principal } from 'auth/principal.decorator';
+import { Principal } from 'decorators/principal.decorator';
+import { Instance } from 'decorators/instance.decorator';
 
 @Controller('operators')
 @UseGuards(AuthGuard)
@@ -22,8 +28,8 @@ export class OperatorsController {
 
   @Get()
   @Roles('all')
-  async getOperators() {
-    return await this.operatorsService.getOperators();
+  async getOperators(@Instance() instance: string) {
+    return await this.operatorsService.getOperators(instance);
   }
 
   @Get('by-owner')
@@ -45,8 +51,14 @@ export class OperatorsController {
   }
 
   @Post()
-  async createOperator(@Body() operator: OperatorNoId) {
-    return await this.operatorsService.createOperator(operator);
+  async createOperator(
+    @Principal() user: UserDetails,
+    @Body() operator: OperatorNoId,
+  ) {
+    return await this.operatorsService.createOperator({
+      ...operator,
+      instance: user.instance,
+    });
   }
 
   @Patch()

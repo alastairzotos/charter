@@ -7,4 +7,5 @@ export const getEnv = () => ({
     .NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
   awsCloudfrontDomain: getConfig().publicRuntimeConfig
     .NEXT_PUBLIC_AWS_CLOUDFRONT_DOMAIN as string,
+  instanceId: getConfig().publicRuntimeConfig.NEXT_PUBLIC_INSTANCE_ID as string,
 });
