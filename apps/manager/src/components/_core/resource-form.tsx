@@ -1,24 +1,12 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import {
-  Card,
-  CardContent,
-  CardActions,
-  FormLabel,
-  Box,
-  SxProps,
-} from "@mui/material";
+import { FormLabel, Box, SxProps } from "@mui/material";
 import { Formik, FormikProps, FormikValues } from "formik";
 import React from "react";
-import {
-  TabData,
-  TabsPrevNextButtons,
-  TabsProvider,
-  TabsView,
-  useIsDesktop,
-} from "ui";
+import { TabData, TabsProvider, TabsView, useIsDesktop } from "ui";
 import { AnyObjectSchema } from "yup";
 
 import { SaveAndDelete } from "components/_core/save-delete";
+import { Surface } from "components/_core/surface";
 import { SETTINGS_WIDTH } from "util/misc";
 
 export interface ResourceFormProps<T> {
@@ -57,15 +45,16 @@ export const ResourceForm = <T extends unknown>({
 
   const sx: SxProps = isDesktop
     ? {
-        p: 1,
+        p: 2,
         pt: 2,
         mb: 2,
       }
     : {
         m: -1,
         mb: 2,
-        p: -2,
+        p: 1,
         pt: 1,
+        border: "none",
       };
 
   return (
@@ -76,19 +65,13 @@ export const ResourceForm = <T extends unknown>({
     >
       {(props) => (
         <Box sx={{ maxWidth: SETTINGS_WIDTH }}>
-          <Card elevation={isDesktop ? 3 : 0} sx={sx}>
+          <Surface sx={sx}>
             <FormLabel sx={{ fontSize: "1.3em", m: 2 }}>{title}</FormLabel>
 
             <TabsProvider tabs={tabs(props)}>
-              <CardContent>
-                <TabsView />
-              </CardContent>
-
-              <CardActions>
-                <TabsPrevNextButtons />
-              </CardActions>
+              <TabsView />
             </TabsProvider>
-          </Card>
+          </Surface>
 
           <SaveAndDelete
             isValid={props.isValid}

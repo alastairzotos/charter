@@ -15,7 +15,7 @@ export const ServiceBookingCutoffSelector: React.FC<Props> = ({
   return (
     <Box sx={{ displat: "flex" }}>
       <FormControlLabel
-        label="Set minimum number of days before booking is possible"
+        label="Booking cutoff days"
         control={
           <Checkbox
             checked={values.hasCutoffDays}
