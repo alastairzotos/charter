@@ -32,7 +32,9 @@ export const ManageInstanceForm: React.FC<ResourceFormProps<InstanceNoId>> = (
           content: (
             <>
               <UserSearch
-                filterUsers={(user) => user.role === "user"}
+                filterUsers={(user) =>
+                  user.role === "user" || user.role === "admin"
+                }
                 onSelectUser={(user) =>
                   user &&
                   setValues({
