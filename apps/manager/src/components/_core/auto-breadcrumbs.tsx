@@ -13,6 +13,9 @@ import {
   LOADING_BREADCRUMB,
 } from "components/_core/breadcrumbs";
 import { capitalise } from "util/misc";
+import { useUserState } from "state/users";
+import { UserDetails, UserRole } from "dtos";
+import { urls } from "urls";
 
 const extractKey = (key: string) => key.substring(1, key.length - 1);
 const removeHyphens = (text: string) => text.split("-").join(" ");
@@ -26,9 +29,29 @@ const paramResolvers: Record<string, (id: string) => Promise<string>> = {
   "[instanceId]": async (id) => (await getInstanceById(id)).name,
 };
 
+const roleHomeMap: Record<UserRole, BreadcrumbLink> = {
+  user: {
+    title: "Home",
+    href: urls.home(),
+  },
+  admin: {
+    title: "Admin",
+    href: urls.admin.home(),
+  },
+  operator: {
+    title: "Operator admin",
+    href: urls.operators.home(),
+  },
+  "super-admin": {
+    title: "Super admin",
+    href: urls.superAdmin.home(),
+  },
+};
+
 const buildBreadcrumbsFromParts = async (
   parts: string[],
   params: Record<string, string>,
+  user: UserDetails | undefined,
   resolveTitle: (part: string, id: string) => Promise<string>
 ): Promise<BreadcrumbLink[]> => {
   const links: BreadcrumbLink[] = [];
@@ -53,11 +76,17 @@ const buildBreadcrumbsFromParts = async (
     });
   }
 
+  if (links.length && user) {
+    links[0] = roleHomeMap[user.role || "user"];
+  }
+
   return links;
 };
 
 export const AutoBreadcrumbs: React.FC = () => {
   const router = useRouter();
+
+  const { loggedInUser } = useUserState();
 
   const path = router.pathname.substring(1);
   const parts = path.split("/");
@@ -67,11 +96,19 @@ export const AutoBreadcrumbs: React.FC = () => {
   useEffect(() => {
     const params = router.query as Record<string, string>;
 
-    buildBreadcrumbsFromParts(parts, params, async () => LOADING_BREADCRUMB)
+    buildBreadcrumbsFromParts(
+      parts,
+      params,
+      loggedInUser,
+      async () => LOADING_BREADCRUMB
+    )
       .then(setCrumbs)
       .then(() =>
-        buildBreadcrumbsFromParts(parts, params, async (part, id) =>
-          paramResolvers[part](id)
+        buildBreadcrumbsFromParts(
+          parts,
+          params,
+          loggedInUser,
+          async (part, id) => paramResolvers[part](id)
         )
       )
       .then(setCrumbs);

@@ -11,9 +11,10 @@ import { SuperAdminLayout } from "components/super-admin/_core/super-admin-layou
 import { useUserState } from "state/users";
 
 function Inner({ Component, pageProps, router }: AppProps) {
-  const [initLocalStorage, initialised] = useUserState((s) => [
+  const [initLocalStorage, initialised, user] = useUserState((s) => [
     s.initLocalStorage,
     s.initialised,
+    s.loggedInUser,
   ]);
 
   React.useEffect(() => {
@@ -22,13 +23,21 @@ function Inner({ Component, pageProps, router }: AppProps) {
     }
   }, [initialised]);
 
-  if (router.route.startsWith("/admin")) {
+  if (!user || user.role === "user") {
+    return (
+      <BaseLayout noPaper>
+        <Component {...pageProps} />
+      </BaseLayout>
+    );
+  }
+
+  if (user.role === "admin") {
     return (
       <AdminLayout>{initialised && <Component {...pageProps} />}</AdminLayout>
     );
   }
 
-  if (router.route.startsWith("/operator-admin")) {
+  if (user.role === "operator") {
     return (
       <OperatorsLayout>
         {initialised && <Component {...pageProps} />}
@@ -36,7 +45,7 @@ function Inner({ Component, pageProps, router }: AppProps) {
     );
   }
 
-  if (router.route.startsWith("/super-admin")) {
+  if (user.role === "super-admin") {
     return (
       <SuperAdminLayout>
         {initialised && <Component {...pageProps} />}
@@ -44,11 +53,7 @@ function Inner({ Component, pageProps, router }: AppProps) {
     );
   }
 
-  return (
-    <BaseLayout noPaper>
-      <Component {...pageProps} />
-    </BaseLayout>
-  );
+  return null;
 }
 
 function AppPage(props: AppProps) {
