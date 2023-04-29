@@ -5,7 +5,11 @@ import Link from "next/link";
 import * as React from "react";
 import { urls } from "urls";
 
+import { useCurrentInstance } from "state/current-instance";
+
 const SuperAdminPage: NextPage = () => {
+  const { currentInstance } = useCurrentInstance();
+
   return (
     <>
       <Box
@@ -19,21 +23,28 @@ const SuperAdminPage: NextPage = () => {
           Instances
         </Button>
 
-        <Divider variant="middle" sx={{ mt: 2, mb: 2, width: "100%" }} />
+        {currentInstance && (
+          <>
+            <Divider variant="middle" sx={{ mt: 2, mb: 2, width: "100%" }} />
 
-        <Button component={Link} href={urls.admin.operators()}>
-          Operators
-        </Button>
-        <Button component={Link} href={urls.admin.bookings()}>
-          Bookings
-        </Button>
+            <Button component={Link} href={urls.admin.operators()}>
+              Operators
+            </Button>
+            <Button component={Link} href={urls.admin.bookings()}>
+              Bookings
+            </Button>
 
-        <Button component={Link} href={urls.admin.serviceSchemas()}>
-          Service schemas
-        </Button>
-        <Button component={Link} href={urls.admin.serviceSchemaCategories()}>
-          Service schema categories
-        </Button>
+            <Button component={Link} href={urls.admin.serviceSchemas()}>
+              Service schemas
+            </Button>
+            <Button
+              component={Link}
+              href={urls.admin.serviceSchemaCategories()}
+            >
+              Service schema categories
+            </Button>
+          </>
+        )}
       </Box>
     </>
   );

@@ -1,5 +1,9 @@
 import axios, { AxiosInstance } from "axios";
 
+import {
+  INSTANCE_STORAGE_KEY,
+  useCurrentInstance,
+} from "state/current-instance";
 import { useUserState } from "state/users";
 import { getEnv } from "util/env";
 
@@ -18,9 +22,15 @@ export const createHttpClient = (baseURL: string): AxiosInstance => {
       config.headers!.authentication = `Bearer ${accessToken}`;
     }
 
-    config.params = {
-      instance: useUserState.getState().loggedInUser?.instance,
-    };
+    const loggedInUser = useUserState.getState().loggedInUser;
+
+    const instance =
+      loggedInUser && loggedInUser.role === "super-admin"
+        ? localStorage.getItem(INSTANCE_STORAGE_KEY) ||
+          loggedInUser.instance?._id
+        : loggedInUser?.instance?._id;
+
+    config.params = { instance };
 
     return config;
   }, console.error);
