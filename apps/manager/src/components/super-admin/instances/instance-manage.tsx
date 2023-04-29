@@ -1,5 +1,5 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, IconButton, List, ListItem } from "@mui/material";
+import { IconButton, List, ListItem } from "@mui/material";
 import { InstanceNoId } from "dtos";
 import { Field } from "formik";
 import { TextField } from "formik-mui";
@@ -10,7 +10,7 @@ import {
   ResourceForm,
   ResourceFormProps,
 } from "components/_core/resource-form";
-import { UserSearch } from "components/operator/dashboard/operator/user-search";
+import { UserSearch } from "components/_core/user-search";
 import { instanceValidationSchema } from "schemas";
 
 export const ManageInstanceForm: React.FC<ResourceFormProps<InstanceNoId>> = (
@@ -30,7 +30,7 @@ export const ManageInstanceForm: React.FC<ResourceFormProps<InstanceNoId>> = (
         {
           label: "Admins",
           content: (
-            <Box sx={{ minHeight: 300 }}>
+            <>
               <UserSearch
                 filterUsers={(user) => user.role === "user"}
                 onSelectUser={(user) =>
@@ -67,7 +67,7 @@ export const ManageInstanceForm: React.FC<ResourceFormProps<InstanceNoId>> = (
                   </ListItem>
                 ))}
               </List>
-            </Box>
+            </>
           ),
         },
       ]}

@@ -9,8 +9,8 @@ import {
   ResourceForm,
   ResourceFormProps,
 } from "components/_core/resource-form";
+import { UserSearch } from "components/_core/user-search";
 import { OpeningTimesForm } from "components/operator/_core/opening-times-form";
-import { UserSearch } from "components/operator/dashboard/operator/user-search";
 import { useOperatorDashboard } from "contexts/operator-dashboard";
 import { operatorValidationSchema } from "schemas";
 
@@ -47,6 +47,7 @@ export const ManageOperatorForm: React.FC<ResourceFormProps<OperatorNoId>> = (
             <>
               {isOwnerSearchAvailable() && (
                 <UserSearch
+                  filterUsers={(user) => user.role === "user"}
                   value={values.owner}
                   onSelectUser={(owner) => setValues({ ...values, owner })}
                   inputLabel="Owner"

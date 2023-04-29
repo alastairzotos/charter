@@ -43,7 +43,6 @@ export const UserSearch: React.FC<Props> = ({
       {userList && (
         <Autocomplete
           sx={sx}
-          disablePortal
           options={userList.filter(filterUsers)}
           getOptionLabel={(opt) => opt.email}
           value={value}
