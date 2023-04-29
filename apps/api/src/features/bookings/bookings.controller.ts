@@ -8,12 +8,18 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { BookingDto, BookingStatus, LoggedInUserDetails } from 'dtos';
+import {
+  BookingDto,
+  BookingStatus,
+  InstanceDto,
+  LoggedInUserDetails,
+} from 'dtos';
 
 import { AuthGuard } from 'auth/auth.guard';
 import { Principal } from 'decorators/principal.decorator';
 import { Roles } from 'auth/roles.decorator';
 import { BookingsService } from 'features/bookings/bookings.service';
+import { Instance } from 'decorators/instance.decorator';
 
 @Controller('bookings')
 @UseGuards(AuthGuard)
@@ -22,8 +28,14 @@ export class BookingsController {
 
   @Post()
   @Roles('all')
-  async createBooking(@Body() booking: BookingDto) {
-    return await this.bookingsService.createBooking(booking);
+  async createBooking(
+    @Instance() instance: InstanceDto,
+    @Body() booking: BookingDto,
+  ) {
+    return await this.bookingsService.createBooking({
+      ...booking,
+      instance,
+    });
   }
 
   @Get('for-user')

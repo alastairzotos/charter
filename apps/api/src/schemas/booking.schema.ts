@@ -1,10 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Instance } from 'decorators/instance.decorator';
 import {
   AdditionalBookingFieldContent,
   BookingDto,
   BookingPaymentStatus,
   BookingPriceDetails,
   BookingStatus,
+  InstanceDto,
   OperatorDto,
 } from 'dtos';
 import { Document, Schema as MongooseSchema } from 'mongoose';
@@ -23,6 +25,9 @@ export class Booking implements BookingDto {
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Operator.name })
   operator: OperatorDto;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Instance.name })
+  instance: InstanceDto;
 
   @Prop()
   name: string;

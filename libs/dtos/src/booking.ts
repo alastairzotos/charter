@@ -1,3 +1,4 @@
+import { InstanceDto } from "./instance";
 import { getNextAvailableBookingDate } from "./opening-times";
 import { OperatorDto } from "./operator";
 import { ServicePricingDto } from "./pricing";
@@ -89,6 +90,7 @@ export interface BookingDto extends DefaultBookingFields {
   _id: string;
   service: ServiceDto;
   operator: OperatorDto;
+  instance?: InstanceDto;
   name: string;
   email: string;
   bookingDate?: Date;

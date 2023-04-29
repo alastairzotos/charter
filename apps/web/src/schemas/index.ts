@@ -58,6 +58,7 @@ export const bookingValidationSchema = (
     | "setupIntentId"
     | "stripeCustomerId"
     | "fulfilled"
+    | "instance"
   >
 > =>
   yup.object().shape({
