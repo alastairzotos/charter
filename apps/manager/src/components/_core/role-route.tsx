@@ -9,6 +9,22 @@ interface Props {
   role: UserRole;
 }
 
+const shouldRedirect = (
+  role: UserRole,
+  initialised: boolean,
+  user: UserDetails | undefined
+) => {
+  if (!initialised) {
+    return false;
+  }
+
+  if (user?.role === "super-admin") {
+    return false;
+  }
+
+  return !user || user?.role !== role;
+};
+
 export const RoleRoute: React.FC<PropsWithChildren<Props>> = ({
   children,
   role,
@@ -18,22 +34,6 @@ export const RoleRoute: React.FC<PropsWithChildren<Props>> = ({
     s.initialised,
     s.loggedInUser,
   ]);
-
-  const shouldRedirect = (
-    role: UserRole,
-    initialised: boolean,
-    user: UserDetails | undefined
-  ) => {
-    if (!initialised) {
-      return false;
-    }
-
-    if (user?.role === "super-admin") {
-      return false;
-    }
-
-    return !user || user?.role !== role;
-  };
 
   useEffect(() => {
     if (typeof window !== "undefined") {
