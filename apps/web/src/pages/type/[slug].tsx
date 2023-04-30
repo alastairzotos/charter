@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { ServiceDto, ServiceSchemaCategoryDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
@@ -17,20 +17,31 @@ interface Props {
 
 const ServiceTypePage: NextPage<Props> = ({ schemaCategory, services }) => {
   return (
-    <UserLayoutContainer>
-      <SeoHead
-        subtitle={schemaCategory.name}
-        description={schemaCategory.description || ""}
+    <>
+      <Box
+        sx={{
+          width: "100%",
+          height: 300,
+          background: `url(${schemaCategory.photo})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       />
 
       <UserLayoutContainer>
-        <Titled title={schemaCategory.pluralName || ""}>
-          <Typography>{schemaCategory.description || ""}</Typography>
-        </Titled>
+        <SeoHead
+          subtitle={schemaCategory.name}
+          description={schemaCategory.description || ""}
+        />
+        <UserLayoutContainer>
+          <Titled title={schemaCategory.pluralName || ""}>
+            <Typography>{schemaCategory.description || ""}</Typography>
+          </Titled>
 
-        <UserServicesView showOperator services={services} />
+          <UserServicesView showOperator services={services} />
+        </UserLayoutContainer>
       </UserLayoutContainer>
-    </UserLayoutContainer>
+    </>
   );
 };
 
