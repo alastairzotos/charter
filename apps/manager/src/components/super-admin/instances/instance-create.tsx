@@ -24,6 +24,7 @@ export const InstanceCreate: React.FC = () => {
       title="Create instance"
       initialValues={{
         name: "",
+        url: "",
       }}
       onSave={handleCreateInstance}
       saveStatus={createInstanceStatus}
