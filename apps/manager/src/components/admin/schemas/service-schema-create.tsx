@@ -26,7 +26,7 @@ export const ServiceSchemaCreate: React.FC = () => {
       initialValues={{
         name: "Restaurant",
         schemaCategory: null,
-        defaultBookingFields: [],
+        defaultBookingFields: ["date", "time"],
         pricingStrategy: "fixed",
         shouldPayNow: true,
         fields: [],

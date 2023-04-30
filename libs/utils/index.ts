@@ -50,6 +50,17 @@ export const calculateBookingPrice = (
   }
 };
 
+export const isValidBookingPrice = (
+  bookingDetails: BookingPriceDetails,
+  service: ServiceNoId
+) => {
+  if (service.serviceSchema.pricingStrategy === "onPremises") {
+    return true;
+  }
+
+  return calculateBookingPrice(bookingDetails, service) > 0;
+};
+
 export const createPriceString = (price: number) => `€${price.toFixed(2)}`;
 
 export const getReadablePricingStringsForService = (
@@ -236,3 +247,15 @@ export const getQrCodeFilePathForBooking = (booking: BookingDto) =>
 
 export const getQrCodeFilePathForOperatorSignup = (operator: OperatorDto) =>
   `qr-code-operator-2:${operator._id}`;
+
+export const showBookingDetailsForm = (service: ServiceNoId) => {
+  const schema = service.serviceSchema;
+
+  const showPriceDetailsForm =
+    schema.pricingStrategy !== "onPremises" &&
+    schema.pricingStrategy !== "fixed";
+  const showBookingPeoplePrompt =
+    service.maxPeople !== null || service.minPeople !== null;
+
+  return showPriceDetailsForm || showBookingPeoplePrompt;
+};

@@ -16,7 +16,7 @@ export const TabsProvider: React.FC<
   return (
     <TabsContext.Provider
       value={{
-        tabs,
+        tabs: tabs.filter((tab) => tab.content !== null),
         tabIndex,
         setTabIndex,
       }}

@@ -20,7 +20,12 @@ import {
   TabsProvider,
 } from "ui";
 import { urls } from "urls";
-import { calculateBookingPrice, createPriceString } from "utils";
+import {
+  calculateBookingPrice,
+  createPriceString,
+  isValidBookingPrice,
+  showBookingDetailsForm,
+} from "utils";
 
 import { BookingAdditionalForms } from "components/booking-form/booking-additonal-forms";
 import { BookingDefaultForms } from "components/booking-form/booking-default-forms";
@@ -74,8 +79,6 @@ export const BookingForm: React.FC<Props> = ({ service, onClose }) => {
     fulfilled: false,
     ...getDefaultDefaultBookingFields(service),
   };
-
-  console.log(initialValues);
 
   const isSubmitting = createBookingStatus === "fetching";
 
@@ -136,7 +139,7 @@ export const BookingForm: React.FC<Props> = ({ service, onClose }) => {
 
                     {
                       label: "Booking details",
-                      content: (
+                      content: showBookingDetailsForm(service) ? (
                         <>
                           <BookingPriceDetails
                             pricingStrategy={schema.pricingStrategy}
@@ -153,7 +156,7 @@ export const BookingForm: React.FC<Props> = ({ service, onClose }) => {
                             setError={handleSetNumberOfPeopleInvalid}
                           />
                         </>
-                      ),
+                      ) : null,
                     },
 
                     {
@@ -192,10 +195,10 @@ export const BookingForm: React.FC<Props> = ({ service, onClose }) => {
                                 isSubmitting ||
                                 isNumberOfPeopleInvalid ||
                                 !tAndCsAccepted ||
-                                calculateBookingPrice(
+                                !isValidBookingPrice(
                                   values.priceDetails,
                                   service
-                                ) <= 0
+                                )
                               }
                             >
                               {schema.shouldPayNow

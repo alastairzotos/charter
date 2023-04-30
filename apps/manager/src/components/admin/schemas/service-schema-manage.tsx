@@ -64,15 +64,23 @@ export const ManageServiceSchemaForm: React.FC<
 
                 <PricingStrategyTypeSelector
                   pricingStrategy={values.pricingStrategy}
-                  onChange={(pricingStrategy) =>
-                    setValues({ ...values, pricingStrategy })
-                  }
+                  onChange={(pricingStrategy) => {
+                    setValues({
+                      ...values,
+                      pricingStrategy,
+                      shouldPayNow:
+                        pricingStrategy === "onPremises"
+                          ? false
+                          : values.shouldPayNow,
+                    });
+                  }}
                 />
 
                 <FormControlLabel
                   label="Should pay now"
                   control={
                     <Checkbox
+                      disabled={values.pricingStrategy === "onPremises"}
                       checked={values.shouldPayNow}
                       onChange={(e) =>
                         setValues({
