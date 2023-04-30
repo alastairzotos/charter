@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Instance } from 'decorators/instance.decorator';
 import {
   AdditionalBookingFieldContent,
   BookingDto,
@@ -10,6 +9,7 @@ import {
   OperatorDto,
 } from 'dtos';
 import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Instance } from 'schemas/instance.schema';
 
 import { Operator } from 'schemas/operator.schema';
 import { Service } from 'schemas/service.schema';

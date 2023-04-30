@@ -20,6 +20,12 @@ export class OperatorsRepository {
     return await this.operatorsModel.findById(id).populate('owner');
   }
 
+  async getOperatorByIdWithInstance(id: string) {
+    return await this.operatorsModel
+      .findById(id)
+      .populate(['owner', 'instance']);
+  }
+
   async getOperatorBySlug(slug: string) {
     return await this.operatorsModel.findOne({ slug }).populate('owner');
   }

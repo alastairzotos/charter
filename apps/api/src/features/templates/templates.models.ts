@@ -13,6 +13,7 @@ export interface BookingMadeUserProps {
   booking: {
     url: string;
     qrCodeUrl: string;
+    details: Array<{ key: string; value: string }>;
   };
 }
 
@@ -27,7 +28,7 @@ export interface BookingMadeOperatorProps {
   booking: {
     date: string;
     url: string;
-    details: Array<{ key: string, value: string }>;
+    details: Array<{ key: string; value: string }>;
   };
 }
 
@@ -42,7 +43,7 @@ export interface BookingMadeOperatorActionRequiredProps {
   booking: {
     date: string;
     url: string;
-    details: Array<{ key: string, value: string }>;
+    details: Array<{ key: string; value: string }>;
   };
 }
 
@@ -60,7 +61,7 @@ export interface BookingMadeUserPendingProps {
   };
   booking: {
     url: string;
-  }
+  };
 }
 
 export interface BookingConfirmedUserProps {
@@ -74,7 +75,8 @@ export interface BookingConfirmedUserProps {
   booking: {
     url: string;
     qrCodeUrl: string;
-  }
+    details: Array<{ key: string; value: string }>;
+  };
 }
 
 export interface BookingRejectedUserProps {
@@ -87,7 +89,7 @@ export interface BookingRejectedUserProps {
   };
   site: {
     url: string;
-  }
+  };
 }
 
 export interface OperatorPromotedProps {
@@ -95,11 +97,10 @@ export interface OperatorPromotedProps {
     name: string;
   };
   site: {
-    url: string;
     name: string;
+    url: string;
   };
   app: {
     url: string;
-    qrCodeUrl: string;
   };
 }

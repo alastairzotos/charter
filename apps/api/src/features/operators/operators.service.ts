@@ -54,7 +54,7 @@ export class OperatorsService {
   }
 
   async createOperator(operator: OperatorNoId) {
-    const createdOperator = await this.operatorsRepo.createOperator({
+    const createdOperatorId = await this.operatorsRepo.createOperator({
       ...operator,
       slug: createOperatorSlug(operator),
     });
@@ -63,11 +63,15 @@ export class OperatorsService {
       if (
         await this.usersService.promoteBasicUserToOperator(operator.owner._id)
       ) {
-        await this.emailOperatorAfterPromotion(operator as OperatorDto);
+        const createdOperator =
+          await this.operatorsRepo.getOperatorByIdWithInstance(
+            createdOperatorId,
+          );
+        await this.emailOperatorAfterPromotion(createdOperator);
       }
     }
 
-    return createdOperator;
+    return createdOperatorId;
   }
 
   async updateOperator(id: string, newOperator: Partial<OperatorDto>) {
@@ -82,13 +86,14 @@ export class OperatorsService {
           newOperator.owner._id,
         )
       ) {
-        await this.emailOperatorAfterPromotion(newOperator as OperatorDto);
+        const updatedOperator =
+          await this.operatorsRepo.getOperatorByIdWithInstance(id);
+        await this.emailOperatorAfterPromotion(updatedOperator);
       }
     }
   }
 
   async emailOperatorAfterPromotion(operator: OperatorDto) {
-    await this.qrCodeService.createQRCodeForOperatorSignup(operator);
     await this.emailService.sendEmailToOperator(
       operator,
       this.templatesService.operatorPromoted(operator),

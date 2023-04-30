@@ -3,6 +3,7 @@ import { LoggedInUserDetails } from "./auth";
 export interface InstanceDto {
   _id: string;
   name: string;
+  url: string;
   admins?: LoggedInUserDetails[];
 }
 

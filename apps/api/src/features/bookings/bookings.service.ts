@@ -58,7 +58,9 @@ export class BookingsService {
       await this.setBookingPaymentStatus(createdBooking._id, 'succeeded');
     }
 
-    await this.qrCodeService.createQRCodeForBooking(createdBooking);
+    await this.qrCodeService.createQRCodeForBooking(
+      await this.getBookingWithOperatorAndService(createdBooking._id),
+    );
 
     return createdBooking;
   }

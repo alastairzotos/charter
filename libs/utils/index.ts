@@ -245,9 +245,6 @@ export const pricingStrategyProvidesNumberOfPeople = (
 export const getQrCodeFilePathForBooking = (booking: BookingDto) =>
   `qr-code:${booking._id}`;
 
-export const getQrCodeFilePathForOperatorSignup = (operator: OperatorDto) =>
-  `qr-code-operator-2:${operator._id}`;
-
 export const showBookingDetailsForm = (service: ServiceNoId) => {
   const schema = service.serviceSchema;
 

@@ -24,7 +24,11 @@ export const ManageInstanceForm: React.FC<ResourceFormProps<InstanceNoId>> = (
         {
           label: "Basics",
           content: (
-            <Field component={TextField} name="name" label="Instance name" />
+            <>
+              <Field component={TextField} name="name" label="Instance name" />
+
+              <Field component={TextField} name="url" label="Instance URL" />
+            </>
           ),
         },
         {

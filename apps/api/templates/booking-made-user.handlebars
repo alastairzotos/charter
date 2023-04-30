@@ -7,6 +7,21 @@
 
 <div class="spacer" />
 
+<table class="data-table">
+  <tbody>
+    {{#each booking.details}}
+      <tr>
+        <td>
+          <strong>{{ this.key }}</strong>
+        </td>
+        <td>{{ this.value }}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<div class="spacer" />
+
 <a class="cta" href="{{ booking.url }}">View booking</a>
 
 <div class="spacer" />

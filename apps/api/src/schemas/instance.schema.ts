@@ -9,6 +9,9 @@ export class Instance implements InstanceDto {
   @Prop()
   name: string;
 
+  @Prop()
+  url: string;
+
   @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'User' })
   admins: LoggedInUserDetails[];
 }

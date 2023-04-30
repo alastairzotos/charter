@@ -4,13 +4,20 @@ import * as fsExtra from 'fs-extra';
 import * as path from 'path';
 import * as juice from 'juice';
 
-import { Injectable } from "@nestjs/common";
-import { EnvService } from "environment/environment.service";
-import { BookingConfirmedUserProps, BookingMadeOperatorActionRequiredProps, BookingMadeOperatorProps, BookingMadeUserPendingProps, BookingMadeUserProps, BookingRejectedUserProps, OperatorPromotedProps } from 'features/templates/templates.models';
-import { BookingDto, OperatorDto } from 'dtos';
+import { Injectable } from '@nestjs/common';
+import {
+  BookingConfirmedUserProps,
+  BookingMadeOperatorActionRequiredProps,
+  BookingMadeOperatorProps,
+  BookingMadeUserPendingProps,
+  BookingMadeUserProps,
+  BookingRejectedUserProps,
+  OperatorPromotedProps,
+} from 'features/templates/templates.models';
+import { BookingDto, InstanceDto, OperatorDto } from 'dtos';
 import { urls } from 'urls';
 import { EmailData } from 'integrations/email/email.models';
-import { getQrCodeFilePathForOperatorSignup, getReadableBookingDetails } from 'utils';
+import { getReadableBookingDetails } from 'utils';
 import { QRCodeService } from 'features/qr-code/qr-code.service';
 
 @Injectable()
@@ -19,10 +26,7 @@ export class TemplatesService {
   private styles = this.loadStyles();
   private templates = this.loadTemplates();
 
-  constructor(
-    private readonly env: EnvService,
-    private readonly qrCodeService: QRCodeService,
-  ) { }
+  constructor(private readonly qrCodeService: QRCodeService) {}
 
   bookingMadeUser(booking: BookingDto): EmailData {
     return {
@@ -33,18 +37,24 @@ export class TemplatesService {
         },
         operator: {
           name: booking.operator.name,
-          url: this.link(urls.user.operator(booking.operator)),
+          url: this.link(
+            booking.instance,
+            urls.user.operator(booking.operator),
+          ),
         },
         service: {
           name: booking.service.name,
-          url: this.link(urls.user.service(booking.service)),
+          url: this.link(booking.instance, urls.user.service(booking.service)),
         },
         booking: {
-          url: this.link(urls.user.booking(booking._id)),
+          url: this.link(booking.instance, urls.user.booking(booking._id)),
           qrCodeUrl: this.qrCodeService.getUrlForBookingQRCode(booking),
-        }
-      })
-    }
+          details: Object.entries(getReadableBookingDetails(booking)).map(
+            ([key, value]) => ({ key, value }),
+          ),
+        },
+      }),
+    };
   }
 
   bookingMadeUserPending(booking: BookingDto): EmailData {
@@ -56,17 +66,20 @@ export class TemplatesService {
         },
         operator: {
           name: booking.operator.name,
-          url: this.link(urls.user.operator(booking.operator)),
+          url: this.link(
+            booking.instance,
+            urls.user.operator(booking.operator),
+          ),
         },
         service: {
           name: booking.service.name,
-          url: this.link(urls.user.service(booking.service)),
+          url: this.link(booking.instance, urls.user.service(booking.service)),
         },
         booking: {
-          url: this.link(urls.user.booking(booking._id))
-        }
-      })
-    }
+          url: this.link(booking.instance, urls.user.booking(booking._id)),
+        },
+      }),
+    };
   }
 
   bookingConfirmedUser(booking: BookingDto): EmailData {
@@ -78,14 +91,17 @@ export class TemplatesService {
         },
         service: {
           name: booking.service.name,
-          url: this.link(urls.user.service(booking.service)),
+          url: this.link(booking.instance, urls.user.service(booking.service)),
         },
         booking: {
-          url: this.link(urls.user.booking(booking._id)),
+          url: this.link(booking.instance, urls.user.booking(booking._id)),
           qrCodeUrl: this.qrCodeService.getUrlForBookingQRCode(booking),
-        }
-      })
-    }
+          details: Object.entries(getReadableBookingDetails(booking)).map(
+            ([key, value]) => ({ key, value }),
+          ),
+        },
+      }),
+    };
   }
 
   bookingRejectedUser(booking: BookingDto): EmailData {
@@ -97,15 +113,15 @@ export class TemplatesService {
         },
         service: {
           name: booking.service.name,
-          url: this.link(urls.user.service(booking.service)),
+          url: this.link(booking.instance, urls.user.service(booking.service)),
         },
         site: {
-          url: this.link()
-        }
-      })
-    }
+          url: this.link(booking.instance),
+        },
+      }),
+    };
   }
-  
+
   bookingMadeOperator(booking: BookingDto): EmailData {
     const bookingDetails = getReadableBookingDetails(booking);
     return {
@@ -116,18 +132,18 @@ export class TemplatesService {
         },
         service: {
           name: booking.service.name,
-          url: this.link(urls.user.service(booking.service)),
+          url: this.link(booking.instance, urls.user.service(booking.service)),
         },
         booking: {
           date: booking.date,
-          url: this.link(urls.operators.booking(booking._id)),
-          details: Object.keys(bookingDetails).map(key => ({
+          url: this.link(booking.instance, urls.operators.booking(booking._id)),
+          details: Object.keys(bookingDetails).map((key) => ({
             key,
-            value: bookingDetails[key]
-          }))
-        }
-      })
-    }
+            value: bookingDetails[key],
+          })),
+        },
+      }),
+    };
   }
 
   bookingMadeOperatorActionRequired(booking: BookingDto): EmailData {
@@ -140,59 +156,74 @@ export class TemplatesService {
         },
         service: {
           name: booking.service.name,
-          url: this.link(urls.user.service(booking.service)),
+          url: this.link(booking.instance, urls.user.service(booking.service)),
         },
         booking: {
           date: booking.date,
-          url: this.link(urls.operators.booking(booking._id)),
-          details: Object.keys(bookingDetails).map(key => ({
+          url: this.link(booking.instance, urls.operators.booking(booking._id)),
+          details: Object.keys(bookingDetails).map((key) => ({
             key,
-            value: bookingDetails[key]
-          }))
-        }
-      })
-    }
+            value: bookingDetails[key],
+          })),
+        },
+      }),
+    };
   }
 
   operatorPromoted(operator: OperatorDto): EmailData {
     return {
-      subject: `[ACTION REQUIRED] You have been made an operator on ${this.env.get().appName}`,
+      subject: `[ACTION REQUIRED] You have been made an operator on ${operator.instance.name}`,
       content: this.templates.operatorPromoted({
         operator: {
           name: operator.owner.givenName,
         },
         site: {
-          name: this.env.get().appName,
-          url: this.env.get().frontendUrl,
+          name: operator.instance.name,
+          url: operator.instance.url,
         },
         app: {
           url: '',
-          qrCodeUrl: this.qrCodeService.getUrlForOperatorSignup(operator)
-        }
-      })
-    }
+        },
+      }),
+    };
   }
 
   private loadTemplates() {
     this.loadPartials();
 
     return {
-      bookingMadeUser: this.compileTemplate<BookingMadeUserProps>('booking-made-user'),
-      bookingMadeUserPending: this.compileTemplate<BookingMadeUserPendingProps>('booking-made-user-pending'),
-      bookingConfirmedUser: this.compileTemplate<BookingConfirmedUserProps>('booking-confirmed-user'),
-      bookingRejectedUser: this.compileTemplate<BookingRejectedUserProps>('booking-rejected-user'),
-      bookingMadeOperator: this.compileTemplate<BookingMadeOperatorProps>('booking-made-operator'),
-      bookingMadeOperatorActionRequired: this.compileTemplate<BookingMadeOperatorActionRequiredProps>('booking-made-operator-action-required'),
-      operatorPromoted: this.compileTemplate<OperatorPromotedProps>('operator-promoted'),
-    }
+      bookingMadeUser:
+        this.compileTemplate<BookingMadeUserProps>('booking-made-user'),
+      bookingMadeUserPending: this.compileTemplate<BookingMadeUserPendingProps>(
+        'booking-made-user-pending',
+      ),
+      bookingConfirmedUser: this.compileTemplate<BookingConfirmedUserProps>(
+        'booking-confirmed-user',
+      ),
+      bookingRejectedUser: this.compileTemplate<BookingRejectedUserProps>(
+        'booking-rejected-user',
+      ),
+      bookingMadeOperator: this.compileTemplate<BookingMadeOperatorProps>(
+        'booking-made-operator',
+      ),
+      bookingMadeOperatorActionRequired:
+        this.compileTemplate<BookingMadeOperatorActionRequiredProps>(
+          'booking-made-operator-action-required',
+        ),
+      operatorPromoted:
+        this.compileTemplate<OperatorPromotedProps>('operator-promoted'),
+    };
   }
 
   private loadPartials() {
     const partialsPath = path.resolve(this.templatesPath, 'partials');
     const partials = fsExtra.readdirSync(partialsPath);
-    
+
     for (const partial of partials) {
-      const content = fs.readFileSync(path.resolve(partialsPath, partial), 'utf-8');
+      const content = fs.readFileSync(
+        path.resolve(partialsPath, partial),
+        'utf-8',
+      );
 
       handlebars.registerPartial(partial.split('.')[0], () => content);
     }
@@ -211,17 +242,23 @@ export class TemplatesService {
       </style>
       </head>
       <body>
-        ${fs.readFileSync(path.resolve(this.templatesPath, `${name}.handlebars`), 'utf-8')}
+        ${fs.readFileSync(
+          path.resolve(this.templatesPath, `${name}.handlebars`),
+          'utf-8',
+        )}
       </body>
       </html>
-    `)
+    `);
   }
 
   private loadStyles() {
-    return fs.readFileSync(path.resolve(this.templatesPath, 'styles.css'), 'utf-8');
+    return fs.readFileSync(
+      path.resolve(this.templatesPath, 'styles.css'),
+      'utf-8',
+    );
   }
 
-  private link(url?: string) {
-    return `${this.env.get().frontendUrl}${url}`;
+  private link(instance: InstanceDto, path?: string) {
+    return `${instance.url}${path}`;
   }
 }

@@ -48,25 +48,25 @@ export class BookingsRepository {
   }
 
   async getBookingById(id: string) {
-    return await this.populateOperatorAndService(
+    return await this.populateOperatorServiceAndInstance(
       this.bookingsModel.findById(id),
     );
   }
 
   async getBookingByPaymentIntentId(paymentIntentId: string) {
-    return await this.populateOperatorAndService(
+    return await this.populateOperatorServiceAndInstance(
       this.bookingsModel.findOne({ paymentIntentId }),
     );
   }
 
   async getBookingBySetupIntentId(setupIntentId: string) {
-    return await this.populateOperatorAndService(
+    return await this.populateOperatorServiceAndInstance(
       this.bookingsModel.findOne({ setupIntentId }),
     );
   }
 
   async getBookingWithOperatorAndService(id: string) {
-    return await this.populateOperatorAndService(
+    return await this.populateOperatorServiceAndInstance(
       this.bookingsModel.findById(id),
     );
   }
@@ -108,7 +108,7 @@ export class BookingsRepository {
     });
   }
 
-  private async populateOperatorAndService(
+  private async populateOperatorServiceAndInstance(
     doc: Query<
       Document<unknown, any, Booking> & Booking & Required<{ _id: string }>,
       Document<unknown, any, Booking> & Booking & Required<{ _id: string }>,
@@ -128,6 +128,7 @@ export class BookingsRepository {
         populate: {
           path: 'serviceSchema',
         },
-      });
+      })
+      .populate('instance');
   }
 }

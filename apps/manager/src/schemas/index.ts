@@ -14,6 +14,7 @@ export const instanceValidationSchema: yup.SchemaOf<InstanceNoId> = yup
   .object()
   .shape({
     name: yup.string().required("Name is required"),
+    url: yup.string().url("Must be valid URL").required(),
     admins: yup.array().of(yup.object()).notRequired(),
   });
 

@@ -2,12 +2,9 @@ import * as qrcode from 'qrcode';
 import { Injectable } from '@nestjs/common';
 import { EnvService } from 'environment/environment.service';
 import { S3Service } from 'integrations/s3/s3.service';
-import { BookingDto, OperatorDto } from 'dtos';
+import { BookingDto } from 'dtos';
 import { urls } from 'urls';
-import {
-  getQrCodeFilePathForBooking,
-  getQrCodeFilePathForOperatorSignup,
-} from 'utils';
+import { getQrCodeFilePathForBooking } from 'utils';
 
 @Injectable()
 export class QRCodeService {
@@ -17,9 +14,10 @@ export class QRCodeService {
   ) {}
 
   async createQRCodeForBooking(booking: BookingDto) {
-    const url = `${this.env.get().frontendUrl}${urls.operators.booking(
-      booking._id,
-    )}`;
+    const url = `${booking.instance.url}${urls.operators.booking(booking._id)}`;
+
+    console.log({ booking });
+    console.log({ url });
 
     await this.s3Service.store(
       getQrCodeFilePathForBooking(booking),
@@ -31,38 +29,5 @@ export class QRCodeService {
     return `${this.env.get().awsCloudfrontDomain}${getQrCodeFilePathForBooking(
       booking,
     )}`;
-  }
-
-  async createQRCodeForOperatorSignup(operator: OperatorDto) {
-    const data = JSON.stringify({
-      id: `${this.env.get().server}-${operator._id}`,
-      server: this.env.get().server,
-      operator: {
-        id: operator._id,
-        name: operator.name,
-        email: operator.email,
-        owner: {
-          name: operator.owner.givenName,
-          email: operator.owner.email,
-        },
-      },
-      oauth2: {
-        fbAppId: this.env.get().fbAppId,
-        googleClientId: this.env.get().googleClientId,
-        googleClientIdAndroid: this.env.get().googleClientIdAndroid,
-        googleClientIdIOS: this.env.get().googleClientIdIOS,
-      },
-    });
-
-    await this.s3Service.store(
-      getQrCodeFilePathForOperatorSignup(operator),
-      await qrcode.toBuffer(data),
-    );
-  }
-
-  getUrlForOperatorSignup(operator: OperatorDto) {
-    return `${
-      this.env.get().awsCloudfrontDomain
-    }${getQrCodeFilePathForOperatorSignup(operator)}`;
   }
 }
