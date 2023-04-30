@@ -67,7 +67,10 @@ export class UsersService {
   }
 
   async createUserFromOAuth2(details: OAuthUserInfo) {
-    return await this.usersRepository.createUserFromOAuth2(details);
+    return await this.usersRepository.createUserFromOAuth2({
+      ...details,
+      role: 'user',
+    });
   }
 
   async loginUser({
