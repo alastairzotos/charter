@@ -76,8 +76,9 @@ export class OperatorsController {
 
   @Post('notification-token')
   async setOperatorNotificationToken(
-    @Body() { id, token }: { id: string; token: string },
+    @Principal() user: LoggedInUserDetails,
+    @Body() { token }: { token: string },
   ) {
-    await this.operatorsService.setOperatorNotificationToken(id, token);
+    await this.operatorsService.setOperatorNotificationToken(user, token);
   }
 }

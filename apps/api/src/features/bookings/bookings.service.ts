@@ -211,9 +211,8 @@ export class BookingsService {
       token,
       booking,
       onRevoke: async () =>
-        await this.operatorsService.setOperatorNotificationToken(
+        await this.operatorsService.revokeNotificationToken(
           booking.operator._id,
-          undefined,
         ),
     });
   }

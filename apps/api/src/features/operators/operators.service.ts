@@ -1,5 +1,10 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { OperatorDto, OperatorNoId } from 'dtos';
+import {
+  LoggedInUserDetails,
+  OperatorDto,
+  OperatorNoId,
+  UserDetails,
+} from 'dtos';
 
 import { OperatorsRepository } from 'features/operators/operators.repository';
 import { QRCodeService } from 'features/qr-code/qr-code.service';
@@ -108,8 +113,19 @@ export class OperatorsService {
     return await this.operatorsRepo.searchOperators(term, instance);
   }
 
-  async setOperatorNotificationToken(id: string, token: string | undefined) {
-    await this.operatorsRepo.setOperatorNotificationToken(id, token);
+  async setOperatorNotificationToken(
+    user: LoggedInUserDetails,
+    token: string | undefined,
+  ) {
+    const operator = await this.operatorsRepo.getOperatorByOwnerId(user._id);
+    await this.operatorsRepo.setOperatorNotificationToken(operator._id, token);
+  }
+
+  async revokeNotificationToken(operatorId: string) {
+    await this.operatorsRepo.setOperatorNotificationToken(
+      operatorId,
+      undefined,
+    );
   }
 
   async getOperatorNotificationToken(id: string) {
