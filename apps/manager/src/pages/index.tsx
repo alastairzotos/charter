@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import { urls } from "urls";
 
 import { useUserState } from "state/users";
+import { NextPage } from "next";
 
-export default function Home() {
+const HomePage: NextPage = () => {
   const router = useRouter();
   const { initialised, loggedInUser } = useUserState();
 
@@ -23,4 +24,8 @@ export default function Home() {
   }, [initialised, loggedInUser]);
 
   return null;
-}
+};
+
+HomePage.getInitialProps = () => ({});
+
+export default HomePage;
