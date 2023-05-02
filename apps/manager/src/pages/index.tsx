@@ -1,10 +1,10 @@
+import { Typography } from "@mui/material";
+import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { urls } from "urls";
 
 import { useUserState } from "state/users";
-import { NextPage } from "next";
-import { Typography } from "@mui/material";
 
 const HomePage: NextPage = () => {
   const router = useRouter();

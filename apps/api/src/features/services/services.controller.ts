@@ -9,6 +9,7 @@ import {
   Query,
   UseGuards,
   NotFoundException,
+  UseInterceptors,
 } from '@nestjs/common';
 import { InstanceDto, ServiceDto, ServiceNoId } from 'dtos';
 
@@ -16,9 +17,11 @@ import { AuthGuard } from 'auth/auth.guard';
 import { Roles } from 'auth/roles.decorator';
 import { ServicesService } from 'features/services/services.service';
 import { Instance } from 'decorators/instance.decorator';
+import { SentryInterceptor } from 'interceptors/sentry.interceptor';
 
 @Controller('services')
 @UseGuards(AuthGuard)
+@UseInterceptors(SentryInterceptor)
 export class ServicesController {
   constructor(private readonly servicesService: ServicesService) {}
 

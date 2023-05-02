@@ -7,6 +7,7 @@ import {
   Param,
   Body,
   ForbiddenException,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   LoginResponse,
@@ -17,8 +18,10 @@ import {
 } from 'dtos';
 
 import { UsersService } from 'features/users/users.service';
+import { SentryInterceptor } from 'interceptors/sentry.interceptor';
 
 @Controller('users')
+@UseInterceptors(SentryInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

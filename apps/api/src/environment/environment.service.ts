@@ -20,6 +20,7 @@ export class EnvService {
     googleClientIdAndroid: process.env.GOOGLE_CLIENT_ID_ANDROID as string,
     googleClientIdIOS: process.env.GOOGLE_CLIENT_ID_IOS as string,
     fbAppId: process.env.FB_APP_ID as string,
+    sentryDsn: process.env.SENTRY_DSN as string,
   };
 
   get() {

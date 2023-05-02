@@ -7,6 +7,7 @@ import {
   Body,
   UseGuards,
   Param,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   InstanceDto,
@@ -20,8 +21,10 @@ import { Roles } from 'auth/roles.decorator';
 import { OperatorsService } from 'features/operators/operators.service';
 import { Principal } from 'decorators/principal.decorator';
 import { Instance } from 'decorators/instance.decorator';
+import { SentryInterceptor } from 'interceptors/sentry.interceptor';
 
 @Controller('operators')
+@UseInterceptors(SentryInterceptor)
 @UseGuards(AuthGuard)
 export class OperatorsController {
   constructor(private readonly operatorsService: OperatorsService) {}

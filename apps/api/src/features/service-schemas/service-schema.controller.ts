@@ -7,15 +7,18 @@ import {
   Patch,
   Post,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from 'auth/auth.guard';
 import { Roles } from 'auth/roles.decorator';
 import { Instance } from 'decorators/instance.decorator';
 import { InstanceDto, ServiceSchemaDto, ServiceSchemaNoId } from 'dtos';
 import { ServiceSchemaService } from 'features/service-schemas/service-schema.service';
+import { SentryInterceptor } from 'interceptors/sentry.interceptor';
 
 @Controller('service-schemas')
 @UseGuards(AuthGuard)
+@UseInterceptors(SentryInterceptor)
 export class ServiceSchemaController {
   constructor(private readonly serviceSchemaService: ServiceSchemaService) {}
 

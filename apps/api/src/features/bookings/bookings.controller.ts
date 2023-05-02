@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import {
   BookingDto,
@@ -20,8 +21,10 @@ import { Principal } from 'decorators/principal.decorator';
 import { Roles } from 'auth/roles.decorator';
 import { BookingsService } from 'features/bookings/bookings.service';
 import { Instance } from 'decorators/instance.decorator';
+import { SentryInterceptor } from 'interceptors/sentry.interceptor';
 
 @Controller('bookings')
+@UseInterceptors(SentryInterceptor)
 @UseGuards(AuthGuard)
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}

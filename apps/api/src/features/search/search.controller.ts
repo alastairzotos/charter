@@ -1,9 +1,11 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, UseInterceptors } from '@nestjs/common';
 import { Instance } from 'decorators/instance.decorator';
 import { SearchResponseDto } from 'dtos';
 import { SearchService } from 'features/search/search.service';
+import { SentryInterceptor } from 'interceptors/sentry.interceptor';
 
 @Controller('search')
+@UseInterceptors(SentryInterceptor)
 export class SearchController {
   constructor(private readonly searchService: SearchService) {}
 

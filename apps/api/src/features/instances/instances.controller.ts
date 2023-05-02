@@ -6,13 +6,16 @@ import {
   Patch,
   Post,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from 'auth/auth.guard';
 import { Roles } from 'auth/roles.decorator';
 import { InstanceDto, InstanceNoId } from 'dtos';
 import { InstancesService } from 'features/instances/instances.service';
+import { SentryInterceptor } from 'interceptors/sentry.interceptor';
 
 @Controller('instances')
+@UseInterceptors(SentryInterceptor)
 @UseGuards(AuthGuard)
 export class InstancesController {
   constructor(private readonly instancesService: InstancesService) {}
