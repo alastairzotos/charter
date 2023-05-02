@@ -139,7 +139,9 @@ const LoginFormInner: React.FC = () => {
 export const LoginForm: React.FC = () => {
   const googleClientIdFromEnv = getEnv().googleClientId;
 
-  const [googleClientId, setGoogleClientId] = useState<string | null>(null);
+  const [googleClientId, setGoogleClientId] = useState<string | null>(
+    googleClientIdFromEnv
+  );
 
   useEffect(() => {
     if (!!googleClientIdFromEnv) {
