@@ -41,7 +41,9 @@ export class BookingsService {
 
     @Inject(forwardRef(() => PaymentsService))
     private readonly paymentsService: PaymentsService,
-  ) {}
+  ) {
+    // this.emailService.sendEmail("alastairzotos@gmail.com", { subject: 'test', content: 'test' }).then(() => console.log('sent')).catch(e => console.log(e))
+  }
 
   async createBooking(booking: BookingNoId) {
     const service = booking.service;
