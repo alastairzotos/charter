@@ -110,6 +110,7 @@ const envServiceMock: ExtractInterface<EnvService> = {
     googleClientIdAndroid: '',
     googleClientIdIOS: '',
     fbAppId: '',
+    sentryDsn: '',
   })),
 };
 
