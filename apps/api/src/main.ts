@@ -17,9 +17,11 @@ async function bootstrap() {
 
   const env = app.get<EnvService>(EnvService).get();
 
-  Sentry.init({
-    dsn: env.sentryDsn,
-  });
+  if (!!env.sentryDsn) {
+    Sentry.init({
+      dsn: env.sentryDsn,
+    });
+  }
 
   // app.use(json({ limit: '50mb' }));
   // app.use(urlencoded({ extended: true, limit: '50mb' }));
