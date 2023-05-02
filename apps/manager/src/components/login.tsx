@@ -137,6 +137,20 @@ const LoginFormInner: React.FC = () => {
 };
 
 export const LoginForm: React.FC = () => {
+  const googleClientIdFromEnv = getEnv().googleClientId;
+
+  const [googleClientId, setGoogleClientId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!!googleClientIdFromEnv) {
+      setGoogleClientId(googleClientIdFromEnv);
+    }
+  }, [googleClientIdFromEnv]);
+
+  if (!googleClientId) {
+    return null;
+  }
+
   return (
     <GoogleOAuthProvider clientId={getEnv().googleClientId}>
       <LoginFormInner />
