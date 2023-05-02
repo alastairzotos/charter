@@ -20,6 +20,7 @@
     "@mui/x-data-grid": "^6.2.1",
     "@mui/x-date-pickers": "^5.0.17",
     "@react-oauth/google": "^0.9.0",
+    "@sentry/react": "^7.50.0",
     "dayjs": "^1.11.7",
     "dtos": "*",
     "formik": "^2.2.9",
