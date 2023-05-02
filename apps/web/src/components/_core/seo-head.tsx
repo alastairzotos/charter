@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React from "react";
-import { getEnv } from "util/env";
 
 import { APP_NAME } from "util/misc";
 
@@ -13,7 +12,7 @@ interface Props {
 export const SeoHead: React.FC<Props> = ({ subtitle, description }) => {
   const title = `${APP_NAME} ${subtitle ? ` | ${subtitle}` : ""}`;
   const router = useRouter();
-  const canonical = `${getEnv().appUrl}${router.asPath}`;
+  const canonical = `https://corfutravelguide.bitmetro.io${router.asPath}`;
 
   return (
     <Head>
