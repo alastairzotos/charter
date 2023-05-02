@@ -4,6 +4,7 @@ import { urls } from "urls";
 
 import { useUserState } from "state/users";
 import { NextPage } from "next";
+import { Typography } from "@mui/material";
 
 const HomePage: NextPage = () => {
   const router = useRouter();
@@ -23,7 +24,17 @@ const HomePage: NextPage = () => {
     }
   }, [initialised, loggedInUser]);
 
-  return null;
+  return (
+    <>
+      <Typography>
+        If you are an operator, wait for the admin to register you.
+      </Typography>
+      <Typography>
+        When they have, log out of this page and log back in and you will be
+        able to manage your services.
+      </Typography>
+    </>
+  );
 };
 
 HomePage.getInitialProps = () => ({});
