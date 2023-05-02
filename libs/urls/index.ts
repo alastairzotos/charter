@@ -64,6 +64,10 @@ export const urls = {
     instance: (id: string) => `/super-admin/instances/${id}`,
     instanceCreate: () => "/super-admin/instances/create",
   },
+  manager: {
+    terms: () => "/legal/terms",
+    privacy: () => "/legal/privacy",
+  },
 } satisfies Urls;
 
 export const createOperatorSlug = (operator: Partial<OperatorDto>) =>

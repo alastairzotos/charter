@@ -1,6 +1,8 @@
-import { Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import Link from "next/link";
 import React from "react";
 import { KeyValues } from "ui";
+import { urls } from "urls";
 
 import { DeleteAccountButton } from "components/_core/delete-account-button";
 import { useUserState } from "state/users";
@@ -25,6 +27,15 @@ export const AccountDetails: React.FC = () => {
       />
 
       <DeleteAccountButton />
+
+      <Box sx={{ mt: 2 }}>
+        <Button component={Link} href={urls.manager.terms()}>
+          Terms & Conditions
+        </Button>
+        <Button component={Link} href={urls.manager.privacy()}>
+          Privacy policy
+        </Button>
+      </Box>
     </>
   );
 };
