@@ -21,6 +21,7 @@ export class EnvService {
     googleClientIdIOS: process.env.GOOGLE_CLIENT_ID_IOS as string,
     fbAppId: process.env.FB_APP_ID as string,
     sentryDsn: process.env.SENTRY_DSN as string,
+    fromEmail: process.env.FROM_EMAIL as string,
   };
 
   get() {

@@ -23,10 +23,14 @@ export class EmailService {
         fsExtra.emptyDirSync(outputPath);
       }
 
-      fs.writeFileSync(path.resolve(outputPath, `${subject}.html`), content, 'utf-8');
+      fs.writeFileSync(
+        path.resolve(outputPath, `${subject}.html`),
+        content,
+        'utf-8',
+      );
     } else {
       await sgMail.send({
-        from: 'alastairzotos@gmail.com',
+        from: this.env.get().fromEmail,
         to,
         subject,
         html: content,
@@ -42,7 +46,7 @@ export class EmailService {
     }
 
     await Promise.all(
-      emails.map(async email => await this.sendEmail(email, emailData))
-    )
+      emails.map(async (email) => await this.sendEmail(email, emailData)),
+    );
   }
 }
