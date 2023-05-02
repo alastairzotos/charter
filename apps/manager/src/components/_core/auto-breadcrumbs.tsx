@@ -114,7 +114,7 @@ export const AutoBreadcrumbs: React.FC = () => {
       .then(setCrumbs);
   }, [router.route]);
 
-  if (!crumbs.length) {
+  if (!crumbs.length || router.pathname === "/") {
     return null;
   }
 

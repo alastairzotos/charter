@@ -1,4 +1,5 @@
 import { UserRole } from "dtos";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { DefaultErrorFallback } from "ui";
@@ -22,12 +23,14 @@ export const BaseLayout: React.FC<React.PropsWithChildren<Props>> = ({
   noPaper,
   children,
 }) => {
+  const router = useRouter();
+
   return (
     <RoleRoute role={role}>
       <SeoHead subtitle="Charter manager" description="Charter manager" />
       {appBar}
       <VerticalLayout>
-        <ResponsiveLayout noPaper={noPaper}>
+        <ResponsiveLayout noPaper={noPaper || router.pathname === "/"}>
           <ErrorBoundary FallbackComponent={DefaultErrorFallback}>
             {children}
           </ErrorBoundary>
