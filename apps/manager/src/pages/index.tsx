@@ -62,8 +62,8 @@ const HomePage: NextPage = () => {
               If you are an operator, wait for the admin to register you.
             </Typography>
             <Typography>
-              When they have, log out of this page and log back in and you will
-              be able to manage your services.
+              When they have, refresh this page and go to your admin settings to
+              manage your services.
             </Typography>
           </>
         )}
