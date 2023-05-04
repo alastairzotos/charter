@@ -29,6 +29,7 @@ describe("User state", () => {
       async () => new Promise((resolve) => resolve({ accessToken: "123" }))
     ),
     deleteUser: jest.fn(async () => new Promise((resolve) => resolve())),
+    refreshToken: jest.fn(async () => Promise.resolve("")),
   };
 
   const localStorage: Record<string, string> = {};
