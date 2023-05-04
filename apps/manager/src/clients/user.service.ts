@@ -43,4 +43,14 @@ export class UserService {
       data: { email },
     });
   }
+
+  async refreshToken() {
+    const { data } = await httpClient.post<
+      any,
+      { data: string | null },
+      unknown
+    >("/users/refresh-token");
+
+    return data;
+  }
 }

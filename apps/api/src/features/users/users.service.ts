@@ -106,6 +106,14 @@ export class UsersService {
     };
   }
 
+  refreshAccessToken(user: User) {
+    if (!!user) {
+      return this.generateAccessToken(user);
+    }
+
+    return null;
+  }
+
   generateAccessToken({ _id, email, givenName, role, instance }: User) {
     return jwt.sign(
       { _id, email, givenName, role, instance: instance?.toString() },

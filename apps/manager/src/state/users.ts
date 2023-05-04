@@ -21,6 +21,7 @@ export interface UserStateValues {
   deleteUserStatus?: FetchStatus;
   userList?: LoggedInUserDetails[];
   getUserListStatus?: FetchStatus;
+  refreshTokenStatus?: FetchStatus;
 }
 
 export interface UserStateActions {
@@ -37,6 +38,8 @@ export interface UserStateActions {
   logout: () => void;
 
   deleteUser: () => Promise<boolean>;
+
+  refreshToken: () => Promise<void>;
 }
 
 export type UserState = UserStateValues & UserStateActions;
@@ -136,6 +139,28 @@ export const createUserState = (
         set({ deleteUserStatus: "error" });
 
         return false;
+      }
+    },
+
+    refreshToken: async () => {
+      try {
+        set({ refreshTokenStatus: "fetching" });
+
+        const accessToken = await userService.refreshToken();
+
+        if (accessToken) {
+          localStorage.set(ACCESS_TOKEN_LOCALSTORAGE_KEY, accessToken);
+
+          set({
+            refreshTokenStatus: "success",
+            accessToken,
+            loggedInUser: jwt.decode(accessToken) as UserDetails,
+          });
+        } else {
+          set({ refreshTokenStatus: "success" });
+        }
+      } catch {
+        set({ refreshTokenStatus: "error" });
       }
     },
   }));

@@ -22,15 +22,19 @@ Sentry.init({
 });
 
 function Inner({ Component, pageProps }: AppProps) {
-  const [initLocalStorage, initialised, user] = useUserState((s) => [
-    s.initLocalStorage,
-    s.initialised,
-    s.loggedInUser,
-  ]);
+  const [initLocalStorage, initialised, user, refreshToken] = useUserState(
+    (s) => [s.initLocalStorage, s.initialised, s.loggedInUser, s.refreshToken]
+  );
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
       initLocalStorage();
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (initialised && !!user) {
+      refreshToken();
     }
   }, [initialised]);
 
