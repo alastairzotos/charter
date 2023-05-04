@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ConfigurationDto, defaultConfiguration } from 'dtos';
-import { Model, mongo } from 'mongoose';
+import { Model } from 'mongoose';
 import { Configuration } from 'schemas/configuration.schema';
 
-const CONFIG_ID = new mongo.ObjectId(0xcafebabe);
+const CONFIG_ID = 'cafebabe3bd908811030a340';
 
 @Injectable()
 export class ConfigurationRepository {

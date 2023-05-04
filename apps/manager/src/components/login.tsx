@@ -14,12 +14,14 @@ import { urls } from "urls";
 
 import { fetchFbUserInfo, fetchGoogleUserInfo } from "clients/oauth2.client";
 import { GoogleLoginButton } from "components/_core/google-login-button";
+import { useConfiguration } from "contexts/configuration";
 import { useOAuthLogin } from "state/oauth2";
 import { useUserState } from "state/users";
 import { getEnv } from "util/env";
 
 const LoginFormInner: React.FC = () => {
   const router = useRouter();
+  const config = useConfiguration();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -67,25 +69,29 @@ const LoginFormInner: React.FC = () => {
           gap: 2,
         }}
       >
-        <Typography variant="h4" sx={{ textAlign: "center" }}>
-          Login
-        </Typography>
+        {config.socialLogin && (
+          <>
+            <Typography variant="h4" sx={{ textAlign: "center" }}>
+              Login
+            </Typography>
 
-        <GoogleLoginButton
-          disabled={isLoggingIn}
-          onClick={() => handleGoogleLogin()}
-        />
-        <FacebookLogin
-          size="small"
-          buttonStyle={{ width: "100%" }}
-          appId={getEnv().fbAppId}
-          fields="name,email,first_name"
-          callback={handleFacebookLogin}
-          icon="fa-facebook"
-          isDisabled={isLoggingIn}
-        />
+            <GoogleLoginButton
+              disabled={isLoggingIn}
+              onClick={() => handleGoogleLogin()}
+            />
+            <FacebookLogin
+              size="small"
+              buttonStyle={{ width: "100%" }}
+              appId={getEnv().fbAppId}
+              fields="name,email,first_name"
+              callback={handleFacebookLogin}
+              icon="fa-facebook"
+              isDisabled={isLoggingIn}
+            />
 
-        <Divider variant="middle" sx={{ pt: 2, pb: 2 }} />
+            <Divider variant="middle" sx={{ pt: 2, pb: 2 }} />
+          </>
+        )}
 
         <Typography variant="h6" sx={{ textAlign: "center" }}>
           Login with email and password
