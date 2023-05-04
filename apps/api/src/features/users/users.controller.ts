@@ -44,7 +44,6 @@ export class UsersController {
   }
 
   @Patch()
-  @Roles('all')
   async updateUser(
     @Body() { id, newUser }: { id: string; newUser: Partial<UserDetails> },
   ) {
@@ -52,7 +51,6 @@ export class UsersController {
   }
 
   @Delete()
-  @Roles('all')
   async deleteUser(@Body() { email }: { email: string }) {
     return await this.usersService.deleteUser(email);
   }
