@@ -19,14 +19,29 @@ export const ManageConfigurationForm: React.FC<
           content: (
             <>
               <FormControlLabel
-                label="Social login"
+                label="Google login"
                 control={
                   <Checkbox
-                    checked={values.socialLogin}
+                    checked={values.googleLogin}
                     onChange={(e) => {
                       setValues({
                         ...values,
-                        socialLogin: e.currentTarget.checked,
+                        googleLogin: e.currentTarget.checked,
+                      });
+                    }}
+                  />
+                }
+              />
+
+              <FormControlLabel
+                label="Facebook login"
+                control={
+                  <Checkbox
+                    checked={values.facebookLogin}
+                    onChange={(e) => {
+                      setValues({
+                        ...values,
+                        facebookLogin: e.currentTarget.checked,
                       });
                     }}
                   />

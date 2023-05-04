@@ -21,7 +21,7 @@ import { getEnv } from "util/env";
 
 const LoginFormInner: React.FC = () => {
   const router = useRouter();
-  const config = useConfiguration();
+  const { googleLogin, facebookLogin } = useConfiguration();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -69,29 +69,30 @@ const LoginFormInner: React.FC = () => {
           gap: 2,
         }}
       >
-        {config.socialLogin && (
-          <>
-            <Typography variant="h4" sx={{ textAlign: "center" }}>
-              Login
-            </Typography>
+        <Typography variant="h4" sx={{ textAlign: "center" }}>
+          Login
+        </Typography>
 
-            <GoogleLoginButton
-              disabled={isLoggingIn}
-              onClick={() => handleGoogleLogin()}
-            />
-            <FacebookLogin
-              size="small"
-              buttonStyle={{ width: "100%" }}
-              appId={getEnv().fbAppId}
-              fields="name,email,first_name"
-              callback={handleFacebookLogin}
-              icon="fa-facebook"
-              isDisabled={isLoggingIn}
-            />
-
-            <Divider variant="middle" sx={{ pt: 2, pb: 2 }} />
-          </>
+        {googleLogin && (
+          <GoogleLoginButton
+            disabled={isLoggingIn}
+            onClick={() => handleGoogleLogin()}
+          />
         )}
+
+        {facebookLogin && (
+          <FacebookLogin
+            size="small"
+            buttonStyle={{ width: "100%" }}
+            appId={getEnv().fbAppId}
+            fields="name,email,first_name"
+            callback={handleFacebookLogin}
+            icon="fa-facebook"
+            isDisabled={isLoggingIn}
+          />
+        )}
+
+        <Divider variant="middle" sx={{ pt: 2, pb: 2 }} />
 
         <Typography variant="h6" sx={{ textAlign: "center" }}>
           Login with email and password

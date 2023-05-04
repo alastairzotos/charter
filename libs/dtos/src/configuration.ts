@@ -1,7 +1,9 @@
 export interface ConfigurationDto {
-  socialLogin: boolean;
+  googleLogin: boolean;
+  facebookLogin: boolean;
 }
 
 export const defaultConfiguration: ConfigurationDto = {
-  socialLogin: false,
+  googleLogin: false,
+  facebookLogin: true,
 };

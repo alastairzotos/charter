@@ -5,8 +5,11 @@ import { ConfigurationDto, defaultConfiguration } from 'dtos';
 export class Configuration implements ConfigurationDto {
   _id: string;
 
-  @Prop({ default: defaultConfiguration.socialLogin })
-  socialLogin: boolean;
+  @Prop({ default: defaultConfiguration.googleLogin })
+  googleLogin: boolean;
+
+  @Prop({ default: defaultConfiguration.facebookLogin })
+  facebookLogin: boolean;
 }
 
 export const ConfigurationSchema = SchemaFactory.createForClass(Configuration);
