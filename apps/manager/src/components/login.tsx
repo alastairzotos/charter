@@ -92,11 +92,15 @@ const LoginFormInner: React.FC = () => {
           />
         )}
 
-        <Divider variant="middle" sx={{ pt: 2, pb: 2 }} />
+        {(googleLogin || facebookLogin) && (
+          <>
+            <Divider variant="middle" sx={{ pt: 2, pb: 2 }} />
 
-        <Typography variant="h6" sx={{ textAlign: "center" }}>
-          Login with email and password
-        </Typography>
+            <Typography variant="h6" sx={{ textAlign: "center" }}>
+              Login with email and password
+            </Typography>
+          </>
+        )}
 
         <TextField
           placeholder="Email address"
