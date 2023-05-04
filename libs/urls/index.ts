@@ -63,6 +63,7 @@ export const urls = {
     instances: () => "/super-admin/instances",
     instance: (id: string) => `/super-admin/instances/${id}`,
     instanceCreate: () => "/super-admin/instances/create",
+    configuration: () => "/super-admin/configuration",
   },
   manager: {
     terms: () => "/legal/terms",

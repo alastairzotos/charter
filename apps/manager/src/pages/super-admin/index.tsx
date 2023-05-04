@@ -19,6 +19,9 @@ const SuperAdminPage: NextPage = () => {
           alignItems: "flex-start",
         }}
       >
+        <Button component={Link} href={urls.superAdmin.configuration()}>
+          Configuration
+        </Button>
         <Button component={Link} href={urls.superAdmin.instances()}>
           Instances
         </Button>

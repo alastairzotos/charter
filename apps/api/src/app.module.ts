@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { EnvModule } from 'environment/environment.module';
 import { EnvService } from 'environment/environment.service';
 import { BookingsModule } from 'features/bookings/bookings.module';
+import { ConfigurationModule } from 'features/configuration/configuration.module';
 import { HealthModule } from 'features/health/health.module';
 import { ImagesModule } from 'features/images/images.module';
 import { InstancesModule } from 'features/instances/instances.module';
@@ -45,6 +46,7 @@ import { RawBodyMiddleware } from 'middleware/raw-body.middleware';
     QRCodeModule,
     NotificationsModule,
     InstancesModule,
+    ConfigurationModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],
