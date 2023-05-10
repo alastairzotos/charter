@@ -1,6 +1,7 @@
 import { FetchStatus } from "@bitmetro/create-query";
 import dayjs from "dayjs";
 import customeParseFormat from "dayjs/plugin/customParseFormat";
+import { nanoid } from "nanoid";
 
 dayjs.extend(customeParseFormat);
 
@@ -39,3 +40,5 @@ export const getLowestStatus = (
 
   return undefined;
 };
+
+export const createKey = () => nanoid(10);

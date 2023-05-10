@@ -4,6 +4,8 @@ import { ServiceSchemaContentSectionDto } from "dtos";
 import React from "react";
 import { useIsDesktop } from "ui";
 
+import { createKey } from "util/misc";
+
 interface Props {
   sections: ServiceSchemaContentSectionDto[];
   onChange: (sections: ServiceSchemaContentSectionDto[]) => void;
@@ -19,14 +21,6 @@ export const ServiceSchemaContentSectionsSelector: React.FC<Props> = ({
     <>
       <DataGrid
         columns={[
-          {
-            width: isDesktop ? 200 : 100,
-            field: "key",
-            headerName: "Key",
-            editable: true,
-            sortable: false,
-            hideable: false,
-          },
           {
             width: isDesktop ? 250 : 250,
             field: "title",
@@ -98,7 +92,7 @@ export const ServiceSchemaContentSectionsSelector: React.FC<Props> = ({
             onChange([
               ...sections,
               {
-                key: "key",
+                key: createKey(),
                 type: "text",
                 title: "New section",
               },

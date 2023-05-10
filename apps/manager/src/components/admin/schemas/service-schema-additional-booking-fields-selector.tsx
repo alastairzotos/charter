@@ -5,6 +5,7 @@ import React from "react";
 import { useIsDesktop } from "ui";
 
 import { Surface } from "components/_core/surface";
+import { createKey } from "util/misc";
 
 interface Props {
   fields: AdditionalBookingField[];
@@ -24,14 +25,6 @@ export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
       <DataGrid
         sx={{ mt: 2 }}
         columns={[
-          {
-            width: isDesktop ? 200 : 100,
-            field: "key",
-            headerName: "Key",
-            editable: true,
-            sortable: false,
-            hideable: false,
-          },
           {
             width: isDesktop ? 250 : 200,
             field: "title",
@@ -95,7 +88,7 @@ export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
             onChange([
               ...fields,
               {
-                key: "key",
+                key: createKey(),
                 type: "string",
                 title: "New field",
               },

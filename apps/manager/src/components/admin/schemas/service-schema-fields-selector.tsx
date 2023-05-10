@@ -5,6 +5,8 @@ import { ServiceSchemaFieldDto } from "dtos";
 import React from "react";
 import { useIsDesktop } from "ui";
 
+import { createKey } from "util/misc";
+
 interface Props {
   fields: ServiceSchemaFieldDto[];
   onChange: (fields: ServiceSchemaFieldDto[]) => void;
@@ -21,15 +23,7 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
       <DataGrid
         columns={[
           {
-            width: isDesktop ? 200 : 100,
-            field: "key",
-            headerName: "Key",
-            editable: true,
-            sortable: false,
-            hideable: false,
-          },
-          {
-            width: isDesktop ? 250 : 100,
+            width: isDesktop ? 250 : 150,
             field: "label",
             headerName: "Label",
             editable: true,
@@ -37,7 +31,7 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
             hideable: false,
           },
           {
-            width: isDesktop ? 150 : 100,
+            width: isDesktop ? 250 : 150,
             field: "type",
             headerName: "Field type",
             type: "singleSelect",
@@ -102,7 +96,7 @@ export const ServiceSchemaFieldsSelector: React.FC<Props> = ({
             onChange([
               ...fields,
               {
-                key: "key",
+                key: createKey(),
                 label: "New field",
                 type: "string",
               },
