@@ -21,11 +21,13 @@ export const createHttpClient = (baseURL: string): AxiosInstance => {
 
     const loggedInUser = useUserState.getState().loggedInUser;
 
-    const instance =
-      loggedInUser && loggedInUser.role === "super-admin"
-        ? localStorage.getItem(INSTANCE_STORAGE_KEY) ||
-          loggedInUser.instance?._id
-        : loggedInUser?.instance?._id;
+    let instance = loggedInUser?.instance as unknown as string;
+
+    if (loggedInUser && loggedInUser.role === "super-admin") {
+      instance =
+        localStorage.getItem(INSTANCE_STORAGE_KEY) ||
+        (loggedInUser.instance as unknown as string);
+    }
 
     config.params = { instance };
 
