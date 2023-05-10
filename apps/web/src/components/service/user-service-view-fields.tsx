@@ -36,7 +36,7 @@ export const UserServiceViewFields: React.FC<Props> = ({ data, fields }) => {
         ...fields.reduce(
           (acc, field) => ({
             ...acc,
-            [field.label]: getFieldView(field, data[field.key]),
+            [field.label]: getFieldView(field, data?.[field.key]),
           }),
           {}
         ),
