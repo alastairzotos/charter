@@ -39,8 +39,11 @@ export const OpeningTimesForm: React.FC<Props> = ({
           headerName: "Opening Time",
           sortable: false,
           hideable: false,
+          editable: true,
           valueGetter: (params) =>
-            params.row.openingTime || defaultOpeningDayTime.openingTime,
+            params.row.allDay || params.row.closed
+              ? "-"
+              : params.row.openingTime || defaultOpeningDayTime.openingTime,
           renderEditCell: (params) => <TimeEditor {...params} />,
         },
         {
@@ -49,8 +52,11 @@ export const OpeningTimesForm: React.FC<Props> = ({
           headerName: "Closing Time",
           sortable: false,
           hideable: false,
+          editable: true,
           valueGetter: (params) =>
-            params.row.closingTime || defaultOpeningDayTime.closingTime,
+            params.row.allDay || params.row.closed
+              ? "-"
+              : params.row.closingTime || defaultOpeningDayTime.closingTime,
           renderEditCell: (params) => <TimeEditor {...params} />,
         },
         {
