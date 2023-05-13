@@ -7,7 +7,6 @@ import { CharterLogo } from "components/_core/charter-logo";
 
 export const OperatorsAppBar: React.FC = () => (
   <AppBarBase
-    sx={{ backgroundColor: "#bbb", color: "#fff" }}
     logo={<CharterLogo url={urls.operators.home()} />}
     rightButton={<AppBarLoginLogout />}
   />

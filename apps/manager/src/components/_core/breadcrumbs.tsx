@@ -63,7 +63,7 @@ export const Breadcrumbs: React.FC<Props> = ({ current, list }) => {
   }
 
   return (
-    <MuiBreadcrumbs sx={{ mb: 3 }}>
+    <MuiBreadcrumbs sx={{ p: 2 }}>
       {list?.map((item) => (
         <Link
           key={item.href}

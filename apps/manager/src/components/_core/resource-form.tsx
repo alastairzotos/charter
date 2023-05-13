@@ -44,11 +44,7 @@ export const ResourceForm = <T extends unknown>({
   const isDesktop = useIsDesktop();
 
   const sx: SxProps = isDesktop
-    ? {
-        p: 2,
-        pt: 2,
-        mb: 2,
-      }
+    ? { mb: 2 }
     : {
         m: -1,
         mb: 2,
@@ -66,13 +62,13 @@ export const ResourceForm = <T extends unknown>({
       {(props) => (
         <Form>
           <Box sx={{ maxWidth: SETTINGS_WIDTH }}>
-            <Surface sx={sx}>
+            <Box sx={sx}>
               <FormLabel sx={{ fontSize: "1.3em", m: 2 }}>{title}</FormLabel>
 
               <TabsProvider tabs={tabs(props)}>
                 <TabsView />
               </TabsProvider>
-            </Surface>
+            </Box>
 
             <SaveAndDelete
               isValid={props.isValid}

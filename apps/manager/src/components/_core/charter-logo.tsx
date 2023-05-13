@@ -13,19 +13,19 @@ export const CharterLogo: React.FC<Props> = ({ url }) => {
     <>
       <Link href={url} style={{ textDecoration: "none", color: "white" }}>
         <Image
-          src="/bm-logo-black.svg"
+          src="/bm-logo.png"
           alt="BitMetro logo"
           width={40}
           height={40}
           style={{
             marginRight: 10,
             marginBottom: 6,
-            filter: "opacity(50%)",
+            // filter: "opacity(70%)",
           }}
         />
       </Link>
-      <Link href={url} style={{ textDecoration: "none", color: "white" }}>
-        <Typography>Charter</Typography>
+      <Link href={url} style={{ textDecoration: "none", color: "#fff" }}>
+        <Typography variant="h5">Charter</Typography>
       </Link>
 
       <Box sx={{ pr: 3 }} />

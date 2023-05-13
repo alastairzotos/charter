@@ -6,9 +6,6 @@ import CookieConsent from "react-cookie-consent";
 import { PageWrapper } from "ui";
 
 import { BaseLayout } from "components/_core/base-layout";
-import { AdminLayout } from "components/admin/_core/admin-layout";
-import { OperatorsLayout } from "components/operator/_core/operators-layout";
-import { SuperAdminLayout } from "components/super-admin/_core/super-admin-layout";
 import { useUserState } from "state/users";
 
 Sentry.init({
@@ -38,37 +35,15 @@ function Inner({ Component, pageProps }: AppProps) {
     }
   }, [initialised]);
 
-  if (!user || user.role === "user") {
-    return (
-      <BaseLayout noPaper>
-        <Component {...pageProps} />
-      </BaseLayout>
-    );
+  if (!initialised) {
+    return null;
   }
 
-  if (user.role === "admin") {
-    return (
-      <AdminLayout>{initialised && <Component {...pageProps} />}</AdminLayout>
-    );
-  }
-
-  if (user.role === "operator") {
-    return (
-      <OperatorsLayout>
-        {initialised && <Component {...pageProps} />}
-      </OperatorsLayout>
-    );
-  }
-
-  if (user.role === "super-admin") {
-    return (
-      <SuperAdminLayout>
-        {initialised && <Component {...pageProps} />}
-      </SuperAdminLayout>
-    );
-  }
-
-  return null;
+  return (
+    <BaseLayout role={user?.role || "user"}>
+      <Component {...pageProps} />
+    </BaseLayout>
+  );
 }
 
 function AppPage(props: AppProps) {

@@ -40,70 +40,67 @@ export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
   };
 
   return (
-    <>
-      <MuiAppBar position="fixed" sx={sx}>
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            {logo}
+    <MuiAppBar position="fixed" sx={sx}>
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          {logo}
 
-            <Box sx={{ ml: 2, display: { xs: "none", md: "flex" } }}>
-              {Array.from(pages.keys()).map((url) => (
-                <Link key={url} href={url} style={{ textDecoration: "none" }}>
-                  <Button sx={{ my: 2, color: "white", display: "block" }}>
-                    {pages.get(url)}
-                  </Button>
-                </Link>
-              ))}
+          <Box sx={{ ml: 2, display: { xs: "none", md: "flex" } }}>
+            {Array.from(pages.keys()).map((url) => (
+              <Link key={url} href={url} style={{ textDecoration: "none" }}>
+                <Button sx={{ my: 2, color: "white", display: "block" }}>
+                  {pages.get(url)}
+                </Button>
+              </Link>
+            ))}
+          </Box>
+
+          {children}
+
+          <Box sx={{ display: "flex", flexGrow: 1 }} />
+
+          <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
+            {rightButton}
+          </Box>
+
+          {Array.from(pages.keys()).length > 0 && (
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                sx={{ color: "white" }}
+                onClick={(e) => setAnchorElNav(e.currentTarget)}
+              >
+                <MenuIcon />
+              </IconButton>
+
+              <Menu
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={() => setAnchorElNav(null)}
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              >
+                <MenuItem>{rightButton}</MenuItem>
+                {Array.from(pages.keys()).map((url) => (
+                  <MenuItem key={url} onClick={() => handleClickUrl(url)}>
+                    <Typography>{pages.get(url)}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
             </Box>
-
-            {children}
-
-            <Box sx={{ display: "flex", flexGrow: 1 }} />
-
-            <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
-              {rightButton}
-            </Box>
-
-            {Array.from(pages.keys()).length > 0 && (
-              <Box sx={{ display: { xs: "flex", md: "none" } }}>
-                <IconButton
-                  size="large"
-                  sx={{ color: "white" }}
-                  onClick={(e) => setAnchorElNav(e.currentTarget)}
-                >
-                  <MenuIcon />
-                </IconButton>
-
-                <Menu
-                  anchorEl={anchorElNav}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  open={Boolean(anchorElNav)}
-                  onClose={() => setAnchorElNav(null)}
-                  sx={{
-                    display: { xs: "block", md: "none" },
-                  }}
-                >
-                  <MenuItem>{rightButton}</MenuItem>
-                  {Array.from(pages.keys()).map((url) => (
-                    <MenuItem key={url} onClick={() => handleClickUrl(url)}>
-                      <Typography>{pages.get(url)}</Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
-            )}
-          </Toolbar>
-        </Container>
-      </MuiAppBar>
-      <Toolbar />
-    </>
+          )}
+        </Toolbar>
+      </Container>
+    </MuiAppBar>
   );
 };

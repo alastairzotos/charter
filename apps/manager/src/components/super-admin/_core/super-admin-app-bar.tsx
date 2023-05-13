@@ -8,7 +8,6 @@ import { SuperAdminInstanceSelector } from "components/super-admin/_core/super-a
 
 export const SuperAdminAppBar: React.FC = () => (
   <AppBarBase
-    sx={{ backgroundColor: "#bbb", color: "#fff" }}
     logo={<CharterLogo url={urls.superAdmin.home()} />}
     rightButton={
       <>
