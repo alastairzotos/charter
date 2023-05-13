@@ -48,6 +48,19 @@ export const Footer: React.FC = () => {
             Privacy Policy
           </Typography>
         </Link>
+
+        <Typography variant="subtitle2" color="GrayText" sx={{ ml: 2, mr: 2 }}>
+          &middot;
+        </Typography>
+
+        <Link
+          href={urls.user.cancellation()}
+          style={{ all: "unset", textDecoration: "none", cursor: "pointer" }}
+        >
+          <Typography variant="subtitle2" color="GrayText">
+            Cancellation Policy
+          </Typography>
+        </Link>
       </Box>
     </Box>
   );

@@ -1,8 +1,11 @@
-import { Box, Grid, Modal, Paper, Typography } from "@mui/material";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { Box, Button, Grid, Modal, Paper, Typography } from "@mui/material";
 import { ServiceDto } from "dtos";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { KeyValues, useIsDesktop } from "ui";
+import { urls } from "urls";
 import { getReadablePricingStringsForService } from "utils";
 
 import { MultilineText } from "components/_core/multiline-text";
@@ -79,6 +82,16 @@ export const UserServiceView: React.FC<Props> = ({
           </Paper>
 
           <UserServiceViewContent service={service} />
+
+          <Button
+            component={Link}
+            href={urls.user.cancellation()}
+            target="_blank"
+            sx={{ mt: 2 }}
+            size="small"
+          >
+            Cancellation Policy <OpenInNewIcon sx={{ fontSize: 14, ml: 1 }} />
+          </Button>
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper>

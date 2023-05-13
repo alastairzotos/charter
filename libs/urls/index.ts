@@ -46,6 +46,7 @@ export const urls = {
       `/type/${paramCase(category.pluralName)}-${category._id}`,
     terms: () => "/legal/terms",
     privacy: () => "/legal/privacy",
+    cancellation: () => "/legal/cancellation",
   },
   operators: {
     home: () => "/operator-admin",
