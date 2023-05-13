@@ -93,6 +93,7 @@ export interface BookingDto extends DefaultBookingFields {
   instance?: InstanceDto;
   name: string;
   email: string;
+  phoneNumber: string;
   bookingDate?: Date;
   priceDetails: BookingPriceDetails;
   additionalFields?: Record<string, AdditionalBookingFieldContent>;

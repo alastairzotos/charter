@@ -117,6 +117,7 @@ export const getReadableBookingDetails = (
   let obj: Record<string, string> = {
     Name: booking.name,
     Email: booking.email,
+    Phone: booking.phoneNumber,
   };
 
   if (schema.defaultBookingFields.includes("date")) {

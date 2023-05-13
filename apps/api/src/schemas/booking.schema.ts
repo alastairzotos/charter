@@ -36,6 +36,9 @@ export class Booking implements BookingDto {
   email: string;
 
   @Prop()
+  phoneNumber: string;
+
+  @Prop()
   date?: string;
 
   @Prop()

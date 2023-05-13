@@ -74,6 +74,7 @@ const mockService: ServiceDto = {
 const mockBooking: BookingNoId = {
   name: 'Joe Bloggs',
   email: 'foo@bar.com',
+  phoneNumber: '1234567890',
   priceDetails: {},
   date: '12 January 2023',
   bookingDate: new Date(),
