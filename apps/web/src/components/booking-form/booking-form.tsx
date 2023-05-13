@@ -9,6 +9,7 @@ import {
 } from "dtos";
 import { Field, Formik } from "formik";
 import { TextField } from "formik-mui";
+import MuiPhoneNumber from "material-ui-phone-number";
 import React, { useEffect, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import {
@@ -74,6 +75,7 @@ export const BookingForm: React.FC<Props> = ({ service, onClose }) => {
     service,
     name: "",
     email: "",
+    phoneNumber: "",
     priceDetails: getDefaultBookingPriceDetails(service.price),
     additionalFields: {},
     fulfilled: false,
@@ -125,6 +127,20 @@ export const BookingForm: React.FC<Props> = ({ service, onClose }) => {
                             name="email"
                             label="Your email address"
                             type="email"
+                          />
+
+                          <MuiPhoneNumber
+                            value={values.phoneNumber}
+                            onChange={(e) =>
+                              setValues({
+                                ...values,
+                                phoneNumber: e.toString(),
+                              })
+                            }
+                            defaultCountry="gb"
+                            variant="outlined"
+                            type="tel"
+                            placeholder="Your phone number"
                           />
 
                           <BookingDefaultForms

@@ -67,6 +67,7 @@ export const bookingValidationSchema = (
       .string()
       .required("Enter your email")
       .email("Enter a valid email address"),
+    phoneNumber: yup.string().required("Enter your phone number"),
     bookingDate: yup.date(),
     priceDetails: pricingStrategyValidators[pricingType] as any,
     date: yup.string().notRequired(),
