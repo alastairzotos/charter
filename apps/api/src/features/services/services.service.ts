@@ -38,8 +38,8 @@ export class ServicesService {
     return await this.servicesRepository.getService(id);
   }
 
-  async getServiceBySlug(slug: string) {
-    return await this.servicesRepository.getServiceBySlug(slug);
+  async getServiceBySlug(slug: string, instance: string) {
+    return await this.servicesRepository.getServiceBySlug(slug, instance);
   }
 
   async addBookingToService(serviceId: string) {

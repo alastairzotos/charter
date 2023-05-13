@@ -55,9 +55,12 @@ export class ServicesController {
 
   @Get('by-slug/:slug')
   @Roles('all')
-  async getServiceBySlug(@Param('slug') slug: string) {
+  async getServiceBySlug(
+    @Instance() instance: string,
+    @Param('slug') slug: string,
+  ) {
     try {
-      return await this.servicesService.getServiceBySlug(slug);
+      return await this.servicesService.getServiceBySlug(slug, instance);
     } catch {
       throw new NotFoundException();
     }

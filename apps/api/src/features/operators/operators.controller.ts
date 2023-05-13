@@ -49,8 +49,14 @@ export class OperatorsController {
 
   @Get('with-services-by-slug/:slug')
   @Roles('all')
-  async getOperatorWithServicesBySlug(@Param('slug') slug: string) {
-    return await this.operatorsService.getOperatorWithServicesBySlug(slug);
+  async getOperatorWithServicesBySlug(
+    @Instance() instance: string,
+    @Param('slug') slug: string,
+  ) {
+    return await this.operatorsService.getOperatorWithServicesBySlug(
+      slug,
+      instance,
+    );
   }
 
   @Post()

@@ -26,8 +26,10 @@ export class OperatorsRepository {
       .populate(['owner', 'instance']);
   }
 
-  async getOperatorBySlug(slug: string) {
-    return await this.operatorsModel.findOne({ slug }).populate('owner');
+  async getOperatorBySlug(slug: string, instance: string) {
+    return await this.operatorsModel
+      .findOne({ slug, instance })
+      .populate('owner');
   }
 
   async getOperatorByOwnerId(id: string) {

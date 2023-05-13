@@ -34,8 +34,8 @@ export class OperatorsService {
     return await this.operatorsRepo.getOperatorById(id);
   }
 
-  async getOperatorBySlug(slug: string) {
-    return await this.operatorsRepo.getOperatorBySlug(slug);
+  async getOperatorBySlug(slug: string, instance: string) {
+    return await this.operatorsRepo.getOperatorBySlug(slug, instance);
   }
 
   async getOperatorByOwnerId(id: string) {
@@ -46,8 +46,8 @@ export class OperatorsService {
     return await this.operatorsRepo.getOperatorByEmail(email);
   }
 
-  async getOperatorWithServicesBySlug(slug: string) {
-    const operator = await this.getOperatorBySlug(slug);
+  async getOperatorWithServicesBySlug(slug: string, instance: string) {
+    const operator = await this.getOperatorBySlug(slug, instance);
     const services = await this.servicesService.getServicesForOperator(
       operator._id,
     );
