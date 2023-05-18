@@ -33,13 +33,15 @@ export const UserServiceViewFields: React.FC<Props> = ({ data, fields }) => {
   return (
     <KeyValues
       kv={{
-        ...fields.reduce(
-          (acc, field) => ({
-            ...acc,
-            [field.label]: getFieldView(field, data?.[field.key]),
-          }),
-          {}
-        ),
+        ...fields
+          .filter((field) => !!data?.[field.key] && data?.[field.key] !== "")
+          .reduce(
+            (acc, field) => ({
+              ...acc,
+              [field.label]: getFieldView(field, data?.[field.key]),
+            }),
+            {}
+          ),
       }}
     />
   );
