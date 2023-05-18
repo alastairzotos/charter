@@ -35,7 +35,7 @@ export const ResourceList = <T extends ResourceType>({
   createTitle,
   createForm,
   editForm,
-}: Props<T>) => {
+}: Props<T>): React.ReactElement => {
   const [selectedResourceId, setSelectedResourceId] = useState<string | null>(
     null
   );

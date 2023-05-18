@@ -10,7 +10,7 @@ import { SaveAndDelete } from "components/_core/save-delete";
 import { SETTINGS_WIDTH } from "util/misc";
 
 export interface ResourceFormProps<T> {
-  title: string;
+  title?: string;
   initialValues: FormikValues & T;
   validationSchema?: AnyObjectSchema;
 
@@ -67,9 +67,12 @@ export const ResourceForm = <T extends unknown>({
           <Box sx={{ maxWidth: SETTINGS_WIDTH }}>
             <Box sx={sx}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <FormLabel sx={{ fontSize: "1.1em", mt: 2, ml: 2 }}>
-                  {title}
-                </FormLabel>
+                {title && (
+                  <FormLabel sx={{ fontSize: "1.1em", mt: 2, ml: 2 }}>
+                    {title}
+                  </FormLabel>
+                )}
+                {!title && <div />}
 
                 {!!onCancel && (
                   <div>

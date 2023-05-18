@@ -41,6 +41,10 @@ export const TabsView: React.FC<Props> = ({ swipeable = true }) => {
   const handleChange = (_: React.SyntheticEvent, newValue: number) =>
     setTabIndex(newValue);
 
+  if (tabs.length === 1) {
+    return <TabPanel hidden={false}>{tabs[0].content}</TabPanel>;
+  }
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>

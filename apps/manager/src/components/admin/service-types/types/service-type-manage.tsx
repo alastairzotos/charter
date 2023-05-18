@@ -19,7 +19,7 @@ export const ServiceTypeManage: React.FC<
       deleteModalText="Are you sure you want to delete this service type?"
       tabs={({ isSubmitting, values, setValues }) => [
         {
-          label: "Basics",
+          label: "",
           content: (
             <>
               <Field name="name" label="Name" component={TextField} />
