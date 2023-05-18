@@ -9,7 +9,7 @@ import {
 
 export type ExtractInterface<T> = Pick<T, keyof T>;
 
-export const calculateBookingPrice = (
+const calculateBookingPriceBase = (
   bookingDetails: BookingPriceDetails,
   service: ServiceNoId
 ) => {
@@ -48,6 +48,17 @@ export const calculateBookingPrice = (
         )?.rate || 0
       );
   }
+};
+
+export const BOOKING_FEE_PERCENTAGE = 3;
+
+export const calculateBookingPrice = (
+  bookingDetails: BookingPriceDetails,
+  service: ServiceNoId
+) => {
+  const basePrice = calculateBookingPriceBase(bookingDetails, service);
+
+  return basePrice + basePrice * (BOOKING_FEE_PERCENTAGE / 100);
 };
 
 export const isValidBookingPrice = (

@@ -15,24 +15,19 @@ import { ErrorBoundary } from "react-error-boundary";
 import {
   DefaultErrorFallback,
   FormBox,
-  KeyValues,
   TabsView,
   TabsPrevNextButtons,
   TabsProvider,
 } from "ui";
 import { urls } from "urls";
-import {
-  calculateBookingPrice,
-  createPriceString,
-  isValidBookingPrice,
-  showBookingDetailsForm,
-} from "utils";
+import { isValidBookingPrice, showBookingDetailsForm } from "utils";
 
 import { BookingAdditionalForms } from "components/booking-form/booking-additonal-forms";
 import { BookingDefaultForms } from "components/booking-form/booking-default-forms";
 import { BookingPayLaterForm } from "components/booking-form/booking-payment-forms/booking-pay-later-form";
 import { BookingPayNowForm } from "components/booking-form/booking-payment-forms/booking-pay-now-form";
 import { BookingPeoplePolicyFeedback } from "components/booking-form/booking-people-policy-feedback";
+import { BookingPrice } from "components/booking-form/booking-price";
 import { BookingPriceDetails } from "components/booking-form/booking-price-forms";
 import { TAndCCheckbox } from "components/booking-form/t-and-c-checkbox";
 import { bookingValidationSchema } from "schemas";
@@ -240,13 +235,9 @@ export const BookingForm: React.FC<Props> = ({ service, onClose }) => {
                   <TabsView />
 
                   {schema.shouldPayNow && (
-                    <KeyValues
-                      kv={{
-                        "Total Price (all taxes and fees included)":
-                          createPriceString(
-                            calculateBookingPrice(values.priceDetails, service)
-                          ),
-                      }}
+                    <BookingPrice
+                      priceDetails={values.priceDetails}
+                      service={service}
                     />
                   )}
 
