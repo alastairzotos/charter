@@ -67,7 +67,9 @@ export const ResourceForm = <T extends unknown>({
           <Box sx={{ maxWidth: SETTINGS_WIDTH }}>
             <Box sx={sx}>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <FormLabel sx={{ fontSize: "1.3em", m: 2 }}>{title}</FormLabel>
+                <FormLabel sx={{ fontSize: "1.1em", mt: 2, ml: 2 }}>
+                  {title}
+                </FormLabel>
 
                 {!!onCancel && (
                   <div>

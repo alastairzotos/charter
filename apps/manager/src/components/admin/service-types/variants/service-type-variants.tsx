@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { StatusSwitch } from "ui";
 
@@ -29,22 +29,24 @@ export const ServiceTypeVariants: React.FC<Props> = ({ categoryId }) => {
       }
     >
       {!!variants && (
-        <ResourceList
-          resources={variants}
-          createTitle="New variant"
-          createForm={(onCancel, onCreated) => (
-            <ServiceTypeVariantCreate
-              schemaCategoryId={categoryId}
-              attemptToUseVariant={variants[0]}
-              onCreated={async () => {
-                await getVariants(categoryId);
-                onCreated();
-              }}
-              onCancel={onCancel}
-            />
-          )}
-          editForm={(id) => <ServiceTypeVariantEdit id={id} />}
-        />
+        <Box sx={{ pr: 1 }}>
+          <ResourceList
+            resources={variants}
+            createTitle="New variant"
+            createForm={(onCancel, onCreated) => (
+              <ServiceTypeVariantCreate
+                schemaCategoryId={categoryId}
+                attemptToUseVariant={variants[0]}
+                onCreated={async () => {
+                  await getVariants(categoryId);
+                  onCreated();
+                }}
+                onCancel={onCancel}
+              />
+            )}
+            editForm={(id) => <ServiceTypeVariantEdit id={id} />}
+          />
+        </Box>
       )}
     </StatusSwitch>
   );

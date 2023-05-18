@@ -1,9 +1,11 @@
 import {
+  Box,
   Button,
   Grid,
   List,
   ListItemButton,
   ListItemText,
+  styled,
 } from "@mui/material";
 import React, { useState } from "react";
 
@@ -18,6 +20,15 @@ interface Props<T extends ResourceType> {
   editForm: (id: string) => React.ReactNode;
 }
 
+const Background = styled("div")<{ hovered: boolean }>(
+  ({ theme, hovered }) => ({
+    backgroundColor: hovered ? "#f8f8f8" : "none",
+    transition: "background-color 0.2s linear",
+    margin: theme.spacing(-3),
+    padding: theme.spacing(3),
+  })
+);
+
 export const ResourceList = <T extends ResourceType>({
   resources,
   createTitle,
@@ -28,6 +39,8 @@ export const ResourceList = <T extends ResourceType>({
     null
   );
   const [creating, setCreating] = useState(false);
+
+  const [hovered, setHovered] = useState(false);
 
   const handleCreateClick = () => {
     setCreating(true);
@@ -40,47 +53,55 @@ export const ResourceList = <T extends ResourceType>({
   };
 
   return (
-    <Grid container spacing={1}>
-      <Grid
-        item
-        xs={12}
-        md={2}
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
-        <List>
-          {resources?.map((resource) => (
-            <ListItemButton
-              key={resource._id}
-              onClick={() => setSelectedResourceId(resource._id)}
-              selected={resource._id === selectedResourceId}
-            >
-              <ListItemText>{resource.name}</ListItemText>
-            </ListItemButton>
-          ))}
-        </List>
+    <Background hovered={hovered}>
+      <Grid container spacing={1}>
+        <Grid item xs={12} md={2}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              p: 1,
+              height: "100%",
+            }}
+          >
+            <List>
+              {resources?.map((resource) => (
+                <ListItemButton
+                  key={resource._id}
+                  onClick={() => setSelectedResourceId(resource._id)}
+                  selected={resource._id === selectedResourceId}
+                >
+                  <ListItemText>{resource.name}</ListItemText>
+                </ListItemButton>
+              ))}
+            </List>
 
-        <div />
+            <div />
 
-        <Button variant="contained" onClick={handleCreateClick}>
-          {createTitle}
-        </Button>
+            <Button variant="contained" onClick={handleCreateClick}>
+              {createTitle}
+            </Button>
+          </Box>
+        </Grid>
+
+        <Grid item xs={12} md={10}>
+          <Box
+            onMouseOver={() => setHovered(true)}
+            onMouseOut={() => setHovered(false)}
+          >
+            {creating ? (
+              <Surface sx={{ p: 2 }}>
+                {createForm(() => setCreating(false), handleOnCreated)}
+              </Surface>
+            ) : (
+              !!selectedResourceId && (
+                <Surface sx={{ p: 2 }}>{editForm(selectedResourceId)}</Surface>
+              )
+            )}
+          </Box>
+        </Grid>
       </Grid>
-
-      <Grid item xs={12} md={10}>
-        {creating ? (
-          <Surface sx={{ p: 2 }}>
-            {createForm(() => setCreating(false), handleOnCreated)}
-          </Surface>
-        ) : (
-          !!selectedResourceId && (
-            <Surface sx={{ p: 2 }}>{editForm(selectedResourceId)}</Surface>
-          )
-        )}
-      </Grid>
-    </Grid>
+    </Background>
   );
 };
