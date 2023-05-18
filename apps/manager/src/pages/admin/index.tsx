@@ -21,12 +21,8 @@ const AdminPage: NextPage = () => {
         <Button component={Link} href={urls.admin.bookings()}>
           Bookings
         </Button>
-
-        <Button component={Link} href={urls.admin.serviceSchemas()}>
-          Service schemas
-        </Button>
-        <Button component={Link} href={urls.admin.serviceSchemaCategories()}>
-          Service schema categories
+        <Button component={Link} href={urls.admin.serviceTypes()}>
+          Service types
         </Button>
       </Box>
     </>
