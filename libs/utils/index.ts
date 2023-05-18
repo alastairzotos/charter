@@ -104,8 +104,10 @@ export const getReadablePricingStringsForService = (
         (acc, cohort) => ({
           ...acc,
           [`Price for ${cohort.name.toLocaleLowerCase()} (Ages ${
-            cohort.fromAge
-          } to ${cohort.toAge})`]: createPriceString(cohort.price),
+            cohort.toAge === 100
+              ? `${cohort.fromAge}+`
+              : `${cohort.fromAge} to ${cohort.toAge}`
+          })`]: createPriceString(cohort.price),
         }),
         {}
       );
@@ -113,7 +115,7 @@ export const getReadablePricingStringsForService = (
       return (service.price.tiered?.tiers || []).reduce(
         (acc, { name, rate }) => ({
           ...acc,
-          ["Price tier: " + name]: createPriceString(rate || 0),
+          [name]: createPriceString(rate || 0),
         }),
         {} as Record<string, string>
       );
