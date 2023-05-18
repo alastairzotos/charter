@@ -9,28 +9,27 @@ export interface OpeningHoursDto {
   closingTime?: string;
 }
 
-export const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;
+export const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
 export type Day = typeof days[number];
 
 export const dayNumberToDayMap: Record<number, Day> = {
-  [0]: 'Sun',
-  [1]: 'Mon',
-  [2]: 'Tue',
-  [3]: 'Wed',
-  [4]: 'Thu',
-  [5]: 'Fri',
-  [6]: 'Sat',
-}
+  [0]: "Sun",
+  [1]: "Mon",
+  [2]: "Tue",
+  [3]: "Wed",
+  [4]: "Thu",
+  [5]: "Fri",
+  [6]: "Sat",
+};
 
 export const defaultOpeningDayTime: OpeningHoursDto = {
   allDay: true,
   closed: false,
-  openingTime: '09:00',
-  closingTime: '21:00',
-}
+  openingTime: "09:00",
+  closingTime: "21:00",
+};
 
 export type OpeningTimesDto = Record<Day, OpeningHoursDto>;
-
 
 export const defaultOpeningTimes: Record<Day, OpeningHoursDto> = {
   Mon: defaultOpeningDayTime,
@@ -48,21 +47,27 @@ const isClosedOnDay = (openingTimes: OpeningTimesDto, day: dayjs.Dayjs) => {
   const openingTimesToday = openingTimes[dayNumberToDayMap[day.day()]];
 
   return openingTimesToday.closed!;
-}
+};
 
-export const isDateDisabled = (booking: Omit<BookingNoId, 'status'>, day: dayjs.Dayjs) => 
-  isClosedOnDay(booking.operator.openingTimes, day)
-  || isClosedOnDay(booking.service.openingTimes, day);
+export const isDateDisabled = (
+  booking: Omit<BookingNoId, "status">,
+  day: dayjs.Dayjs
+) =>
+  isClosedOnDay(booking.operator.openingTimes, day) ||
+  isClosedOnDay(booking.service.openingTimes, day);
 
 export const getNextAvailableBookingDate = (service: ServiceDto) => {
   if (service.hasCutoffDays && !!service.cutoffDays) {
-    return dayjs().add(service.cutoffDays, 'days');
+    return dayjs().add(service.cutoffDays, "days");
   }
 
   return dayjs();
-}
+};
 
-export const getOpeningTimesOnDay = (openingTimes: OpeningTimesDto | undefined, date: string | undefined) => {
+export const getOpeningTimesOnDay = (
+  openingTimes: OpeningTimesDto | undefined,
+  date: string | undefined
+) => {
   const times = openingTimes || defaultOpeningTimes;
   const openingTimesOnDay: OpeningHoursDto = {
     ...defaultOpeningDayTime,
@@ -72,7 +77,11 @@ export const getOpeningTimesOnDay = (openingTimes: OpeningTimesDto | undefined, 
   return openingTimesOnDay;
 };
 
-export const timeIsOutOfOpeningHours = (openingTimes: OpeningTimesDto | undefined, date: string | undefined, time: string | undefined) => {
+export const timeIsOutOfOpeningHours = (
+  openingTimes: OpeningTimesDto | undefined,
+  date: string | undefined,
+  time: string | undefined
+) => {
   if (!openingTimes) {
     return false;
   }
@@ -96,13 +105,9 @@ export const timeIsOutOfOpeningHours = (openingTimes: OpeningTimesDto | undefine
 
   const timeObject = dayjs(time, "HH:mm");
   const isAfterOpening =
-    timeObject.hour() < openingTime.hour()
-      ? false
-      : timeObject.minute() >= openingTime.minute();
+    timeObject.isAfter(openingTime) || timeObject.isSame(openingTime);
   const isBeforeClosing =
-    timeObject.hour() > closingTime.hour()
-      ? false
-      : timeObject.minute() <= openingTime.minute();
+    timeObject.isBefore(closingTime) || timeObject.isSame(openingTime);
 
   return !(isAfterOpening && isBeforeClosing);
 };

@@ -2,7 +2,6 @@ import {
   Divider,
   Drawer,
   List,
-  ListItem,
   ListItemButton,
   ListItemText,
   Toolbar,

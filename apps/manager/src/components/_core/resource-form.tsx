@@ -6,7 +6,6 @@ import { TabData, TabsProvider, TabsView, useIsDesktop } from "ui";
 import { AnyObjectSchema } from "yup";
 
 import { SaveAndDelete } from "components/_core/save-delete";
-import { Surface } from "components/_core/surface";
 import { SETTINGS_WIDTH } from "util/misc";
 
 export interface ResourceFormProps<T> {
