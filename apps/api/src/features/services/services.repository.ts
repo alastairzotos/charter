@@ -69,7 +69,12 @@ export class ServicesRepository {
     return await this.servicesModel
       .findOne({ slug, instance })
       .populate('operator')
-      .populate('serviceSchema');
+      .populate({
+        path: 'serviceSchema',
+        populate: {
+          path: 'schemaCategory',
+        },
+      });
   }
 
   async getServicesWithOperatorsBySchemaId(schemaId: string, instance: string) {

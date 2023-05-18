@@ -95,9 +95,14 @@ export const UserServiceView: React.FC<Props> = ({
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper>
-            {service.photos && service.photos.length > 0 && (
+            {service.photos && service.photos.length > 0 ? (
               <ImageGallery items={service.photos} />
-            )}
+            ) : service.serviceSchema.schemaCategory &&
+              service.serviceSchema.schemaCategory.photo ? (
+              <ImageGallery
+                items={[service.serviceSchema.schemaCategory.photo]}
+              />
+            ) : null}
 
             <Box sx={{ p: 1 }}>
               <KeyValues kv={priceDetails} />
