@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { ServiceSchemaDto, ServiceSchemaNoId } from "dtos";
+import { ServiceSchemaNoId } from "dtos";
 import React, { useEffect } from "react";
 import { StatusSwitch } from "ui";
 
@@ -12,15 +12,9 @@ import {
 
 interface Props {
   id: string;
-  onSave: (schema: ServiceSchemaDto) => void;
-  onDelete: () => void;
 }
 
-export const ServiceTypeVariantEdit: React.FC<Props> = ({
-  id,
-  onSave,
-  onDelete,
-}) => {
+export const ServiceTypeVariantEdit: React.FC<Props> = ({ id }) => {
   const [loadSchemaStatus, loadSchema, schema] = useLoadServiceSchemaById(
     (s) => [s.status, s.request, s.value]
   );
@@ -41,12 +35,10 @@ export const ServiceTypeVariantEdit: React.FC<Props> = ({
 
   const handleSave = async (newSchema: ServiceSchemaNoId) => {
     await updateSchema(id, newSchema);
-    onSave({ _id: id, ...newSchema });
   };
 
   const handleDelete = async () => {
     await deleteSchema(id);
-    onDelete();
   };
 
   return (
