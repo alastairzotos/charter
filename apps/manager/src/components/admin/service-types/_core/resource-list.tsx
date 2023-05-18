@@ -53,6 +53,11 @@ export const ResourceList = <T extends ResourceType>({
     setSelectedResourceId(null);
   };
 
+  const handlePanelClick = () => {
+    setCreating(false);
+    setSelectedResourceId(null);
+  };
+
   return (
     <Background hovered={hovered}>
       <Grid container>
@@ -79,7 +84,7 @@ export const ResourceList = <T extends ResourceType>({
               ))}
             </List>
 
-            <div />
+            <Box sx={{ flexGrow: 1 }} onClick={handlePanelClick} />
 
             <Button
               variant="outlined"
