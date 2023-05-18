@@ -2,55 +2,35 @@ import { FormControlLabel, Checkbox, FormLabel } from "@mui/material";
 import { ServiceSchemaNoId } from "dtos";
 import { Field } from "formik";
 import { TextField } from "formik-mui";
-import { useRouter } from "next/router";
 import React from "react";
-import { urls } from "urls";
 
 import {
   ResourceForm,
   ResourceFormProps,
 } from "components/_core/resource-form";
 import { Surface } from "components/_core/surface";
-import { ServiceSchemaCategorySelector } from "components/admin/schema-categories/service-schema-category-selector";
-import { DefaultBookingFieldsSelector } from "components/admin/schemas/default-booking-fields-selector";
-import { PricingStrategyTypeSelector } from "components/admin/schemas/pricing-strategy-type-selector";
-import { AdditionalBookingFieldsSelector } from "components/admin/schemas/service-schema-additional-booking-fields-selector";
-import { ServiceSchemaContentSectionsSelector } from "components/admin/schemas/service-schema-content-sections-selector";
-import { ServiceSchemaFieldsSelector } from "components/admin/schemas/service-schema-fields-selector";
+import {
+  DefaultBookingFieldsSelector,
+  PricingStrategyTypeSelector,
+  AdditionalBookingFieldsSelector,
+  ServiceSchemaContentSectionsSelector,
+  ServiceSchemaFieldsSelector,
+} from "components/admin/service-types/variants/forms";
 
-export const ManageServiceSchemaForm: React.FC<
+export const ManageServiceTypeVariantForm: React.FC<
   ResourceFormProps<ServiceSchemaNoId>
 > = (props) => {
-  const router = useRouter();
-
-  const handleDeleteServiceSchema =
-    props.onDelete &&
-    (async () => {
-      if (!!props.onDelete) {
-        await props.onDelete();
-        router.push(urls.admin.serviceSchemas());
-      }
-    });
-
   return (
     <ResourceForm
       {...props}
-      onDelete={handleDeleteServiceSchema}
-      deleteModalTitle="Delete service schema?"
-      deleteModalText="Are you sure you want to delete this service schema?"
+      deleteModalTitle="Delete service type variant?"
+      deleteModalText="Are you sure you want to delete this service type variant?"
       tabs={({ values, setValues }) => [
         {
           label: "Basics",
           content: (
             <>
               <Field component={TextField} name="name" label="Name" />
-
-              <ServiceSchemaCategorySelector
-                value={values.schemaCategory}
-                onChange={(schemaCategory) =>
-                  setValues({ ...values, schemaCategory })
-                }
-              />
 
               <Surface
                 sx={{

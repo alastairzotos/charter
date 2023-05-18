@@ -1,9 +1,7 @@
 import { ServiceSchemaCategoryNoId } from "dtos";
 import { ErrorMessage, Field } from "formik";
 import { TextField } from "formik-mui";
-import { useRouter } from "next/router";
 import React from "react";
-import { urls } from "urls";
 
 import { FileUpload } from "components/_core/file-upload";
 import {
@@ -11,26 +9,14 @@ import {
   ResourceFormProps,
 } from "components/_core/resource-form";
 
-export const ServiceSchemaCategoryManage: React.FC<
+export const ServiceTypeManage: React.FC<
   ResourceFormProps<ServiceSchemaCategoryNoId>
 > = (props) => {
-  const router = useRouter();
-
-  const handleDeleteServiceSchemaCategory =
-    props.onDelete &&
-    (async () => {
-      if (!!props.onDelete) {
-        await props.onDelete();
-        router.push(urls.admin.serviceSchemaCategories());
-      }
-    });
-
   return (
     <ResourceForm
       {...props}
-      onDelete={handleDeleteServiceSchemaCategory}
-      deleteModalTitle="Delete service schema category?"
-      deleteModalText="Are you sure you want to delete this service schema category?"
+      deleteModalTitle="Delete service type?"
+      deleteModalText="Are you sure you want to delete this service type?"
       tabs={({ isSubmitting, values, setValues }) => [
         {
           label: "Basics",

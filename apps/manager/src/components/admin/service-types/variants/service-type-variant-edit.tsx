@@ -1,8 +1,9 @@
 import { Typography } from "@mui/material";
+import { ServiceSchemaDto, ServiceSchemaNoId } from "dtos";
 import React, { useEffect } from "react";
 import { StatusSwitch } from "ui";
 
-import { ManageServiceSchemaForm } from "components/admin/schemas/service-schema-manage";
+import { ManageServiceTypeVariantForm } from "components/admin/service-types/variants/service-type-variant-manage";
 import {
   useDeleteServiceSchema,
   useLoadServiceSchemaById,
@@ -11,9 +12,15 @@ import {
 
 interface Props {
   id: string;
+  onSave: (schema: ServiceSchemaDto) => void;
+  onDelete: () => void;
 }
 
-export const ServiceSchemaEdit: React.FC<Props> = ({ id }) => {
+export const ServiceTypeVariantEdit: React.FC<Props> = ({
+  id,
+  onSave,
+  onDelete,
+}) => {
   const [loadSchemaStatus, loadSchema, schema] = useLoadServiceSchemaById(
     (s) => [s.status, s.request, s.value]
   );
@@ -32,19 +39,31 @@ export const ServiceSchemaEdit: React.FC<Props> = ({ id }) => {
     }
   }, [id]);
 
+  const handleSave = async (newSchema: ServiceSchemaNoId) => {
+    await updateSchema(id, newSchema);
+    onSave({ _id: id, ...newSchema });
+  };
+
+  const handleDelete = async () => {
+    await deleteSchema(id);
+    onDelete();
+  };
+
   return (
     <StatusSwitch
       status={loadSchemaStatus}
       error={
-        <Typography>There was an error loading the service schema</Typography>
+        <Typography>
+          There was an error loading the service type variant
+        </Typography>
       }
     >
-      <ManageServiceSchemaForm
-        title="Edit service schema"
+      <ManageServiceTypeVariantForm
+        title="Edit"
         initialValues={schema!}
-        onSave={(newSchema) => updateSchema(id, newSchema)}
+        onSave={handleSave}
         saveStatus={updateSchemaStatus}
-        onDelete={() => deleteSchema(id)}
+        onDelete={handleDelete}
         deleteStatus={deleteSchemaStatus}
       />
     </StatusSwitch>

@@ -20,7 +20,6 @@ interface Props {
 }
 
 const fields: Array<{ type: DefaultBookingFieldType; label: string }> = [
-  { type: "date", label: "Date" },
   { type: "time", label: "Time" },
   { type: "numberOfPeople", label: "Number of people" },
 ];

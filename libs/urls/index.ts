@@ -22,14 +22,7 @@ export const urls = {
       `/admin/operators/${operatorId}/services/create?schemaId=${schemaId}`,
     service: (operatorId: string, id: string) =>
       `/admin/operators/${operatorId}/services/${id}`,
-    serviceSchemas: () => `/admin/service-schemas`,
-    serviceSchema: (id: string) => `/admin/service-schemas/${id}`,
-    serviceSchemaCreate: () => `/admin/service-schemas/create`,
-    serviceSchemaCategories: () => "/admin/service-schema-categories",
-    serviceSchemaCategory: (id: string) =>
-      `/admin/service-schema-categories/${id}`,
-    serviceSchemaCategoryCreate: () =>
-      "/admin/service-schema-categories/create",
+    serviceTypes: () => "/admin/service-types",
     bookings: () => "/admin/bookings",
     operatorBookings: (operatorId: string) => `/admin/bookings/${operatorId}`,
     operatorBooking: (operatorId: string, bookingId: string) =>

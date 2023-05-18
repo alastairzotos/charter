@@ -37,12 +37,8 @@ const linksForRole: Record<UserRole, Array<DrawerLink | "divider">> = {
       url: urls.admin.bookings(),
     },
     {
-      title: "Schemas",
-      url: urls.admin.serviceSchemas(),
-    },
-    {
-      title: "Schema categories",
-      url: urls.admin.serviceSchemaCategories(),
+      title: "Service types",
+      url: urls.admin.serviceTypes(),
     },
   ],
   operator: [
@@ -74,12 +70,8 @@ const linksForRole: Record<UserRole, Array<DrawerLink | "divider">> = {
       url: urls.admin.bookings(),
     },
     {
-      title: "Schemas",
-      url: urls.admin.serviceSchemas(),
-    },
-    {
-      title: "Schema categories",
-      url: urls.admin.serviceSchemaCategories(),
+      title: "Service types",
+      url: urls.admin.serviceTypes(),
     },
   ],
 };

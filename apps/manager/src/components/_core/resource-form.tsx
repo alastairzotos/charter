@@ -1,5 +1,6 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import { FormLabel, Box, SxProps } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { FormLabel, Box, SxProps, IconButton } from "@mui/material";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React from "react";
 import { TabData, TabsProvider, TabsView, useIsDesktop } from "ui";
@@ -13,11 +14,13 @@ export interface ResourceFormProps<T> {
   initialValues: FormikValues & T;
   validationSchema?: AnyObjectSchema;
 
-  onSave: (service: T) => void;
+  onSave: (resource: T) => void;
   saveStatus?: FetchStatus;
 
   onDelete?: () => Promise<void>;
   deleteStatus?: FetchStatus;
+
+  onCancel?: () => void;
 }
 
 interface Props<T> extends ResourceFormProps<T> {
@@ -35,6 +38,7 @@ export const ResourceForm = <T extends unknown>({
   onSave,
   saveStatus,
   onDelete,
+  onCancel,
   deleteStatus,
   deleteModalTitle,
   deleteModalText,
@@ -62,7 +66,17 @@ export const ResourceForm = <T extends unknown>({
         <Form>
           <Box sx={{ maxWidth: SETTINGS_WIDTH }}>
             <Box sx={sx}>
-              <FormLabel sx={{ fontSize: "1.3em", m: 2 }}>{title}</FormLabel>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <FormLabel sx={{ fontSize: "1.3em", m: 2 }}>{title}</FormLabel>
+
+                {!!onCancel && (
+                  <div>
+                    <IconButton size="small" onClick={onCancel} sx={{ mt: 1 }}>
+                      <CloseIcon />
+                    </IconButton>
+                  </div>
+                )}
+              </Box>
 
               <TabsProvider tabs={tabs(props)}>
                 <TabsView />

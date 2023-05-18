@@ -18,6 +18,16 @@ export const getServiceSchemaById = async (
   return data;
 };
 
+export const getServiceSchemasByCategoryId = async (
+  id: string
+): Promise<ServiceSchemaDto[]> => {
+  const { data } = await httpClient.get<ServiceSchemaDto[]>(
+    `/service-schemas/by-category/${id}`
+  );
+
+  return data;
+};
+
 export const createServiceSchema = async (
   serviceSchema: ServiceSchemaNoId
 ): Promise<string> => {

@@ -34,6 +34,18 @@ export class ServiceSchemaController {
     return await this.serviceSchemaService.getServiceSchemaById(id);
   }
 
+  @Get('by-category/:id')
+  @Roles('all')
+  async getServiceSchemaByCategoryId(
+    @Instance() instance: string,
+    @Param('id') id: string,
+  ) {
+    return await this.serviceSchemaService.getServicesSchemasByCategoryId(
+      id,
+      instance,
+    );
+  }
+
   @Post()
   async createServiceSchema(
     @Instance() instance: InstanceDto,

@@ -24,10 +24,12 @@ export class ServiceSchemaRepository {
   }
 
   async getServicesSchemasByCategoryId(categoryId: string, instance: string) {
-    return await this.serviceSchemasModel.find({
-      schemaCategory: categoryId,
-      instance,
-    });
+    return await this.serviceSchemasModel
+      .find({
+        schemaCategory: categoryId,
+        instance,
+      })
+      .populate('schemaCategory');
   }
 
   async getServicesSchemasByCategoryIds(

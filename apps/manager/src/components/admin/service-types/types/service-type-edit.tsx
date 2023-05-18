@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { StatusSwitch } from "ui";
 
-import { ServiceSchemaCategoryManage } from "components/admin/schema-categories/service-schema-category-manage";
+import { ServiceTypeManage } from "components/admin/service-types/types/service-type-manage";
 import {
   useDeleteServiceSchemaCategory,
   useLoadServiceSchemaCategory,
@@ -13,7 +13,7 @@ interface Props {
   id: string;
 }
 
-export const ServiceSchemaCategoryEdit: React.FC<Props> = ({ id }) => {
+export const ServiceTypeEdit: React.FC<Props> = ({ id }) => {
   const [loadSchemaCategoryStatus, loadSchemaCategory, schemaCategory] =
     useLoadServiceSchemaCategory((s) => [s.status, s.request, s.value]);
   const [updateSchemaCategoryStatus, updateSchemaCategory] =
@@ -31,11 +31,11 @@ export const ServiceSchemaCategoryEdit: React.FC<Props> = ({ id }) => {
     <StatusSwitch
       status={loadSchemaCategoryStatus}
       error={
-        <Typography>There was an error loading the service schema</Typography>
+        <Typography>There was an error loading the service type</Typography>
       }
     >
-      <ServiceSchemaCategoryManage
-        title="Edit service schema category"
+      <ServiceTypeManage
+        title="Edit service type"
         initialValues={schemaCategory!}
         onSave={(newSchemaCategory) =>
           updateSchemaCategory(id, newSchemaCategory)

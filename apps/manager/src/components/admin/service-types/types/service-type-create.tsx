@@ -1,27 +1,29 @@
 import { ServiceSchemaCategoryNoId } from "dtos";
-import { useRouter } from "next/router";
 import React from "react";
-import { urls } from "urls";
 
-import { ServiceSchemaCategoryManage } from "components/admin/schema-categories/service-schema-category-manage";
+import { ServiceTypeManage } from "components/admin/service-types/types/service-type-manage";
 import { useCreateServiceSchemaCategory } from "state/service-schema-categories";
 
-export const ServiceSchemaCategoryCreate: React.FC = () => {
-  const router = useRouter();
+interface Props {
+  onCreated: () => void;
+  onCancel: () => void;
+}
 
+export const ServiceTypeCreate: React.FC<Props> = ({ onCreated, onCancel }) => {
   const { status, request } = useCreateServiceSchemaCategory();
 
   const handleCreateServiceSchemaCategory = async (
     serviceSchemaCategory: ServiceSchemaCategoryNoId
   ) => {
     await request(serviceSchemaCategory);
-    router.push(urls.admin.serviceSchemaCategories());
+    onCreated();
   };
 
   return (
-    <ServiceSchemaCategoryManage
-      title="Create service schema category"
+    <ServiceTypeManage
+      title="Create service type"
       onSave={handleCreateServiceSchemaCategory}
+      onCancel={onCancel}
       saveStatus={status}
       initialValues={{
         name: "Restaurant",
