@@ -1,7 +1,6 @@
 import EmailIcon from "@mui/icons-material/Email";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HomeIcon from "@mui/icons-material/Home";
-import PhoneIcon from "@mui/icons-material/Phone";
 import {
   Accordion,
   AccordionDetails,
@@ -51,11 +50,6 @@ const OperatorCardInner: React.FC<InnerProps> = ({
       <Stack direction="row" alignItems="center" gap={1} sx={{ mt: 2, ml: 1 }}>
         <EmailIcon />
         <Typography variant="subtitle2">{operator.email}</Typography>
-      </Stack>
-
-      <Stack direction="row" alignItems="center" gap={1} sx={{ mt: 2, ml: 1 }}>
-        <PhoneIcon />
-        <Typography variant="subtitle2">{operator.phoneNumber}</Typography>
       </Stack>
 
       <Stack direction="row" alignItems="center" gap={1} sx={{ mt: 2, ml: 1 }}>

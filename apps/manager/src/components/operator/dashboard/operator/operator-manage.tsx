@@ -66,12 +66,6 @@ export const ManageOperatorForm: React.FC<ResourceFormProps<OperatorNoId>> = (
 
               <Field
                 component={TextField}
-                name="phoneNumber"
-                label="Phone number"
-              />
-
-              <Field
-                component={TextField}
                 name="address"
                 label="Address"
                 multiline

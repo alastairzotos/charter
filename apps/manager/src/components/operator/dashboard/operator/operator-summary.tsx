@@ -17,7 +17,6 @@ export const OperatorSummary: React.FC<Props> = ({ operator }) => {
     <Titled title={operator.name} avatar={<Avatar src={operator.photo} />}>
       <Typography variant="subtitle2">{operator.email}</Typography>
       <Typography variant="subtitle2">{operator.address}</Typography>
-      <Typography variant="subtitle2">{operator.phoneNumber}</Typography>
       <Button
         href={getOperatorEditUrl(operator)}
         LinkComponent={Link}
