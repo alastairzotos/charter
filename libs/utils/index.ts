@@ -116,9 +116,16 @@ export const getReadableBookingDetails = (
 
   let obj: Record<string, string> = {
     Name: booking.name,
-    Email: booking.email,
-    Phone: booking.phoneNumber,
   };
+
+  const hideContactDetails =
+    booking.service.approveBookingBeforePayment &&
+    booking.paymentStatus === "pending";
+
+  if (!hideContactDetails) {
+    obj["Email"] = booking.email;
+    obj["Phone"] = booking.phoneNumber;
+  }
 
   if (schema.defaultBookingFields.includes("date")) {
     obj["Date"] = booking.date!;
