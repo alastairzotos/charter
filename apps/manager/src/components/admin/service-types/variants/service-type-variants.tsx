@@ -32,7 +32,7 @@ export const ServiceTypeVariants: React.FC<Props> = ({ categoryId }) => {
         <Box sx={{ pr: 1 }}>
           <ResourceList
             resources={variants}
-            createTitle="New variant"
+            createTitle="Variant"
             createForm={(onCancel, onCreated) => (
               <ServiceTypeVariantCreate
                 schemaCategoryId={categoryId}

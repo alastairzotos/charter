@@ -31,7 +31,11 @@ const TabPanel: React.FC<React.PropsWithChildren<TabPanelProps>> = ({
   );
 };
 
-export const TabsView: React.FC = () => {
+interface Props {
+  swipeable?: boolean;
+}
+
+export const TabsView: React.FC<Props> = ({ swipeable = true }) => {
   const { tabs, tabIndex, setTabIndex } = useTabs();
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) =>
@@ -52,13 +56,25 @@ export const TabsView: React.FC = () => {
         </MuiTabs>
       </Box>
 
-      <SwipeableViews index={tabIndex} onChangeIndex={setTabIndex}>
-        {tabs.map((tab, index) => (
-          <TabPanel key={index} hidden={index !== tabIndex}>
-            {tab.content}
-          </TabPanel>
-        ))}
-      </SwipeableViews>
+      {swipeable && (
+        <SwipeableViews index={tabIndex} onChangeIndex={setTabIndex}>
+          {tabs.map((tab, index) => (
+            <TabPanel key={index} hidden={index !== tabIndex}>
+              {tab.content}
+            </TabPanel>
+          ))}
+        </SwipeableViews>
+      )}
+
+      {!swipeable && (
+        <>
+          {tabs.map((tab, index) => (
+            <TabPanel key={index} hidden={index !== tabIndex}>
+              {tab.content}
+            </TabPanel>
+          ))}
+        </>
+      )}
     </Box>
   );
 };

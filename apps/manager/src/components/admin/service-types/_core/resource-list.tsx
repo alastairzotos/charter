@@ -1,3 +1,4 @@
+import AddIcon from "@mui/icons-material/Add";
 import {
   Box,
   Button,
@@ -54,14 +55,15 @@ export const ResourceList = <T extends ResourceType>({
 
   return (
     <Background hovered={hovered}>
-      <Grid container spacing={1}>
+      <Grid container>
         <Grid item xs={12} md={2}>
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "space-between",
-              p: 1,
+              pl: 1,
+              pr: 1,
               height: "100%",
             }}
           >
@@ -79,8 +81,12 @@ export const ResourceList = <T extends ResourceType>({
 
             <div />
 
-            <Button variant="contained" onClick={handleCreateClick}>
-              {createTitle}
+            <Button
+              variant="outlined"
+              onClick={handleCreateClick}
+              sx={{ mb: -2 }}
+            >
+              <AddIcon /> {createTitle}
             </Button>
           </Box>
         </Grid>

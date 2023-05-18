@@ -24,7 +24,7 @@ export const ServiceTypesList: React.FC = () => {
     >
       <ResourceList
         resources={categories!}
-        createTitle="New service type"
+        createTitle="Service type"
         createForm={(onCancel, onCreated) => (
           <ServiceTypeCreate
             onCreated={async () => {
