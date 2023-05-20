@@ -41,6 +41,11 @@ export class TemplatesService {
             booking.instance,
             urls.user.operator(booking.operator),
           ),
+          details: [
+            { key: 'Operator', value: booking.operator.name },
+            { key: 'Operator Email', value: booking.operator.email },
+            { key: 'Operator Phone', value: booking.operator.phoneNumber },
+          ],
         },
         service: {
           name: booking.service.name,
@@ -99,6 +104,13 @@ export class TemplatesService {
           details: Object.entries(getReadableBookingDetails(booking)).map(
             ([key, value]) => ({ key, value }),
           ),
+        },
+        operator: {
+          details: [
+            { key: 'Operator', value: booking.operator.name },
+            { key: 'Operator Email', value: booking.operator.email },
+            { key: 'Operator Phone', value: booking.operator.phoneNumber },
+          ],
         },
       }),
     };

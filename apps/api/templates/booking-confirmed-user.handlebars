@@ -28,3 +28,20 @@
 <p>Verify your booking to the operator by showing them the below QR code: </p>
 
 <img src="{{ booking.qrCodeUrl }}" width="250" height="250" />
+
+<div class="spacer" />
+<hr />
+<div class="spacer" />
+
+<table class="data-table">
+  <tbody>
+    {{#each operator.details}}
+      <tr>
+        <td>
+          <strong>{{ this.key }}</strong>
+        </td>
+        <td>{{ this.value }}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

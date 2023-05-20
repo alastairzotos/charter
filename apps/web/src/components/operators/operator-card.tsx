@@ -1,4 +1,3 @@
-import EmailIcon from "@mui/icons-material/Email";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HomeIcon from "@mui/icons-material/Home";
 import {
@@ -46,11 +45,6 @@ const OperatorCardInner: React.FC<InnerProps> = ({
   return (
     <>
       {showTitle && <OperatorCardTitle operator={operator} />}
-
-      <Stack direction="row" alignItems="center" gap={1} sx={{ mt: 2, ml: 1 }}>
-        <EmailIcon />
-        <Typography variant="subtitle2">{operator.email}</Typography>
-      </Stack>
 
       <Stack direction="row" alignItems="center" gap={1} sx={{ mt: 2, ml: 1 }}>
         <HomeIcon />

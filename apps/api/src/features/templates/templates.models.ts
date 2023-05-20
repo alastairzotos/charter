@@ -5,6 +5,7 @@ export interface BookingMadeUserProps {
   operator: {
     name: string;
     url: string;
+    details: Array<{ key: string; value: string }>;
   };
   service: {
     name: string;
@@ -75,6 +76,9 @@ export interface BookingConfirmedUserProps {
   booking: {
     url: string;
     qrCodeUrl: string;
+    details: Array<{ key: string; value: string }>;
+  };
+  operator: {
     details: Array<{ key: string; value: string }>;
   };
 }
