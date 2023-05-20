@@ -27,6 +27,7 @@ const mockOperator: OperatorDto = {
   email: '',
   name: '',
   slug: '',
+  phoneNumber: '',
   photo: '',
   openingTimes: defaultOpeningTimes,
 };
