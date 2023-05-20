@@ -52,13 +52,24 @@ const calculateBookingPriceBase = (
 
 export const BOOKING_FEE_PERCENTAGE = 3;
 
+const calculateBookingFeeFromBasePrice = (basePrice: number) =>
+  basePrice * (BOOKING_FEE_PERCENTAGE / 100);
+
+export const calculateBookingFee = (
+  bookingDetails: BookingPriceDetails,
+  service: ServiceNoId
+) =>
+  calculateBookingFeeFromBasePrice(
+    calculateBookingPriceBase(bookingDetails, service)
+  );
+
 export const calculateBookingPrice = (
   bookingDetails: BookingPriceDetails,
   service: ServiceNoId
 ) => {
   const basePrice = calculateBookingPriceBase(bookingDetails, service);
 
-  return basePrice + basePrice * (BOOKING_FEE_PERCENTAGE / 100);
+  return basePrice + calculateBookingFeeFromBasePrice(basePrice);
 };
 
 export const isValidBookingPrice = (
