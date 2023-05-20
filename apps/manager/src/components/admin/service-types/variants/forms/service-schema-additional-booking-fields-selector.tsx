@@ -46,6 +46,14 @@ export const AdditionalBookingFieldsSelector: React.FC<Props> = ({
                 value: "string",
                 label: "String",
               },
+              {
+                value: "number",
+                label: "Number",
+              },
+              {
+                value: "boolean",
+                label: "Yes/No",
+              },
             ],
           },
           {

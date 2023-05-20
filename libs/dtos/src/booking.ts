@@ -84,7 +84,7 @@ export const getDefaultDefaultBookingFields = (
   };
 };
 
-export type AdditionalBookingFieldContent = string;
+export type AdditionalBookingFieldContent = string | number | boolean;
 
 export interface BookingDto extends DefaultBookingFields {
   _id: string;

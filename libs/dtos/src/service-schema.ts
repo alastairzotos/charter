@@ -23,7 +23,7 @@ export interface ServiceSchemaContentSectionDto {
   title: string;
 }
 
-export type AdditionalBookingFieldType = "string";
+export type AdditionalBookingFieldType = "string" | "number" | "boolean";
 
 export interface AdditionalBookingField {
   key: string;

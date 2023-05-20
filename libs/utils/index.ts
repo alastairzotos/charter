@@ -206,8 +206,19 @@ export const getReadableBookingDetails = (
         booking.service.serviceSchema.additionalBookingFields.find(
           (field) => field.key === key
         );
+
       if (schemaField) {
-        obj[schemaField.title] = booking.additionalFields?.[key] || "";
+        const value = booking.additionalFields?.[key];
+
+        if (value) {
+          if (schemaField.type === "number") {
+            obj[schemaField.title] = `${value}`;
+          } else if (schemaField.type === "boolean") {
+            obj[schemaField.title] = value ? "Yes" : "No";
+          } else {
+            obj[schemaField.title] = value as string;
+          }
+        }
       }
     });
   }
