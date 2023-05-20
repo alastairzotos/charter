@@ -16,6 +16,7 @@ import { PaymentsService } from 'features/payments/payments.service';
 import { QRCodeService } from 'features/qr-code/qr-code.service';
 import { ServicesService } from 'features/services/services.service';
 import { TemplatesService } from 'features/templates/templates.service';
+import { UsersService } from 'features/users/users.service';
 import { EmailService } from 'integrations/email/email.service';
 import { NotificationsService } from 'integrations/notifications/notifications.service';
 import { ExtractInterface } from 'utils';
@@ -133,6 +134,7 @@ const emailServiceMock: Partial<ExtractInterface<EmailService>> = {
 const templatesServiceMock: Partial<ExtractInterface<TemplatesService>> = {
   bookingMadeOperator: jest.fn(() => ({ subject: '', content: '' })),
   bookingMadeUser: jest.fn(() => ({ subject: '', content: '' })),
+  bookingMadeAdmin: jest.fn(() => ({ subject: '', content: '' })),
 };
 
 const qrCodeServiceMock: Partial<ExtractInterface<QRCodeService>> = {
@@ -167,6 +169,12 @@ const bookingsRepoMock: Partial<ExtractInterface<BookingsRepository>> = {
 
 const paymentsServiceMock: Partial<ExtractInterface<PaymentsService>> = {};
 
+const usersServiceMock: Partial<ExtractInterface<UsersService>> = {
+  getAdmins: jest.fn(async () =>
+    Promise.resolve([{ email: 'test@test.com' } as any]),
+  ),
+};
+
 describe('BookingService', () => {
   describe('createBooking', () => {
     let bookingsService: BookingsService;
@@ -182,6 +190,7 @@ describe('BookingService', () => {
         templatesServiceMock,
         qrCodeServiceMock,
         notificationsServiceMock,
+        usersServiceMock,
       );
       await bookingsService.createBooking(mockBooking);
 
@@ -204,7 +213,8 @@ describe('BookingService', () => {
     });
 
     it('should send emails', () => {
-      expect(emailServiceMock.sendEmail).toHaveBeenCalledTimes(1);
+      expect(usersServiceMock.getAdmins).toHaveBeenCalledTimes(1);
+      expect(emailServiceMock.sendEmail).toHaveBeenCalledTimes(2); // for user and admin
       expect(emailServiceMock.sendEmailToOperator).toHaveBeenCalledTimes(1);
     });
 
@@ -230,6 +240,7 @@ const createService = async (
   templatesServiceMock: Partial<ExtractInterface<TemplatesService>>,
   qrCodeServiceMock: Partial<ExtractInterface<QRCodeService>>,
   notificationsServiceMock: Partial<ExtractInterface<NotificationsService>>,
+  usersServiceMock: Partial<ExtractInterface<UsersService>>,
 ) => {
   const testingModule = await Test.createTestingModule({
     providers: [
@@ -269,6 +280,10 @@ const createService = async (
       {
         provide: NotificationsService,
         useValue: notificationsServiceMock,
+      },
+      {
+        provide: UsersService,
+        useValue: usersServiceMock,
       },
     ],
   }).compile();

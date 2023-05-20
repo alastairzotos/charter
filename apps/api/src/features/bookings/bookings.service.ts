@@ -17,6 +17,7 @@ import { TemplatesService } from 'features/templates/templates.service';
 import { QRCodeService } from 'features/qr-code/qr-code.service';
 import { getReadableBookingDetails } from 'utils';
 import { NotificationsService } from 'integrations/notifications/notifications.service';
+import { UsersService } from 'features/users/users.service';
 
 export interface ReadableBooking {
   service: {
@@ -38,6 +39,7 @@ export class BookingsService {
     private readonly bookingsRepository: BookingsRepository,
     private readonly qrCodeService: QRCodeService,
     private readonly notificationsService: NotificationsService,
+    private readonly usersService: UsersService,
 
     @Inject(forwardRef(() => PaymentsService))
     private readonly paymentsService: PaymentsService,
@@ -111,6 +113,8 @@ export class BookingsService {
           this.sendPushNotificationToOperatorForBooking(createdBooking),
         ]);
       }
+
+      await this.notifyAdminsOfBooking(createdBooking);
     }
   }
 
@@ -201,6 +205,19 @@ export class BookingsService {
       ),
       this.sendPushNotificationToOperatorForBooking(booking),
     ]);
+  }
+
+  async notifyAdminsOfBooking(booking: BookingDto) {
+    const admins = await this.usersService.getAdmins();
+
+    await Promise.all(
+      admins.map((admin) =>
+        this.emailService.sendEmail(
+          admin.email,
+          this.templatesService.bookingMadeAdmin(booking),
+        ),
+      ),
+    );
   }
 
   async sendPushNotificationToOperatorForBooking(booking: BookingDto) {

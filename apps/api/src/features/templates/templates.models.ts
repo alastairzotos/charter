@@ -108,3 +108,18 @@ export interface OperatorPromotedProps {
     url: string;
   };
 }
+
+export interface BookingMadeAdminProps {
+  operator: {
+    name: string;
+    url: string;
+  };
+  service: {
+    name: string;
+    url: string;
+  };
+  booking: {
+    date: string;
+    details: Array<{ key: string; value: string }>;
+  };
+}

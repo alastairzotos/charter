@@ -1,0 +1,24 @@
+{{> heading }}
+
+<h3>Hello,</h3>
+<p>
+  A new booking for
+    <a href="{{ service.url }}">{{ service.name }}</a>
+    by <a href="{{ operator.url }}">{{ operator.name }}</a>
+    on <strong>{{ booking.date }}</strong>
+    has been made
+</p>
+<p>Here are the details:</p>
+
+<table class="data-table">
+  <tbody>
+    {{#each booking.details}}
+      <tr>
+        <td>
+          <strong>{{ this.key }}</strong>
+        </td>
+        <td>{{ this.value }}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

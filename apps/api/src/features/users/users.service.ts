@@ -24,6 +24,10 @@ export class UsersService {
     return await this.usersRepository.getUsers();
   }
 
+  async getAdmins() {
+    return await this.usersRepository.getAdmins();
+  }
+
   async getUserByEmail(email: string) {
     return await this.usersRepository.getUserByEmail(email);
   }

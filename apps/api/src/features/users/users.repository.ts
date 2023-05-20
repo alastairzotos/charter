@@ -15,6 +15,12 @@ export class UsersRepository {
     return await this.userModel.find();
   }
 
+  async getAdmins() {
+    return await this.userModel.find({
+      $or: [{ role: 'admin' }, { role: 'super-admin' }],
+    });
+  }
+
   async getUserById(id: string) {
     return await this.userModel.findById(id);
   }

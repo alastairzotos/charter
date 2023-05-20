@@ -7,6 +7,7 @@ import * as juice from 'juice';
 import { Injectable } from '@nestjs/common';
 import {
   BookingConfirmedUserProps,
+  BookingMadeAdminProps,
   BookingMadeOperatorActionRequiredProps,
   BookingMadeOperatorProps,
   BookingMadeUserPendingProps,
@@ -200,6 +201,33 @@ export class TemplatesService {
     };
   }
 
+  bookingMadeAdmin(booking: BookingDto): EmailData {
+    const bookingDetails = getReadableBookingDetails(booking);
+    return {
+      subject: `New booking for ${booking.service.name} on ${booking.date}`,
+      content: this.templates.bookingMadeAdmin({
+        operator: {
+          name: booking.operator.name,
+          url: this.link(
+            booking.instance,
+            urls.user.operator(booking.operator),
+          ),
+        },
+        service: {
+          name: booking.service.name,
+          url: this.link(booking.instance, urls.user.service(booking.service)),
+        },
+        booking: {
+          date: booking.date,
+          details: Object.keys(bookingDetails).map((key) => ({
+            key,
+            value: bookingDetails[key],
+          })),
+        },
+      }),
+    };
+  }
+
   private loadTemplates() {
     this.loadPartials();
 
@@ -224,6 +252,8 @@ export class TemplatesService {
         ),
       operatorPromoted:
         this.compileTemplate<OperatorPromotedProps>('operator-promoted'),
+      bookingMadeAdmin:
+        this.compileTemplate<BookingMadeAdminProps>('booking-made-admin'),
     };
   }
 
