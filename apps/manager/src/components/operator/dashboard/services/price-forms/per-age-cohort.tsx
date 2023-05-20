@@ -107,7 +107,7 @@ export const PerAgeCohortPriceForm: React.FC<PriceFormProps> = ({
               type="number"
               size="small"
               value={cohort.price}
-              inputProps={{ min: 1 }}
+              inputProps={{ min: 0 }}
               onChange={(e) =>
                 updateCohort(index, {
                   price: parseFloat(e.currentTarget.value),

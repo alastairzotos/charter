@@ -85,6 +85,9 @@ export const isValidBookingPrice = (
 
 export const createPriceString = (price: number) => `€${price.toFixed(2)}`;
 
+const priceOrFree = (price: number) =>
+  price === 0 ? "Free" : createPriceString(price);
+
 export const getReadablePricingStringsForService = (
   service: ServiceNoId
 ): Record<string, string> => {
@@ -95,16 +98,14 @@ export const getReadablePricingStringsForService = (
       return { Price: createPriceString(service.price.fixed?.price || 0) };
     case "perPerson":
       return {
-        "Price per person": createPriceString(
-          service.price.perPerson?.price || 0
-        ),
+        "Price per person": priceOrFree(service.price.perPerson?.price || 0),
       };
     case "perAdultAndChild":
       return {
-        "Price per adult": createPriceString(
+        "Price per adult": priceOrFree(
           service.price.perAdultAndChild?.adultPrice || 0
         ),
-        "Price per child": createPriceString(
+        "Price per child": priceOrFree(
           service.price.perAdultAndChild?.childPrice || 0
         ),
       };
@@ -118,7 +119,7 @@ export const getReadablePricingStringsForService = (
             cohort.toAge === 100
               ? `${cohort.fromAge}+`
               : `${cohort.fromAge} to ${cohort.toAge}`
-          })`]: createPriceString(cohort.price),
+          })`]: priceOrFree(cohort.price),
         }),
         {}
       );
@@ -126,7 +127,7 @@ export const getReadablePricingStringsForService = (
       return (service.price.tiered?.tiers || []).reduce(
         (acc, { name, rate }) => ({
           ...acc,
-          [name]: createPriceString(rate || 0),
+          [name]: priceOrFree(rate || 0),
         }),
         {} as Record<string, string>
       );
