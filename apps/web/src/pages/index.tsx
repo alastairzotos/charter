@@ -25,7 +25,7 @@ const Home: NextPage<Props> = ({ schemaCategories }) => {
     <>
       <SeoHead
         subtitle={`${serviceList}, and other services in Corfu`}
-        description={`Easily book ${serviceList}, and other services in Corfu`}
+        description={`Book ${serviceList}, and other services in Corfu`}
       />
 
       <Box
@@ -59,11 +59,11 @@ const Home: NextPage<Props> = ({ schemaCategories }) => {
           />
 
           <Typography variant="h3" sx={{ pt: 3 }}>
-            The best way to enjoy Corfu
+            Enjoy Corfu Effortlessly
           </Typography>
           <Typography variant="h5" sx={{ pt: 1 }}>
-            Easily book trips, tours, activities, restaurants and other services
-            for you and your family
+            Book trips, tours, activities, restaurants and other services for
+            you and your family
           </Typography>
         </Box>
       </Box>

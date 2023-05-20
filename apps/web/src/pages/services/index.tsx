@@ -19,7 +19,7 @@ const ServicesPage: NextPage<Props> = ({ schemaCategories }) => {
     <>
       <SeoHead
         subtitle={"Available services"}
-        description={`Easily book ${serviceList}, and other services in Corfu`}
+        description={`Book ${serviceList}, and other services in Corfu`}
       />
 
       <UserLayoutContainer>
