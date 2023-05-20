@@ -7,6 +7,7 @@ export interface OperatorDto {
   name: string;
   email: string;
   slug: string;
+  phoneNumber: string;
   address: string;
   photo: string;
   description: string;

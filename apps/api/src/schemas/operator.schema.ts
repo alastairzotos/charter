@@ -22,6 +22,9 @@ export class Operator implements OperatorDto {
   email: string;
 
   @Prop()
+  phoneNumber: string;
+
+  @Prop()
   address: string;
 
   @Prop()
