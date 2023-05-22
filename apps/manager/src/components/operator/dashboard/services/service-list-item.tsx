@@ -16,6 +16,9 @@ interface Props {
   service: ServiceDto;
 }
 
+const hasValidSchema = (service: ServiceDto) =>
+  !!service.serviceSchema && !!service.serviceSchema.schemaCategory;
+
 export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
   const { getServiceEditUrl } = useOperatorDashboard();
 
@@ -23,7 +26,7 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
     <ListItem
       sx={{
         backgroundColor:
-          service.hidden || !service.serviceSchema ? "lightgray" : "none",
+          service.hidden || !hasValidSchema(service) ? "lightgray" : "none",
       }}
       alignItems="flex-start"
       component={Link}
@@ -42,13 +45,13 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
       <ListItemText
         primary={
           <>
-            {service.serviceSchema && (
+            {hasValidSchema(service) && (
               <strong>
                 [{service.serviceSchema.schemaCategory?.name}] [
                 {service.serviceSchema.name}]
               </strong>
             )}
-            {!service.serviceSchema && (
+            {!hasValidSchema(service) && (
               <strong>
                 {"[DELETED SCHEMA"}
                 <Tooltip title="This service won't appear to users because its schema has been deleted">
