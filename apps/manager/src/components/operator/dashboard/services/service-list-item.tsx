@@ -1,5 +1,6 @@
 import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-import { Avatar, ListItemAvatar, Typography } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
+import { Avatar, ListItemAvatar, Tooltip, Typography } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import ListItem from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -20,7 +21,10 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
 
   return (
     <ListItem
-      sx={{ backgroundColor: service.hidden ? "lightgray" : "none" }}
+      sx={{
+        backgroundColor:
+          service.hidden || !service.serviceSchema ? "lightgray" : "none",
+      }}
       alignItems="flex-start"
       component={Link}
       href={getServiceEditUrl(operatorId, service._id)}
@@ -38,10 +42,23 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
       <ListItemText
         primary={
           <>
-            <strong>
-              [{service.serviceSchema.schemaCategory?.name}] [
-              {service.serviceSchema.name}]
-            </strong>{" "}
+            {service.serviceSchema && (
+              <strong>
+                [{service.serviceSchema.schemaCategory?.name}] [
+                {service.serviceSchema.name}]
+              </strong>
+            )}
+            {!service.serviceSchema && (
+              <strong>
+                {"[DELETED SCHEMA"}
+                <Tooltip title="This service won't appear to users because its schema has been deleted">
+                  <InfoIcon
+                    sx={{ fontSize: "0.8em", color: "GrayText", ml: 1 }}
+                  />
+                </Tooltip>
+                {"]"}
+              </strong>
+            )}{" "}
             {service.name}
             {service.hidden && (
               <Typography sx={{ ml: 2 }} variant="overline">
