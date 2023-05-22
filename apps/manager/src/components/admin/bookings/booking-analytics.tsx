@@ -99,6 +99,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
   const handleClickPoint = (elements: ActiveElement[]) => {
     if (!elements || !elements.length) {
       setSelectedBookings(filteredBookings);
+      setSelectedBookingDate(`Last ${days} days`);
       return;
     }
 
@@ -159,7 +160,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
         )}
       </Box>
 
-      <Box sx={{ maxWidth: 1000 }}>
+      <Box sx={{ maxWidth: 1000, mt: 2 }}>
         <BookingAnalyticsList
           selectedDate={selectedBookingDate}
           bookings={selectedBookings}
