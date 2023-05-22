@@ -23,7 +23,7 @@ export class Service implements ServiceDto {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: ServiceSchemaSchema.name })
   serviceSchema: ServiceSchemaDto;
 
-  @Prop()
+  @Prop({ trim: true })
   name: string;
 
   @Prop()

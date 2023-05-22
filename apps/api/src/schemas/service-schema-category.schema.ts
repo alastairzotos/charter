@@ -7,7 +7,7 @@ import { Instance } from 'decorators/instance.decorator';
 export class ServiceSchemaCategory implements ServiceSchemaCategoryDto {
   _id: string;
 
-  @Prop()
+  @Prop({ trim: true })
   name: string;
 
   @Prop()

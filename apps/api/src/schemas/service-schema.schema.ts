@@ -17,7 +17,7 @@ import { Instance } from 'decorators/instance.decorator';
 export class ServiceSchema implements ServiceSchemaDto {
   _id: string;
 
-  @Prop()
+  @Prop({ trim: true })
   name: string;
 
   @Prop({

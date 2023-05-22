@@ -12,7 +12,7 @@ export type OperatorDocument = Operator & Document;
 export class Operator implements OperatorDto {
   _id: string;
 
-  @Prop()
+  @Prop({ trim: true })
   name: string;
 
   @Prop()

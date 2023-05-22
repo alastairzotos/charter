@@ -10,13 +10,13 @@ export type UserDocument = User & Document;
 export class User implements LoggedInUserDetails {
   _id: string;
 
-  @Prop()
+  @Prop({ trim: true })
   email: string;
 
   @Prop({ select: false })
   hashedPassword: string;
 
-  @Prop()
+  @Prop({ trim: true })
   givenName: string;
 
   @Prop()

@@ -29,10 +29,10 @@ export class Booking implements BookingDto {
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Instance.name })
   instance: InstanceDto;
 
-  @Prop()
+  @Prop({ trim: true })
   name: string;
 
-  @Prop()
+  @Prop({ trim: true })
   email: string;
 
   @Prop()

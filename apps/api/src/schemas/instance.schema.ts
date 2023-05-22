@@ -6,10 +6,10 @@ import { InstanceDto, LoggedInUserDetails } from 'dtos';
 export class Instance implements InstanceDto {
   _id: string;
 
-  @Prop()
+  @Prop({ trim: true })
   name: string;
 
-  @Prop()
+  @Prop({ trim: true })
   url: string;
 
   @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'User' })
