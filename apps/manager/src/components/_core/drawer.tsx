@@ -1,8 +1,17 @@
 import {
+  Settings,
+  Public,
+  Business,
+  Timeline,
+  Schema,
+  Dashboard,
+} from "@mui/icons-material";
+import {
   Divider,
   Drawer,
   List,
   ListItemButton,
+  ListItemIcon,
   ListItemText,
   Toolbar,
 } from "@mui/material";
@@ -21,6 +30,7 @@ interface Props {
 }
 
 interface DrawerLink {
+  icon: React.ReactElement;
   title: string;
   url: string;
 }
@@ -29,47 +39,57 @@ const linksForRole: Record<UserRole, Array<DrawerLink | "divider">> = {
   user: [],
   admin: [
     {
+      icon: <Business />,
       title: "Operators",
       url: urls.admin.operators(),
     },
     {
+      icon: <Timeline />,
       title: "Bookings",
       url: urls.admin.bookings(),
     },
     {
+      icon: <Schema />,
       title: "Service types",
       url: urls.admin.serviceTypes(),
     },
   ],
   operator: [
     {
+      icon: <Dashboard />,
       title: "Dashboard",
       url: urls.operators.dashboard(),
     },
     {
+      icon: <Timeline />,
       title: "Bookings",
       url: urls.operators.bookings(),
     },
   ],
   "super-admin": [
     {
+      icon: <Settings />,
       title: "Configuration",
       url: urls.superAdmin.configuration(),
     },
     {
+      icon: <Public />,
       title: "Instances",
       url: urls.superAdmin.instances(),
     },
     "divider",
     {
+      icon: <Business />,
       title: "Operators",
       url: urls.admin.operators(),
     },
     {
+      icon: <Timeline />,
       title: "Bookings",
       url: urls.admin.bookings(),
     },
     {
+      icon: <Schema />,
       title: "Service types",
       url: urls.admin.serviceTypes(),
     },
@@ -99,6 +119,7 @@ export const AppDrawer: React.FC<Props> = ({ role }) => {
                 href={link.url}
                 selected={router.pathname.startsWith(link.url)}
               >
+                <ListItemIcon>{link.icon}</ListItemIcon>
                 <ListItemText primary={link.title} />
               </ListItemButton>
             )}
