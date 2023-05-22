@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Alert, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { KeyValues, StatusSwitch } from "ui";
 import { getReadableBookingDetails } from "utils";
@@ -30,6 +30,16 @@ export const BookingAnalyticsBooking: React.FC<Props> = ({ bookingId }) => {
             ...getReadableBookingDetails(booking),
           }}
         />
+      )}
+
+      {booking?.status === "pending" && (
+        <Alert severity="info">Operator has yet to approve the booking</Alert>
+      )}
+      {booking?.status === "rejected" && (
+        <Alert severity="warning">Operator has rejected the booking</Alert>
+      )}
+      {booking?.status === "confirmed" && (
+        <Alert severity="success">Booking confirmed and paid</Alert>
       )}
     </StatusSwitch>
   );

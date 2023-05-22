@@ -1,9 +1,13 @@
 import {
   FormControl,
+  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
+  Switch,
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import {
@@ -13,6 +17,7 @@ import {
   LineElement,
   Chart,
   ActiveElement,
+  Tooltip,
 } from "chart.js";
 import dayjs from "dayjs";
 import { BookingDto } from "dtos";
@@ -28,6 +33,7 @@ Chart.register(CategoryScale);
 Chart.register(LinearScale);
 Chart.register(PointElement);
 Chart.register(LineElement);
+Chart.register(Tooltip);
 
 interface Props {
   bookings: BookingDto[] | null;
@@ -62,6 +68,20 @@ const bookingsPerDate = (
   return bookingsPerDate;
 };
 
+type ViewMode = "Bookings" | "Revenue";
+
+const getLineChartValue = (bookings: BookingDto[], mode: ViewMode) => {
+  if (mode === "Bookings") {
+    return bookings.length;
+  }
+
+  return bookings.reduce(
+    (acc, cur) =>
+      acc + Math.max(calculateBookingPrice(cur.priceDetails, cur.service), 0),
+    0
+  );
+};
+
 export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
   const [days, setDays] = useState(30);
   const [filteredBookings, setFilteredBookings] = useState<BookingDto[]>([]);
@@ -69,6 +89,8 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
   const [selectedBookingDate, setSelectedBookingDate] = useState<string | null>(
     null
   );
+  const [mode, setMode] = useState<ViewMode>("Revenue");
+  const [onlyShowPaidBookings, setOnlyShowPaidBookings] = useState(true);
 
   const setDefaultBookingDate = () =>
     setSelectedBookingDate(`last ${days} days`);
@@ -78,13 +100,14 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
       bookings?.filter(
         (booking) =>
           !!booking.service &&
-          dayjs(booking.date).isAfter(dayjs().subtract(days, "days"))
+          dayjs(booking.date).isAfter(dayjs().subtract(days, "days")) &&
+          (onlyShowPaidBookings ? booking.status === "confirmed" : true)
       ) || [];
 
     setFilteredBookings(currentBookings);
     setSelectedBookings(currentBookings);
     setDefaultBookingDate();
-  }, [days]);
+  }, [days, onlyShowPaidBookings]);
 
   const handleChangeTimeframe = (e: SelectChangeEvent) => {
     setDays(parseInt(e.target.value, 10));
@@ -92,9 +115,8 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
 
   const totalPrice = filteredBookings
     .map((booking) =>
-      calculateBookingPrice(booking.priceDetails, booking.service)
+      Math.max(calculateBookingPrice(booking.priceDetails, booking.service), 0)
     )
-    .filter((price) => price >= 0)
     .reduce((acc, cur) => acc + cur, 0);
 
   const lineData = bookingsPerDate(filteredBookings, days);
@@ -116,19 +138,32 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
   return (
     <>
       <Box sx={{ maxWidth: SETTINGS_WIDTH }}>
-        <FormControl sx={{ mb: 3, width: "100%" }}>
-          <InputLabel id="select-label">Time frame</InputLabel>
-          <Select
-            size="small"
-            labelId="select-label"
-            label="Time frame"
-            value={`${days}`}
-            onChange={handleChangeTimeframe}
-          >
-            <MenuItem value={7}>7 days</MenuItem>
-            <MenuItem value={30}>30 days</MenuItem>
-          </Select>
-        </FormControl>
+        <Box sx={{ display: "flex", gap: 2 }}>
+          <FormControl sx={{ mb: 3, width: "100%" }}>
+            <InputLabel id="select-label">Time frame</InputLabel>
+            <Select
+              size="small"
+              labelId="select-label"
+              label="Time frame"
+              value={`${days}`}
+              onChange={handleChangeTimeframe}
+            >
+              <MenuItem value={7}>7 days</MenuItem>
+              <MenuItem value={30}>30 days</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControlLabel
+            sx={{ width: 300, mb: 3 }}
+            label="Paid bookings"
+            control={
+              <Switch
+                value={onlyShowPaidBookings}
+                onChange={(e) => setOnlyShowPaidBookings(e.target.checked)}
+              />
+            }
+          />
+        </Box>
 
         <KeyValues
           sx={{ mb: 3 }}
@@ -139,27 +174,49 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
         />
 
         {lineData && (
-          <Box sx={{ height: 300, width: SETTINGS_WIDTH }}>
-            <Line
-              data={{
-                labels: Object.keys(lineData),
-                datasets: [
-                  {
-                    label: "Bookings",
-                    data: Object.values(lineData).map(
-                      (bookings) => bookings.length
-                    ),
-                    borderColor: "rgb(75, 192, 192)",
-                    pointRadius: 3,
-                    pointHoverRadius: 6,
-                  },
-                ],
+          <>
+            <Box
+              sx={{
+                width: SETTINGS_WIDTH,
+                display: "flex",
+                justifyContent: "center",
               }}
-              options={{
-                onClick: (_, elements) => handleClickPoint(elements),
-              }}
-            />
-          </Box>
+            >
+              <ToggleButtonGroup
+                size="small"
+                exclusive
+                onChange={(_, newMode) => setMode(newMode)}
+                value={mode}
+                sx={{ mb: 2 }}
+              >
+                <ToggleButton value="Bookings">Bookings</ToggleButton>
+                <ToggleButton value="Revenue">Revenue</ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
+            <Box sx={{ width: SETTINGS_WIDTH }}>
+              <Line
+                data={{
+                  labels: Object.keys(lineData),
+                  datasets: [
+                    {
+                      label: mode,
+                      data: Object.values(lineData).map((bookings) =>
+                        getLineChartValue(bookings, mode)
+                      ),
+                      borderColor: "rgb(75, 192, 192)",
+                      backgroundColor: "rgba(255, 99, 132, 0.5)",
+                      pointRadius: 3,
+                      pointHoverRadius: 6,
+                    },
+                  ],
+                }}
+                options={{
+                  responsive: true,
+                  onClick: (_, elements) => handleClickPoint(elements),
+                }}
+              />
+            </Box>
+          </>
         )}
       </Box>
 
