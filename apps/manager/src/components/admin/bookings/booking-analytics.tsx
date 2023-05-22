@@ -70,6 +70,9 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
     null
   );
 
+  const setDefaultBookingDate = () =>
+    setSelectedBookingDate(`last ${days} days`);
+
   useEffect(() => {
     const currentBookings =
       bookings?.filter(
@@ -80,7 +83,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
 
     setFilteredBookings(currentBookings);
     setSelectedBookings(currentBookings);
-    setSelectedBookingDate(`last ${days} days`);
+    setDefaultBookingDate();
   }, [days]);
 
   const handleChangeTimeframe = (e: SelectChangeEvent) => {
@@ -99,7 +102,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
   const handleClickPoint = (elements: ActiveElement[]) => {
     if (!elements || !elements.length) {
       setSelectedBookings(filteredBookings);
-      setSelectedBookingDate(`Last ${days} days`);
+      setDefaultBookingDate();
       return;
     }
 
