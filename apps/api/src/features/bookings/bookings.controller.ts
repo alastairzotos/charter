@@ -47,6 +47,11 @@ export class BookingsController {
     return await this.bookingsService.getBookingsForUser(user);
   }
 
+  @Get('all')
+  async getBookingsByInstance(@Instance() instance: string) {
+    return await this.bookingsService.getBookingsByInstance(instance);
+  }
+
   @Get(':id')
   @Roles('all')
   async getBookingById(@Param('id') id: string) {

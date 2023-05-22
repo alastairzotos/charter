@@ -72,12 +72,20 @@ export class BookingsRepository {
   }
 
   async getBookingsByOperator(operator: OperatorDto) {
-    return await this.populateService(this.bookingsModel.find({ operator }));
+    return await this.populateOperatorAndService(
+      this.bookingsModel.find({ operator }),
+    );
   }
 
   async getBookingsByOperatorId(id: string) {
-    return await this.populateService(
+    return await this.populateOperatorAndService(
       this.bookingsModel.find({ operator: id }),
+    );
+  }
+
+  async getBookingsByInstance(instance: string) {
+    return await this.populateOperatorAndService(
+      this.bookingsModel.find({ instance }),
     );
   }
 
@@ -106,6 +114,29 @@ export class BookingsRepository {
         path: 'serviceSchema',
       },
     });
+  }
+
+  private async populateOperatorAndService(
+    doc: Query<
+      (Document<unknown, any, Booking> & Booking & Required<{ _id: string }>)[],
+      Document<unknown, any, Booking> & Booking & Required<{ _id: string }>,
+      {},
+      Booking
+    >,
+  ) {
+    return await doc
+      .populate({
+        path: 'operator',
+        populate: {
+          path: 'owner',
+        },
+      })
+      .populate({
+        path: 'service',
+        populate: {
+          path: 'serviceSchema',
+        },
+      });
   }
 
   private async populateOperatorServiceAndInstance(

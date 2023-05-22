@@ -1,24 +1,10 @@
-import { OperatorDto } from "dtos";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import * as React from "react";
-import { OperatorSearch } from "ui";
-import { urls } from "urls";
 
-import { useLoadOperators } from "state/operators";
+import { BookingAnalyticsTabs } from "components/admin/bookings/booking-analytics-tabs";
 
 const BookingsPage: NextPage = () => {
-  const router = useRouter();
-
-  const state = useLoadOperators();
-
-  const handleSelectOperator = (operator: OperatorDto) => {
-    router.push(urls.admin.operatorBookings(operator._id));
-  };
-
-  return (
-    <OperatorSearch state={state} onSelectOperator={handleSelectOperator} />
-  );
+  return <BookingAnalyticsTabs />;
 };
 
 BookingsPage.getInitialProps = () => ({});

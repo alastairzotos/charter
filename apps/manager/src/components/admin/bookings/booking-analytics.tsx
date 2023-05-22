@@ -1,50 +1,161 @@
-import { Typography } from "@mui/material";
-import React, { useEffect } from "react";
-import { StatusSwitch } from "ui";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import {
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Chart,
+  ActiveElement,
+} from "chart.js";
+import dayjs from "dayjs";
+import { BookingDto } from "dtos";
+import React, { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
+import { KeyValues } from "ui";
+import { calculateBookingPrice, createPriceString } from "utils";
 
 import { BookingAnalyticsList } from "components/admin/bookings/booking-analytics-list";
-import { useLoadBookingsByOperatorId } from "state/bookings";
-import { useLoadOperator } from "state/operators";
+import { SETTINGS_WIDTH } from "util/misc";
+
+Chart.register(CategoryScale);
+Chart.register(LinearScale);
+Chart.register(PointElement);
+Chart.register(LineElement);
 
 interface Props {
-  operatorId: string;
+  bookings: BookingDto[] | null;
 }
 
-export const BookingAnalytics: React.FC<Props> = ({ operatorId }) => {
-  const {
-    status: operatorStatus,
-    request: loadOperator,
-    value: operator,
-  } = useLoadOperator();
-  const {
-    status: bookingsStatus,
-    request: loadBookings,
-    value: bookings,
-  } = useLoadBookingsByOperatorId();
+const bookingsPerDate = (
+  bookings: BookingDto[],
+  days: number
+): Record<string, BookingDto[]> | null => {
+  if (!bookings || !bookings.length) {
+    return null;
+  }
+
+  const today = dayjs().add(1, "day");
+  const startDate = today.subtract(days, "days");
+
+  const bookingsPerDate: Record<string, BookingDto[]> = {};
+
+  for (
+    let date = startDate;
+    date.isBefore(today) || date.isSame(today);
+    date = date.add(1, "day")
+  ) {
+    const dateString = date.format("DD/MM/YYYY");
+
+    bookingsPerDate[dateString] = bookings.filter(
+      (booking) => dayjs(booking.date).format("DD/MM/YYYY") === dateString
+    );
+  }
+
+  return bookingsPerDate;
+};
+
+export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
+  const [days, setDays] = useState(30);
+  const [filteredBookings, setFilteredBookings] = useState<BookingDto[]>([]);
+  const [selectedBookings, setSelectedBookings] = useState<BookingDto[]>([]);
 
   useEffect(() => {
-    loadOperator(operatorId);
-    loadBookings(operatorId);
-  }, [operatorId]);
+    const currentBookings =
+      bookings?.filter(
+        (booking) =>
+          !!booking.service &&
+          dayjs(booking.date).isAfter(dayjs().subtract(days, "days"))
+      ) || [];
+
+    setFilteredBookings(currentBookings);
+    setSelectedBookings(currentBookings);
+  }, [days]);
+
+  const handleChangeTimeframe = (e: SelectChangeEvent) => {
+    setDays(parseInt(e.target.value, 10));
+  };
+
+  const totalPrice = filteredBookings
+    .map((booking) =>
+      calculateBookingPrice(booking.priceDetails, booking.service)
+    )
+    .filter((price) => price >= 0)
+    .reduce((acc, cur) => acc + cur, 0);
+
+  const lineData = bookingsPerDate(filteredBookings, days);
+
+  const handleClickPoint = (elements: ActiveElement[]) => {
+    if (!elements || !elements.length) {
+      setSelectedBookings(filteredBookings);
+      return;
+    }
+
+    const index = elements[0].index;
+    if (lineData) {
+      setSelectedBookings(Object.values(lineData)[index]);
+    }
+  };
 
   return (
-    <StatusSwitch
-      status={operatorStatus}
-      error={<Typography>There was an error loading the operator</Typography>}
-    >
-      <Typography variant="h5" sx={{ mb: 3 }}>
-        Bookings for {operator?.name}
-      </Typography>
+    <>
+      <Box sx={{ maxWidth: SETTINGS_WIDTH }}>
+        <FormControl sx={{ mb: 3, width: "100%" }}>
+          <InputLabel id="select-label">Time frame</InputLabel>
+          <Select
+            size="small"
+            labelId="select-label"
+            label="Time frame"
+            value={`${days}`}
+            onChange={handleChangeTimeframe}
+          >
+            <MenuItem value={7}>7 days</MenuItem>
+            <MenuItem value={30}>30 days</MenuItem>
+          </Select>
+        </FormControl>
 
-      <StatusSwitch
-        status={bookingsStatus}
-        error={<Typography>There was an error loading the bookings</Typography>}
-      >
-        <BookingAnalyticsList
-          operatorId={operatorId}
-          bookings={bookings || []}
+        <KeyValues
+          sx={{ mb: 3 }}
+          kv={{
+            [`Total booking price for last ${days} days`]:
+              createPriceString(totalPrice),
+          }}
         />
-      </StatusSwitch>
-    </StatusSwitch>
+
+        {lineData && (
+          <Box sx={{ height: 300, width: SETTINGS_WIDTH }}>
+            <Line
+              data={{
+                labels: Object.keys(lineData),
+                datasets: [
+                  {
+                    label: "Bookings",
+                    data: Object.values(lineData).map(
+                      (bookings) => bookings.length
+                    ),
+                    borderColor: "rgb(75, 192, 192)",
+                    pointRadius: 3,
+                    pointHoverRadius: 6,
+                  },
+                ],
+              }}
+              options={{
+                onClick: (_, elements) => handleClickPoint(elements),
+              }}
+            />
+          </Box>
+        )}
+      </Box>
+
+      <Box sx={{ maxWidth: 1000 }}>
+        <BookingAnalyticsList bookings={selectedBookings} />
+      </Box>
+    </>
   );
 };

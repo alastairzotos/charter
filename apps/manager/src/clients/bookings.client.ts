@@ -28,6 +28,11 @@ export const getBookingsByOperatorId = async (id: string) => {
   return data;
 };
 
+export const getAllBookings = async () => {
+  const { data } = await httpClient.get<BookingDto[]>(`/bookings/all`);
+  return data;
+};
+
 export const setBookingFulfillment = async (id: string, fulfilled: boolean) => {
   await httpClient.post<any, unknown, { id: string; fulfilled: boolean }>(
     "/bookings/fulfillment",

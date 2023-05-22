@@ -5,7 +5,6 @@ import {
   BookingPaymentStatus,
   BookingStatus,
   LoggedInUserDetails,
-  UserDetails,
 } from 'dtos';
 
 import { BookingsRepository } from 'features/bookings/bookings.repository';
@@ -128,6 +127,10 @@ export class BookingsService {
 
   async getBookingById(id: string) {
     return await this.bookingsRepository.getBookingById(id);
+  }
+
+  async getBookingsByInstance(instance: string) {
+    return await this.bookingsRepository.getBookingsByInstance(instance);
   }
 
   async getReadableBookingById(id: string): Promise<ReadableBooking> {

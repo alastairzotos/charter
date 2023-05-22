@@ -1,18 +1,18 @@
-import { ListItem, ListItemText } from "@mui/material";
+import { ListItemButton, ListItemText } from "@mui/material";
 import { BookingDto } from "dtos";
-import Link from "next/link";
 import React from "react";
-import { urls } from "urls";
 import { calculateBookingPrice, createPriceString } from "utils";
 
 interface Props {
-  operatorId: string;
+  selected: boolean;
   booking: BookingDto;
+  onClick: () => void;
 }
 
 export const BookingAnalyticsListItem: React.FC<Props> = ({
-  operatorId,
+  selected,
   booking,
+  onClick,
 }) => {
   const bookingPrice = calculateBookingPrice(
     booking.priceDetails,
@@ -24,11 +24,11 @@ export const BookingAnalyticsListItem: React.FC<Props> = ({
       : booking.date;
 
   return (
-    <ListItem
-      component={Link}
-      href={urls.admin.operatorBooking(operatorId, booking._id)}
-    >
-      <ListItemText primary={booking.service.name} secondary={secondaryText} />
-    </ListItem>
+    <ListItemButton selected={selected} onClick={onClick}>
+      <ListItemText
+        primary={`${booking.service.name} by ${booking.operator.name}`}
+        secondary={secondaryText}
+      />
+    </ListItemButton>
   );
 };
