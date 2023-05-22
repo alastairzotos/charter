@@ -89,7 +89,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
   const [selectedBookingDate, setSelectedBookingDate] = useState<string | null>(
     null
   );
-  const [mode, setMode] = useState<ViewMode>("Revenue");
+  const [mode, setMode] = useState<ViewMode>("Bookings");
   const [onlyShowPaidBookings, setOnlyShowPaidBookings] = useState(true);
 
   const setDefaultBookingDate = () =>
