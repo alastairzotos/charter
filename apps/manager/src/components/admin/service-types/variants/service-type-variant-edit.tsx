@@ -1,8 +1,11 @@
 import { Typography } from "@mui/material";
 import { ServiceSchemaNoId } from "dtos";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { StatusSwitch } from "ui";
+import { urls } from "urls";
 
+import { ServicesByVariantButton } from "components/admin/service-types/services-by-variant-button";
 import { ManageServiceTypeVariantForm } from "components/admin/service-types/variants/service-type-variant-manage";
 import {
   useDeleteServiceSchema,
@@ -15,6 +18,8 @@ interface Props {
 }
 
 export const ServiceTypeVariantEdit: React.FC<Props> = ({ id }) => {
+  const router = useRouter();
+
   const [loadSchemaStatus, loadSchema, schema] = useLoadServiceSchemaById(
     (s) => [s.status, s.request, s.value]
   );
@@ -57,6 +62,8 @@ export const ServiceTypeVariantEdit: React.FC<Props> = ({ id }) => {
         saveStatus={updateSchemaStatus}
         onDelete={handleDelete}
         deleteStatus={deleteSchemaStatus}
+        actionIcon={<ServicesByVariantButton schemaId={id} />}
+        onActionClick={() => router.push(urls.admin.serviceType(id))}
       />
     </StatusSwitch>
   );

@@ -1,3 +1,4 @@
+import CloseIcon from "@mui/icons-material/Close";
 import { ServiceSchemaCategoryNoId } from "dtos";
 import React from "react";
 
@@ -23,7 +24,8 @@ export const ServiceTypeCreate: React.FC<Props> = ({ onCreated, onCancel }) => {
     <ServiceTypeManage
       title="Create service type"
       onSave={handleCreateServiceSchemaCategory}
-      onCancel={onCancel}
+      actionIcon={<CloseIcon />}
+      onActionClick={onCancel}
       saveStatus={status}
       initialValues={{
         name: "Restaurant",

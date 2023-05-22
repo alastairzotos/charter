@@ -12,14 +12,13 @@ import { useOperatorDashboard } from "contexts/operator-dashboard";
 import { shortenText } from "util/misc";
 
 interface Props {
-  operatorId: string;
   service: ServiceDto;
 }
 
 const hasValidSchema = (service: ServiceDto) =>
   !!service.serviceSchema && !!service.serviceSchema.schemaCategory;
 
-export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
+export const ServiceListItem: React.FC<Props> = ({ service }) => {
   const { getServiceEditUrl } = useOperatorDashboard();
 
   return (
@@ -30,7 +29,12 @@ export const ServiceListItem: React.FC<Props> = ({ operatorId, service }) => {
       }}
       alignItems="flex-start"
       component={Link}
-      href={getServiceEditUrl(operatorId, service._id)}
+      href={getServiceEditUrl(
+        typeof service.operator === "string"
+          ? service.operator
+          : service.operator._id,
+        service._id
+      )}
     >
       <ListItemAvatar>
         {service.photos && service.photos.length > 0 ? (

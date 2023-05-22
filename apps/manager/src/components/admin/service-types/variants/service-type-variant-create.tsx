@@ -1,3 +1,4 @@
+import CloseIcon from "@mui/icons-material/Close";
 import { ServiceSchemaDto, ServiceSchemaNoId } from "dtos";
 import React from "react";
 
@@ -58,7 +59,8 @@ export const ServiceTypeVariantCreate: React.FC<Props> = ({
       title="Create variant"
       onSave={handleCreateServiceSchema}
       saveStatus={createSchemaStatus}
-      onCancel={onCancel}
+      actionIcon={<CloseIcon />}
+      onActionClick={onCancel}
       initialValues={useVariant}
     />
   );

@@ -1,5 +1,4 @@
 import { FetchStatus } from "@bitmetro/create-query";
-import CloseIcon from "@mui/icons-material/Close";
 import { FormLabel, Box, SxProps, IconButton } from "@mui/material";
 import { Form, Formik, FormikProps, FormikValues } from "formik";
 import React from "react";
@@ -20,7 +19,8 @@ export interface ResourceFormProps<T> {
   onDelete?: () => Promise<void>;
   deleteStatus?: FetchStatus;
 
-  onCancel?: () => void;
+  actionIcon?: React.ReactElement;
+  onActionClick?: () => void;
 }
 
 interface Props<T> extends ResourceFormProps<T> {
@@ -38,7 +38,8 @@ export const ResourceForm = <T extends unknown>({
   onSave,
   saveStatus,
   onDelete,
-  onCancel,
+  actionIcon,
+  onActionClick,
   deleteStatus,
   deleteModalTitle,
   deleteModalText,
@@ -74,10 +75,14 @@ export const ResourceForm = <T extends unknown>({
                 )}
                 {!title && <div />}
 
-                {!!onCancel && (
+                {!!actionIcon && !!onActionClick && (
                   <div>
-                    <IconButton size="small" onClick={onCancel} sx={{ mt: 1 }}>
-                      <CloseIcon />
+                    <IconButton
+                      size="small"
+                      onClick={onActionClick}
+                      sx={{ mt: 1 }}
+                    >
+                      {actionIcon}
                     </IconButton>
                   </div>
                 )}

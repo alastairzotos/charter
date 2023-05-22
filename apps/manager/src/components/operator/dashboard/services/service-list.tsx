@@ -2,8 +2,8 @@ import { List, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { StatusSwitch } from "ui";
 
+import { ServiceListItem } from "components/_core/service-list-item";
 import { ServiceCreateInput } from "components/operator/dashboard/services/service-create-input";
-import { ServiceListItem } from "components/operator/dashboard/services/service-list-item";
 import { useLoadServicesIncludingHidden } from "state/services";
 import { SETTINGS_WIDTH } from "util/misc";
 
@@ -40,11 +40,7 @@ export const ServiceList: React.FC<Props> = ({ operatorId }) => {
         }}
       >
         {services?.map((service) => (
-          <ServiceListItem
-            key={service._id}
-            operatorId={operatorId}
-            service={service}
-          />
+          <ServiceListItem key={service._id} service={service} />
         ))}
       </List>
     </StatusSwitch>

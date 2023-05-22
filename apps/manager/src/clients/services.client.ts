@@ -22,6 +22,14 @@ export const getServicesForOperatorIncludingHidden = async (
   return data;
 };
 
+export const getServicesWithOperatorsBySchemaId = async (schemaId: string) => {
+  const { data } = await httpClient.get<ServiceDto[]>(
+    `/services/by-schema-id/${schemaId}`
+  );
+
+  return data;
+};
+
 export const getService = async (id: string): Promise<ServiceDto> => {
   const { data } = await httpClient.get<ServiceDto>(`/services/${id}`);
 

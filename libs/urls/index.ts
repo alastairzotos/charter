@@ -23,6 +23,7 @@ export const urls = {
     service: (operatorId: string, id: string) =>
       `/admin/operators/${operatorId}/services/${id}`,
     serviceTypes: () => "/admin/service-types",
+    serviceType: (id: string) => `/admin/service-types/${id}`,
     bookings: () => "/admin/bookings",
   },
   user: {
