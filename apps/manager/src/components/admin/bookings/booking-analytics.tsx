@@ -41,7 +41,7 @@ const bookingsPerDate = (
     return null;
   }
 
-  const today = dayjs().add(1, "day");
+  const today = dayjs();
   const startDate = today.subtract(days, "days");
 
   const bookingsPerDate: Record<string, BookingDto[]> = {};
@@ -54,7 +54,8 @@ const bookingsPerDate = (
     const dateString = date.format("DD/MM/YYYY");
 
     bookingsPerDate[dateString] = bookings.filter(
-      (booking) => dayjs(booking.date).format("DD/MM/YYYY") === dateString
+      (booking) =>
+        dayjs(booking.bookingDate).format("DD/MM/YYYY") === dateString
     );
   }
 
@@ -65,6 +66,9 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
   const [days, setDays] = useState(30);
   const [filteredBookings, setFilteredBookings] = useState<BookingDto[]>([]);
   const [selectedBookings, setSelectedBookings] = useState<BookingDto[]>([]);
+  const [selectedBookingDate, setSelectedBookingDate] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     const currentBookings =
@@ -76,6 +80,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
 
     setFilteredBookings(currentBookings);
     setSelectedBookings(currentBookings);
+    setSelectedBookingDate(`last ${days} days`);
   }, [days]);
 
   const handleChangeTimeframe = (e: SelectChangeEvent) => {
@@ -100,6 +105,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
     const index = elements[0].index;
     if (lineData) {
       setSelectedBookings(Object.values(lineData)[index]);
+      setSelectedBookingDate(Object.keys(lineData)[index]);
     }
   };
 
@@ -154,7 +160,10 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
       </Box>
 
       <Box sx={{ maxWidth: 1000 }}>
-        <BookingAnalyticsList bookings={selectedBookings} />
+        <BookingAnalyticsList
+          selectedDate={selectedBookingDate}
+          bookings={selectedBookings}
+        />
       </Box>
     </>
   );

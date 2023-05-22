@@ -6,10 +6,14 @@ import { BookingAnalyticsBooking } from "components/admin/bookings/booking-analy
 import { BookingAnalyticsListItem } from "components/admin/bookings/booking-analytics-list-item";
 
 interface Props {
+  selectedDate: string | null;
   bookings: BookingDto[];
 }
 
-export const BookingAnalyticsList: React.FC<Props> = ({ bookings }) => {
+export const BookingAnalyticsList: React.FC<Props> = ({
+  selectedDate,
+  bookings,
+}) => {
   const [selectedBooking, setSelectedBooking] = useState<BookingDto | null>(
     null
   );
@@ -17,6 +21,8 @@ export const BookingAnalyticsList: React.FC<Props> = ({ bookings }) => {
   return (
     <Grid container>
       <Grid item xs={5}>
+        {selectedDate && <Typography>Bookings for {selectedDate}</Typography>}
+
         <List dense>
           {bookings
             .slice()
