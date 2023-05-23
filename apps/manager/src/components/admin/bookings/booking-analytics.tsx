@@ -158,6 +158,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
             label="Paid bookings"
             control={
               <Switch
+                defaultChecked
                 value={onlyShowPaidBookings}
                 onChange={(e) => setOnlyShowPaidBookings(e.target.checked)}
               />
