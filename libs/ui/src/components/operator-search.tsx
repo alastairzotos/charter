@@ -1,4 +1,10 @@
-import { Autocomplete, Box, TextField, Typography } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  TextField,
+  Typography,
+  styled,
+} from "@mui/material";
 import { OperatorDto } from "dtos";
 import React, { useEffect } from "react";
 import { StatusSwitch } from "./status-switch";
@@ -9,6 +15,10 @@ interface Props {
   state: QueryState<Promise<OperatorDto[]>, []>;
   onSelectOperator: (operator: OperatorDto) => void;
 }
+
+const SearchField = styled(TextField)(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+}));
 
 export const OperatorSearch: React.FC<Props> = ({
   state,
@@ -46,11 +56,7 @@ export const OperatorSearch: React.FC<Props> = ({
           </Box>
         )}
         renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Search operators"
-            sx={{ backgroundColor: "white" }}
-          />
+          <SearchField {...params} label="Search operators" />
         )}
       />
     </StatusSwitch>

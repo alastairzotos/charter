@@ -5,9 +5,9 @@ export class LocalStorageService {
     }
   }
 
-  get(key: string, fallback = null): any {
+  get(key: string, fallback: string | null = null): any {
     if (typeof localStorage !== "undefined") {
-      return localStorage.getItem(key);
+      return localStorage.getItem(key) || fallback;
     }
 
     return fallback;

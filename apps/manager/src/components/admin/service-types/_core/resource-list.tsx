@@ -11,6 +11,7 @@ import {
 import React, { useState } from "react";
 
 import { Surface } from "components/_core/surface";
+import { offsetColour } from "util/colour";
 
 type ResourceType = { _id: string; name: string };
 
@@ -23,7 +24,7 @@ interface Props<T extends ResourceType> {
 
 const Background = styled("div")<{ hovered: boolean }>(
   ({ theme, hovered }) => ({
-    backgroundColor: hovered ? "#f8f8f8" : "none",
+    backgroundColor: hovered ? offsetColour(theme, 0.01) : "none",
     transition: "background-color 0.2s linear",
     margin: theme.spacing(-3),
     padding: theme.spacing(3),

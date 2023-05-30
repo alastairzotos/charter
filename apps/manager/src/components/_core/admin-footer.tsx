@@ -1,14 +1,20 @@
-import { Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { Typography, styled } from "@mui/material";
 import { Box } from "@mui/system";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { urls } from "urls";
 
+import { offsetColour } from "util/colour";
+
+const FooterBox = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(10),
+  backgroundColor: offsetColour(theme),
+}));
+
 export const AdminFooter: React.FC = () => {
   return (
-    <Box sx={{ bgcolor: grey[300], p: 10 }}>
+    <FooterBox>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Image
           src="/bm-logo.png"
@@ -47,6 +53,6 @@ export const AdminFooter: React.FC = () => {
           </Typography>
         </Link>
       </Box>
-    </Box>
+    </FooterBox>
   );
 };

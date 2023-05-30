@@ -14,6 +14,7 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
+  styled,
 } from "@mui/material";
 import { UserRole } from "dtos";
 import Link from "next/link";
@@ -96,6 +97,10 @@ const linksForRole: Record<UserRole, Array<DrawerLink | "divider">> = {
   ],
 };
 
+const LogoArea = styled(Toolbar)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#4e4e4e" : "#0e60b0",
+}));
+
 export const AppDrawer: React.FC<Props> = ({ role }) => {
   const router = useRouter();
 
@@ -104,9 +109,9 @@ export const AppDrawer: React.FC<Props> = ({ role }) => {
 
   const drawer = (
     <div>
-      <Toolbar sx={{ backgroundColor: "#0e60b0" }}>
+      <LogoArea>
         <CharterLogo url={urls.superAdmin.home()} />
-      </Toolbar>
+      </LogoArea>
       <Divider />
       <List>
         {linksForRole[role].map((link, index) => (

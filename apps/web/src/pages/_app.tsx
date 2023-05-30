@@ -3,8 +3,8 @@ import * as Sentry from "@sentry/react";
 import type { AppProps } from "next/app";
 import * as React from "react";
 import CookieConsent from "react-cookie-consent";
-import { PageWrapper } from "ui";
 
+import { PageWrapper } from "components/_core/page-wrapper";
 import { UserLayout } from "components/_core/user-layout";
 
 Sentry.init({

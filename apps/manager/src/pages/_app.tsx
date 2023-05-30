@@ -3,9 +3,9 @@ import * as Sentry from "@sentry/react";
 import type { AppProps } from "next/app";
 import * as React from "react";
 import CookieConsent from "react-cookie-consent";
-import { PageWrapper } from "ui";
 
 import { BaseLayout } from "components/_core/base-layout";
+import { PageWrapper } from "components/_core/page-wrapper";
 import { useUserState } from "state/users";
 
 Sentry.init({
