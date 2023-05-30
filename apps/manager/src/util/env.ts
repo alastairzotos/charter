@@ -5,5 +5,5 @@ export const getEnv = () => ({
   fbAppId: getConfig().publicRuntimeConfig.NEXT_PUBLIC_FB_APP_ID as string,
   googleClientId: getConfig().publicRuntimeConfig
     .NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
-  sentryDsn: getConfig().publicRuntimeConfig.NEXT_PUBLIC_SENTRY_DSN,
+  sentryDsn: getConfig().publicRuntimeConfig.NEXT_PUBLIC_SENTRY_DSN as string,
 });

@@ -8,4 +8,5 @@ export const getEnv = () => ({
   awsCloudfrontDomain: getConfig().publicRuntimeConfig
     .NEXT_PUBLIC_AWS_CLOUDFRONT_DOMAIN as string,
   instanceId: getConfig().publicRuntimeConfig.NEXT_PUBLIC_INSTANCE_ID as string,
+  sentryDsn: getConfig().publicRuntimeConfig.NEXT_PUBLIC_SENTRY_DSN as string,
 });
