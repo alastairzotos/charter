@@ -197,6 +197,11 @@ export class TemplatesService {
         site: {
           name: operator.instance.name,
           url: operator.instance.url,
+          resetPasswordUrl: this.linkToManager(
+            `/reset-password?email=${encodeURIComponent(
+              operator.owner.email,
+            )}&defaultPassword=1`,
+          ),
         },
         app: {
           url: '',

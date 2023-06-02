@@ -103,6 +103,7 @@ export interface OperatorPromotedProps {
   site: {
     name: string;
     url: string;
+    resetPasswordUrl: string;
   };
   app: {
     url: string;

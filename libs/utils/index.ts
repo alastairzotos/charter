@@ -2,7 +2,6 @@ import {
   BookingDto,
   BookingNoId,
   BookingPriceDetails,
-  OperatorDto,
   PricingStrategyType,
   ServiceNoId,
 } from "dtos";
@@ -300,3 +299,5 @@ export const showBookingDetailsForm = (service: ServiceNoId) => {
 
   return showPriceDetailsForm || showBookingPeoplePrompt;
 };
+
+export const DEFAULT_OPERATOR_PASSWORD = "password";

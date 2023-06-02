@@ -7,14 +7,19 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
+import { DEFAULT_OPERATOR_PASSWORD } from "utils";
 
 import { useUserState } from "state/users";
 
 export const ResetPasswordForm: React.FC = () => {
   const router = useRouter();
 
-  const [email, setEmail] = React.useState("");
-  const [oldPassword, setOldPassword] = React.useState("");
+  const [email, setEmail] = React.useState(
+    (router.query.email as string) || ""
+  );
+  const [oldPassword, setOldPassword] = React.useState(
+    router.query.defaultPassword === "1" ? DEFAULT_OPERATOR_PASSWORD : ""
+  );
   const [newPassword, setNewPassword] = React.useState("");
 
   const [resetPasswordStatus, resetPassword] = useUserState((s) => [
