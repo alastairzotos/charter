@@ -78,7 +78,7 @@ export class ServicesRepository {
   }
 
   async getServicesWithOperatorsBySchemaId(schemaId: string, instance: string) {
-    return await this.servicesModel
+    const services = await this.servicesModel
       .find({ instance, serviceSchema: schemaId })
       .populate('operator')
       .populate({
@@ -87,14 +87,19 @@ export class ServicesRepository {
           path: 'schemaCategory',
         },
       });
+
+    return services.filter((service) => !!service.operator);
   }
 
   async getServicesWithOperatorsBySchemaIds(
     schemaIds: string[],
     instance: string,
   ) {
-    return await this.servicesModel
-      .find({ instance, serviceSchema: { $in: schemaIds } })
+    const services = await this.servicesModel
+      .find({
+        instance,
+        serviceSchema: { $in: schemaIds },
+      })
       .populate('operator')
       .populate({
         path: 'serviceSchema',
@@ -102,12 +107,16 @@ export class ServicesRepository {
           path: 'schemaCategory',
         },
       });
+
+    return services.filter((service) => !!service.operator);
   }
 
   async getServicesBySchemaIds(schemaIds: string[], instance: string) {
-    return await this.servicesModel
+    const services = await this.servicesModel
       .find({ instance, serviceSchema: { $in: schemaIds } })
       .populate('operator');
+
+    return services.filter((service) => !!service.operator);
   }
 
   async createService(service: ServiceNoId) {
