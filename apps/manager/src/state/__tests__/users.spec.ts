@@ -28,6 +28,9 @@ describe("User state", () => {
     registerUser: jest.fn(
       async () => new Promise((resolve) => resolve({ accessToken: "123" }))
     ),
+    resetPassword: jest.fn(
+      async () => new Promise((resolve) => resolve({ accessToken: "123" }))
+    ),
     deleteUser: jest.fn(async () => new Promise((resolve) => resolve())),
     refreshToken: jest.fn(async () => Promise.resolve("")),
   };
