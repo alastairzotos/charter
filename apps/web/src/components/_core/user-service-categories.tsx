@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { ServiceSchemaCategoryDto } from "dtos";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { Titled } from "ui";
 import { urls } from "urls";
@@ -19,16 +20,20 @@ interface Props {
 }
 
 export const ServiceCategories: React.FC<Props> = ({ schemaCategories }) => {
+  const router = useRouter();
+
   return (
     <Titled title="Available services" center>
       <Grid container gap={2} sx={{ mt: 3 }} justifyContent="center">
         {schemaCategories.map((category) => (
           <Grid key={category._id} item xs={12} md={3}>
             <Card
+              onClick={() => router.push(urls.user.serviceCategory(category))}
               sx={{
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
+                cursor: "pointer",
               }}
             >
               <CardMedia
@@ -43,14 +48,6 @@ export const ServiceCategories: React.FC<Props> = ({ schemaCategories }) => {
                   {category.description}
                 </Typography>
               </CardContent>
-              <CardActions>
-                <Button
-                  component={Link}
-                  href={urls.user.serviceCategory(category)}
-                >
-                  Browse
-                </Button>
-              </CardActions>
             </Card>
           </Grid>
         ))}

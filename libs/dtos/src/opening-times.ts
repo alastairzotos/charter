@@ -25,8 +25,8 @@ export const dayNumberToDayMap: Record<number, Day> = {
 export const defaultOpeningDayTime: OpeningHoursDto = {
   allDay: true,
   closed: false,
-  openingTime: "09:00",
-  closingTime: "21:00",
+  openingTime: "10:00",
+  closingTime: "18:00",
 };
 
 export type OpeningTimesDto = Record<Day, OpeningHoursDto>;
