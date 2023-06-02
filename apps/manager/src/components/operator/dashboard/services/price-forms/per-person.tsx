@@ -2,7 +2,10 @@ import { Field } from "formik";
 import { TextField } from "formik-mui";
 import React from "react";
 
-import { PriceFormProps } from "components/operator/dashboard/services/price-forms/props";
+import {
+  PriceFormProps,
+  pricingInputProps,
+} from "components/operator/dashboard/services/price-forms/props";
 
 export const PerPersonPriceForm: React.FC<PriceFormProps> = () => {
   return (
@@ -11,6 +14,7 @@ export const PerPersonPriceForm: React.FC<PriceFormProps> = () => {
       type="number"
       name="price.perPerson.price"
       label="Price per person"
+      InputProps={pricingInputProps}
     />
   );
 };

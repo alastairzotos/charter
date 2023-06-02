@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { DefaultErrorFallback, StatusSwitch } from "ui";
-import { noRedirect, urls } from "urls";
+import { noRedirect } from "urls";
 
 import { AdminFooter } from "components/_core/admin-footer";
 import { BaseAppBar } from "components/_core/app-bar/base-app-bar";

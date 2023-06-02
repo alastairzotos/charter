@@ -11,7 +11,10 @@ import { Box } from "@mui/system";
 import { PriceTierDto } from "dtos";
 import React from "react";
 
-import { PriceFormProps } from "components/operator/dashboard/services/price-forms/props";
+import {
+  PriceFormProps,
+  pricingInputProps,
+} from "components/operator/dashboard/services/price-forms/props";
 
 export const TieredPriceForm: React.FC<PriceFormProps> = ({
   pricing,
@@ -88,6 +91,7 @@ export const TieredPriceForm: React.FC<PriceFormProps> = ({
                 setTierPrice(index, parseFloat(e.currentTarget.value))
               }
               sx={{ flexGrow: 0 }}
+              InputProps={pricingInputProps}
             />
             <div>
               <IconButton onClick={() => removeTier(index)}>
