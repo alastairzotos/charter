@@ -1,4 +1,4 @@
-import { Switch, useTheme } from "@mui/material";
+import { Switch } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
 
@@ -53,12 +53,11 @@ const StyledSwitch = styled(Switch)(({ theme }) => ({
 }));
 
 export const DarkModeSwitch: React.FC = () => {
-  const theme = useTheme();
   const colourMode = useColourMode();
 
   return (
     <StyledSwitch
-      checked={theme.palette.mode === "dark"}
+      checked={colourMode.colourMode === "dark"}
       onClick={() => colourMode.toggleColourMode()}
     />
   );

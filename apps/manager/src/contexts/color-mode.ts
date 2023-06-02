@@ -1,10 +1,12 @@
 import * as React from "react";
 
-export interface ColourModeActions {
+export interface ColourModeState {
+  colourMode: "light" | "dark";
   toggleColourMode: () => void;
 }
 
-const ColorModeContext = React.createContext<ColourModeActions>({
+const ColorModeContext = React.createContext<ColourModeState>({
+  colourMode: "light",
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   toggleColourMode: () => {},
 });

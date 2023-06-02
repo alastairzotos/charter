@@ -4,26 +4,13 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme } from "@mui/material/styles";
 import React from "react";
 
-import {
-  ColorModeContextProvider,
-  ColourModeActions,
-} from "contexts/color-mode";
+import { ColorModeContextProvider } from "contexts/color-mode";
 import { ColourMode, getColourMode, setColourMode } from "util/colour";
 
 export const PageWrapper: React.FC<React.PropsWithChildren> = ({
   children,
 }) => {
   const [mode, setMode] = React.useState<ColourMode>(getColourMode());
-  const colorMode = React.useMemo<ColourModeActions>(
-    () => ({
-      toggleColourMode: () => {
-        const newMode = mode === "light" ? "dark" : "light";
-        setMode(newMode);
-        setColourMode(newMode);
-      },
-    }),
-    []
-  );
 
   const theme = React.useMemo(
     () =>
@@ -49,7 +36,16 @@ export const PageWrapper: React.FC<React.PropsWithChildren> = ({
   );
 
   return (
-    <ColorModeContextProvider value={colorMode}>
+    <ColorModeContextProvider
+      value={{
+        colourMode: mode,
+        toggleColourMode: () => {
+          const newMode = mode === "light" ? "dark" : "light";
+          setMode(newMode);
+          setColourMode(newMode);
+        },
+      }}
+    >
       <ThemeProvider theme={theme}>
         <CssBaseline />
 
