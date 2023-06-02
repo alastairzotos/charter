@@ -56,7 +56,10 @@ export const autoCreateOperatorAccounts = async (app: INestApplication) => {
       });
 
       const owner = await usersService.getUserByEmail(operator.email);
-      await operatorsService.updateOperator(operator._id, { owner });
+      await operatorsService.updateOperator(operator._id, {
+        owner,
+        slug: createOperatorSlug(operator),
+      });
 
       console.log('Finished', operator.name);
     }
