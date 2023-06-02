@@ -8,6 +8,7 @@ import { ServiceSchemaCategoryRepository } from 'features/service-schema-categor
 import { ServiceSchemaRepository } from 'features/service-schemas/service-schema.repository';
 import { ServicesRepository } from 'features/services/services.repository';
 import { UsersService } from 'features/users/users.service';
+import { createOperatorSlug } from 'urls';
 import { DEFAULT_OPERATOR_PASSWORD } from 'utils';
 
 export default null;
@@ -46,8 +47,6 @@ export const autoCreateOperatorAccounts = async (app: INestApplication) => {
 
   let operators = await operatorsRepo.getOperators('644e8d8be3d3eeff3c2bffcd');
 
-  operators = operators.filter((op) => op.slug === 'corfu-travel-guide-test');
-
   for (const operator of operators.map((op) => op.toObject())) {
     if (!operator.owner) {
       await usersService.registerUser({
@@ -61,5 +60,20 @@ export const autoCreateOperatorAccounts = async (app: INestApplication) => {
 
       console.log('Finished', operator.name);
     }
+  }
+};
+
+export const fixSlugs = async (app: INestApplication) => {
+  const { operatorsRepo } = await getRepos(app);
+
+  const ops = await operatorsRepo.getOperators('644e8d8be3d3eeff3c2bffcd');
+
+  for (const op of ops.map((op) => op.toObject())) {
+    await operatorsRepo.updateOperator(op._id, {
+      ...op,
+      slug: createOperatorSlug(op),
+    });
+
+    console.log(op.name);
   }
 };
