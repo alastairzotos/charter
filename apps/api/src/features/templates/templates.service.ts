@@ -20,6 +20,7 @@ import { urls } from 'urls';
 import { EmailData } from 'integrations/email/email.models';
 import { getReadableBookingDetails } from 'utils';
 import { QRCodeService } from 'features/qr-code/qr-code.service';
+import { EnvService } from 'environment/environment.service';
 
 @Injectable()
 export class TemplatesService {
@@ -27,7 +28,10 @@ export class TemplatesService {
   private styles = this.loadStyles();
   private templates = this.loadTemplates();
 
-  constructor(private readonly qrCodeService: QRCodeService) {}
+  constructor(
+    private readonly envService: EnvService,
+    private readonly qrCodeService: QRCodeService,
+  ) {}
 
   bookingMadeUser(booking: BookingDto): EmailData {
     return {
@@ -149,7 +153,7 @@ export class TemplatesService {
         },
         booking: {
           date: booking.date,
-          url: this.link(booking.instance, urls.operators.booking(booking._id)),
+          url: this.linkToManager(urls.operators.booking(booking._id)),
           details: Object.keys(bookingDetails).map((key) => ({
             key,
             value: bookingDetails[key],
@@ -173,7 +177,7 @@ export class TemplatesService {
         },
         booking: {
           date: booking.date,
-          url: this.link(booking.instance, urls.operators.booking(booking._id)),
+          url: this.linkToManager(urls.operators.booking(booking._id)),
           details: Object.keys(bookingDetails).map((key) => ({
             key,
             value: bookingDetails[key],
@@ -302,5 +306,9 @@ export class TemplatesService {
 
   private link(instance: InstanceDto, path?: string) {
     return `${instance.url}${path}`;
+  }
+
+  private linkToManager(path: string) {
+    return `${this.envService.get().managerUrl}${path}`;
   }
 }
