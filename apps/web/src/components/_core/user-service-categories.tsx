@@ -1,7 +1,5 @@
 import {
-  Button,
   Card,
-  CardActions,
   CardContent,
   CardHeader,
   CardMedia,
@@ -9,7 +7,6 @@ import {
   Typography,
 } from "@mui/material";
 import { ServiceSchemaCategoryDto } from "dtos";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { Titled } from "ui";
