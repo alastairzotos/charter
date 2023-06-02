@@ -14,7 +14,9 @@ export class QRCodeService {
   ) {}
 
   async createQRCodeForBooking(booking: BookingDto) {
-    const url = `${booking.instance.url}${urls.operators.booking(booking._id)}`;
+    const url = `${this.env.get().managerUrl}${urls.operators.booking(
+      booking._id,
+    )}`;
 
     await this.s3Service.store(
       getQrCodeFilePathForBooking(booking),

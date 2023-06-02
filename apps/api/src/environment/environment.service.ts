@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class EnvService {
   private readonly env_vars = {
     nodeEnv: process.env.NODE_ENV as string | undefined,
+    managerUrl: process.env.MANAGER_URL as string,
     dbConnectionString: process.env.DB_CONNECTION_STRING as string,
     jwtSigningKey: process.env.JWT_SIGNING_KEY as string,
     awsAccessKeyId: process.env.AWS_ACCESSKEY_ID as string,
