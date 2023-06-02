@@ -48,6 +48,13 @@ export class UsersRepository {
     });
   }
 
+  async updatePassword(id: string, hashedPassword: string) {
+    return await this.userModel.findOneAndUpdate(
+      { _id: id },
+      { hashedPassword },
+    );
+  }
+
   async setUserRole(id: string, role: UserRole) {
     await this.userModel.findOneAndUpdate({ _id: id }, { role });
   }

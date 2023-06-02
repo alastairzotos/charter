@@ -16,6 +16,7 @@ export interface UserStateValues {
   initialised: boolean;
   registerStatus?: FetchStatus;
   loginStatus?: FetchStatus;
+  resetPasswordStatus?: FetchStatus;
   accessToken?: string;
   loggedInUser?: UserDetails;
   deleteUserStatus?: FetchStatus;
@@ -35,6 +36,11 @@ export interface UserStateActions {
     password: string
   ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
+  resetPassword: (
+    email: string,
+    oldPassword: string,
+    newPassword: string
+  ) => Promise<void>;
   logout: () => void;
 
   deleteUser: () => Promise<boolean>;
@@ -109,6 +115,18 @@ export const createUserState = (
         });
       } catch {
         set({ loginStatus: "error" });
+      }
+    },
+
+    resetPassword: async (email, oldPassword, newPassword) => {
+      try {
+        set({ resetPasswordStatus: "fetching" });
+
+        await userService.resetPassword(email, oldPassword, newPassword);
+
+        set({ resetPasswordStatus: "success" });
+      } catch {
+        set({ resetPasswordStatus: "error" });
       }
     },
 

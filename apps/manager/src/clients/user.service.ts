@@ -3,6 +3,7 @@ import {
   LoginDetails,
   LoginResponse,
   RegisterDetails,
+  ResetPasswordDetails,
 } from "dtos";
 
 import { httpClient } from "clients/http.client";
@@ -24,6 +25,20 @@ export class UserService {
       { data: LoginResponse },
       RegisterDetails
     >("/users", { givenName, email, password });
+
+    return data;
+  }
+
+  async resetPassword(
+    email: string,
+    oldPassword: string,
+    newPassword: string
+  ): Promise<LoginResponse> {
+    const { data } = await httpClient.post<
+      any,
+      { data: LoginResponse },
+      ResetPasswordDetails
+    >("/users/reset-password", { email, oldPassword, newPassword });
 
     return data;
   }

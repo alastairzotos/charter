@@ -21,6 +21,12 @@ export interface RegisterDetails extends UserDetails {
   password: string;
 }
 
+export interface ResetPasswordDetails {
+  email: string;
+  oldPassword: string;
+  newPassword: string;
+}
+
 export interface LoggedInUserDetails extends UserDetails {
   _id: string;
 }

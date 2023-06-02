@@ -38,7 +38,6 @@ const LoginFormInner: React.FC = () => {
 
   const handleEmailPasswordLogin = async () => {
     await basicLogin(email, password);
-    router.push(urls.home());
   };
 
   const handleGoogleLogin = useGoogleLogin({

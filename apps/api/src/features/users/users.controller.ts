@@ -19,6 +19,7 @@ import {
   RegisterDetails,
   LoginDetails,
   OAuthUserInfo,
+  ResetPasswordDetails,
 } from 'dtos';
 
 import { UsersService } from 'features/users/users.service';
@@ -59,6 +60,14 @@ export class UsersController {
   @Roles('all')
   async registerUser(@Body() user: RegisterDetails): Promise<LoginResponse> {
     return await this.usersService.registerUser(user);
+  }
+
+  @Post('reset-password')
+  @Roles('all')
+  async resetPassword(
+    @Body() details: ResetPasswordDetails,
+  ): Promise<LoginResponse> {
+    return await this.usersService.resetPassword(details);
   }
 
   @Post('login')

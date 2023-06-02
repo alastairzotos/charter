@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { DefaultErrorFallback, StatusSwitch } from "ui";
-import { urls } from "urls";
+import { noRedirect, urls } from "urls";
 
 import { AdminFooter } from "components/_core/admin-footer";
 import { BaseAppBar } from "components/_core/app-bar/base-app-bar";
@@ -37,13 +37,7 @@ export const BaseLayout: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const router = useRouter();
 
-  const hideDrawerUrls = [
-    urls.home(),
-    urls.login(),
-    urls.register(),
-    urls.account(),
-  ];
-  const showDrawer = !hideDrawerUrls.includes(router.pathname);
+  const showDrawer = !noRedirect.includes(router.pathname);
 
   const [getConfigurationStatus, getConfiguration, configuration] =
     useGetConfiguration((s) => [s.status, s.request, s.value]);

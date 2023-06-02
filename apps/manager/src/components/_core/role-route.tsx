@@ -1,7 +1,7 @@
 import { UserDetails, UserRole } from "dtos";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect } from "react";
-import { urls } from "urls";
+import { noRedirect, urls } from "urls";
 
 import { useUserState } from "state/users";
 
@@ -12,8 +12,13 @@ interface Props {
 const shouldRedirect = (
   role: UserRole,
   initialised: boolean,
-  user: UserDetails | undefined
+  user: UserDetails | undefined,
+  path: string
 ) => {
+  if (noRedirect.includes(path)) {
+    return false;
+  }
+
   if (!initialised) {
     return false;
   }
@@ -37,7 +42,7 @@ export const RoleRoute: React.FC<PropsWithChildren<Props>> = ({
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      if (shouldRedirect(role, initialised, user)) {
+      if (shouldRedirect(role, initialised, user, router.pathname)) {
         router.push(urls.home());
       }
     }

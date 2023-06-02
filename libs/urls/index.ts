@@ -12,6 +12,7 @@ export const urls = {
   login: () => "/login",
   register: () => "/register",
   account: () => "/account",
+  resetPassword: () => "/reset-password",
   admin: {
     home: () => "/admin",
     operators: () => "/admin/operators",
@@ -70,3 +71,11 @@ export const createServiceSlug = (service: Partial<ServiceDto>) =>
   `${paramCase(service.name || "")}-by-${paramCase(
     service?.operator?.name || ""
   )}`;
+
+export const noRedirect = [
+  urls.home(),
+  urls.login(),
+  urls.register(),
+  urls.account(),
+  urls.resetPassword(),
+];

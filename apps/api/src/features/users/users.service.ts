@@ -6,6 +6,7 @@ import {
   RegisterDetails,
   LoginDetails,
   OAuthUserInfo,
+  ResetPasswordDetails,
 } from 'dtos';
 import * as jwt from 'jsonwebtoken';
 
@@ -49,6 +50,33 @@ export class UsersService {
     }
 
     return false;
+  }
+
+  async resetPassword({
+    email,
+    oldPassword,
+    newPassword,
+  }: ResetPasswordDetails): Promise<LoginResponse> {
+    const user = await this.usersRepository.getUserByEmailWithPassword(email);
+
+    if (!user) {
+      return null;
+    }
+
+    const pwCheck = await bcrypt.compare(oldPassword, user.hashedPassword);
+
+    if (!pwCheck) {
+      return null;
+    }
+
+    await this.usersRepository.updatePassword(
+      user._id,
+      await bcrypt.hash(newPassword, 10),
+    );
+
+    return {
+      accessToken: this.generateAccessToken(user),
+    };
   }
 
   async registerUser({
