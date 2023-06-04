@@ -21,6 +21,10 @@ export class UsersRepository {
     });
   }
 
+  async getSuperAdmins() {
+    return await this.userModel.find({ role: 'super-admin' });
+  }
+
   async getUserById(id: string) {
     return await this.userModel.findById(id);
   }

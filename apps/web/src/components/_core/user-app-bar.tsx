@@ -1,4 +1,5 @@
-import { Toolbar } from "@mui/material";
+import HelpIcon from "@mui/icons-material/Help";
+import { Box, Button, Toolbar } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
@@ -30,7 +31,23 @@ export const UserAppBar: React.FC = () => {
           </Link>
         }
       >
-        <ServiceSearch sx={{ ml: 3, mr: 3, width: 600, minWidth: 150 }} />
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          <ServiceSearch sx={{ ml: 3, mr: 3, width: 600, minWidth: 150 }} />
+          <Button
+            color="inherit"
+            LinkComponent={Link}
+            href={urls.user.feedback()}
+          >
+            Feedback
+            <HelpIcon sx={{ ml: 1, fontSize: "1.2em" }} />
+          </Button>
+        </Box>
       </AppBarBase>
       <Toolbar />
     </>

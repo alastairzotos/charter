@@ -13,9 +13,10 @@ import {
   BookingMadeUserPendingProps,
   BookingMadeUserProps,
   BookingRejectedUserProps,
+  FeedbackAddedProps,
   OperatorPromotedProps,
 } from 'features/templates/templates.models';
-import { BookingDto, InstanceDto, OperatorDto } from 'dtos';
+import { BookingDto, FeedbackNoId, InstanceDto, OperatorDto } from 'dtos';
 import { urls } from 'urls';
 import { EmailData } from 'integrations/email/email.models';
 import { getReadableBookingDetails } from 'utils';
@@ -237,6 +238,13 @@ export class TemplatesService {
     };
   }
 
+  feedbackAdded({ name, email, text }: FeedbackNoId): EmailData {
+    return {
+      subject: '[FEEDBACK ADDED] You have Charter feedback',
+      content: this.templates.feedbackAdded({ name, email, text }),
+    };
+  }
+
   private loadTemplates() {
     this.loadPartials();
 
@@ -263,6 +271,7 @@ export class TemplatesService {
         this.compileTemplate<OperatorPromotedProps>('operator-promoted'),
       bookingMadeAdmin:
         this.compileTemplate<BookingMadeAdminProps>('booking-made-admin'),
+      feedbackAdded: this.compileTemplate<FeedbackAddedProps>('feedback-added'),
     };
   }
 

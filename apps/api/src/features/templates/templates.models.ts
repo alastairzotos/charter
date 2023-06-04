@@ -124,3 +124,9 @@ export interface BookingMadeAdminProps {
     details: Array<{ key: string; value: string }>;
   };
 }
+
+export interface FeedbackAddedProps {
+  name: string;
+  email: string;
+  text: string;
+}

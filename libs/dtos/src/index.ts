@@ -10,3 +10,4 @@ export * from "./search";
 export * from "./opening-times";
 export * from "./instance";
 export * from "./configuration";
+export * from "./feedback";

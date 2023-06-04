@@ -6,6 +6,7 @@ import { EnvModule } from 'environment/environment.module';
 import { EnvService } from 'environment/environment.service';
 import { BookingsModule } from 'features/bookings/bookings.module';
 import { ConfigurationModule } from 'features/configuration/configuration.module';
+import { FeedbackModule } from 'features/feedback/feedback.module';
 import { HealthModule } from 'features/health/health.module';
 import { ImagesModule } from 'features/images/images.module';
 import { InstancesModule } from 'features/instances/instances.module';
@@ -47,6 +48,7 @@ import { RawBodyMiddleware } from 'middleware/raw-body.middleware';
     NotificationsModule,
     InstancesModule,
     ConfigurationModule,
+    FeedbackModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],

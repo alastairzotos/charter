@@ -39,6 +39,7 @@ export const urls = {
     terms: () => "/legal/terms",
     privacy: () => "/legal/privacy",
     cancellation: () => "/legal/cancellation",
+    feedback: () => "/feedback",
   },
   operators: {
     home: () => "/operator-admin",
