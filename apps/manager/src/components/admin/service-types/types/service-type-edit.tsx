@@ -1,5 +1,4 @@
 import { Typography } from "@mui/material";
-import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { StatusSwitch } from "ui";
 
@@ -12,11 +11,10 @@ import {
 
 interface Props {
   id: string;
+  onDelete: () => void;
 }
 
-export const ServiceTypeEdit: React.FC<Props> = ({ id }) => {
-  const router = useRouter();
-
+export const ServiceTypeEdit: React.FC<Props> = ({ id, onDelete }) => {
   const [loadSchemaCategoryStatus, loadSchemaCategory, schemaCategory] =
     useLoadServiceSchemaCategory((s) => [s.status, s.request, s.value]);
   const [updateSchemaCategoryStatus, updateSchemaCategory] =
@@ -32,7 +30,7 @@ export const ServiceTypeEdit: React.FC<Props> = ({ id }) => {
 
   const handleDelete = async (id: string) => {
     await deleteSchemaCategory(id);
-    router.reload();
+    onDelete();
   };
 
   return (

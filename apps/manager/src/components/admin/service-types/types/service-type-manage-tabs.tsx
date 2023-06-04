@@ -6,15 +6,16 @@ import { ServiceTypeVariants } from "components/admin/service-types/variants/ser
 
 interface Props {
   id: string;
+  onDelete: () => void;
 }
 
-export const ServiceTypeManageTabs: React.FC<Props> = ({ id }) => {
+export const ServiceTypeManageTabs: React.FC<Props> = ({ id, onDelete }) => {
   return (
     <TabsProvider
       tabs={[
         {
           label: "Edit",
-          content: <ServiceTypeEdit id={id} />,
+          content: <ServiceTypeEdit id={id} onDelete={onDelete} />,
         },
         {
           label: "Variants",

@@ -34,7 +34,9 @@ export const ServiceTypesList: React.FC = () => {
             onCancel={onCancel}
           />
         )}
-        editForm={(id) => <ServiceTypeManageTabs id={id} />}
+        editForm={(id) => (
+          <ServiceTypeManageTabs id={id} onDelete={loadCategories} />
+        )}
       />
     </StatusSwitch>
   );
