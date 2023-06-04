@@ -32,6 +32,10 @@ export class ServiceSchemaRepository {
       .populate('schemaCategory');
   }
 
+  async deleteServiceSchemasByCategoryId(categoryId: string) {
+    await this.serviceSchemasModel.deleteMany({ schemaCategory: categoryId });
+  }
+
   async getServicesSchemasByCategoryIds(
     categoryIds: string[],
     instance: string,

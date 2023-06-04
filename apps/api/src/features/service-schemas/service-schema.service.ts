@@ -27,6 +27,12 @@ export class ServiceSchemaService {
     );
   }
 
+  async deleteServiceSchemasByCategoryId(categoryId: string) {
+    await this.serviceSchemaRepository.deleteServiceSchemasByCategoryId(
+      categoryId,
+    );
+  }
+
   async getServiceSchemasByCategoryIds(
     categoryIds: string[],
     instance: string,

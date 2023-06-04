@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ServiceSchemaCategoryDto, ServiceSchemaCategoryNoId } from 'dtos';
 import { ServiceSchemaCategoryRepository } from 'features/service-schema-categories/service-schema-categories.repository';
+import { ServiceSchemaService } from 'features/service-schemas/service-schema.service';
 
 @Injectable()
 export class ServiceSchemaCategoryService {
-  constructor(private readonly repo: ServiceSchemaCategoryRepository) {}
+  constructor(
+    private readonly serviceSchemaService: ServiceSchemaService,
+    private readonly repo: ServiceSchemaCategoryRepository,
+  ) {}
 
   async getServiceSchemaCategories(instance: string) {
     return await this.repo.getServiceSchemaCategories(instance);
@@ -29,6 +33,8 @@ export class ServiceSchemaCategoryService {
   }
 
   async deleteServiceSchemaCategory(id: string) {
+    await this.serviceSchemaService.deleteServiceSchemasByCategoryId(id);
+
     return await this.repo.deleteServiceSchemaCategory(id);
   }
 
