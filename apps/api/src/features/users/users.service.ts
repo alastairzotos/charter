@@ -61,6 +61,10 @@ export class UsersService {
     oldPassword,
     newPassword,
   }: ResetPasswordDetails): Promise<LoginResponse> {
+    email = email.trim();
+    oldPassword = oldPassword.trim();
+    newPassword = newPassword.trim();
+
     const user = await this.usersRepository.getUserByEmailWithPassword(email);
 
     if (!user) {
@@ -88,6 +92,10 @@ export class UsersService {
     email,
     password,
   }: RegisterDetails): Promise<LoginResponse> {
+    givenName = givenName.trim();
+    email = email.trim();
+    password = password.trim();
+
     const user = await this.usersRepository.registerUser(
       {
         givenName,
@@ -113,6 +121,9 @@ export class UsersService {
     email,
     password,
   }: LoginDetails): Promise<LoginResponse | null> {
+    email = email.trim();
+    password = password.trim();
+
     const user = await this.usersRepository.getUserByEmailWithPassword(email);
 
     if (!user) {
