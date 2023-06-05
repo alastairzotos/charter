@@ -49,6 +49,10 @@ export class ServicesRepository {
     });
   }
 
+  async getServicesForSchemaIncludingHidden(schemaId: string) {
+    return await this.servicesModel.find({ serviceSchema: schemaId });
+  }
+
   async getServices(instance: string) {
     return await this.servicesModel
       .find({ instance })
@@ -134,6 +138,14 @@ export class ServicesRepository {
 
   async deleteService(id: string) {
     return await this.servicesModel.findOneAndDelete({ _id: id });
+  }
+
+  async deleteServicesForOperator(operatorId: string) {
+    await this.servicesModel.deleteMany({ operator: operatorId });
+  }
+
+  async deleteServicesForSchema(schemaId: string) {
+    await this.servicesModel.deleteMany({ serviceSchema: schemaId });
   }
 
   async getServicesBySchema(schemaId: string) {

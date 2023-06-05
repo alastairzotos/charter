@@ -27,12 +27,6 @@ export class ServiceSchemaService {
     );
   }
 
-  async deleteServiceSchemasByCategoryId(categoryId: string) {
-    await this.serviceSchemaRepository.deleteServiceSchemasByCategoryId(
-      categoryId,
-    );
-  }
-
   async getServiceSchemasByCategoryIds(
     categoryIds: string[],
     instance: string,
@@ -72,7 +66,23 @@ export class ServiceSchemaService {
   }
 
   async deleteServiceSchema(id: string) {
+    await this.servicesService.deleteServicesForSchema(id);
     await this.serviceSchemaRepository.deleteServiceSchema(id);
+  }
+
+  async deleteServiceSchemasForServiceSchemaCategory(categoryId: string) {
+    const schemas =
+      await this.serviceSchemaRepository.getServicesSchemasByCategoryIdNoInstance(
+        categoryId,
+      );
+
+    for (const schema of schemas.map((s) => s.toObject())) {
+      await this.servicesService.deleteServicesForSchema(schema._id);
+    }
+
+    await this.serviceSchemaRepository.deleteServiceSchemasByCategoryId(
+      categoryId,
+    );
   }
 
   async searchServiceSchemas(term: string, instance: string) {

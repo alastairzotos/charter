@@ -44,7 +44,12 @@ export const ServiceTypeVariants: React.FC<Props> = ({ categoryId }) => {
                 onCancel={onCancel}
               />
             )}
-            editForm={(id) => <ServiceTypeVariantEdit id={id} />}
+            editForm={(id) => (
+              <ServiceTypeVariantEdit
+                id={id}
+                onDelete={() => getVariants(categoryId)}
+              />
+            )}
           />
         </Box>
       )}

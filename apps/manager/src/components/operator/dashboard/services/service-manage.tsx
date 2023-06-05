@@ -46,7 +46,7 @@ export const ManageServiceForm: React.FC<Props> = (props) => {
         validationSchema={serviceValidationSchema}
         onDelete={handleDeleteService}
         deleteModalTitle="Delete service?"
-        deleteModalText="Are you sure you want to delete this service?"
+        deleteModalText="Are you sure you want to delete this service? This cannot be undone and will delete all related bookings."
         tabs={({ values, setValues, isSubmitting }) => [
           {
             label: "Basics",

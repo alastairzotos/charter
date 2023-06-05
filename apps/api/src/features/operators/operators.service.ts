@@ -106,6 +106,7 @@ export class OperatorsService {
   }
 
   async deleteOperator(id: string) {
+    await this.servicesService.deleteServicesForOperator(id);
     await this.operatorsRepo.deleteOperator(id);
   }
 

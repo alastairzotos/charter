@@ -15,9 +15,10 @@ import {
 
 interface Props {
   id: string;
+  onDelete: () => void;
 }
 
-export const ServiceTypeVariantEdit: React.FC<Props> = ({ id }) => {
+export const ServiceTypeVariantEdit: React.FC<Props> = ({ id, onDelete }) => {
   const router = useRouter();
 
   const [loadSchemaStatus, loadSchema, schema] = useLoadServiceSchemaById(
@@ -44,6 +45,7 @@ export const ServiceTypeVariantEdit: React.FC<Props> = ({ id }) => {
 
   const handleDelete = async () => {
     await deleteSchema(id);
+    onDelete();
   };
 
   return (

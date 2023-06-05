@@ -16,7 +16,7 @@ export const ServiceTypeManage: React.FC<
     <ResourceForm
       {...props}
       deleteModalTitle="Delete service type?"
-      deleteModalText="Are you sure you want to delete this service type?"
+      deleteModalText="Are you sure you want to delete this service type? This cannot be undone and will delete all related variants, services and bookings."
       tabs={({ isSubmitting, values, setValues }) => [
         {
           label: "",

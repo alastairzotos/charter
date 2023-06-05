@@ -39,7 +39,7 @@ export const ManageOperatorForm: React.FC<ResourceFormProps<OperatorNoId>> = (
       validationSchema={operatorValidationSchema}
       onDelete={isOperatorDeletable() ? handleDeleteOperator : undefined}
       deleteModalTitle="Delete operator?"
-      deleteModalText="Are you sure you want to delete this operator?"
+      deleteModalText="Are you sure you want to delete this operator? This cannot be undone and will also remove all related services and bookings."
       tabs={({ isSubmitting, values, setValues }) => [
         {
           label: "Basics",

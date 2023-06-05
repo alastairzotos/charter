@@ -240,4 +240,8 @@ export class BookingsService {
   async setBookingFulfillment(id: string, fulfilled: boolean) {
     await this.bookingsRepository.setBookingFulfillment(id, fulfilled);
   }
+
+  async deleteBookingsForService(serviceId: string) {
+    await this.bookingsRepository.deleteBookingsForService(serviceId);
+  }
 }

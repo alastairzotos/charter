@@ -6,6 +6,7 @@ import {
   ServiceNoId,
   ServiceSchemaDto,
 } from 'dtos';
+import { BookingsService } from 'features/bookings/bookings.service';
 
 import { OperatorsService } from 'features/operators/operators.service';
 import { ServiceSchemaCategoryService } from 'features/service-schema-categories/service-schema-categories.service';
@@ -21,6 +22,8 @@ export class ServicesService {
     private readonly operatorsService: OperatorsService,
     private readonly serviceSchemaService: ServiceSchemaService,
     private readonly categoriesService: ServiceSchemaCategoryService,
+    @Inject(forwardRef(() => BookingsService))
+    private readonly bookingsService: BookingsService,
     private readonly servicesRepository: ServicesRepository,
   ) {}
 
@@ -83,7 +86,34 @@ export class ServicesService {
   }
 
   async deleteService(id: string) {
+    await this.bookingsService.deleteBookingsForService(id);
     return await this.servicesRepository.deleteService(id);
+  }
+
+  async deleteServicesForOperator(operatorId: string) {
+    const services =
+      await this.servicesRepository.getServicesForOperatorIncludingHidden(
+        operatorId,
+      );
+
+    for (const service of services.map((s) => s.toObject())) {
+      await this.bookingsService.deleteBookingsForService(service._id);
+    }
+
+    await this.servicesRepository.deleteServicesForOperator(operatorId);
+  }
+
+  async deleteServicesForSchema(schemaId: string) {
+    const services =
+      await this.servicesRepository.getServicesForOperatorIncludingHidden(
+        schemaId,
+      );
+
+    for (const service of services.map((s) => s.toObject())) {
+      await this.bookingsService.deleteBookingsForService(service._id);
+    }
+
+    await this.servicesRepository.deleteServicesForSchema(schemaId);
   }
 
   async updateServicesWithNewServiceSchema(updatedSchema: ServiceSchemaDto) {

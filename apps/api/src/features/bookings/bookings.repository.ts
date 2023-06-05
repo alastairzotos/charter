@@ -100,6 +100,10 @@ export class BookingsRepository {
     await this.bookingsModel.findOneAndUpdate({ _id: id }, { fulfilled });
   }
 
+  async deleteBookingsForService(serviceId: string) {
+    await this.bookingsModel.deleteMany({ service: serviceId });
+  }
+
   private async populateService(
     doc: Query<
       (Document<unknown, any, Booking> & Booking & Required<{ _id: string }>)[],

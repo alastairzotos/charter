@@ -21,7 +21,7 @@ import { Service, ServiceSchema } from 'schemas/service.schema';
   imports: [
     EnvModule,
     OperatorsModule,
-    ServicesModule,
+    forwardRef(() => ServicesModule),
     UsersModule,
     EmailModule,
     forwardRef(() => PaymentsModule),
