@@ -4,15 +4,18 @@ import React, { useState } from "react";
 
 import { BookingAnalyticsBooking } from "components/admin/bookings/booking-analytics-booking";
 import { BookingAnalyticsListItem } from "components/admin/bookings/booking-analytics-list-item";
+import { IBookingAnalyticsDateType } from "components/admin/bookings/booking-analytics.models";
 
 interface Props {
-  selectedDate: string | null;
+  title: string;
   bookings: BookingDto[];
+  dateType: IBookingAnalyticsDateType;
 }
 
 export const BookingAnalyticsList: React.FC<Props> = ({
-  selectedDate,
+  title,
   bookings,
+  dateType,
 }) => {
   const [selectedBooking, setSelectedBooking] = useState<BookingDto | null>(
     null
@@ -20,7 +23,7 @@ export const BookingAnalyticsList: React.FC<Props> = ({
 
   return (
     <Box>
-      {selectedDate && <Typography>Bookings for {selectedDate}</Typography>}
+      <Typography>{title}</Typography>
 
       <Grid container>
         <Grid item xs={5}>
@@ -35,6 +38,7 @@ export const BookingAnalyticsList: React.FC<Props> = ({
                     !!selectedBooking && selectedBooking._id === booking._id
                   }
                   booking={booking}
+                  dateType={dateType}
                   onClick={() => setSelectedBooking(booking)}
                 />
               ))}

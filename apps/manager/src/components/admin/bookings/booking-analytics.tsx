@@ -24,9 +24,13 @@ import { BookingDto } from "dtos";
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { KeyValues } from "ui";
-import { calculateBookingPrice, createPriceString } from "utils";
+import { calculateBookingPrice, createPriceString, formatDate } from "utils";
 
 import { BookingAnalyticsList } from "components/admin/bookings/booking-analytics-list";
+import {
+  IBookingAnalyticsDateType,
+  getBookingDate,
+} from "components/admin/bookings/booking-analytics.models";
 import { SETTINGS_WIDTH } from "util/misc";
 
 Chart.register(CategoryScale);
@@ -83,7 +87,7 @@ const getLineChartValue = (bookings: BookingDto[], mode: ViewMode) => {
 };
 
 export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
-  const [days, setDays] = useState(30);
+  const [days, setDays] = useState(7);
   const [filteredBookings, setFilteredBookings] = useState<BookingDto[]>([]);
   const [selectedBookings, setSelectedBookings] = useState<BookingDto[]>([]);
   const [selectedBookingDate, setSelectedBookingDate] = useState<string | null>(
@@ -91,23 +95,37 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
   );
   const [mode, setMode] = useState<ViewMode>("Bookings");
   const [onlyShowPaidBookings, setOnlyShowPaidBookings] = useState(true);
+  const [bookingDateType, setBookingDateType] =
+    useState<IBookingAnalyticsDateType>("booked-on");
 
   const setDefaultBookingDate = () =>
     setSelectedBookingDate(`last ${days} days`);
 
   useEffect(() => {
-    const currentBookings =
-      bookings?.filter(
-        (booking) =>
-          !!booking.service &&
-          dayjs(booking.date).isAfter(dayjs().subtract(days, "days")) &&
-          (onlyShowPaidBookings ? booking.status === "confirmed" : true)
-      ) || [];
+    const today = dayjs();
+    const startDate = today.subtract(days, "days");
+
+    const currentBookings = (bookings || []).filter((booking) => {
+      if (!booking.service) {
+        return false;
+      }
+
+      if (onlyShowPaidBookings && booking.status !== "confirmed") {
+        return false;
+      }
+
+      const bookingDate = getBookingDate(booking, bookingDateType);
+
+      return (
+        (bookingDate.isAfter(startDate) || bookingDate.isSame(startDate)) &&
+        (bookingDate.isBefore(today) || bookingDate.isSame(today))
+      );
+    });
 
     setFilteredBookings(currentBookings);
     setSelectedBookings(currentBookings);
     setDefaultBookingDate();
-  }, [days, onlyShowPaidBookings]);
+  }, [days, onlyShowPaidBookings, bookingDateType]);
 
   const handleChangeTimeframe = (e: SelectChangeEvent) => {
     setDays(parseInt(e.target.value, 10));
@@ -131,7 +149,9 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
     const index = elements[0].index;
     if (lineData) {
       setSelectedBookings(Object.values(lineData)[index]);
-      setSelectedBookingDate(Object.keys(lineData)[index]);
+      setSelectedBookingDate(
+        `${formatDate(new Date(Object.keys(lineData)[index]))}`
+      );
     }
   };
 
@@ -139,17 +159,33 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
     <>
       <Box sx={{ maxWidth: SETTINGS_WIDTH }}>
         <Box sx={{ display: "flex", gap: 2 }}>
-          <FormControl sx={{ mb: 3, width: "100%" }}>
-            <InputLabel id="select-label">Time frame</InputLabel>
+          <FormControl sx={{ mb: 3, flex: 1 }}>
+            <InputLabel id="time-frame-label">Time frame</InputLabel>
             <Select
               size="small"
-              labelId="select-label"
+              labelId="time-frame-label"
               label="Time frame"
               value={`${days}`}
               onChange={handleChangeTimeframe}
             >
               <MenuItem value={7}>7 days</MenuItem>
               <MenuItem value={30}>30 days</MenuItem>
+            </Select>
+          </FormControl>
+
+          <FormControl sx={{ mb: 3, flex: 1 }}>
+            <InputLabel id="date-type-label">Date type</InputLabel>
+            <Select
+              size="small"
+              labelId="date-type-label"
+              label="Date type"
+              value={bookingDateType}
+              onChange={(e) =>
+                setBookingDateType(e.target.value as IBookingAnalyticsDateType)
+              }
+            >
+              <MenuItem value={"booked-on"}>Booked on</MenuItem>
+              <MenuItem value={"booked-for"}>Booked for</MenuItem>
             </Select>
           </FormControl>
 
@@ -196,6 +232,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
             </Box>
             <Box sx={{ width: SETTINGS_WIDTH }}>
               <Line
+                style={{ height: 300, width: SETTINGS_WIDTH }}
                 data={{
                   labels: Object.keys(lineData),
                   datasets: [
@@ -212,6 +249,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
                   ],
                 }}
                 options={{
+                  maintainAspectRatio: true,
                   responsive: true,
                   onClick: (_, elements) => handleClickPoint(elements),
                 }}
@@ -223,8 +261,14 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
 
       <Box sx={{ maxWidth: 1000, mt: 2 }}>
         <BookingAnalyticsList
-          selectedDate={selectedBookingDate}
+          title={
+            bookingDateType === "booked-on"
+              ? `Bookings made in ${selectedBookingDate}`
+              : `Bookings made for ${selectedBookingDate}`
+          }
+          // selectedDate={selectedBookingDate}
           bookings={selectedBookings}
+          dateType={bookingDateType}
         />
       </Box>
     </>

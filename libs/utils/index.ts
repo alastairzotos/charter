@@ -5,8 +5,12 @@ import {
   PricingStrategyType,
   ServiceNoId,
 } from "dtos";
+import dayjs from "dayjs";
 
 export type ExtractInterface<T> = Pick<T, keyof T>;
+
+export const formatDate = (date?: Date) =>
+  date ? dayjs(date).format("DD MMM YYYY") : "<Invalid date>";
 
 const calculateBookingPriceBase = (
   bookingDetails: BookingPriceDetails,
@@ -151,8 +155,10 @@ export const getReadableBookingDetails = (
     obj["Phone"] = booking.phoneNumber;
   }
 
+  obj["Booked on date"] = formatDate(booking.bookingDate);
+
   if (schema.defaultBookingFields.includes("date")) {
-    obj["Date"] = booking.date!;
+    obj["Booked for date"] = booking.date!;
   }
 
   if (schema.defaultBookingFields.includes("time")) {
