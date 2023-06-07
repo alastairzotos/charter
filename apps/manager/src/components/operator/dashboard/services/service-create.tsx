@@ -108,7 +108,7 @@ export const ServiceCreate: React.FC<Props> = ({
             serviceSchema,
             numberOfBookings: 0,
             hidden: false,
-            approveBookingBeforePayment: false,
+            approveBookingBeforePayment: true,
             openingTimes: defaultOpeningTimes,
             hasCutoffDays: true,
             cutoffDays: 1,
