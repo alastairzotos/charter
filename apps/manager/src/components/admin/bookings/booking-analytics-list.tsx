@@ -4,18 +4,21 @@ import React, { useState } from "react";
 
 import { BookingAnalyticsBooking } from "components/admin/bookings/booking-analytics-booking";
 import { BookingAnalyticsListItem } from "components/admin/bookings/booking-analytics-list-item";
-import { IBookingAnalyticsDateType } from "components/admin/bookings/booking-analytics.models";
+import { BookingFilterType } from "components/admin/bookings/booking-analytics.models";
+import { BookingAnalyticsCopy } from "components/admin/bookings/booking-analytics-copy";
 
 interface Props {
   title: string;
   bookings: BookingDto[];
-  dateType: IBookingAnalyticsDateType;
+  filterType: BookingFilterType;
+  totalPrice: string;
 }
 
 export const BookingAnalyticsList: React.FC<Props> = ({
   title,
   bookings,
-  dateType,
+  filterType,
+  totalPrice,
 }) => {
   const [selectedBooking, setSelectedBooking] = useState<BookingDto | null>(
     null
@@ -23,7 +26,15 @@ export const BookingAnalyticsList: React.FC<Props> = ({
 
   return (
     <Box>
-      <Typography>{title}</Typography>
+      <Box sx={{ display: "flex", gap: 2 }}>
+        <Typography>{title}</Typography>
+        <BookingAnalyticsCopy
+          title={title}
+          bookings={bookings}
+          filterType={filterType}
+          totalPrice={totalPrice}
+        />
+      </Box>
 
       <Grid container>
         <Grid item xs={5}>
@@ -38,7 +49,7 @@ export const BookingAnalyticsList: React.FC<Props> = ({
                     !!selectedBooking && selectedBooking._id === booking._id
                   }
                   booking={booking}
-                  dateType={dateType}
+                  filterType={filterType}
                   onClick={() => setSelectedBooking(booking)}
                 />
               ))}

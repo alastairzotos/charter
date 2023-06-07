@@ -28,7 +28,7 @@ import { calculateBookingPrice, createPriceString, formatDate } from "utils";
 
 import { BookingAnalyticsList } from "components/admin/bookings/booking-analytics-list";
 import {
-  IBookingAnalyticsDateType,
+  BookingFilterType,
   getBookingDate,
 } from "components/admin/bookings/booking-analytics.models";
 import { SETTINGS_WIDTH } from "util/misc";
@@ -42,6 +42,8 @@ Chart.register(Tooltip);
 interface Props {
   bookings: BookingDto[] | null;
 }
+
+const dayRanges = [2, 7, 14, 28];
 
 const bookingsPerDate = (
   bookings: BookingDto[],
@@ -95,8 +97,8 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
   );
   const [mode, setMode] = useState<ViewMode>("Bookings");
   const [onlyShowPaidBookings, setOnlyShowPaidBookings] = useState(true);
-  const [bookingDateType, setBookingDateType] =
-    useState<IBookingAnalyticsDateType>("booked-on");
+  const [bookingFilterType, setBookingFilterType] =
+    useState<BookingFilterType>("placed");
 
   const setDefaultBookingDate = () =>
     setSelectedBookingDate(`last ${days} days`);
@@ -114,7 +116,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
         return false;
       }
 
-      const bookingDate = getBookingDate(booking, bookingDateType);
+      const bookingDate = getBookingDate(booking, bookingFilterType);
 
       return (
         (bookingDate.isAfter(startDate) || bookingDate.isSame(startDate)) &&
@@ -122,10 +124,18 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
       );
     });
 
+    if (bookingFilterType === "completed") {
+      currentBookings.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)));
+    } else {
+      currentBookings.sort((a, b) =>
+        dayjs(a.bookingDate).diff(dayjs(b.bookingDate))
+      );
+    }
+
     setFilteredBookings(currentBookings);
     setSelectedBookings(currentBookings);
     setDefaultBookingDate();
-  }, [days, onlyShowPaidBookings, bookingDateType]);
+  }, [days, onlyShowPaidBookings, bookingFilterType]);
 
   const handleChangeTimeframe = (e: SelectChangeEvent) => {
     setDays(parseInt(e.target.value, 10));
@@ -168,24 +178,27 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
               value={`${days}`}
               onChange={handleChangeTimeframe}
             >
-              <MenuItem value={7}>7 days</MenuItem>
-              <MenuItem value={30}>30 days</MenuItem>
+              {dayRanges.map((range) => (
+                <MenuItem key={range} value={range}>
+                  {range} days
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 
           <FormControl sx={{ mb: 3, flex: 1 }}>
-            <InputLabel id="date-type-label">Date type</InputLabel>
+            <InputLabel id="filter-type-label">Filter type</InputLabel>
             <Select
               size="small"
-              labelId="date-type-label"
-              label="Date type"
-              value={bookingDateType}
+              labelId="filter-type-label"
+              label="Filter type"
+              value={bookingFilterType}
               onChange={(e) =>
-                setBookingDateType(e.target.value as IBookingAnalyticsDateType)
+                setBookingFilterType(e.target.value as BookingFilterType)
               }
             >
-              <MenuItem value={"booked-on"}>Booked on</MenuItem>
-              <MenuItem value={"booked-for"}>Booked for</MenuItem>
+              <MenuItem value={"placed"}>Bookings placed</MenuItem>
+              <MenuItem value={"completed"}>Bookings completed</MenuItem>
             </Select>
           </FormControl>
 
@@ -262,13 +275,13 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
       <Box sx={{ maxWidth: 1000, mt: 2 }}>
         <BookingAnalyticsList
           title={
-            bookingDateType === "booked-on"
+            bookingFilterType === "placed"
               ? `Bookings made in ${selectedBookingDate}`
-              : `Bookings made for ${selectedBookingDate}`
+              : `Bookings completed in ${selectedBookingDate}`
           }
-          // selectedDate={selectedBookingDate}
           bookings={selectedBookings}
-          dateType={bookingDateType}
+          filterType={bookingFilterType}
+          totalPrice={createPriceString(totalPrice)}
         />
       </Box>
     </>
