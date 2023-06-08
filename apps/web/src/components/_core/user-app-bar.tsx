@@ -3,17 +3,16 @@ import { Box, Button, Toolbar } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
-import { AppBarBase } from "ui";
+import { AppBarBase, useIsDesktop } from "ui";
 import { urls } from "urls";
 
 import { ServiceSearch } from "components/_core/service-search";
 import { APP_NAME } from "util/misc";
 
 export const UserAppBar: React.FC = () => {
-  const pages = new Map<string, string>([
-    [urls.user.operators(), "Operators"],
-    [urls.user.services(), "Services"],
-  ]);
+  const isDesktop = useIsDesktop();
+
+  const pages = new Map<string, string>([[urls.user.services(), "Services"]]);
 
   return (
     <>
@@ -38,7 +37,12 @@ export const UserAppBar: React.FC = () => {
             width: "100%",
           }}
         >
-          <ServiceSearch sx={{ ml: 3, mr: 3, width: 600, minWidth: 150 }} />
+          {isDesktop ? (
+            <ServiceSearch sx={{ ml: 3, mr: 3, width: 600, minWidth: 150 }} />
+          ) : (
+            <div />
+          )}
+
           <Button
             color="inherit"
             LinkComponent={Link}
