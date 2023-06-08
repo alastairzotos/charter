@@ -141,11 +141,19 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
     setDays(parseInt(e.target.value, 10));
   };
 
-  const totalPrice = filteredBookings
-    .map((booking) =>
-      Math.max(calculateBookingPrice(booking.priceDetails, booking.service), 0)
-    )
-    .reduce((acc, cur) => acc + cur, 0);
+  const getTotalPrice = (includeFees: boolean) =>
+    filteredBookings
+      .map((booking) =>
+        Math.max(
+          calculateBookingPrice(
+            booking.priceDetails,
+            booking.service,
+            includeFees
+          ),
+          0
+        )
+      )
+      .reduce((acc, cur) => acc + cur, 0);
 
   const lineData = bookingsPerDate(filteredBookings, days);
 
@@ -218,8 +226,9 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
         <KeyValues
           sx={{ mb: 3 }}
           kv={{
-            [`Total booking price for last ${days} days`]:
-              createPriceString(totalPrice),
+            [`Total booking price for last ${days} days`]: createPriceString(
+              getTotalPrice(true)
+            ),
           }}
         />
 
@@ -281,7 +290,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
           }
           bookings={selectedBookings}
           filterType={bookingFilterType}
-          totalPrice={createPriceString(totalPrice)}
+          totalPrice={createPriceString(getTotalPrice(false))}
         />
       </Box>
     </>

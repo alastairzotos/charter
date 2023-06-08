@@ -68,11 +68,14 @@ export const calculateBookingFee = (
 
 export const calculateBookingPrice = (
   bookingDetails: BookingPriceDetails,
-  service: ServiceNoId
+  service: ServiceNoId,
+  includeFees: boolean = true
 ) => {
   const basePrice = calculateBookingPriceBase(bookingDetails, service);
 
-  return basePrice + calculateBookingFeeFromBasePrice(basePrice);
+  return (
+    basePrice + (includeFees ? calculateBookingFeeFromBasePrice(basePrice) : 0)
+  );
 };
 
 export const isValidBookingPrice = (

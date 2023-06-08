@@ -14,7 +14,7 @@ interface Props {
   totalPrice: string;
 }
 
-const defaultCopyText = "Copy to clipboard";
+const defaultCopyText = "Copy to clipboard (without fees)";
 
 export const BookingAnalyticsCopy: React.FC<Props> = ({
   title,
@@ -41,7 +41,7 @@ export const BookingAnalyticsCopy: React.FC<Props> = ({
             (booking) =>
               `${booking.service.name} by ${
                 booking.operator.name
-              }\n${getBookingSummary(booking, filterType)}\n\n`
+              }\n${getBookingSummary(booking, filterType, false)}\n\n`
           ),
         ].join("")
       );

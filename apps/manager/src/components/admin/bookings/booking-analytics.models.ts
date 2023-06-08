@@ -12,11 +12,13 @@ export const getBookingDate = (
 
 export const getBookingSummary = (
   booking: BookingDto,
-  filterType: BookingFilterType
+  filterType: BookingFilterType,
+  includeFees: boolean
 ) => {
   const bookingPrice = calculateBookingPrice(
     booking.priceDetails,
-    booking.service
+    booking.service,
+    includeFees
   );
 
   const showDate =

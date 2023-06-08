@@ -24,7 +24,7 @@ export const BookingAnalyticsListItem: React.FC<Props> = ({
     <ListItemButton selected={selected} onClick={onClick}>
       <ListItemText
         primary={`${booking.service.name} by ${booking.operator.name}`}
-        secondary={getBookingSummary(booking, filterType)}
+        secondary={getBookingSummary(booking, filterType, true)}
       />
     </ListItemButton>
   );
