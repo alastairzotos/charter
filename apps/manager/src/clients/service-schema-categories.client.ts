@@ -6,7 +6,7 @@ export const getServiceSchemaCategories = async (): Promise<
   ServiceSchemaCategoryDto[]
 > => {
   const { data } = await httpClient.get<ServiceSchemaCategoryDto[]>(
-    "/service-schema-categories"
+    "/service-schema-categories/all"
   );
 
   return data;

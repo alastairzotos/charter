@@ -6,6 +6,7 @@ export interface ServiceSchemaCategoryDto {
   pluralName: string;
   description: string;
   photo: string;
+  hidden: boolean;
   instance?: InstanceDto;
 }
 

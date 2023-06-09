@@ -103,6 +103,7 @@ export class ServicesRepository {
       .find({
         instance,
         serviceSchema: { $in: schemaIds },
+        hidden: false,
       })
       .populate('operator')
       .populate({

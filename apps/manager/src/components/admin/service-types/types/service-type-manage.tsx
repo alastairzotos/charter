@@ -8,6 +8,7 @@ import {
   ResourceForm,
   ResourceFormProps,
 } from "components/_core/resource-form";
+import { FormControlLabel, Checkbox } from "@mui/material";
 
 export const ServiceTypeManage: React.FC<
   ResourceFormProps<ServiceSchemaCategoryNoId>
@@ -48,6 +49,21 @@ export const ServiceTypeManage: React.FC<
                 onChange={(urls) => setValues({ ...values, photo: urls[0] })}
               />
               <ErrorMessage name="photo" />
+
+              <FormControlLabel
+                label="Hidden"
+                control={
+                  <Checkbox
+                    checked={values.hidden}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        hidden: e.target.checked,
+                      })
+                    }
+                  />
+                }
+              />
             </>
           ),
         },

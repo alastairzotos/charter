@@ -12,6 +12,10 @@ export class ServiceSchemaCategoryRepository {
   ) {}
 
   async getServiceSchemaCategories(instance: string) {
+    return await this.model.find({ instance, hidden: { $ne: true } });
+  }
+
+  async getServiceSchemaCategoriesIncludingHidden(instance: string) {
     return await this.model.find({ instance });
   }
 

@@ -32,6 +32,16 @@ export class ServiceSchemaCategoryController {
     return await this.service.getServiceSchemaCategories(instance);
   }
 
+  @Get('all')
+  @Roles('all')
+  async getServiceSchemaCategoriesIncludingHidden(
+    @Instance() instance: string,
+  ) {
+    return await this.service.getServiceSchemaCategoriesIncludingHidden(
+      instance,
+    );
+  }
+
   @Get(':id')
   @Roles('all')
   async getServiceSchemaCategoryById(@Param('id') id: string) {

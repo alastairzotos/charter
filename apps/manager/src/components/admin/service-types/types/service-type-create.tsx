@@ -32,6 +32,7 @@ export const ServiceTypeCreate: React.FC<Props> = ({ onCreated, onCancel }) => {
         pluralName: "Restaurants",
         description: "",
         photo: "",
+        hidden: false,
       }}
     />
   );

@@ -14,6 +14,10 @@ export class ServiceSchemaCategoryService {
     return await this.repo.getServiceSchemaCategories(instance);
   }
 
+  async getServiceSchemaCategoriesIncludingHidden(instance: string) {
+    return await this.repo.getServiceSchemaCategoriesIncludingHidden(instance);
+  }
+
   async getServiceSchemaCategoryById(id: string) {
     return await this.repo.getServiceSchemaCategoryById(id);
   }

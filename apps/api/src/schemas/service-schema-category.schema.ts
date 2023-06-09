@@ -19,6 +19,9 @@ export class ServiceSchemaCategory implements ServiceSchemaCategoryDto {
   @Prop()
   photo: string;
 
+  @Prop({ default: false })
+  hidden: boolean;
+
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Instance.name })
   instance?: InstanceDto;
 }
