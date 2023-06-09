@@ -39,6 +39,7 @@ const mockServiceSchemaCategory: ServiceSchemaCategoryDto = {
   pluralName: 'Trips',
   description: '',
   photo: '',
+  hidden: false,
 };
 
 const mockServiceSchema: ServiceSchemaDto = {
