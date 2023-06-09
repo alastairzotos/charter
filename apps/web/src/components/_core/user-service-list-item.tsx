@@ -1,8 +1,12 @@
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-import { Avatar, ListItemAvatar } from "@mui/material";
-import { blue } from "@mui/material/colors";
-import ListItem from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
+import {
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Typography,
+} from "@mui/material";
 import { ServiceDto } from "dtos";
 import Link from "next/link";
 import React from "react";
@@ -25,45 +29,41 @@ export const UserServiceListItem: React.FC<Props> = ({
       : service.description;
 
   return (
-    <ListItem
-      alignItems="flex-start"
-      component={Link}
-      href={urls.user.service(service)}
-    >
-      <ListItemAvatar>
-        {service.photos && service.photos.length > 0 ? (
-          <Avatar alt={service.name} src={service.photos[0]} />
-        ) : (
-          <Avatar sx={{ bgcolor: blue[500] }}>
-            <BeachAccessIcon />
-          </Avatar>
-        )}
-      </ListItemAvatar>
+    <Link href={urls.user.service(service)} style={{ textDecoration: "none" }}>
+      <Card>
+        <CardMedia
+          title={service.name}
+          // TODO: Get this in an env var
+          image={
+            service.photos && service.photos.length > 0
+              ? service.photos[0]
+              : "https://d3tr1qr2feu6jb.cloudfront.net/4598e612-f6c9-4a42-9676-836626862a82"
+          }
+          sx={{ height: 180 }}
+        />
+        <CardHeader title={service.name} />
+        <CardContent sx={{ flexGrow: 1 }}>
+          <Typography variant="body1" color="text.secondary">
+            {desc}
+          </Typography>
 
-      <ListItemText
-        primary={
-          <>
-            {service.name}
-            {showOperator && (
-              <>
-                <Avatar
-                  src={service.operator.photo}
-                  sx={{
-                    width: 16,
-                    height: 16,
-                    display: "inline-block",
-                    ml: 1,
-                    mr: 1,
-                  }}
-                />
-                {"by "}
+          {showOperator && (
+            <CardActions sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+              <Avatar
+                src={service.operator.photo}
+                sx={{
+                  width: 25,
+                  height: 25,
+                  mr: 1,
+                }}
+              />
+              <Typography variant="body2" color="text.secondary">
                 {service.operator.name}
-              </>
-            )}
-          </>
-        }
-        secondary={desc}
-      />
-    </ListItem>
+              </Typography>
+            </CardActions>
+          )}
+        </CardContent>
+      </Card>
+    </Link>
   );
 };

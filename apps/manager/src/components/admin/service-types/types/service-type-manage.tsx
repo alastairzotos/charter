@@ -1,3 +1,4 @@
+import { FormControlLabel, Checkbox } from "@mui/material";
 import { ServiceSchemaCategoryNoId } from "dtos";
 import { ErrorMessage, Field } from "formik";
 import { TextField } from "formik-mui";
@@ -8,7 +9,6 @@ import {
   ResourceForm,
   ResourceFormProps,
 } from "components/_core/resource-form";
-import { FormControlLabel, Checkbox } from "@mui/material";
 
 export const ServiceTypeManage: React.FC<
   ResourceFormProps<ServiceSchemaCategoryNoId>

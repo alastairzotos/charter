@@ -1,4 +1,4 @@
-import { List } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
 import { Box } from "@mui/system";
 import { ServiceDto } from "dtos";
 import React from "react";
@@ -35,13 +35,17 @@ export const UserServicesView: React.FC<Props> = ({
         {Object.keys(servicesByCategory).map((pluralLabel) => (
           <Box key={pluralLabel} sx={{ mb: 3 }}>
             <Titled title={pluralLabel}>
-              {servicesByCategory[pluralLabel].map((service) => (
-                <UserServiceListItem
-                  key={service._id}
-                  service={service}
-                  showOperator={showOperator}
-                />
-              ))}
+              <Grid container spacing={2}>
+                {servicesByCategory[pluralLabel].map((service) => (
+                  <Grid xs={12} sm={6} md={6} lg={4}>
+                    <UserServiceListItem
+                      key={service._id}
+                      service={service}
+                      showOperator={showOperator}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
             </Titled>
           </Box>
         ))}
@@ -50,14 +54,16 @@ export const UserServicesView: React.FC<Props> = ({
   }
 
   return (
-    <List sx={{ width: "100%" }}>
+    <Grid container spacing={2}>
       {services.map((service) => (
-        <UserServiceListItem
-          key={service._id}
-          service={service}
-          showOperator={showOperator}
-        />
+        <Grid xs={12} sm={6} md={4} lg={3}>
+          <UserServiceListItem
+            key={service._id}
+            service={service}
+            showOperator={showOperator}
+          />
+        </Grid>
       ))}
-    </List>
+    </Grid>
   );
 };
