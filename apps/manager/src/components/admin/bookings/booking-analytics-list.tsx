@@ -5,12 +5,12 @@ import React, { useState } from "react";
 import { BookingAnalyticsBooking } from "components/admin/bookings/booking-analytics-booking";
 import { BookingAnalyticsCopy } from "components/admin/bookings/booking-analytics-copy";
 import { BookingAnalyticsListItem } from "components/admin/bookings/booking-analytics-list-item";
-import { BookingFilterType } from "components/admin/bookings/booking-analytics.utils";
+import { AnalyticsFilterType } from "state/analytics";
 
 interface Props {
   title: string;
   bookings: BookingDto[];
-  filterType: BookingFilterType;
+  filterType: AnalyticsFilterType;
   totalPrice: string;
 }
 
