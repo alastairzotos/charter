@@ -2,15 +2,13 @@ import { ListItemButton, ListItemText } from "@mui/material";
 import { BookingDto } from "dtos";
 import React from "react";
 
-import {
-  BookingFilterType,
-  getBookingSummary,
-} from "components/admin/bookings/booking-analytics.utils";
+import { getBookingSummary } from "components/admin/bookings/booking-analytics.utils";
+import { AnalyticsFilterType } from "state/analytics";
 
 interface Props {
   selected: boolean;
   booking: BookingDto;
-  filterType: BookingFilterType;
+  filterType: AnalyticsFilterType;
   onClick: () => void;
 }
 
