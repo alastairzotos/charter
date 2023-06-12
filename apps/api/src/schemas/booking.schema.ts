@@ -7,6 +7,7 @@ import {
   BookingStatus,
   InstanceDto,
   OperatorDto,
+  SetupIntentStatus,
 } from 'dtos';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Instance } from 'schemas/instance.schema';
@@ -64,6 +65,9 @@ export class Booking implements BookingDto {
 
   @Prop()
   setupIntentId?: string;
+
+  @Prop()
+  setupIntentStatus?: SetupIntentStatus;
 
   @Prop()
   stripeCustomerId?: string;

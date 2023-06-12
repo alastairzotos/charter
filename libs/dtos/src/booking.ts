@@ -86,6 +86,8 @@ export const getDefaultDefaultBookingFields = (
 
 export type AdditionalBookingFieldContent = string | number | boolean;
 
+export type SetupIntentStatus = "succeeded" | "failed";
+
 export interface BookingDto extends DefaultBookingFields {
   _id: string;
   service: ServiceDto;
@@ -100,6 +102,7 @@ export interface BookingDto extends DefaultBookingFields {
   notes?: string;
   paymentIntentId?: string;
   setupIntentId?: string;
+  setupIntentStatus?: SetupIntentStatus;
   stripeCustomerId?: string;
   paymentStatus?: BookingPaymentStatus;
   status: BookingStatus;

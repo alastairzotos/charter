@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { BookingDto } from 'dtos';
 import { BookingsService } from 'features/bookings/bookings.service';
-import { BroadcastService } from 'features/broadcast/broadcast.service';
 import { StripeService } from 'integrations/stripe/stripe.service';
 import { calculateBookingPrice } from 'utils';
 
@@ -16,7 +15,6 @@ export class PaymentsService {
     private readonly stripeService: StripeService,
     @Inject(forwardRef(() => BookingsService))
     private readonly bookingService: BookingsService,
-    private readonly broadcastService: BroadcastService,
   ) {}
 
   async handleWebhook(body: Buffer, signature: string) {
@@ -63,7 +61,10 @@ export class PaymentsService {
       if (!!booking) {
         switch (event.type) {
           case 'setup_intent.succeeded':
-            await this.broadcastService.broadcastPendingBooking(booking);
+            await this.bookingService.setBookingSetupIntentStatus(
+              booking,
+              'succeeded',
+            );
             break;
         }
       }

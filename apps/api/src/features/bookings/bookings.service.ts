@@ -1,9 +1,11 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import {
+  BookingDto,
   BookingNoId,
   BookingPaymentStatus,
   BookingStatus,
   LoggedInUserDetails,
+  SetupIntentStatus,
 } from 'dtos';
 
 import { BookingsRepository } from 'features/bookings/bookings.repository';
@@ -76,6 +78,20 @@ export class BookingsService {
       setupIntentId,
       stripeCustomerId,
     );
+  }
+
+  async setBookingSetupIntentStatus(
+    booking: BookingDto,
+    setupIntentStatus: SetupIntentStatus,
+  ) {
+    await this.bookingsRepository.setBookingSetupIntentStatus(
+      booking._id,
+      setupIntentStatus,
+    );
+
+    if (setupIntentStatus === 'succeeded') {
+      await this.broadcastService.broadcastPendingBooking(booking);
+    }
   }
 
   async setBookingPaymentStatus(

@@ -5,6 +5,7 @@ import {
   BookingPaymentStatus,
   BookingStatus,
   OperatorDto,
+  SetupIntentStatus,
 } from 'dtos';
 import { Document, Model, Query } from 'mongoose';
 
@@ -32,6 +33,16 @@ export class BookingsRepository {
     await this.bookingsModel.findOneAndUpdate(
       { _id: id },
       { setupIntentId, stripeCustomerId },
+    );
+  }
+
+  async setBookingSetupIntentStatus(
+    id: string,
+    setupIntentStatus: SetupIntentStatus,
+  ) {
+    await this.bookingsModel.findOneAndUpdate(
+      { _id: id },
+      { setupIntentStatus },
     );
   }
 
