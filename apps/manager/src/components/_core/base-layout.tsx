@@ -48,7 +48,7 @@ export const BaseLayout: React.FC<React.PropsWithChildren<Props>> = ({
 
   return (
     <RoleRoute role={role}>
-      <SeoHead subtitle="Charter manager" description="Charter manager" />
+      <SeoHead subtitle="Charter | BitMetro" description="Charter | BitMetro" />
 
       <Box sx={{ display: "flex" }}>
         {appBarForRole[role]}
