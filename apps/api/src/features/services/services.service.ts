@@ -1,6 +1,7 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import {
   getDefaultValueForServiceSchemaFieldType,
+  OperatorDto,
   ServiceDto,
   ServiceFieldValue,
   ServiceNoId,
@@ -148,6 +149,19 @@ export class ServicesService {
           ...service.data,
           ...addedDefaults,
         },
+      });
+    }
+  }
+
+  async updateSlugsForOperator(operator: OperatorDto) {
+    const services =
+      await this.servicesRepository.getServicesForOperatorIncludingHidden(
+        operator._id,
+      );
+
+    for (const service of services.map((s) => s.toObject())) {
+      await this.servicesRepository.updateService(service._id, {
+        slug: createServiceSlug(service),
       });
     }
   }

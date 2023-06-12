@@ -60,7 +60,16 @@ export class ServicesController {
     @Param('slug') slug: string,
   ) {
     try {
-      return await this.servicesService.getServiceBySlug(slug, instance);
+      const service = await this.servicesService.getServiceBySlug(
+        slug,
+        instance,
+      );
+
+      if (!service) {
+        throw new NotFoundException();
+      }
+
+      return service;
     } catch {
       throw new NotFoundException();
     }

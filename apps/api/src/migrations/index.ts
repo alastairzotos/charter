@@ -8,7 +8,7 @@ import { ServiceSchemaCategoryRepository } from 'features/service-schema-categor
 import { ServiceSchemaRepository } from 'features/service-schemas/service-schema.repository';
 import { ServicesRepository } from 'features/services/services.repository';
 import { UsersService } from 'features/users/users.service';
-import { createOperatorSlug } from 'urls';
+import { createOperatorSlug, createServiceSlug } from 'urls';
 import { DEFAULT_OPERATOR_PASSWORD } from 'utils';
 
 export default null;
@@ -66,7 +66,7 @@ export const autoCreateOperatorAccounts = async (app: INestApplication) => {
   }
 };
 
-export const fixSlugs = async (app: INestApplication) => {
+export const fixOperatorSlugs = async (app: INestApplication) => {
   const { operatorsRepo } = await getRepos(app);
 
   const ops = await operatorsRepo.getOperators('644e8d8be3d3eeff3c2bffcd');

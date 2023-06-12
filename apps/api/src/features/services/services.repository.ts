@@ -41,12 +41,15 @@ export class ServicesRepository {
   }
 
   async getServicesForOperatorIncludingHidden(operatorId: string) {
-    return await this.servicesModel.find({ operator: operatorId }).populate({
-      path: 'serviceSchema',
-      populate: {
-        path: 'schemaCategory',
-      },
-    });
+    return await this.servicesModel
+      .find({ operator: operatorId })
+      .populate('operator')
+      .populate({
+        path: 'serviceSchema',
+        populate: {
+          path: 'schemaCategory',
+        },
+      });
   }
 
   async getServicesForSchemaIncludingHidden(schemaId: string) {

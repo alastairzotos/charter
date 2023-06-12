@@ -80,10 +80,17 @@ export class OperatorsService {
   }
 
   async updateOperator(id: string, newOperator: Partial<OperatorDto>) {
+    const updatedOperator =
+      await this.operatorsRepo.getOperatorByIdWithInstance(id);
+
     await this.operatorsRepo.updateOperator(id, {
       ...newOperator,
       slug: createOperatorSlug(newOperator),
     });
+
+    if (newOperator.name !== updatedOperator.name) {
+      await this.servicesService.updateSlugsForOperator(updatedOperator);
+    }
 
     if (!!newOperator.owner) {
       if (
@@ -91,8 +98,6 @@ export class OperatorsService {
           newOperator.owner._id,
         )
       ) {
-        const updatedOperator =
-          await this.operatorsRepo.getOperatorByIdWithInstance(id);
         await this.emailOperatorAfterPromotion(updatedOperator);
       }
     }
