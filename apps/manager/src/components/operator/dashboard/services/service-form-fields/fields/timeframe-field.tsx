@@ -79,6 +79,9 @@ export const TimeframeField: React.FC<ServiceFieldProps> = ({
           marginLeft: "-1px",
         }}
       >
+        <MenuItem value="Minutes">
+          {number === "1" ? "Minute" : "Minutes"}
+        </MenuItem>
         <MenuItem value="Hours">{number === "1" ? "Hour" : "Hours"}</MenuItem>
         <MenuItem value="Days">{number === "1" ? "Day" : "Days"}</MenuItem>
       </Select>
