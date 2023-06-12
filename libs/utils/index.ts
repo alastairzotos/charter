@@ -151,7 +151,7 @@ export const getReadableBookingDetails = (
 
   const hideContactDetails =
     booking.service.approveBookingBeforePayment &&
-    booking.paymentStatus === "pending";
+    booking.paymentStatus !== "succeeded";
 
   if (!hideContactDetails) {
     obj["Email"] = booking.email;
