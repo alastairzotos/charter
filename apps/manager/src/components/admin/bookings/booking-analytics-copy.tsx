@@ -2,15 +2,13 @@ import { Button } from "@mui/material";
 import { BookingDto } from "dtos";
 import React, { useState } from "react";
 
-import {
-  BookingFilterType,
-  getBookingSummary,
-} from "components/admin/bookings/booking-analytics.utils";
+import { getBookingSummary } from "components/admin/bookings/booking-analytics.utils";
+import { AnalyticsFilterType } from "state/analytics";
 
 interface Props {
   title: string;
   bookings: BookingDto[];
-  filterType: BookingFilterType;
+  filterType: AnalyticsFilterType;
   totalPrice: string;
 }
 

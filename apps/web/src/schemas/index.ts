@@ -57,6 +57,7 @@ export const bookingValidationSchema = (
     | "paymentStatus"
     | "setupIntentId"
     | "stripeCustomerId"
+    | "setupIntentStatus"
     | "fulfilled"
     | "instance"
   >
