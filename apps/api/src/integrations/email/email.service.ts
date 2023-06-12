@@ -39,14 +39,8 @@ export class EmailService {
   }
 
   async sendEmailToOperator(operator: OperatorDto, emailData: EmailData) {
-    const emails = [operator.email];
+    const address = operator.owner?.email || operator.email;
 
-    if (operator.owner?.email && operator.email !== operator.owner?.email) {
-      emails.push(operator.owner.email);
-    }
-
-    await Promise.all(
-      emails.map(async (email) => await this.sendEmail(email, emailData)),
-    );
+    await this.sendEmail(address, emailData);
   }
 }

@@ -24,6 +24,7 @@ interface Props {
   onClose: () => void;
   onDelete?: () => void;
   deleteStatus?: FetchStatus;
+  deleteText?: string;
 }
 
 export const DeleteConfirmModal: React.FC<Props> = ({
@@ -33,6 +34,7 @@ export const DeleteConfirmModal: React.FC<Props> = ({
   onClose,
   onDelete,
   deleteStatus,
+  deleteText = "Delete",
 }) => {
   return (
     <Modal open={open} onClose={onClose}>
@@ -53,7 +55,7 @@ export const DeleteConfirmModal: React.FC<Props> = ({
             {deleteStatus === "fetching" ? (
               <CircularProgress size={20} />
             ) : (
-              "Delete"
+              deleteText
             )}
           </Button>
         </Box>

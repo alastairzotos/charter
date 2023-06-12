@@ -11,7 +11,6 @@ import {
   BookingMadeOperatorActionRequiredProps,
   BookingMadeOperatorProps,
   BookingMadeUserPendingProps,
-  BookingMadeUserProps,
   BookingRejectedUserProps,
   FeedbackAddedProps,
   OperatorPromotedProps,
@@ -33,40 +32,6 @@ export class TemplatesService {
     private readonly envService: EnvService,
     private readonly qrCodeService: QRCodeService,
   ) {}
-
-  bookingMadeUser(booking: BookingDto): EmailData {
-    return {
-      subject: `Your booking with ${booking.operator.name}`,
-      content: this.templates.bookingMadeUser({
-        user: {
-          name: booking.name,
-        },
-        operator: {
-          name: booking.operator.name,
-          url: this.link(
-            booking.instance,
-            urls.user.operator(booking.operator),
-          ),
-          details: [
-            { key: 'Operator', value: booking.operator.name },
-            { key: 'Operator Email', value: booking.operator.email },
-            { key: 'Operator Phone', value: booking.operator.phoneNumber },
-          ],
-        },
-        service: {
-          name: booking.service.name,
-          url: this.link(booking.instance, urls.user.service(booking.service)),
-        },
-        booking: {
-          url: this.link(booking.instance, urls.user.booking(booking._id)),
-          qrCodeUrl: this.qrCodeService.getUrlForBookingQRCode(booking),
-          details: Object.entries(getReadableBookingDetails(booking)).map(
-            ([key, value]) => ({ key, value }),
-          ),
-        },
-      }),
-    };
-  }
 
   bookingMadeUserPending(booking: BookingDto): EmailData {
     return {
@@ -249,8 +214,6 @@ export class TemplatesService {
     this.loadPartials();
 
     return {
-      bookingMadeUser:
-        this.compileTemplate<BookingMadeUserProps>('booking-made-user'),
       bookingMadeUserPending: this.compileTemplate<BookingMadeUserPendingProps>(
         'booking-made-user-pending',
       ),

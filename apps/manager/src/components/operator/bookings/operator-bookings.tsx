@@ -16,7 +16,10 @@ export const OperatorBookings: React.FC = () => {
   }, [userBookings]);
 
   const pendingBookings = userBookings
-    ? userBookings.filter((booking) => booking.status === "pending")
+    ? userBookings.filter(
+        (booking) =>
+          booking.status === "pending" && booking.paymentStatus === "pending"
+      )
     : undefined;
 
   const confirmedBookings = userBookings

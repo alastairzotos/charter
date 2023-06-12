@@ -1,8 +1,14 @@
-import { forwardRef, Inject, Injectable, InternalServerErrorException } from "@nestjs/common";
-import { BookingDto } from "dtos";
-import { BookingsService } from "features/bookings/bookings.service";
-import { StripeService } from "integrations/stripe/stripe.service";
-import { calculateBookingPrice } from "utils";
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { BookingDto } from 'dtos';
+import { BookingsService } from 'features/bookings/bookings.service';
+import { BroadcastService } from 'features/broadcast/broadcast.service';
+import { StripeService } from 'integrations/stripe/stripe.service';
+import { calculateBookingPrice } from 'utils';
 
 @Injectable()
 export class PaymentsService {
@@ -10,27 +16,39 @@ export class PaymentsService {
     private readonly stripeService: StripeService,
     @Inject(forwardRef(() => BookingsService))
     private readonly bookingService: BookingsService,
-  ) { }
+    private readonly broadcastService: BroadcastService,
+  ) {}
 
   async handleWebhook(body: Buffer, signature: string) {
     const event = await this.stripeService.constructEvent(body, signature);
 
     if (event.type.startsWith('payment_intent')) {
       const paymentIntentId = event.data.object['id'] as string;
-      const booking = await this.bookingService.getBookingByPaymentIntentId(paymentIntentId);
+      const booking = await this.bookingService.getBookingByPaymentIntentId(
+        paymentIntentId,
+      );
 
       if (!!booking) {
         switch (event.type) {
           case 'payment_intent.succeeded':
-            await this.bookingService.setBookingPaymentStatus(booking._id, 'succeeded');
+            await this.bookingService.setBookingPaymentStatus(
+              booking._id,
+              'succeeded',
+            );
             break;
 
           case 'payment_intent.payment_failed':
-            await this.bookingService.setBookingPaymentStatus(booking._id, 'failed');
+            await this.bookingService.setBookingPaymentStatus(
+              booking._id,
+              'failed',
+            );
             break;
 
           case 'payment_intent.canceled':
-            await this.bookingService.setBookingPaymentStatus(booking._id, 'cancelled');
+            await this.bookingService.setBookingPaymentStatus(
+              booking._id,
+              'cancelled',
+            );
             break;
         }
       }
@@ -38,12 +56,14 @@ export class PaymentsService {
 
     if (event.type.startsWith('setup_intent')) {
       const setupIntentId = event.data.object['id'] as string;
-      const booking = await this.bookingService.getBookingBySetupIntentId(setupIntentId);
+      const booking = await this.bookingService.getBookingBySetupIntentId(
+        setupIntentId,
+      );
 
       if (!!booking) {
         switch (event.type) {
           case 'setup_intent.succeeded':
-            await this.bookingService.notifyPartiesOfPendingBooking(booking);
+            await this.broadcastService.broadcastPendingBooking(booking);
             break;
         }
       }
@@ -54,7 +74,10 @@ export class PaymentsService {
     const booking = await this.bookingService.getBookingById(bookingId);
     const amount = calculateBookingPrice(booking.priceDetails, booking.service);
 
-    const { id, client_secret } = await this.stripeService.createPaymentIntent(amount * 100, "EUR");
+    const { id, client_secret } = await this.stripeService.createPaymentIntent(
+      amount * 100,
+      'EUR',
+    );
 
     await this.bookingService.setBookingPaymentIntentId(bookingId, id);
 
@@ -66,18 +89,33 @@ export class PaymentsService {
   }
 
   async createSetupIntent(bookingId, customerId: string) {
-    const { id: setupIntentId, client_secret } = await this.stripeService.createSetupIntent(customerId);
+    const { id: setupIntentId, client_secret } =
+      await this.stripeService.createSetupIntent(customerId);
 
-    await this.bookingService.setBookingSetupIntentIdAndStripeCustomerId(bookingId, setupIntentId, customerId);
+    await this.bookingService.setBookingSetupIntentIdAndStripeCustomerId(
+      bookingId,
+      setupIntentId,
+      customerId,
+    );
 
     return client_secret;
   }
 
-  async createPaymentIntentOffSession(bookingId: string, paymentMethodId: string, customerId: string) {
+  async createPaymentIntentOffSession(
+    bookingId: string,
+    paymentMethodId: string,
+    customerId: string,
+  ) {
     const booking = await this.bookingService.getBookingById(bookingId);
     const amount = calculateBookingPrice(booking.priceDetails, booking.service);
 
-    const { id, client_secret } = await this.stripeService.createPaymentIntentOffSession(amount * 100, "EUR", paymentMethodId, customerId)
+    const { id, client_secret } =
+      await this.stripeService.createPaymentIntentOffSession(
+        amount * 100,
+        'EUR',
+        paymentMethodId,
+        customerId,
+      );
 
     await this.bookingService.setBookingPaymentIntentId(bookingId, id);
 
@@ -85,14 +123,25 @@ export class PaymentsService {
   }
 
   async chargeUserOffSession(booking: BookingDto) {
-    const paymentMethods = await this.stripeService.getPaymentMethodsForCustomerId(booking.stripeCustomerId);
+    const paymentMethods =
+      await this.stripeService.getPaymentMethodsForCustomerId(
+        booking.stripeCustomerId,
+      );
 
-    if (!paymentMethods || !paymentMethods.data || !paymentMethods.data.length) {
+    if (
+      !paymentMethods ||
+      !paymentMethods.data ||
+      !paymentMethods.data.length
+    ) {
       throw new InternalServerErrorException();
     }
 
     const paymentMethod = paymentMethods.data[0];
 
-    return await this.createPaymentIntentOffSession(booking._id, paymentMethod.id, booking.stripeCustomerId);
+    return await this.createPaymentIntentOffSession(
+      booking._id,
+      paymentMethod.id,
+      booking.stripeCustomerId,
+    );
   }
 }

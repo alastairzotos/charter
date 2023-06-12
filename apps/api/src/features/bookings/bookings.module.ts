@@ -5,14 +5,12 @@ import { EnvModule } from 'environment/environment.module';
 import { BookingsController } from 'features/bookings/bookings.controller';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { BookingsService } from 'features/bookings/bookings.service';
+import { BroadcastModule } from 'features/broadcast/broadcast.module';
 import { OperatorsModule } from 'features/operators/operators.module';
 import { PaymentsModule } from 'features/payments/payments.module';
 import { QRCodeModule } from 'features/qr-code/qr-code.module';
 import { ServicesModule } from 'features/services/services.module';
-import { TemplatesModule } from 'features/templates/templates.module';
 import { UsersModule } from 'features/users/users.module';
-import { EmailModule } from 'integrations/email/email.module';
-import { NotificationsModule } from 'integrations/notifications/notifications.module';
 import { Booking, BookingSchema } from 'schemas/booking.schema';
 import { Operator, OperatorSchema } from 'schemas/operator.schema';
 import { Service, ServiceSchema } from 'schemas/service.schema';
@@ -23,11 +21,9 @@ import { Service, ServiceSchema } from 'schemas/service.schema';
     OperatorsModule,
     forwardRef(() => ServicesModule),
     UsersModule,
-    EmailModule,
     forwardRef(() => PaymentsModule),
-    TemplatesModule,
     QRCodeModule,
-    NotificationsModule,
+    BroadcastModule,
     MongooseModule.forFeature([
       { name: Booking.name, schema: BookingSchema },
       { name: Operator.name, schema: OperatorSchema },

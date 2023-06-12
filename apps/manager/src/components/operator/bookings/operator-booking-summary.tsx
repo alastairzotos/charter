@@ -127,6 +127,7 @@ export const OperatorBookingSummary: React.FC<Props> = ({ booking }) => {
         onClose={() => setRejectModalOpen(false)}
         deleteStatus={setBookingStatusStatus}
         onDelete={rejectBooking}
+        deleteText="Reject"
       />
     </Titled>
   );

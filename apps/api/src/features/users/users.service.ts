@@ -25,8 +25,8 @@ export class UsersService {
     return await this.usersRepository.getUsers();
   }
 
-  async getAdmins() {
-    return await this.usersRepository.getAdmins();
+  async getAdmins(instance: string) {
+    return await this.usersRepository.getAdmins(instance);
   }
 
   async getSuperAdmins() {

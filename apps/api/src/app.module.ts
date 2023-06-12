@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { EnvModule } from 'environment/environment.module';
 import { EnvService } from 'environment/environment.service';
 import { BookingsModule } from 'features/bookings/bookings.module';
+import { BroadcastModule } from 'features/broadcast/broadcast.module';
 import { ConfigurationModule } from 'features/configuration/configuration.module';
 import { FeedbackModule } from 'features/feedback/feedback.module';
 import { HealthModule } from 'features/health/health.module';
@@ -49,6 +50,7 @@ import { RawBodyMiddleware } from 'middleware/raw-body.middleware';
     InstancesModule,
     ConfigurationModule,
     FeedbackModule,
+    BroadcastModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],

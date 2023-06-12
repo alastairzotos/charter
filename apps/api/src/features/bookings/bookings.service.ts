@@ -1,6 +1,5 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import {
-  BookingDto,
   BookingNoId,
   BookingPaymentStatus,
   BookingStatus,
@@ -9,14 +8,11 @@ import {
 
 import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { OperatorsService } from 'features/operators/operators.service';
-import { EmailService } from 'integrations/email/email.service';
 import { ServicesService } from 'features/services/services.service';
 import { PaymentsService } from 'features/payments/payments.service';
-import { TemplatesService } from 'features/templates/templates.service';
 import { QRCodeService } from 'features/qr-code/qr-code.service';
 import { getReadableBookingDetails } from 'utils';
-import { NotificationsService } from 'integrations/notifications/notifications.service';
-import { UsersService } from 'features/users/users.service';
+import { BroadcastService } from 'features/broadcast/broadcast.service';
 
 export interface ReadableBooking {
   service: {
@@ -32,13 +28,10 @@ export interface ReadableBooking {
 export class BookingsService {
   constructor(
     private readonly operatorsService: OperatorsService,
-    private readonly templatesService: TemplatesService,
-    private readonly emailService: EmailService,
     private readonly servicesService: ServicesService,
     private readonly bookingsRepository: BookingsRepository,
     private readonly qrCodeService: QRCodeService,
-    private readonly notificationsService: NotificationsService,
-    private readonly usersService: UsersService,
+    private readonly broadcastService: BroadcastService,
 
     @Inject(forwardRef(() => PaymentsService))
     private readonly paymentsService: PaymentsService,
@@ -99,22 +92,31 @@ export class BookingsService {
         createdBooking.service._id,
       );
 
-      if (!createdBooking.service.approveBookingBeforePayment) {
-        await Promise.all([
-          this.emailService.sendEmailToOperator(
-            createdBooking.operator,
-            this.templatesService.bookingMadeOperator(createdBooking),
-          ),
-          this.emailService.sendEmail(
-            createdBooking.email,
-            this.templatesService.bookingMadeUser(createdBooking),
-          ),
-          this.sendPushNotificationToOperatorForBooking(createdBooking),
-        ]);
-      }
-
-      await this.notifyAdminsOfBooking(createdBooking);
+      await this.broadcastService.broadcastSuccessfulBooking(createdBooking);
+    } else if (paymentStatus === 'failed') {
+      await this.broadcastService.broadcastFailedPayment(createdBooking);
+    } else if (paymentStatus === 'cancelled') {
+      await this.broadcastService.broadcastCancelledPayment(createdBooking);
     }
+  }
+
+  async setBookingStatus(id: string, status: BookingStatus) {
+    const booking =
+      await this.bookingsRepository.getBookingWithOperatorAndService(id);
+
+    await this.bookingsRepository.setBookingStatus(id, status);
+
+    if (booking.service.approveBookingBeforePayment) {
+      if (status === 'confirmed') {
+        await this.paymentsService.chargeUserOffSession(booking);
+      } else if (status === 'rejected') {
+        await this.broadcastService.broadcastRejectedBooking(booking);
+      }
+    }
+  }
+
+  async setBookingFulfillment(id: string, fulfilled: boolean) {
+    await this.bookingsRepository.setBookingFulfillment(id, fulfilled);
   }
 
   async getBookingPaymentStatus(id: string) {
@@ -176,69 +178,6 @@ export class BookingsService {
 
   async getBookingsByOperatorId(id: string) {
     return await this.bookingsRepository.getBookingsByOperatorId(id);
-  }
-
-  async setBookingStatus(id: string, status: BookingStatus) {
-    const booking =
-      await this.bookingsRepository.getBookingWithOperatorAndService(id);
-
-    if (status === 'confirmed' && booking.service.approveBookingBeforePayment) {
-      await this.paymentsService.chargeUserOffSession(booking);
-    }
-
-    await this.bookingsRepository.setBookingStatus(id, status);
-
-    const email =
-      status === 'confirmed'
-        ? this.templatesService.bookingConfirmedUser(booking)
-        : this.templatesService.bookingRejectedUser(booking);
-
-    await this.emailService.sendEmail(booking.email, email);
-  }
-
-  async notifyPartiesOfPendingBooking(booking: BookingDto) {
-    await Promise.all([
-      this.emailService.sendEmail(
-        booking.email,
-        this.templatesService.bookingMadeUserPending(booking),
-      ),
-      this.emailService.sendEmailToOperator(
-        booking.operator,
-        this.templatesService.bookingMadeOperatorActionRequired(booking),
-      ),
-      this.sendPushNotificationToOperatorForBooking(booking),
-    ]);
-  }
-
-  async notifyAdminsOfBooking(booking: BookingDto) {
-    const admins = await this.usersService.getAdmins();
-
-    await Promise.all(
-      admins.map((admin) =>
-        this.emailService.sendEmail(
-          admin.email,
-          this.templatesService.bookingMadeAdmin(booking),
-        ),
-      ),
-    );
-  }
-
-  async sendPushNotificationToOperatorForBooking(booking: BookingDto) {
-    const token = await this.operatorsService.getOperatorNotificationToken(
-      booking.operator._id,
-    );
-    this.notificationsService.notifyOperatorOfBooking({
-      token,
-      booking,
-      onRevoke: async () =>
-        await this.operatorsService.revokeNotificationToken(
-          booking.operator._id,
-        ),
-    });
-  }
-
-  async setBookingFulfillment(id: string, fulfilled: boolean) {
-    await this.bookingsRepository.setBookingFulfillment(id, fulfilled);
   }
 
   async deleteBookingsForService(serviceId: string) {

@@ -11,6 +11,7 @@ import {
 import { EnvService } from 'environment/environment.service';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { BookingsService } from 'features/bookings/bookings.service';
+import { BroadcastService } from 'features/broadcast/broadcast.service';
 import { OperatorsService } from 'features/operators/operators.service';
 import { PaymentsService } from 'features/payments/payments.service';
 import { QRCodeService } from 'features/qr-code/qr-code.service';
@@ -128,25 +129,13 @@ const servicesServiceMock: Partial<ExtractInterface<ServicesService>> = {
   getService: jest.fn(() => Promise.resolve(mockService as any)),
 };
 
-const emailServiceMock: Partial<ExtractInterface<EmailService>> = {
-  sendEmail: jest.fn(async () => {}),
-  sendEmailToOperator: jest.fn(),
-};
-
 const templatesServiceMock: Partial<ExtractInterface<TemplatesService>> = {
   bookingMadeOperator: jest.fn(() => ({ subject: '', content: '' })),
-  bookingMadeUser: jest.fn(() => ({ subject: '', content: '' })),
   bookingMadeAdmin: jest.fn(() => ({ subject: '', content: '' })),
 };
 
 const qrCodeServiceMock: Partial<ExtractInterface<QRCodeService>> = {
   createQRCodeForBooking: jest.fn(),
-};
-
-const notificationsServiceMock: Partial<
-  ExtractInterface<NotificationsService>
-> = {
-  notifyOperatorOfBooking: jest.fn(),
 };
 
 const bookingsRepoMock: Partial<ExtractInterface<BookingsRepository>> = {
@@ -171,10 +160,8 @@ const bookingsRepoMock: Partial<ExtractInterface<BookingsRepository>> = {
 
 const paymentsServiceMock: Partial<ExtractInterface<PaymentsService>> = {};
 
-const usersServiceMock: Partial<ExtractInterface<UsersService>> = {
-  getAdmins: jest.fn(async () =>
-    Promise.resolve([{ email: 'test@test.com' } as any]),
-  ),
+const broadcastServiceMock: Partial<ExtractInterface<BroadcastService>> = {
+  broadcastSuccessfulBooking: jest.fn(),
 };
 
 describe('BookingService', () => {
@@ -185,14 +172,12 @@ describe('BookingService', () => {
       bookingsService = await createService(
         envServiceMock,
         operatorsServiceMock,
-        emailServiceMock,
         servicesServiceMock,
         bookingsRepoMock,
         paymentsServiceMock,
         templatesServiceMock,
         qrCodeServiceMock,
-        notificationsServiceMock,
-        usersServiceMock,
+        broadcastServiceMock,
       );
       await bookingsService.createBooking(mockBooking);
 
@@ -214,16 +199,10 @@ describe('BookingService', () => {
       expect(qrCodeServiceMock.createQRCodeForBooking).toHaveBeenCalled();
     });
 
-    it('should send emails', () => {
-      expect(usersServiceMock.getAdmins).toHaveBeenCalledTimes(1);
-      expect(emailServiceMock.sendEmail).toHaveBeenCalledTimes(2); // for user and admin
-      expect(emailServiceMock.sendEmailToOperator).toHaveBeenCalledTimes(1);
-    });
-
-    it('should send a notification to the operator', () => {
+    it('should broadcast status', () => {
       expect(
-        notificationsServiceMock.notifyOperatorOfBooking,
-      ).toHaveBeenCalled();
+        broadcastServiceMock.broadcastSuccessfulBooking,
+      ).toHaveBeenCalledTimes(1);
     });
 
     it('should increment the number of bookings on the service', () => {
@@ -235,14 +214,12 @@ describe('BookingService', () => {
 const createService = async (
   envServiceMock: ExtractInterface<EnvService>,
   operatorsServiceMock: Partial<ExtractInterface<OperatorsService>>,
-  emailServiceMock: Partial<ExtractInterface<EmailService>>,
   servicesServiceMock: Partial<ExtractInterface<ServicesService>>,
   bookingsRepoMock: Partial<ExtractInterface<BookingsRepository>>,
   paymentsServiceMock: Partial<ExtractInterface<PaymentsService>>,
   templatesServiceMock: Partial<ExtractInterface<TemplatesService>>,
   qrCodeServiceMock: Partial<ExtractInterface<QRCodeService>>,
-  notificationsServiceMock: Partial<ExtractInterface<NotificationsService>>,
-  usersServiceMock: Partial<ExtractInterface<UsersService>>,
+  broadcastServiceMock: Partial<ExtractInterface<BroadcastService>>,
 ) => {
   const testingModule = await Test.createTestingModule({
     providers: [
@@ -254,10 +231,6 @@ const createService = async (
       {
         provide: OperatorsService,
         useValue: operatorsServiceMock,
-      },
-      {
-        provide: EmailService,
-        useValue: emailServiceMock,
       },
       {
         provide: ServicesService,
@@ -280,12 +253,8 @@ const createService = async (
         useValue: qrCodeServiceMock,
       },
       {
-        provide: NotificationsService,
-        useValue: notificationsServiceMock,
-      },
-      {
-        provide: UsersService,
-        useValue: usersServiceMock,
+        provide: BroadcastService,
+        useValue: broadcastServiceMock,
       },
     ],
   }).compile();

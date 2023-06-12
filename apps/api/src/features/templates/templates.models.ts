@@ -1,23 +1,3 @@
-export interface BookingMadeUserProps {
-  user: {
-    name: string;
-  };
-  operator: {
-    name: string;
-    url: string;
-    details: Array<{ key: string; value: string }>;
-  };
-  service: {
-    name: string;
-    url: string;
-  };
-  booking: {
-    url: string;
-    qrCodeUrl: string;
-    details: Array<{ key: string; value: string }>;
-  };
-}
-
 export interface BookingMadeOperatorProps {
   operator: {
     name: string;
