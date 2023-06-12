@@ -1,11 +1,9 @@
 import {
   FormControl,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
-  Switch,
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
@@ -20,7 +18,7 @@ import {
   Tooltip,
 } from "chart.js";
 import dayjs from "dayjs";
-import { BookingDto } from "dtos";
+import { BookingDto, BookingStatus } from "dtos";
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { KeyValues } from "ui";
@@ -28,9 +26,11 @@ import { calculateBookingPrice, createPriceString, formatDate } from "utils";
 
 import { BookingAnalyticsList } from "components/admin/bookings/booking-analytics-list";
 import {
-  BookingFilterType,
+  bookingsPerDate,
   getBookingDate,
-} from "components/admin/bookings/booking-analytics.models";
+  getLineChartValue,
+} from "components/admin/bookings/booking-analytics.utils";
+import { AnalyticsFilterType, useAnalyticsSettings } from "state/analytics";
 import { SETTINGS_WIDTH } from "util/misc";
 
 Chart.register(CategoryScale);
@@ -45,63 +45,23 @@ interface Props {
 
 const dayRanges = [2, 7, 14, 28];
 
-const bookingsPerDate = (
-  bookings: BookingDto[],
-  days: number
-): Record<string, BookingDto[]> | null => {
-  if (!bookings || !bookings.length) {
-    return null;
-  }
-
-  const today = dayjs();
-  const startDate = today.subtract(days, "days");
-
-  const bookingsPerDate: Record<string, BookingDto[]> = {};
-
-  for (
-    let date = startDate;
-    date.isBefore(today) || date.isSame(today);
-    date = date.add(1, "day")
-  ) {
-    const dateString = date.format("DD/MM/YYYY");
-
-    bookingsPerDate[dateString] = bookings.filter(
-      (booking) =>
-        dayjs(booking.bookingDate).format("DD/MM/YYYY") === dateString
-    );
-  }
-
-  return bookingsPerDate;
-};
-
-type ViewMode = "Bookings" | "Revenue";
-
-const getLineChartValue = (bookings: BookingDto[], mode: ViewMode) => {
-  if (mode === "Bookings") {
-    return bookings.length;
-  }
-
-  return bookings.reduce(
-    (acc, cur) =>
-      acc + Math.max(calculateBookingPrice(cur.priceDetails, cur.service), 0),
-    0
-  );
-};
-
 export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
-  const [days, setDays] = useState(7);
-  const [filteredBookings, setFilteredBookings] = useState<BookingDto[]>([]);
-  const [selectedBookings, setSelectedBookings] = useState<BookingDto[]>([]);
   const [selectedBookingDate, setSelectedBookingDate] = useState<string | null>(
     null
   );
-  const [mode, setMode] = useState<ViewMode>("Bookings");
-  const [onlyShowPaidBookings, setOnlyShowPaidBookings] = useState(true);
-  const [bookingFilterType, setBookingFilterType] =
-    useState<BookingFilterType>("placed");
+
+  const { days, mode, filterType, bookingStatus, init, updateSettings } =
+    useAnalyticsSettings();
+
+  const [filteredBookings, setFilteredBookings] = useState<BookingDto[]>([]);
+  const [selectedBookings, setSelectedBookings] = useState<BookingDto[]>([]);
 
   const setDefaultBookingDate = () =>
     setSelectedBookingDate(`last ${days} days`);
+
+  useEffect(() => {
+    init();
+  }, []);
 
   useEffect(() => {
     const today = dayjs();
@@ -112,11 +72,11 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
         return false;
       }
 
-      if (onlyShowPaidBookings && booking.status !== "confirmed") {
+      if (booking.status !== bookingStatus) {
         return false;
       }
 
-      const bookingDate = getBookingDate(booking, bookingFilterType);
+      const bookingDate = getBookingDate(booking, filterType);
 
       return (
         (bookingDate.isAfter(startDate) || bookingDate.isSame(startDate)) &&
@@ -124,7 +84,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
       );
     });
 
-    if (bookingFilterType === "completed") {
+    if (filterType === "completed") {
       currentBookings.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)));
     } else {
       currentBookings.sort((a, b) =>
@@ -135,10 +95,10 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
     setFilteredBookings(currentBookings);
     setSelectedBookings(currentBookings);
     setDefaultBookingDate();
-  }, [days, onlyShowPaidBookings, bookingFilterType]);
+  }, [days, bookingStatus, filterType]);
 
   const handleChangeTimeframe = (e: SelectChangeEvent) => {
-    setDays(parseInt(e.target.value, 10));
+    updateSettings({ days: parseInt(e.target.value, 10) });
   };
 
   const getTotalPrice = (includeFees: boolean) =>
@@ -200,27 +160,36 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
               size="small"
               labelId="filter-type-label"
               label="Filter type"
-              value={bookingFilterType}
+              value={filterType}
               onChange={(e) =>
-                setBookingFilterType(e.target.value as BookingFilterType)
+                updateSettings({
+                  filterType: e.target.value as AnalyticsFilterType,
+                })
               }
             >
-              <MenuItem value={"placed"}>Bookings placed</MenuItem>
-              <MenuItem value={"completed"}>Bookings completed</MenuItem>
+              <MenuItem value={"placed"}>Recently placed bookings</MenuItem>
+              <MenuItem value={"completed"}>Recently visited bookings</MenuItem>
             </Select>
           </FormControl>
 
-          <FormControlLabel
-            sx={{ width: 300, mb: 3 }}
-            label="Paid bookings"
-            control={
-              <Switch
-                defaultChecked
-                value={onlyShowPaidBookings}
-                onChange={(e) => setOnlyShowPaidBookings(e.target.checked)}
-              />
-            }
-          />
+          <FormControl sx={{ mb: 3, flex: 1 }}>
+            <InputLabel id="filter-type-label">Booking status</InputLabel>
+            <Select
+              size="small"
+              labelId="filter-type-label"
+              label="Booking status"
+              value={bookingStatus}
+              onChange={(e) =>
+                updateSettings({
+                  bookingStatus: e.target.value as BookingStatus,
+                })
+              }
+            >
+              <MenuItem value={"confirmed"}>Confirmed bookings</MenuItem>
+              <MenuItem value={"pending"}>Pending bookings</MenuItem>
+              <MenuItem value={"rejected"}>Rejected bookings</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
 
         <KeyValues
@@ -244,7 +213,7 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
               <ToggleButtonGroup
                 size="small"
                 exclusive
-                onChange={(_, newMode) => setMode(newMode)}
+                onChange={(_, newMode) => updateSettings({ mode: newMode })}
                 value={mode}
                 sx={{ mb: 2 }}
               >
@@ -284,12 +253,12 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
       <Box sx={{ maxWidth: 1000, mt: 2 }}>
         <BookingAnalyticsList
           title={
-            bookingFilterType === "placed"
-              ? `Bookings made in ${selectedBookingDate}`
-              : `Bookings completed in ${selectedBookingDate}`
+            filterType === "placed"
+              ? `Bookings placed in ${selectedBookingDate}`
+              : `Bookings visited in ${selectedBookingDate}`
           }
           bookings={selectedBookings}
-          filterType={bookingFilterType}
+          filterType={filterType}
           totalPrice={createPriceString(getTotalPrice(false))}
         />
       </Box>

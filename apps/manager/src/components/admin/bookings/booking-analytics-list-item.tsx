@@ -5,7 +5,7 @@ import React from "react";
 import {
   BookingFilterType,
   getBookingSummary,
-} from "components/admin/bookings/booking-analytics.models";
+} from "components/admin/bookings/booking-analytics.utils";
 
 interface Props {
   selected: boolean;
