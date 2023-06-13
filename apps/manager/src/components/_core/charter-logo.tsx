@@ -13,7 +13,7 @@ export const CharterLogo: React.FC<Props> = ({ url }) => {
     <>
       <Link href={url} style={{ textDecoration: "none", color: "white" }}>
         <Image
-          src="/bm-logo.png"
+          src="/bm-logo-new-white.png"
           alt="BitMetro logo"
           width={40}
           height={40}

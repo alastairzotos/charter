@@ -17,7 +17,7 @@ export const AdminFooter: React.FC = () => {
     <FooterBox>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Image
-          src="/bm-logo.png"
+          src="/bm-logo-new-white.png"
           alt={`BitMetro logo`}
           width={64}
           height={64}
