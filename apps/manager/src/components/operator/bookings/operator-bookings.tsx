@@ -22,7 +22,9 @@ export const OperatorBookings: React.FC = () => {
   );
 
   useEffect(() => {
-    Notification.requestPermission((perm) => setNotificationPermission(perm));
+    if ("Notification" in window) {
+      Notification.requestPermission((perm) => setNotificationPermission(perm));
+    }
 
     getBookingsForUser();
     const interval = setInterval(() => getBookingsForUser(), POLLING_INTERVAL);
@@ -58,7 +60,7 @@ export const OperatorBookings: React.FC = () => {
           unseenBookings?.map((booking) => booking._id) || []
         );
 
-        if (notificationPermission === "granted") {
+        if ("Notification" in window && notificationPermission === "granted") {
           unseenBookings?.forEach((unseenBooking) => {
             const notification = new Notification(
               `New booking for ${unseenBooking.service.name}`,
