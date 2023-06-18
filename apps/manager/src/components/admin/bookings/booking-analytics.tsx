@@ -76,6 +76,15 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
         return false;
       }
 
+      if (
+        bookingStatus === "pending" &&
+        booking.setupIntentStatus !== "succeeded"
+      ) {
+        return false;
+      }
+
+      console.log(booking);
+
       const bookingDate = getBookingDate(booking, filterType);
 
       return (
