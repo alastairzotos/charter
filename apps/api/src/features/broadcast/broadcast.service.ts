@@ -31,6 +31,26 @@ export class BroadcastService {
     ]);
   }
 
+  async broadcastPendingBookingReminder(booking: BookingDto) {
+    await this.emailService.sendEmailToOperator(
+      booking.operator,
+      this.templatesService.pendingBookingReminder(booking),
+    );
+  }
+
+  async broadcastExpiredBooking(booking: BookingDto) {
+    await Promise.all([
+      this.emailService.sendEmail(
+        booking.email,
+        this.templatesService.bookingExpiredUser(booking),
+      ),
+      this.emailService.sendEmailToOperator(
+        booking.operator,
+        this.templatesService.bookingExpiredOperator(booking),
+      ),
+    ]);
+  }
+
   async broadcastSuccessfulBooking(booking: BookingDto) {
     // Only notify operator if it's a direct booking with no approval needed. They already know about it otherwise
     if (!booking.service.approveBookingBeforePayment) {

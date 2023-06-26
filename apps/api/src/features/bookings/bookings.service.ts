@@ -199,4 +199,9 @@ export class BookingsService {
   async deleteBookingsForService(serviceId: string) {
     await this.bookingsRepository.deleteBookingsForService(serviceId);
   }
+
+  async cancelExpiredBooking(booking: BookingDto) {
+    await this.bookingsRepository.setBookingStatus(booking._id, 'rejected');
+    await this.broadcastService.broadcastExpiredBooking(booking);
+  }
 }

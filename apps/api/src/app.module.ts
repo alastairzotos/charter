@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { EnvModule } from 'environment/environment.module';
 import { EnvService } from 'environment/environment.service';
+import { AutomationsModule } from 'features/automation/automation.module';
 import { BookingsModule } from 'features/bookings/bookings.module';
 import { BroadcastModule } from 'features/broadcast/broadcast.module';
 import { ConfigurationModule } from 'features/configuration/configuration.module';
@@ -53,6 +54,7 @@ import { MigrationsModule } from 'migrations/migrations.module';
     FeedbackModule,
     BroadcastModule,
     MigrationsModule,
+    AutomationsModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],

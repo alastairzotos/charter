@@ -7,6 +7,8 @@ import * as juice from 'juice';
 import { Injectable } from '@nestjs/common';
 import {
   BookingConfirmedUserProps,
+  BookingExpiredOperator,
+  BookingExpiredUser,
   BookingMadeAdminProps,
   BookingMadeOperatorActionRequiredProps,
   BookingMadeOperatorProps,
@@ -210,6 +212,66 @@ export class TemplatesService {
     };
   }
 
+  pendingBookingReminder(booking: BookingDto): EmailData {
+    const bookingDetails = getReadableBookingDetails(booking);
+
+    return {
+      subject: `[REMINDER] You have a pending booking`,
+      content: this.templates.pendingBookingReminder({
+        operator: {
+          name: booking.operator.name,
+        },
+        service: {
+          name: booking.service.name,
+          url: this.link(booking.instance, urls.user.service(booking.service)),
+        },
+        booking: {
+          date: booking.date,
+          url: this.linkToManager(urls.operators.booking(booking._id)),
+          details: Object.keys(bookingDetails).map((key) => ({
+            key,
+            value: bookingDetails[key],
+          })),
+        },
+      }),
+    };
+  }
+
+  bookingExpiredUser(booking: BookingDto): EmailData {
+    return {
+      subject: 'Your booking has expired',
+      content: this.templates.bookingExpiredUser({
+        user: {
+          name: booking.name,
+        },
+        service: {
+          name: booking.service.name,
+          url: this.link(booking.instance, urls.user.service(booking.service)),
+        },
+        site: {
+          url: this.link(booking.instance),
+        },
+      }),
+    };
+  }
+
+  bookingExpiredOperator(booking: BookingDto): EmailData {
+    return {
+      subject: 'A booking has expired',
+      content: this.templates.bookingExpiredOperator({
+        booking: {
+          date: booking.date,
+        },
+        operator: {
+          name: booking.operator.name,
+        },
+        service: {
+          name: booking.service.name,
+        },
+      }),
+    };
+  }
+
   private loadTemplates() {
     this.loadPartials();
 
@@ -235,6 +297,16 @@ export class TemplatesService {
       bookingMadeAdmin:
         this.compileTemplate<BookingMadeAdminProps>('booking-made-admin'),
       feedbackAdded: this.compileTemplate<FeedbackAddedProps>('feedback-added'),
+      pendingBookingReminder:
+        this.compileTemplate<BookingMadeOperatorActionRequiredProps>(
+          'pending-booking-reminder',
+        ),
+      bookingExpiredUser: this.compileTemplate<BookingExpiredUser>(
+        'booking-expired-user',
+      ),
+      bookingExpiredOperator: this.compileTemplate<BookingExpiredOperator>(
+        'booking-expired-operator',
+      ),
     };
   }
 

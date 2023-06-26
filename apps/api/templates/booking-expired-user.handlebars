@@ -1,0 +1,17 @@
+{{> heading }}
+
+<p>Hello {{ user.name }},</p>
+
+<p>
+  Unfortunately your booking for <a href="{{ service.url }}">{{ service.name }}</a> has expired
+</p>
+
+<p>This is will because there is no availability on the day or time selected. Please try an alternative day or time.</p>
+
+<p>In the meantime you can always visit our website to browse more services that you can book.</p>
+
+<p>We apologise for any inconvenience this may have caused.</p>
+
+<div class="spacer" />
+
+<a href="{{ site.url }}" class="cta">Browse services</a>

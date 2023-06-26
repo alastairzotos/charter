@@ -110,3 +110,28 @@ export interface FeedbackAddedProps {
   email: string;
   text: string;
 }
+
+export interface BookingExpiredUser {
+  user: {
+    name: string;
+  };
+  service: {
+    url: string;
+    name: string;
+  };
+  site: {
+    url: string;
+  };
+}
+
+export interface BookingExpiredOperator {
+  operator: {
+    name: string;
+  };
+  service: {
+    name: string;
+  };
+  booking: {
+    date: string;
+  };
+}

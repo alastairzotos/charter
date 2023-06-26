@@ -23,6 +23,7 @@ export class EnvService {
     fbAppId: process.env.FB_APP_ID as string,
     sentryDsn: process.env.SENTRY_DSN as string,
     fromEmail: process.env.FROM_EMAIL as string,
+    timezone: process.env.TIMEZONE as string,
   };
 
   get() {
