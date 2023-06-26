@@ -117,6 +117,7 @@ const envServiceMock: ExtractInterface<EnvService> = {
     fbAppId: '',
     sentryDsn: '',
     fromEmail: '',
+    timezone: '',
   })),
 };
 
