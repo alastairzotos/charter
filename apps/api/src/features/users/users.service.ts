@@ -7,6 +7,7 @@ import {
   LoginDetails,
   OAuthUserInfo,
   ResetPasswordDetails,
+  InstanceDto,
 } from 'dtos';
 import * as jwt from 'jsonwebtoken';
 
@@ -45,11 +46,11 @@ export class UsersService {
     await this.usersRepository.deleteUser(email);
   }
 
-  async promoteBasicUserToOperator(id: string) {
+  async promoteBasicUserToOperator(id: string, instance: InstanceDto) {
     const user = await this.usersRepository.getUserById(id);
 
     if (!!user && (!user.role || user.role === 'user')) {
-      await this.usersRepository.setUserRole(id, 'operator');
+      await this.usersRepository.setUserRole(id, 'operator', instance);
       return true;
     }
 

@@ -66,13 +66,20 @@ export class OperatorsService {
 
     if (!!operator.owner) {
       if (
-        await this.usersService.promoteBasicUserToOperator(operator.owner._id)
+        await this.usersService.promoteBasicUserToOperator(
+          operator.owner._id,
+          operator.instance,
+        )
       ) {
         const createdOperator =
           await this.operatorsRepo.getOperatorByIdWithInstance(
             createdOperatorId,
           );
-        await this.emailOperatorAfterPromotion(createdOperator);
+        await this.emailOperatorAfterPromotion({
+          ...createdOperator,
+          owner: operator.owner,
+          instance: operator.instance,
+        });
       }
     }
 
@@ -96,9 +103,13 @@ export class OperatorsService {
       if (
         await this.usersService.promoteBasicUserToOperator(
           newOperator.owner._id,
+          newOperator.instance,
         )
       ) {
-        await this.emailOperatorAfterPromotion(updatedOperator);
+        await this.emailOperatorAfterPromotion({
+          ...updatedOperator,
+          owner: newOperator.owner,
+        });
       }
     }
   }

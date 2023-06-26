@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { UserDetails, UserRole } from 'dtos';
+import { InstanceDto, UserDetails, UserRole } from 'dtos';
 import { Model } from 'mongoose';
 
 import { User } from 'schemas/user.schema';
@@ -59,8 +59,8 @@ export class UsersRepository {
     );
   }
 
-  async setUserRole(id: string, role: UserRole) {
-    await this.userModel.findOneAndUpdate({ _id: id }, { role });
+  async setUserRole(id: string, role: UserRole, instance: InstanceDto) {
+    await this.userModel.findOneAndUpdate({ _id: id }, { role, instance });
   }
 
   async createUserFromOAuth2(details: UserDetails) {

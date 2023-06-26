@@ -26,6 +26,7 @@ import { S3Module } from 'integrations/s3/s3.module';
 import { StripeModule } from 'integrations/stripe/stripe.module';
 import { JsonBodyMiddleware } from 'middleware/json-body.middleware';
 import { RawBodyMiddleware } from 'middleware/raw-body.middleware';
+import { MigrationsModule } from 'migrations/migrations.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { RawBodyMiddleware } from 'middleware/raw-body.middleware';
     ConfigurationModule,
     FeedbackModule,
     BroadcastModule,
+    MigrationsModule,
     MongooseModule.forRootAsync({
       imports: [EnvModule],
       inject: [EnvService],

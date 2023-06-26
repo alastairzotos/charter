@@ -54,11 +54,9 @@ function AppPage(props: AppProps) {
     <PageWrapper>
       <Inner {...props} />
 
-      <div style={{ zIndex: 99999 }}>
-        <CookieConsent>
-          This website uses cookies to enhance the user experience.
-        </CookieConsent>
-      </div>
+      <CookieConsent style={{ zIndex: 999999 }}>
+        This website uses cookies to enhance the user experience.
+      </CookieConsent>
     </PageWrapper>
   );
 }
