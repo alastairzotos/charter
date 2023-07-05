@@ -5,6 +5,7 @@ import { urlencoded, json } from 'express';
 
 import { AppModule } from 'app.module';
 import { EnvService } from 'environment/environment.service';
+import { MigrationsService } from 'migrations/migrations.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bodyParser: false });

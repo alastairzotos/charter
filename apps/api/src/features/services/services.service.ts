@@ -81,7 +81,7 @@ export class ServicesService {
 
   async updateService(id: string, newService: Partial<ServiceDto>) {
     return await this.servicesRepository.updateService(id, {
-      ...newService,
+      ...this.trimPricingFieldNames(newService as ServiceDto),
       slug: await this.createServiceSlug(newService),
     });
   }
@@ -224,5 +224,40 @@ export class ServicesService {
       ...service,
       operator,
     });
+  }
+
+  private trimPricingFieldNames(service: ServiceDto): ServiceDto {
+    switch (service.serviceSchema.pricingStrategy) {
+      case 'tiered':
+        return {
+          ...service,
+          price: {
+            ...service.price,
+            tiered: {
+              tiers: service.price.tiered.tiers.map((t) => ({
+                ...t,
+                name: t.name.trim(),
+              })),
+            },
+          },
+        };
+
+      case 'perAgeCohort':
+        return {
+          ...service,
+          price: {
+            ...service.price,
+            perAgeCohort: {
+              ageCohorts: service.price.perAgeCohort.ageCohorts.map((c) => ({
+                ...c,
+                name: c.name.trim(),
+              })),
+            },
+          },
+        };
+
+      default:
+        return service;
+    }
   }
 }
