@@ -41,7 +41,7 @@ export const UserServicesView: React.FC<Props> = ({
                     <UserServiceListItem
                       key={service._id}
                       service={service}
-                      showOperator={showOperator}
+                      // showOperator={showOperator}
                     />
                   </Grid>
                 ))}
@@ -60,7 +60,7 @@ export const UserServicesView: React.FC<Props> = ({
           <UserServiceListItem
             key={service._id}
             service={service}
-            showOperator={showOperator}
+            // showOperator={showOperator}
           />
         </Grid>
       ))}

@@ -71,7 +71,7 @@ export const UserServiceView: React.FC<Props> = ({
         {service.name}
       </Typography>
 
-      <OperatorCardMobile linkToOperatorPage operator={service.operator} />
+      {/* <OperatorCardMobile linkToOperatorPage operator={service.operator} /> */}
 
       <Grid container spacing={2} sx={{ mt: 1 }}>
         <Grid item xs={12} md={6}>

@@ -57,9 +57,9 @@ export const UserServiceListItem: React.FC<Props> = ({
                   mr: 1,
                 }}
               />
-              <Typography variant="body2" color="text.secondary">
+              {/* <Typography variant="body2" color="text.secondary">
                 {service.operator.name}
-              </Typography>
+              </Typography> */}
             </CardActions>
           )}
         </CardContent>

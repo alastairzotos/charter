@@ -102,7 +102,8 @@ export const BookingForm: React.FC<Props> = ({ service, onClose }) => {
               resetKeys={[initialValues]}
             >
               <FormBox
-                title={`Book ${service.name} by ${service.operator.name}`}
+                // title={`Book ${service.name} by ${service.operator.name}`}
+                title={`Book ${service.name}`}
                 onClose={onClose}
               >
                 <TabsProvider
