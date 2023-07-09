@@ -19,7 +19,7 @@ export const BookingAnalyticsAll: React.FC = () => {
       status={loadBookingsStatus}
       error={<Typography>There was an error loading the bookings</Typography>}
     >
-      <BookingAnalytics bookings={bookings} />
+      <BookingAnalytics bookings={bookings} onRefresh={loadBookings} />
     </StatusSwitch>
   );
 };

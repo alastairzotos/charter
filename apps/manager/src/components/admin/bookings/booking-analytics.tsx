@@ -1,4 +1,6 @@
+import RefreshIcon from "@mui/icons-material/Refresh";
 import {
+  Button,
   FormControl,
   InputLabel,
   MenuItem,
@@ -41,11 +43,15 @@ Chart.register(Tooltip);
 
 interface Props {
   bookings: BookingDto[] | null;
+  onRefresh: () => void;
 }
 
 const dayRanges = [2, 7, 14, 28];
 
-export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
+export const BookingAnalytics: React.FC<Props> = ({
+  bookings = [],
+  onRefresh,
+}) => {
   const [selectedBookingDate, setSelectedBookingDate] = useState<string | null>(
     null
   );
@@ -197,6 +203,15 @@ export const BookingAnalytics: React.FC<Props> = ({ bookings = [] }) => {
               <MenuItem value={"rejected"}>Rejected bookings</MenuItem>
             </Select>
           </FormControl>
+
+          <Button
+            size="small"
+            variant="outlined"
+            sx={{ borderRadius: 0, width: 40, height: 40 }}
+            onClick={onRefresh}
+          >
+            <RefreshIcon fontSize="small" />
+          </Button>
         </Box>
 
         <KeyValues

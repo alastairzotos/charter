@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { OperatorDto } from "dtos";
-import React from "react";
+import React, { useState } from "react";
 import { OperatorSearch, StatusSwitch } from "ui";
 
 import { BookingAnalytics } from "components/admin/bookings/booking-analytics";
@@ -8,6 +8,10 @@ import { useLoadBookingsByOperatorId } from "state/bookings";
 import { useLoadOperator, useLoadOperators } from "state/operators";
 
 export const BookingAnalyticsOperator: React.FC = () => {
+  const [selectedOperatorId, setSelectedOperatorId] = useState<string | null>(
+    null
+  );
+
   const loadOperatorsState = useLoadOperators();
 
   const {
@@ -23,8 +27,15 @@ export const BookingAnalyticsOperator: React.FC = () => {
 
   const handleSelectOperator = (operator: OperatorDto) => {
     if (operator) {
+      setSelectedOperatorId(operator._id);
       loadOperator(operator._id);
       loadBookings(operator._id);
+    }
+  };
+
+  const handleRefresh = () => {
+    if (!!selectedOperatorId) {
+      loadBookings(selectedOperatorId);
     }
   };
 
@@ -51,7 +62,7 @@ export const BookingAnalyticsOperator: React.FC = () => {
                 <Typography>There was an error loading the bookings</Typography>
               }
             >
-              <BookingAnalytics bookings={bookings} />
+              <BookingAnalytics bookings={bookings} onRefresh={handleRefresh} />
             </StatusSwitch>
           </>
         )}
