@@ -20,10 +20,12 @@ export class FeedbackService {
       instance,
     });
 
-    const superAdmins = await this.usersService.getSuperAdmins();
-    for (const superAdmin of superAdmins) {
+    const admins = await this.usersService.getAdmins(
+      instance as unknown as string,
+    );
+    for (const admin of admins) {
       await this.emailService.sendEmail(
-        superAdmin.email,
+        admin.email,
         this.templatesService.feedbackAdded(feedback),
       );
     }
