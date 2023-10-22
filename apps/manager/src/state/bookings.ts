@@ -4,6 +4,7 @@ import { BookingStatus } from "dtos";
 import {
   getAllBookings,
   getBookingById,
+  getBookingByRef,
   getBookingsByOperatorId,
   getBookingsForUser,
   setBookingFulfillment,
@@ -12,6 +13,7 @@ import {
 
 export const useLoadBookingsForUser = createQuery(getBookingsForUser);
 export const useLoadBooking = createQuery(getBookingById);
+export const useLoadBookingByRef = createQuery(getBookingByRef);
 export const useLoadBookingsByOperatorId = createQuery(getBookingsByOperatorId);
 export const useLoadAllBookings = createQuery(getAllBookings);
 export const useSetBookingFulfillment = createQuery(setBookingFulfillment);

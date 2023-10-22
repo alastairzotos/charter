@@ -21,6 +21,9 @@ export type BookingDocument = Booking & Document;
 export class Booking implements BookingDto {
   _id: string;
 
+  @Prop()
+  bookingRef: string;
+
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Service.name })
   service: Service;
 

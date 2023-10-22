@@ -58,6 +58,12 @@ export class BookingsController {
     return await this.bookingsService.getBookingById(id);
   }
 
+  @Get('by-ref/:ref')
+  @Roles('all')
+  async getBookingByRef(@Param('ref') bookingRef: string) {
+    return await this.bookingsService.getBookingByRef(bookingRef);
+  }
+
   @Get('readable/:id')
   @Roles('all')
   async getReadableBookingById(@Param('id') id: string) {

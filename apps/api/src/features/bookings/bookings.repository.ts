@@ -64,6 +64,12 @@ export class BookingsRepository {
     );
   }
 
+  async getBookingByRef(bookingRef: string) {
+    return await this.populateOperatorServiceAndInstance(
+      this.bookingsModel.findOne({ bookingRef }),
+    );
+  }
+
   async getBookingByPaymentIntentId(paymentIntentId: string) {
     return await this.populateOperatorServiceAndInstance(
       this.bookingsModel.findOne({ paymentIntentId }),

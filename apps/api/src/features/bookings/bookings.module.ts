@@ -6,6 +6,7 @@ import { BookingsController } from 'features/bookings/bookings.controller';
 import { BookingsRepository } from 'features/bookings/bookings.repository';
 import { BookingsService } from 'features/bookings/bookings.service';
 import { BroadcastModule } from 'features/broadcast/broadcast.module';
+import { InstancesModule } from 'features/instances/instances.module';
 import { OperatorsModule } from 'features/operators/operators.module';
 import { PaymentsModule } from 'features/payments/payments.module';
 import { QRCodeModule } from 'features/qr-code/qr-code.module';

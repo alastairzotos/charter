@@ -8,6 +8,14 @@ export const getBookingById = async (id: string) => {
   return data;
 };
 
+export const getBookingByRef = async (ref: string) => {
+  const { data } = await httpClient.get<BookingDto>(
+    `/bookings/by-ref/${ref.trim()}`
+  );
+
+  return data;
+};
+
 export const getBookingsForUser = async () => {
   const { data } = await httpClient.get<BookingDto[]>("/bookings/for-user");
 

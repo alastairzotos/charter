@@ -44,6 +44,7 @@ export class BookingsService {
 
     const createdBooking = await this.bookingsRepository.createBooking({
       bookingDate: new Date(),
+      bookingRef: await this.generateBookingRef(booking),
       ...booking,
       paymentStatus: 'pending',
       status: service.approveBookingBeforePayment ? 'pending' : 'confirmed',
@@ -147,6 +148,10 @@ export class BookingsService {
     return await this.bookingsRepository.getBookingById(id);
   }
 
+  async getBookingByRef(bookingRef: string) {
+    return await this.bookingsRepository.getBookingByRef(bookingRef.trim());
+  }
+
   async getBookingsByInstance(instance: string) {
     return await this.bookingsRepository.getBookingsByInstance(instance);
   }
@@ -203,5 +208,17 @@ export class BookingsService {
   async cancelExpiredBooking(booking: BookingDto) {
     await this.bookingsRepository.setBookingStatus(booking._id, 'rejected');
     await this.broadcastService.broadcastExpiredBooking(booking);
+  }
+
+  private async generateBookingRef(booking: BookingNoId) {
+    const bookingsInInstance =
+      await this.bookingsRepository.getBookingsByInstance(
+        booking.instance as unknown as string,
+      );
+
+    return `CB-${new Date().getFullYear()}-${`${bookingsInInstance?.length}`.padStart(
+      6,
+      '0',
+    )}`;
   }
 }

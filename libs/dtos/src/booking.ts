@@ -90,6 +90,7 @@ export type SetupIntentStatus = "succeeded" | "failed";
 
 export interface BookingDto extends DefaultBookingFields {
   _id: string;
+  bookingRef: string;
   service: ServiceDto;
   operator: OperatorDto;
   instance?: InstanceDto;

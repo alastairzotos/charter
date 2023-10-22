@@ -153,6 +153,10 @@ export const getReadableBookingDetails = (
     booking.service.approveBookingBeforePayment &&
     booking.paymentStatus !== "succeeded";
 
+  if (!!booking.bookingRef) {
+    obj["Booking Ref"] = booking.bookingRef;
+  }
+
   if (!hideContactDetails) {
     obj["Email"] = booking.email;
     obj["Phone"] = booking.phoneNumber;
