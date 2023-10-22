@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { FeedbackNoId, InstanceDto } from 'dtos';
+import { EnvService } from 'environment/environment.service';
 import { FeedbackRepository } from 'features/feedback/feedback.repository';
 import { TemplatesService } from 'features/templates/templates.service';
 import { UsersService } from 'features/users/users.service';
@@ -10,7 +11,7 @@ export class FeedbackService {
   constructor(
     private readonly templatesService: TemplatesService,
     private readonly emailService: EmailService,
-    private readonly usersService: UsersService,
+    private readonly envService: EnvService,
     private readonly feedbackRepo: FeedbackRepository,
   ) {}
 
@@ -20,15 +21,10 @@ export class FeedbackService {
       instance,
     });
 
-    const admins = await this.usersService.getAdmins(
-      instance as unknown as string,
+    await this.emailService.sendEmail(
+      this.envService.get().feedbackEmail,
+      this.templatesService.feedbackAdded(feedback),
     );
-    for (const admin of admins) {
-      await this.emailService.sendEmail(
-        admin.email,
-        this.templatesService.feedbackAdded(feedback),
-      );
-    }
   }
 
   async getFeedback(instance: string) {

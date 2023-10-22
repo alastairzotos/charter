@@ -5,13 +5,11 @@ import { FeedbackController } from 'features/feedback/feedback.controller';
 import { FeedbackRepository } from 'features/feedback/feedback.repository';
 import { FeedbackService } from 'features/feedback/feedback.service';
 import { TemplatesModule } from 'features/templates/templates.module';
-import { UsersModule } from 'features/users/users.module';
 import { EmailModule } from 'integrations/email/email.module';
 import { Feedback, FeedbackSchema } from 'schemas/feedback.schema';
 
 @Module({
   imports: [
-    UsersModule,
     EnvModule,
     EmailModule,
     TemplatesModule,

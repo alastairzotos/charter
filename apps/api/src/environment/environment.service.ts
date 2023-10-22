@@ -24,6 +24,7 @@ export class EnvService {
     sentryDsn: process.env.SENTRY_DSN as string,
     fromEmail: process.env.FROM_EMAIL as string,
     timezone: process.env.TIMEZONE as string,
+    feedbackEmail: process.env.FEEDBACK_EMAIL as string,
   };
 
   get() {
