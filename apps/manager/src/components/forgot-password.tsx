@@ -48,7 +48,10 @@ export const ForgotPasswordForm: React.FC = () => {
               value={email}
               disabled={sendForgotPasswordEmailStatus === "fetching"}
               error={sendForgotPasswordEmailStatus === "error"}
-              helperText="User with that email doesn't exist"
+              helperText={
+                sendForgotPasswordEmailStatus === "error" &&
+                "User with that email doesn't exist"
+              }
               onChange={(e) => setEmail(e.target.value)}
             />
 
