@@ -8,8 +8,12 @@ import {
   OAuthUserInfo,
   ResetPasswordDetails,
   InstanceDto,
+  GetResetPwdOtc,
+  ResetForgottenPwdResponse,
 } from 'dtos';
 import * as jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
+import * as crypto from 'crypto';
 
 import { EnvService } from 'environment/environment.service';
 import { UsersRepository } from 'features/users/users.repository';
@@ -17,6 +21,9 @@ import { User } from 'schemas/user.schema';
 import { IOauthVerifier } from 'interfaces/oauth-verifier';
 import { FacebookOAuthService } from 'integrations/facebook-oauth/facebook-oauth.service';
 import { GoogleOAuthService } from 'integrations/google-oauth/google-oauth.service';
+import { EmailService } from 'integrations/email/email.service';
+import { TemplatesService } from 'features/templates/templates.service';
+import { urls } from 'urls';
 
 @Injectable()
 export class UsersService {
@@ -24,6 +31,8 @@ export class UsersService {
     private readonly env: EnvService,
     private readonly facebookOAuthService: FacebookOAuthService,
     private readonly googleOAuthService: GoogleOAuthService,
+    private readonly emailService: EmailService,
+    private readonly templatesService: TemplatesService,
     private readonly usersRepository: UsersRepository,
   ) {}
 
@@ -155,6 +164,82 @@ export class UsersService {
     return await this.loginOauth(accessToken, this.googleOAuthService);
   }
 
+  async sendForgotPasswordEmail(email: string): Promise<boolean> {
+    const user = await this.usersRepository.getUserByEmail(email);
+
+    if (!user) {
+      return false;
+    }
+
+    const expiry = Date.now() + 60 * 60 * 1000; // One hour from now
+
+    const code = uuidv4();
+    const hashedCode = this.hashResetPwdOtcCode(code);
+
+    await this.usersRepository.createResetPwdOtc(user, hashedCode, expiry);
+
+    const expiryDate = new Date(expiry);
+    const expiryDateString =
+      expiryDate.toDateString() + ' ' + expiryDate.toLocaleTimeString();
+
+    await this.emailService.sendEmail(
+      email,
+      this.templatesService.forgotPassword(
+        user.givenName,
+        expiryDateString,
+        `${this.env.get().managerUrl}${urls.forgotPasswordReset(code)}`,
+      ),
+    );
+
+    return true;
+  }
+
+  async getResetPwdOtcIdFromCode(code: string): Promise<GetResetPwdOtc> {
+    const hashedCode = this.hashResetPwdOtcCode(code);
+
+    const resetPwdOtc = await this.usersRepository.getResetPwdOtcByHashedCode(
+      hashedCode,
+    );
+
+    if (!resetPwdOtc) {
+      return 'not-found';
+    }
+
+    if (Date.now() > resetPwdOtc.expires) {
+      return 'expired';
+    }
+
+    return resetPwdOtc;
+  }
+
+  async resetForgottenPassword(
+    otcId: string,
+    newPassword: string,
+  ): Promise<ResetForgottenPwdResponse> {
+    const otc = await this.usersRepository.getResetPwdOtcById(otcId);
+
+    if (!otc || Date.now() > otc.expires) {
+      return 'invalid-otc';
+    }
+
+    const user = await this.usersRepository.getUserByEmailWithPassword(
+      otc.user.email,
+    );
+
+    if (!user) {
+      return 'no-user';
+    }
+
+    await this.usersRepository.updatePassword(
+      user._id,
+      await bcrypt.hash(newPassword, 10),
+    );
+
+    await this.usersRepository.expireResetPwdOtc(otcId);
+
+    return 'success';
+  }
+
   private async loginOauth(
     accessToken: string,
     verifier: IOauthVerifier,
@@ -189,5 +274,9 @@ export class UsersService {
       { _id, email, givenName, role, instance: instance?.toString() },
       this.env.get().jwtSigningKey,
     );
+  }
+
+  private hashResetPwdOtcCode(code: string) {
+    return crypto.createHash('sha1').update(code).digest('hex');
   }
 }

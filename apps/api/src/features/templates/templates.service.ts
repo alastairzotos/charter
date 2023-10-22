@@ -15,6 +15,7 @@ import {
   BookingMadeUserPendingProps,
   BookingRejectedUserProps,
   FeedbackAddedProps,
+  ForgotPasswordProps,
   OperatorPromotedProps,
 } from 'features/templates/templates.models';
 import { BookingDto, FeedbackNoId, InstanceDto, OperatorDto } from 'dtos';
@@ -272,6 +273,21 @@ export class TemplatesService {
     };
   }
 
+  forgotPassword(
+    name: string,
+    expires: string,
+    resetPasswordUrl: string,
+  ): EmailData {
+    return {
+      subject: 'Reset your password',
+      content: this.templates.forgotPassword({
+        name,
+        expires,
+        resetPasswordUrl,
+      }),
+    };
+  }
+
   private loadTemplates() {
     this.loadPartials();
 
@@ -307,6 +323,8 @@ export class TemplatesService {
       bookingExpiredOperator: this.compileTemplate<BookingExpiredOperator>(
         'booking-expired-operator',
       ),
+      forgotPassword:
+        this.compileTemplate<ForgotPasswordProps>('forgot-password'),
     };
   }
 

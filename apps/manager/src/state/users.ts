@@ -8,7 +8,7 @@ import {
   localStorageService,
   LocalStorageService,
 } from "clients/localstorage.service";
-import { UserService } from "clients/user.service";
+import { UserService, usersService } from "clients/user.service";
 
 export const ACCESS_TOKEN_LOCALSTORAGE_KEY = "boatrental:auth-token";
 
@@ -23,6 +23,8 @@ export interface UserStateValues {
   userList?: LoggedInUserDetails[];
   getUserListStatus?: FetchStatus;
   refreshTokenStatus?: FetchStatus;
+  sendForgotPasswordEmailStatus?: FetchStatus;
+  resetForgottenPasswordStatus?: FetchStatus;
 }
 
 export interface UserStateActions {
@@ -46,6 +48,10 @@ export interface UserStateActions {
   deleteUser: () => Promise<boolean>;
 
   refreshToken: () => Promise<void>;
+
+  sendForgotPasswordEmail: (email: string) => Promise<void>;
+
+  resetForgottenPassword: (otcId: string, newPassword: string) => Promise<void>;
 }
 
 export type UserState = UserStateValues & UserStateActions;
@@ -181,12 +187,36 @@ export const createUserState = (
         set({ refreshTokenStatus: "error" });
       }
     },
+
+    sendForgotPasswordEmail: async (email: string) => {
+      try {
+        set({ sendForgotPasswordEmailStatus: "fetching" });
+
+        await userService.sendForgotPasswordEmail(email);
+
+        set({ sendForgotPasswordEmailStatus: "success" });
+      } catch {
+        set({ sendForgotPasswordEmailStatus: "error" });
+      }
+    },
+
+    resetForgottenPassword: async (otcId, newPassword) => {
+      try {
+        set({ resetForgottenPasswordStatus: "fetching" });
+
+        await userService.resetForgottenPassword(otcId, newPassword);
+
+        set({ resetForgottenPasswordStatus: "success" });
+      } catch {
+        set({ resetForgottenPasswordStatus: "error" });
+      }
+    },
   }));
 
 export const useUserState = createUserState(
   {
     initialised: false,
   },
-  new UserService(),
+  usersService,
   localStorageService
 );

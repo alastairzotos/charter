@@ -1,9 +1,13 @@
 import {
+  GetResetPwdOtc,
   LoggedInUserDetails,
   LoginDetails,
   LoginResponse,
   RegisterDetails,
+  ResetForgottenPasswordDto,
+  ResetForgottenPwdResponse,
   ResetPasswordDetails,
+  ResetPwdOtc,
 } from "dtos";
 
 import { httpClient } from "clients/http.client";
@@ -68,4 +72,34 @@ export class UserService {
 
     return data;
   }
+
+  async sendForgotPasswordEmail(email: string) {
+    await httpClient.post<{ email: string }, unknown>(
+      "/users/send-forgot-password-email",
+      { email }
+    );
+  }
+
+  async getResetPwdOtcIdFromCode(code: string): Promise<GetResetPwdOtc> {
+    const { data } = await httpClient.get<GetResetPwdOtc>(
+      `/users/reset-pwd-otc/${code}`
+    );
+
+    return data;
+  }
+
+  async resetForgottenPassword(
+    otcId: string,
+    newPassword: string
+  ): Promise<ResetForgottenPwdResponse> {
+    const { data } = await httpClient.post<
+      ResetForgottenPasswordDto,
+      { data: ResetForgottenPwdResponse },
+      unknown
+    >("/users/reset-forgotten-password", { otcId, newPassword });
+
+    return data;
+  }
 }
+
+export const usersService = new UserService();

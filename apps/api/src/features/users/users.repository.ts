@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { InstanceDto, UserDetails, UserRole } from 'dtos';
 import { Model } from 'mongoose';
+import { ResetPasswordOtc } from 'schemas/reset-pwd-otc.schema';
 
 import { User } from 'schemas/user.schema';
 
@@ -9,6 +10,8 @@ import { User } from 'schemas/user.schema';
 export class UsersRepository {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
+    @InjectModel(ResetPasswordOtc.name)
+    private readonly resetPwdOtcModel: Model<ResetPasswordOtc>,
   ) {}
 
   async getUsers() {
@@ -65,5 +68,21 @@ export class UsersRepository {
 
   async createUserFromOAuth2(details: UserDetails) {
     return await this.userModel.create(details);
+  }
+
+  async createResetPwdOtc(user: User, hashedCode: string, expires: number) {
+    return await this.resetPwdOtcModel.create({ user, hashedCode, expires });
+  }
+
+  async getResetPwdOtcById(id: string) {
+    return await this.resetPwdOtcModel.findById(id).populate('user');
+  }
+
+  async getResetPwdOtcByHashedCode(hashedCode: string) {
+    return await this.resetPwdOtcModel.findOne({ hashedCode }).populate('user');
+  }
+
+  async expireResetPwdOtc(id: string) {
+    await this.resetPwdOtcModel.findOneAndUpdate({ _id: id }, { expires: -1 });
   }
 }

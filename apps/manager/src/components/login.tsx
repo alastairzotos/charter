@@ -22,6 +22,7 @@ import { getEnv } from "util/env";
 const LoginFormInner: React.FC = () => {
   const router = useRouter();
   const { googleLogin, facebookLogin } = useConfiguration();
+  const includeSocials = router.query["include-socials"] === "true";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -72,14 +73,14 @@ const LoginFormInner: React.FC = () => {
           Login
         </Typography>
 
-        {googleLogin && (
+        {googleLogin && includeSocials && (
           <GoogleLoginButton
             disabled={isLoggingIn}
             onClick={() => handleGoogleLogin()}
           />
         )}
 
-        {facebookLogin && (
+        {facebookLogin && includeSocials && (
           <FacebookLogin
             size="small"
             buttonStyle={{ width: "100%" }}
@@ -91,7 +92,7 @@ const LoginFormInner: React.FC = () => {
           />
         )}
 
-        {(googleLogin || facebookLogin) && (
+        {includeSocials && (googleLogin || facebookLogin) && (
           <>
             <Divider variant="middle" sx={{ pt: 2, pb: 2 }} />
 
@@ -140,6 +141,12 @@ const LoginFormInner: React.FC = () => {
             Register
           </Link>{" "}
           an account
+        </Typography>
+
+        <Typography color="GrayText">
+          <Link href={urls.forgotPassword()} style={{ textDecoration: "none" }}>
+            Forgot your password?
+          </Link>
         </Typography>
       </Box>
     </Paper>

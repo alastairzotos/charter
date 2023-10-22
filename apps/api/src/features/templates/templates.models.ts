@@ -135,3 +135,9 @@ export interface BookingExpiredOperator {
     date: string;
   };
 }
+
+export interface ForgotPasswordProps {
+  name: string;
+  expires: string;
+  resetPasswordUrl: string;
+}

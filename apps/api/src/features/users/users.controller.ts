@@ -10,6 +10,7 @@ import {
   UseInterceptors,
   UseGuards,
   UnauthorizedException,
+  NotFoundException,
 } from '@nestjs/common';
 import { AuthGuard } from 'auth/auth.guard';
 import { Roles } from 'auth/roles.decorator';
@@ -19,8 +20,8 @@ import {
   UserDetails,
   RegisterDetails,
   LoginDetails,
-  OAuthUserInfo,
   ResetPasswordDetails,
+  ResetForgottenPasswordDto,
 } from 'dtos';
 
 import { UsersService } from 'features/users/users.service';
@@ -110,5 +111,29 @@ export class UsersController {
   @Post('refresh-token')
   refreshAccessToken(@Principal() user: User) {
     return this.usersService.refreshAccessToken(user);
+  }
+
+  @Post('send-forgot-password-email')
+  @Roles('all')
+  async sendForgotPasswordEmail(@Body() { email }: { email: string }) {
+    const success = await this.usersService.sendForgotPasswordEmail(email);
+
+    if (!success) {
+      throw new UnauthorizedException();
+    }
+  }
+
+  @Get('reset-pwd-otc/:code')
+  @Roles('all')
+  async getResetPwdOtcIdFromCode(@Param('code') code: string) {
+    return await this.usersService.getResetPwdOtcIdFromCode(code);
+  }
+
+  @Post('reset-forgotten-password')
+  @Roles('all')
+  async resetForgottenPassword(
+    @Body() { otcId, newPassword }: ResetForgottenPasswordDto,
+  ) {
+    return await this.usersService.resetForgottenPassword(otcId, newPassword);
   }
 }

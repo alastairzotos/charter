@@ -34,3 +34,18 @@ export interface LoggedInUserDetails extends UserDetails {
 export interface LoginResponse {
   accessToken: string;
 }
+
+export interface ResetPwdOtc {
+  _id: string;
+  user: UserDetails;
+  expires: number;
+}
+
+export type GetResetPwdOtc = ResetPwdOtc | "not-found" | "expired";
+
+export type ResetForgottenPwdResponse = "invalid-otc" | "no-user" | "success";
+
+export interface ResetForgottenPasswordDto {
+  otcId: string;
+  newPassword: string;
+}

@@ -9,10 +9,14 @@ interface Urls {
 
 export const urls = {
   home: () => "/",
-  login: () => "/login",
+  login: (includeSocials: boolean = true) =>
+    `/login?include-socials=${includeSocials}`,
   register: () => "/register",
   account: () => "/account",
   resetPassword: () => "/reset-password",
+  forgotPassword: () => "/forgot-password",
+  forgotPasswordReset: (resetOtc: string) =>
+    `/forgot-password-reset?otc=${resetOtc}`,
   admin: {
     home: () => "/admin",
     operators: () => "/admin/operators",
@@ -79,4 +83,6 @@ export const noRedirect = [
   urls.register(),
   urls.account(),
   urls.resetPassword(),
-];
+  urls.forgotPassword(),
+  urls.forgotPasswordReset(""),
+].map((url) => new URL(url, "https://www.bitmetro.io").pathname); // Remove query params etc
