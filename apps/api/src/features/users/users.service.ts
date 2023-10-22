@@ -244,7 +244,7 @@ export class UsersService {
     accessToken: string,
     verifier: IOauthVerifier,
   ): Promise<LoginResponse | null> {
-    let details = await verifier.verifyAccessToken(accessToken);
+    const details = await verifier.verifyAccessToken(accessToken);
 
     if (!details) {
       return null;
