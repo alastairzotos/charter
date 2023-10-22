@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import FacebookLogin, { ReactFacebookLoginInfo } from "react-facebook-login";
 import { urls } from "urls";
 
-import { fetchFbUserInfo, fetchGoogleUserInfo } from "clients/oauth2.client";
+import { loginWithFacebook, loginWithGoogle } from "clients/oauth2.client";
 import { GoogleLoginButton } from "components/_core/google-login-button";
 import { useConfiguration } from "contexts/configuration";
 import { useOAuthLogin } from "state/oauth2";
@@ -43,14 +43,14 @@ const LoginFormInner: React.FC = () => {
   const handleGoogleLogin = useGoogleLogin({
     flow: "implicit",
     onSuccess: (response) => {
-      fetchGoogleUserInfo(response.access_token)
+      loginWithGoogle(response.access_token)
         .then(loginOAuth)
         .then(() => router.push(urls.home()));
     },
   });
 
   const handleFacebookLogin = (response: ReactFacebookLoginInfo) => {
-    fetchFbUserInfo(response.accessToken)
+    loginWithFacebook(response.accessToken)
       .then(loginOAuth)
       .then(() => router.push(urls.home()));
   };

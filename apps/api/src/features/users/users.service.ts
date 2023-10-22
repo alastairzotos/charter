@@ -14,11 +14,16 @@ import * as jwt from 'jsonwebtoken';
 import { EnvService } from 'environment/environment.service';
 import { UsersRepository } from 'features/users/users.repository';
 import { User } from 'schemas/user.schema';
+import { IOauthVerifier } from 'interfaces/oauth-verifier';
+import { FacebookOAuthService } from 'integrations/facebook-oauth/facebook-oauth.service';
+import { GoogleOAuthService } from 'integrations/google-oauth/google-oauth.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly env: EnvService,
+    private readonly facebookOAuthService: FacebookOAuthService,
+    private readonly googleOAuthService: GoogleOAuthService,
     private readonly usersRepository: UsersRepository,
   ) {}
 
@@ -142,7 +147,24 @@ export class UsersService {
     };
   }
 
-  async loginUserOAuth(details: OAuthUserInfo): Promise<LoginResponse> {
+  async loginWithFacebook(accessToken: string): Promise<LoginResponse | null> {
+    return await this.loginOauth(accessToken, this.facebookOAuthService);
+  }
+
+  async loginWithGoogle(accessToken: string): Promise<LoginResponse | null> {
+    return await this.loginOauth(accessToken, this.googleOAuthService);
+  }
+
+  private async loginOauth(
+    accessToken: string,
+    verifier: IOauthVerifier,
+  ): Promise<LoginResponse | null> {
+    let details = await verifier.verifyAccessToken(accessToken);
+
+    if (!details) {
+      return null;
+    }
+
     let user = await this.getUserByEmail(details.email);
 
     if (!user) {

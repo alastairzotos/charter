@@ -9,6 +9,7 @@ import {
   ForbiddenException,
   UseInterceptors,
   UseGuards,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthGuard } from 'auth/auth.guard';
 import { Roles } from 'auth/roles.decorator';
@@ -82,10 +83,28 @@ export class UsersController {
     return result;
   }
 
-  @Post('login-oauth')
+  @Post('oauth/facebook')
   @Roles('all')
-  async loginImplicit(@Body() details: OAuthUserInfo) {
-    return await this.usersService.loginUserOAuth(details);
+  async loginFacebook(@Body() { accessToken }: { accessToken: string }) {
+    const details = await this.usersService.loginWithFacebook(accessToken);
+
+    if (!details) {
+      throw new UnauthorizedException();
+    }
+
+    return details;
+  }
+
+  @Post('oauth/google')
+  @Roles('all')
+  async loginGoogle(@Body() { accessToken }: { accessToken: string }) {
+    const details = await this.usersService.loginWithGoogle(accessToken);
+
+    if (!details) {
+      throw new UnauthorizedException();
+    }
+
+    return details;
   }
 
   @Post('refresh-token')
