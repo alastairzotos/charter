@@ -66,6 +66,7 @@ export const BookingForm: React.FC<Props> = ({ service, onClose }) => {
     await createBooking({ ...booking, status: "pending" });
 
   const initialValues: Omit<BookingNoId, "status"> = {
+    bookingRef: "",
     operator: service.operator,
     service,
     name: "",
