@@ -50,6 +50,7 @@ export const bookingValidationSchema = (
 ): yup.SchemaOf<
   Omit<
     BookingNoId,
+    | "bookingRef"
     | "operator"
     | "status"
     | "service"
