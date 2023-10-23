@@ -33,6 +33,9 @@ describe("User state", () => {
     ),
     deleteUser: jest.fn(async () => new Promise((resolve) => resolve())),
     refreshToken: jest.fn(async () => Promise.resolve("")),
+    getResetPwdOtcIdFromCode: jest.fn(),
+    resetForgottenPassword: jest.fn(),
+    sendForgotPasswordEmail: jest.fn(),
   };
 
   const localStorage: Record<string, string> = {};
