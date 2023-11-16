@@ -18,12 +18,8 @@ const HomePage: NextPage = () => {
 
   console.log(mode);
 
-  const prompt = (
-    <Typography variant="h4">
-      Manage your service offerings, handle bookings, and local operators using
-      Charter.
-    </Typography>
-  );
+  const prompt =
+    "Manage your service offerings, handle bookings, and local operators using Charter.";
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -53,7 +49,11 @@ const HomePage: NextPage = () => {
         </Typography>
 
         <Box sx={{ flexGrow: 1, textAlign: "center" }}>
-          {!isDesktop && prompt}
+          {!isDesktop && (
+            <Typography variant="h4" sx={{ pt: 4 }}>
+              {prompt}
+            </Typography>
+          )}
         </Box>
 
         <Box sx={{ p: 2, pb: 10, textAlign: "center" }}>
@@ -109,12 +109,27 @@ const HomePage: NextPage = () => {
             width: `calc(100% - ${SIDEBAR_WIDTH}px)`,
             height: "100vh",
             p: 5,
-            backgroundImage: `url(/corfu-bg.jpeg)`,
+            backgroundImage:
+              mode === "light"
+                ? `url(/corfu-day.jpeg)`
+                : "url(/corfu-night.jpeg)",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         >
-          {prompt}
+          <Typography
+            variant="h4"
+            sx={{
+              p: 6,
+              backgroundColor:
+                mode === "dark"
+                  ? "rgba(0, 0, 0, 0.4)"
+                  : "rgba(255, 255, 255, 0.2)",
+              backdropFilter: "blur(20px)",
+            }}
+          >
+            {prompt}
+          </Typography>
         </Box>
       )}
     </Box>
