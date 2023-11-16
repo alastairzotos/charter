@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 
 dayjs.extend(customeParseFormat);
 
-export const APP_NAME = "Corfu Travel Guide";
+export const APP_NAME = "Charter";
 
 export const SETTINGS_WIDTH = 800;
 
