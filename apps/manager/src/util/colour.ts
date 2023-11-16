@@ -11,8 +11,8 @@ const COLOUR_MODE_LS_KEY = "@charter:colour-mode";
 
 export type ColourMode = "light" | "dark";
 
-export const getColourMode = (): ColourMode =>
-  localStorageService.get(COLOUR_MODE_LS_KEY, "light");
+export const getColourMode = (): ColourMode => "light";
+// localStorageService.get(COLOUR_MODE_LS_KEY, "light");
 
 export const setColourMode = (mode: ColourMode) =>
   localStorageService.set(COLOUR_MODE_LS_KEY, mode);

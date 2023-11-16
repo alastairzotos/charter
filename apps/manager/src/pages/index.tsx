@@ -1,49 +1,63 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useTheme } from "@mui/material";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { urls } from "urls";
 
 import { useUserState } from "state/users";
+import { useIsDesktop } from "ui";
+
+const SIDEBAR_WIDTH = 350;
 
 const HomePage: NextPage = () => {
   const { initialised, loggedInUser } = useUserState();
+  const {
+    palette: { mode },
+  } = useTheme();
+  const isDesktop = useIsDesktop();
+
+  console.log(mode);
+
+  const prompt = (
+    <Typography variant="h4">
+      Manage your service offerings, handle bookings, and local operators using
+      Charter.
+    </Typography>
+  );
 
   return (
-    <>
+    <Box sx={{ display: "flex" }}>
       <Box
         sx={{
-          backgroundColor: "#bbc",
-          ml: -15,
-          mr: -15,
-          mt: -6,
-          p: 16,
+          p: 5,
+          width: isDesktop ? SIDEBAR_WIDTH : "100vw",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          alignItems: "center",
         }}
       >
-        <Box sx={{ display: "flex" }}>
-          <Image
-            src="/bm-logo-black.svg"
-            alt="BitMetro Logo"
-            width={100}
-            height={100}
-          />
-          <Typography variant="h2" sx={{ mt: 4, ml: 2 }}>
-            Charter
-          </Typography>
-        </Box>
-        <Typography variant="h3" sx={{ mt: 4, ml: 2 }}>
-          Next level tourism management
+        <Image
+          src={
+            mode === "light"
+              ? "/bm-logo-new-black.png"
+              : "/bm-logo-new-white.png"
+          }
+          alt="BitMetro Logo"
+          width={100}
+          height={100}
+        />
+        <Typography variant="h2" sx={{ mt: 4, ml: 2 }}>
+          Charter
         </Typography>
-      </Box>
 
-      <Box sx={{ p: 16, textAlign: "center" }}>
-        {initialised && !loggedInUser && (
-          <>
-            <Typography variant="h5">
-              Manage your service offerings, handle bookings, and local
-              operators using Charter.
-            </Typography>
+        <Box sx={{ flexGrow: 1, textAlign: "center" }}>
+          {!isDesktop && prompt}
+        </Box>
 
+        <Box sx={{ p: 2, pb: 10, textAlign: "center" }}>
+          {initialised && !loggedInUser && (
             <Button
               variant="contained"
               sx={{ mt: 2 }}
@@ -53,55 +67,70 @@ const HomePage: NextPage = () => {
             >
               Login to get started
             </Button>
-          </>
-        )}
+          )}
 
-        {initialised && loggedInUser?.role === "user" && (
-          <>
-            <Typography>
-              If you are an operator, wait for the admin to register you.
-            </Typography>
-            <Typography>
-              When they have, refresh this page and go to your admin settings to
-              manage your services.
-            </Typography>
-          </>
-        )}
+          {initialised && loggedInUser?.role === "user" && (
+            <>
+              <Typography>
+                If you are an operator, wait for the admin to register you.
+              </Typography>
+              <Typography>
+                When they have, refresh this page and go to your admin settings
+                to manage your services.
+              </Typography>
+            </>
+          )}
 
-        {initialised && !!loggedInUser && loggedInUser?.role !== "user" && (
-          <Button
-            variant="contained"
-            sx={{ mt: 2 }}
-            size="large"
-            component={Link}
-            href={
-              loggedInUser.role === "admin"
-                ? urls.admin.home()
-                : loggedInUser.role === "operator"
-                ? urls.operators.home()
-                : loggedInUser.role === "super-admin"
-                ? urls.superAdmin.home()
-                : ""
-            }
-          >
-            Go to admin panel
-          </Button>
-        )}
+          {initialised && !!loggedInUser && loggedInUser?.role !== "user" && (
+            <Button
+              variant="contained"
+              sx={{ mt: 2 }}
+              size="large"
+              component={Link}
+              href={
+                loggedInUser.role === "admin"
+                  ? urls.admin.home()
+                  : loggedInUser.role === "operator"
+                  ? urls.operators.home()
+                  : loggedInUser.role === "super-admin"
+                  ? urls.superAdmin.home()
+                  : ""
+              }
+            >
+              Go to admin panel
+            </Button>
+          )}
+        </Box>
       </Box>
-    </>
+
+      {isDesktop && (
+        <Box
+          sx={{
+            width: `calc(100% - ${SIDEBAR_WIDTH}px)`,
+            height: "100vh",
+            p: 5,
+            backgroundImage: `url(/corfu-bg.jpeg)`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {prompt}
+        </Box>
+      )}
+    </Box>
   );
 
-  return (
-    <>
-      <Typography>
-        If you are an operator, wait for the admin to register you.
-      </Typography>
-      <Typography>
-        When they have, log out of this page and log back in and you will be
-        able to manage your services.
-      </Typography>
-    </>
-  );
+  // return (
+  //   <>
+  //     <Typography>
+  //       If you are an operator, wait for the admin to register you.
+  //     </Typography>
+  //     <Typography>
+  //       When they have, log out of this page and log back in and you will be
+  //       able to manage your services.
+  //     </Typography>
+  //   </>
+  // );
 };
 
 HomePage.getInitialProps = () => ({});

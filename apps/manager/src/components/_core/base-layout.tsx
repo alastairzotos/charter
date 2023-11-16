@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { DefaultErrorFallback, StatusSwitch } from "ui";
-import { noRedirect } from "urls";
+import { noRedirect, urls } from "urls";
 
 import { AdminFooter } from "components/_core/admin-footer";
 import { BaseAppBar } from "components/_core/app-bar/base-app-bar";
@@ -45,6 +45,10 @@ export const BaseLayout: React.FC<React.PropsWithChildren<Props>> = ({
   useEffect(() => {
     getConfiguration();
   }, []);
+
+  if (router.asPath === urls.home()) {
+    return <RoleRoute role={role}>{children}</RoleRoute>;
+  }
 
   return (
     <RoleRoute role={role}>
