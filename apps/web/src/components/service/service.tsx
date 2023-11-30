@@ -18,6 +18,8 @@ import { BookButton } from "components/service/book-button";
 import { ImageGallery } from "components/service/image-gallery";
 import { UserServiceViewContent } from "components/service/user-service-view-content";
 import { UserServiceViewFields } from "components/service/user-service-view-fields";
+import { IS_CLOSED_FOR_WINTER } from "util/misc";
+import { ClosedMessage } from "components/_core/closed-message";
 
 interface Props {
   bookingView?: boolean;
@@ -114,7 +116,7 @@ export const UserServiceView: React.FC<Props> = ({
             </Box>
           </Paper>
 
-          {!bookingView && (
+          {!bookingView && !IS_CLOSED_FOR_WINTER && (
             <>
               <BookButton onClick={() => setBookingModalOpen(true)} />
               {service.approveBookingBeforePayment && (
@@ -132,6 +134,12 @@ export const UserServiceView: React.FC<Props> = ({
               )}
             </>
           )}
+
+          <Box sx={{ p: 3 }}>
+            <Typography>
+              <ClosedMessage />
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
 

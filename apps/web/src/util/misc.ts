@@ -4,6 +4,8 @@ import customeParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customeParseFormat);
 
+export const IS_CLOSED_FOR_WINTER = true;
+
 export const APP_NAME = "Corfu Travel Guide";
 
 export const SETTINGS_WIDTH = 800;

@@ -9,6 +9,7 @@ import { SeoHead } from "components/_core/seo-head";
 import { UserLayoutContainer } from "components/_core/user-layout-container";
 import { ServiceCategories } from "components/_core/user-service-categories";
 import { APP_NAME, capitalise } from "util/misc";
+import { ClosedMessage } from "components/_core/closed-message";
 
 interface Props {
   schemaCategories: ServiceSchemaCategoryDto[];
@@ -69,6 +70,12 @@ const Home: NextPage<Props> = ({ schemaCategories }) => {
       </Box>
 
       <UserLayoutContainer>
+        <Box sx={{ p: 3, pb: 6, mx: { sx: 0, md: 6, xl: 20 } }}>
+          <Typography variant="h6">
+            <ClosedMessage />
+          </Typography>
+        </Box>
+
         <ServiceCategories schemaCategories={schemaCategories} />
       </UserLayoutContainer>
     </>
