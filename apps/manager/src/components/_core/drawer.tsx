@@ -14,6 +14,7 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
+  darken,
   styled,
 } from "@mui/material";
 import { UserRole } from "dtos";
@@ -98,7 +99,13 @@ const linksForRole: Record<UserRole, Array<DrawerLink | "divider">> = {
 };
 
 const LogoArea = styled(Toolbar)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#4e4e4e" : "#0e60b0",
+  backgroundColor:
+    theme.palette.mode === "dark"
+      ? darken(theme.palette.background.paper, 0.65)
+      : theme.palette.background.paper,
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
 }));
 
 export const AppDrawer: React.FC<Props> = ({ role }) => {

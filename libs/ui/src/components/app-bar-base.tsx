@@ -7,6 +7,7 @@ import {
   MenuItem,
   SxProps,
   Typography,
+  styled,
 } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -14,14 +15,22 @@ import Toolbar from "@mui/material/Toolbar";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import * as React from "react";
-interface Props {
+import { useIsDesktop, useIsMobile } from "../hooks";
+
+export interface AppBarBaseProps {
   sx?: SxProps;
   logo?: React.ReactNode;
   pages?: Map<string, string>;
   rightButton?: React.ReactNode;
 }
 
-export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
+const LogoArea = styled("div")(() => ({
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
+}));
+
+export const AppBarBase: React.FC<React.PropsWithChildren<AppBarBaseProps>> = ({
   sx,
   logo = <></>,
   pages = new Map(),
@@ -29,6 +38,7 @@ export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
   children,
 }) => {
   const router = useRouter();
+  const isMobile = useIsMobile();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -43,7 +53,7 @@ export const AppBarBase: React.FC<React.PropsWithChildren<Props>> = ({
     <MuiAppBar position="fixed" sx={sx}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {logo}
+          {isMobile && <LogoArea>{logo}</LogoArea>}
 
           <Box sx={{ ml: 2, display: { xs: "none", md: "flex" } }}>
             {Array.from(pages.keys()).map((url) => (

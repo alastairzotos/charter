@@ -1,34 +1,30 @@
-import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { SxProps, styled } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 interface Props {
+  sx?: SxProps;
   url: string;
 }
 
-export const CharterLogo: React.FC<Props> = ({ url }) => {
-  return (
-    <>
-      <Link href={url} style={{ textDecoration: "none", color: "white" }}>
-        <Image
-          src="/bm-logo-new-white.png"
-          alt="BitMetro logo"
-          width={40}
-          height={40}
-          style={{
-            marginRight: 10,
-            marginBottom: 6,
-            // filter: "opacity(70%)",
-          }}
-        />
-      </Link>
-      <Link href={url} style={{ textDecoration: "none", color: "#fff" }}>
-        <Typography variant="h5">Charter</Typography>
-      </Link>
+const LogoImage = styled(Image)(({ theme }) => ({
+  filter: theme.palette.mode === "dark" ? "invert(1)" : "none",
+}));
 
-      <Box sx={{ pr: 3 }} />
-    </>
+export const CharterLogo: React.FC<Props> = ({ sx, url }) => {
+  return (
+    <Link
+      href={url}
+      style={{ textDecoration: "none", color: "white", lineHeight: 0 }}
+    >
+      <LogoImage
+        src="/charter-large.png"
+        alt="Charter logo"
+        width={120}
+        height={60}
+        sx={sx}
+      />
+    </Link>
   );
 };

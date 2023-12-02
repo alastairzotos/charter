@@ -16,18 +16,26 @@ export const AdminFooter: React.FC = () => {
   return (
     <FooterBox>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Image
-          src="/bm-logo-new-white.png"
-          alt={`BitMetro logo`}
-          width={64}
-          height={64}
-        />
+        <Link href="https://www.bitmetro.io" target="_blank">
+          <Image
+            src="/bm-logo-new-white.png"
+            alt={`BitMetro logo`}
+            width={64}
+            height={64}
+          />
+        </Link>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-        <Typography variant="subtitle2" color="GrayText">
-          &copy; BitMetro {new Date().getFullYear()}
-        </Typography>
+        <Link
+          href="https://www.bitmetro.io"
+          target="_blank"
+          style={{ textDecoration: "none" }}
+        >
+          <Typography variant="subtitle2" color="GrayText">
+            &copy; bitmetro {new Date().getFullYear()}
+          </Typography>
+        </Link>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>

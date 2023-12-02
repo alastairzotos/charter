@@ -7,6 +7,7 @@ import { urls } from "urls";
 import { useUserState } from "state/users";
 import { useIsDesktop } from "ui";
 import { SeoHead } from "components/_core/seo-head";
+import { CharterLogo } from "components/_core/charter-logo";
 
 const SIDEBAR_WIDTH = 350;
 
@@ -36,7 +37,8 @@ const HomePage: NextPage = () => {
             alignItems: "center",
           }}
         >
-          <Image
+          <CharterLogo url="/" sx={{ width: 200, height: 100 }} />
+          {/* <Image
             src={
               mode === "light"
                 ? "/bm-logo-new-black.png"
@@ -45,10 +47,10 @@ const HomePage: NextPage = () => {
             alt="BitMetro Logo"
             width={100}
             height={100}
-          />
-          <Typography variant="h2" sx={{ mt: 4, ml: 2 }}>
+          /> */}
+          {/* <Typography variant="h2" sx={{ mt: 4, ml: 2 }}>
             Charter
-          </Typography>
+          </Typography> */}
 
           <Box sx={{ flexGrow: 1, textAlign: "center" }}>
             {!isDesktop && (
