@@ -4,11 +4,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { ResetPwdOtc } from "dtos";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { urls } from "urls";
 
-import { ResetPwdOtc } from "dtos";
 import { useUserState } from "state/users";
 
 interface Props {
@@ -26,7 +26,7 @@ export const ForgotPasswordResetForm: React.FC<Props> = ({ otc }) => {
 
   React.useEffect(() => {
     if (resetForgottenPasswordStatus === "success") {
-      router.push(urls.login(false));
+      router.push(urls.loginAfterPasswordReset());
     }
   }, [resetForgottenPasswordStatus]);
 

@@ -22,6 +22,7 @@ export interface AppBarBaseProps {
   logo?: React.ReactNode;
   pages?: Map<string, string>;
   rightButton?: React.ReactNode;
+  alwaysShowLogo?: boolean;
 }
 
 const LogoArea = styled("div")(() => ({
@@ -35,6 +36,7 @@ export const AppBarBase: React.FC<React.PropsWithChildren<AppBarBaseProps>> = ({
   logo = <></>,
   pages = new Map(),
   rightButton,
+  alwaysShowLogo = true,
   children,
 }) => {
   const router = useRouter();
@@ -53,7 +55,7 @@ export const AppBarBase: React.FC<React.PropsWithChildren<AppBarBaseProps>> = ({
     <MuiAppBar position="fixed" sx={sx}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {isMobile && <LogoArea>{logo}</LogoArea>}
+          {alwaysShowLogo ? logo : isMobile && <LogoArea>{logo}</LogoArea>}
 
           <Box sx={{ ml: 2, display: { xs: "none", md: "flex" } }}>
             {Array.from(pages.keys()).map((url) => (

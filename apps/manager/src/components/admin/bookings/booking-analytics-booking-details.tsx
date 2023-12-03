@@ -1,10 +1,10 @@
 import { Alert } from "@mui/material";
+import { BookingDto } from "dtos";
 import React from "react";
 import { KeyValues } from "ui";
 import { getReadableBookingDetails } from "utils";
 
 import { SETTINGS_WIDTH } from "util/misc";
-import { BookingDto } from "dtos";
 
 interface Props {
   booking: BookingDto;

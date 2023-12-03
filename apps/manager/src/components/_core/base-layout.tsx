@@ -1,9 +1,9 @@
-import { Box, Toolbar, Typography } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 import { UserRole } from "dtos";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { DefaultErrorFallback, StatusSwitch } from "ui";
+import { DefaultErrorFallback } from "ui";
 import { noRedirect, urls } from "urls";
 
 import { AdminFooter } from "components/_core/admin-footer";
@@ -17,8 +17,6 @@ import { VerticalLayout } from "components/_core/vertical-layout";
 import { AdminAppBar } from "components/admin/_core/admin-app-bar";
 import { OperatorsAppBar } from "components/operator/_core/operators-app-bar";
 import { SuperAdminAppBar } from "components/super-admin/_core/super-admin-app-bar";
-import { ConfigurationProvider } from "contexts/configuration";
-import { useGetConfiguration } from "state/configuration";
 
 interface Props {
   role?: UserRole;
@@ -38,13 +36,6 @@ export const BaseLayout: React.FC<React.PropsWithChildren<Props>> = ({
   const router = useRouter();
 
   const showDrawer = !noRedirect.includes(router.pathname);
-
-  const [getConfigurationStatus, getConfiguration, configuration] =
-    useGetConfiguration((s) => [s.status, s.request, s.value]);
-
-  useEffect(() => {
-    getConfiguration();
-  }, []);
 
   if (router.asPath === urls.home()) {
     return <RoleRoute role={role}>{children}</RoleRoute>;
@@ -77,18 +68,7 @@ export const BaseLayout: React.FC<React.PropsWithChildren<Props>> = ({
           <VerticalLayout>
             <ResponsiveLayout>
               <ErrorBoundary FallbackComponent={DefaultErrorFallback}>
-                <StatusSwitch
-                  status={getConfigurationStatus}
-                  error={
-                    <Typography>
-                      There was an error loading the configuration
-                    </Typography>
-                  }
-                >
-                  <ConfigurationProvider value={configuration!}>
-                    {children}
-                  </ConfigurationProvider>
-                </StatusSwitch>
+                {children}
               </ErrorBoundary>
             </ResponsiveLayout>
 

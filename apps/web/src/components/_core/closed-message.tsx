@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+
 import { IS_CLOSED_FOR_WINTER } from "util/misc";
 
 export const ClosedMessage: React.FC = () => {

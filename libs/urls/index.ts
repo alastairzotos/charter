@@ -9,8 +9,8 @@ interface Urls {
 
 export const urls = {
   home: () => "/",
-  login: (includeSocials: boolean = true) =>
-    `/login?include-socials=${includeSocials}`,
+  login: () => "/",
+  loginAfterPasswordReset: () => "/reset-login",
   register: () => "/register",
   account: () => "/account",
   resetPassword: () => "/reset-password",
@@ -80,6 +80,7 @@ export const createServiceSlug = (service: Partial<ServiceDto>) =>
 export const noRedirect = [
   urls.home(),
   urls.login(),
+  urls.loginAfterPasswordReset(),
   urls.register(),
   urls.account(),
   urls.resetPassword(),

@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 import { KeyValues, StatusSwitch } from "ui";
 import { getReadableBookingDetails } from "utils";
 
+import { BookingAnalyticsBookingDetails } from "components/admin/bookings/booking-analytics-booking-details";
 import { useLoadBooking } from "state/bookings";
 import { SETTINGS_WIDTH } from "util/misc";
-import { BookingAnalyticsBookingDetails } from "components/admin/bookings/booking-analytics-booking-details";
 
 interface Props {
   bookingId: string;

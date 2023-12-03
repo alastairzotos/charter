@@ -1,11 +1,11 @@
+import { Typography } from "@mui/material";
 import Container from "@mui/material/Container";
+import { GetResetPwdOtc } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import * as React from "react";
 
-import { SeoHead } from "components/_core/seo-head";
 import { usersService } from "clients/user.service";
-import { GetResetPwdOtc } from "dtos";
-import { Typography } from "@mui/material";
+import { SeoHead } from "components/_core/seo-head";
 import { ForgotPasswordResetForm } from "components/forgot-password-reset";
 
 interface Props {

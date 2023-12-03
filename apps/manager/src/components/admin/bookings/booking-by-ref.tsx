@@ -1,3 +1,4 @@
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Box,
   Button,
@@ -5,11 +6,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import React, { useState } from "react";
-import { SETTINGS_WIDTH } from "util/misc";
-import { useLoadBookingByRef } from "state/bookings";
+
 import { BookingAnalyticsBookingDetails } from "components/admin/bookings/booking-analytics-booking-details";
+import { useLoadBookingByRef } from "state/bookings";
+import { SETTINGS_WIDTH } from "util/misc";
 
 export const BookingByRef: React.FC = () => {
   const [bookingRef, setBookingRef] = useState("");

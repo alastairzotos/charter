@@ -1,11 +1,15 @@
 import "styles/globals.css";
+import { Typography } from "@mui/material";
 import * as Sentry from "@sentry/react";
 import type { AppProps } from "next/app";
-import * as React from "react";
+import React, { useEffect } from "react";
 import CookieConsent from "react-cookie-consent";
+import { StatusSwitch } from "ui";
 
 import { BaseLayout } from "components/_core/base-layout";
 import { PageWrapper } from "components/_core/page-wrapper";
+import { ConfigurationProvider } from "contexts/configuration";
+import { useGetConfiguration } from "state/configuration";
 import { useUserState } from "state/users";
 import { getEnv } from "util/env";
 
@@ -22,30 +26,46 @@ if (getEnv().sentryDsn) {
 }
 
 function Inner({ Component, pageProps }: AppProps) {
+  const [getConfigurationStatus, getConfiguration, configuration] =
+    useGetConfiguration((s) => [s.status, s.request, s.value]);
+
   const [initLocalStorage, initialised, user, refreshToken] = useUserState(
     (s) => [s.initLocalStorage, s.initialised, s.loggedInUser, s.refreshToken]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
+    getConfiguration();
+  }, []);
+
+  useEffect(() => {
     if (typeof window !== "undefined") {
       initLocalStorage();
     }
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (initialised && !!user) {
       refreshToken();
     }
   }, [initialised]);
 
-  if (!initialised) {
+  if (!initialised || !configuration) {
     return null;
   }
 
   return (
-    <BaseLayout role={user?.role || "user"}>
-      <Component {...pageProps} />
-    </BaseLayout>
+    <StatusSwitch
+      status={getConfigurationStatus}
+      error={
+        <Typography>There was an error loading the configuration</Typography>
+      }
+    >
+      <ConfigurationProvider value={configuration!}>
+        <BaseLayout role={user?.role || "user"}>
+          <Component {...pageProps} />
+        </BaseLayout>
+      </ConfigurationProvider>
+    </StatusSwitch>
   );
 }
 

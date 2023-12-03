@@ -8,6 +8,7 @@ import { KeyValues, useIsDesktop } from "ui";
 import { urls } from "urls";
 import { getReadablePricingStringsForService } from "utils";
 
+import { ClosedMessage } from "components/_core/closed-message";
 import { MultilineText } from "components/_core/multiline-text";
 import { OpeningTimesView } from "components/_core/opening-times-view";
 import { ReadMore } from "components/_core/read-more";
@@ -19,7 +20,6 @@ import { ImageGallery } from "components/service/image-gallery";
 import { UserServiceViewContent } from "components/service/user-service-view-content";
 import { UserServiceViewFields } from "components/service/user-service-view-fields";
 import { IS_CLOSED_FOR_WINTER } from "util/misc";
-import { ClosedMessage } from "components/_core/closed-message";
 
 interface Props {
   bookingView?: boolean;

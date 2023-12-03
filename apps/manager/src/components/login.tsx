@@ -1,28 +1,32 @@
+import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+import GoogleIcon from "@mui/icons-material/Google";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import Divider from "@mui/material/Divider";
-import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import FacebookLogin, { ReactFacebookLoginInfo } from "react-facebook-login";
+import { ReactFacebookLoginInfo } from "react-facebook-login";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { urls } from "urls";
 
 import { loginWithFacebook, loginWithGoogle } from "clients/oauth2.client";
-import { GoogleLoginButton } from "components/_core/google-login-button";
+import { LoginButton } from "components/_core/login-button";
 import { useConfiguration } from "contexts/configuration";
 import { useOAuthLogin } from "state/oauth2";
 import { useUserState } from "state/users";
 import { getEnv } from "util/env";
 
-const LoginFormInner: React.FC = () => {
+interface Props {
+  includeSocials?: boolean;
+}
+
+const LoginFormInner: React.FC<Props> = ({ includeSocials = true }) => {
   const router = useRouter();
   const { googleLogin, facebookLogin } = useConfiguration();
-  const includeSocials = router.query["include-socials"] === "true";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,24 +64,24 @@ const LoginFormInner: React.FC = () => {
     basicLoginStatus === "fetching" || oauthLoginStatus === "fetching";
 
   return (
-    <Paper sx={{ p: 3, mt: 3 }}>
+    <>
       <Box
         component="form"
         sx={{
           display: "flex",
           flexDirection: "column",
           gap: 2,
+          width: "100%",
         }}
       >
-        <Typography variant="h4" sx={{ textAlign: "center" }}>
-          Login
-        </Typography>
-
         {googleLogin && includeSocials && (
-          <GoogleLoginButton
+          <LoginButton
             disabled={isLoggingIn}
             onClick={() => handleGoogleLogin()}
-          />
+            startIcon={<GoogleIcon />}
+          >
+            Login with Google
+          </LoginButton>
         )}
 
         {facebookLogin && includeSocials && (
@@ -89,15 +93,18 @@ const LoginFormInner: React.FC = () => {
             callback={handleFacebookLogin}
             icon="fa-facebook"
             isDisabled={isLoggingIn}
+            render={(props) => (
+              <LoginButton {...props} startIcon={<FacebookRoundedIcon />}>
+                Login with Facebook
+              </LoginButton>
+            )}
           />
         )}
 
         {includeSocials && (googleLogin || facebookLogin) && (
           <>
-            <Divider variant="middle" sx={{ pt: 2, pb: 2 }} />
-
-            <Typography variant="h6" sx={{ textAlign: "center" }}>
-              Login with email and password
+            <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
+              Or with email and password
             </Typography>
           </>
         )}
@@ -149,11 +156,11 @@ const LoginFormInner: React.FC = () => {
           </Link>
         </Typography>
       </Box>
-    </Paper>
+    </>
   );
 };
 
-export const LoginForm: React.FC = () => {
+export const LoginForm: React.FC<Props> = (props) => {
   const googleClientIdFromEnv = getEnv().googleClientId;
 
   const [googleClientId, setGoogleClientId] = useState<string | null>(
@@ -172,7 +179,7 @@ export const LoginForm: React.FC = () => {
 
   return (
     <GoogleOAuthProvider clientId={getEnv().googleClientId}>
-      <LoginFormInner />
+      <LoginFormInner {...props} />
     </GoogleOAuthProvider>
   );
 };

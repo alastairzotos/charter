@@ -2,12 +2,13 @@ import { Box, Button, Typography, useTheme } from "@mui/material";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { useIsDesktop } from "ui";
 import { urls } from "urls";
 
-import { useUserState } from "state/users";
-import { useIsDesktop } from "ui";
-import { SeoHead } from "components/_core/seo-head";
 import { CharterLogo } from "components/_core/charter-logo";
+import { SeoHead } from "components/_core/seo-head";
+import { LoginForm } from "components/login";
+import { useUserState } from "state/users";
 
 const SIDEBAR_WIDTH = 350;
 
@@ -19,7 +20,7 @@ const HomePage: NextPage = () => {
   const isDesktop = useIsDesktop();
 
   const prompt =
-    "Manage your service offerings, handle bookings, and local operators using Charter.";
+    "Manage local tour operators, service offerings and bookings using the world's most advanced local tourism CMS and booking engine";
 
   return (
     <>
@@ -31,6 +32,7 @@ const HomePage: NextPage = () => {
             p: 5,
             width: isDesktop ? SIDEBAR_WIDTH : "100vw",
             height: "100vh",
+            overflowY: "scroll",
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
@@ -38,41 +40,22 @@ const HomePage: NextPage = () => {
           }}
         >
           <CharterLogo url="/" sx={{ width: 200, height: 100 }} />
-          {/* <Image
-            src={
-              mode === "light"
-                ? "/bm-logo-new-black.png"
-                : "/bm-logo-new-white.png"
-            }
-            alt="BitMetro Logo"
-            width={100}
-            height={100}
-          /> */}
-          {/* <Typography variant="h2" sx={{ mt: 4, ml: 2 }}>
-            Charter
-          </Typography> */}
 
-          <Box sx={{ flexGrow: 1, textAlign: "center" }}>
+          <Box sx={{ width: "100%", flexGrow: 1, textAlign: "center" }}>
             {!isDesktop && (
-              <Typography variant="h4" sx={{ pt: 4 }}>
+              <Typography variant="h5" sx={{ pt: 4 }}>
                 {prompt}
               </Typography>
+            )}
+
+            {initialised && !loggedInUser && (
+              <Box sx={{ pt: 5 }}>
+                <LoginForm />
+              </Box>
             )}
           </Box>
 
           <Box sx={{ p: 2, pb: 10, textAlign: "center" }}>
-            {initialised && !loggedInUser && (
-              <Button
-                variant="contained"
-                sx={{ mt: 2 }}
-                size="large"
-                component={Link}
-                href={urls.login()}
-              >
-                Login to get started
-              </Button>
-            )}
-
             {initialised && loggedInUser?.role === "user" && (
               <>
                 <Typography>
@@ -104,6 +87,35 @@ const HomePage: NextPage = () => {
                 Go to admin panel
               </Button>
             )}
+          </Box>
+
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 1,
+              textAlign: "center",
+            }}
+          >
+            <Link href="https://www.bitmetro.io" target="_blank">
+              <Image
+                src="/bm-logo-new-black.png"
+                alt="bitmetro logo"
+                width={40}
+                height={40}
+              />
+            </Link>
+
+            <Link
+              href="https://www.bitmetro.io"
+              target="_blank"
+              style={{ textDecoration: "none", fontSize: "0.8em" }}
+            >
+              Developed with ❤️ by bitmetro
+            </Link>
           </Box>
         </Box>
 

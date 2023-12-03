@@ -14,6 +14,7 @@ export const CoreAppBar: React.FC<AppBarBaseProps> = (props) => {
             ? theme.palette.background.paper
             : theme.palette.primary.main,
       }}
+      alwaysShowLogo={false}
       {...props}
     />
   );

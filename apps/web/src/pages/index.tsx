@@ -5,11 +5,11 @@ import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 
 import { getServiceSchemaCategories } from "clients/service-schema-categories.client";
+import { ClosedMessage } from "components/_core/closed-message";
 import { SeoHead } from "components/_core/seo-head";
 import { UserLayoutContainer } from "components/_core/user-layout-container";
 import { ServiceCategories } from "components/_core/user-service-categories";
 import { APP_NAME, capitalise } from "util/misc";
-import { ClosedMessage } from "components/_core/closed-message";
 
 interface Props {
   schemaCategories: ServiceSchemaCategoryDto[];
