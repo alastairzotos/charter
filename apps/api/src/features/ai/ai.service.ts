@@ -9,12 +9,16 @@ const FIND_RESULTS = 8;
 
 @Injectable()
 export class AiService {
-  private embeddings = new OpenAIEmbeddings();
+  private embeddings: OpenAIEmbeddings;
 
   constructor(
     private readonly envService: EnvService,
     private readonly aiRepo: AiRepository,
   ) {
+    this.embeddings = new OpenAIEmbeddings({
+      openAIApiKey: this.envService.get().openAiApiKey,
+    });
+
     this.aiRepo.connect(this.envService.get().pineconeApiKey);
   }
 
