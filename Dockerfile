@@ -1,4 +1,4 @@
-FROM node:16-alpine as builder
+FROM node:20-alpine as builder
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN yarn global add turbo@1.5.5 && \
     turbo run build --scope=${SCOPE} --include-dependencies && \
     rm -rf node_modules/.cache .yarn/cache
 
-FROM node:16-alpine as app
+FROM node:20-alpine as app
 
 ARG SCOPE
 ARG PORT
