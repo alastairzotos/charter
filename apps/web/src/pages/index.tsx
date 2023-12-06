@@ -19,7 +19,7 @@ interface Props {
 }
 
 const Home: NextPage<Props> = ({ schemaCategories }) => {
-  const [searchResults, setSearchResults] = useState<ServiceDto[]>([]);
+  const [searchResults, setSearchResults] = useState<ServiceDto[] | null>(null);
 
   const serviceList = capitalise(
     schemaCategories
@@ -92,18 +92,21 @@ const Home: NextPage<Props> = ({ schemaCategories }) => {
           }}
         >
           <AiSearch onResultsUpdated={setSearchResults} />
-          {searchResults?.length && (
-            <>
-              <Typography variant="h6">
-                These services might be of interest to you:
-              </Typography>
-              <UserServicesView services={searchResults} />
-            </>
-          )}
-          ;
+
+          {searchResults &&
+            (searchResults.length === 0 ? (
+              <Typography>Sorry, no results found for your search</Typography>
+            ) : (
+              <>
+                <Typography variant="h6">
+                  These services might be of interest to you:
+                </Typography>
+                <UserServicesView services={searchResults} />
+              </>
+            ))}
         </Box>
 
-        {(!searchResults || !searchResults.length) && (
+        {!searchResults && (
           <ServiceCategories schemaCategories={schemaCategories} />
         )}
       </UserLayoutContainer>

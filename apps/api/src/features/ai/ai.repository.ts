@@ -29,6 +29,6 @@ export class AiRepository {
 
     const ids = results.matches.map((match) => match.id);
 
-    return await this.serviceModel.find({ _id: { $in: ids } });
+    return await this.serviceModel.find({ _id: { $in: ids }, hidden: false });
   }
 }
