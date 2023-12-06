@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { ServiceSchemaCategoryDto } from "dtos";
+import { ServiceDto, ServiceSchemaCategoryDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 
@@ -10,12 +10,17 @@ import { SeoHead } from "components/_core/seo-head";
 import { UserLayoutContainer } from "components/_core/user-layout-container";
 import { ServiceCategories } from "components/_core/user-service-categories";
 import { APP_NAME, capitalise } from "util/misc";
+import { AiSearch } from "components/_core/ai/ai-search";
+import { useState } from "react";
+import { UserServicesView } from "components/_core/user-services-view";
 
 interface Props {
   schemaCategories: ServiceSchemaCategoryDto[];
 }
 
 const Home: NextPage<Props> = ({ schemaCategories }) => {
+  const [searchResults, setSearchResults] = useState<ServiceDto[]>([]);
+
   const serviceList = capitalise(
     schemaCategories
       .map((category) => category.pluralName.toLocaleLowerCase())
@@ -70,13 +75,37 @@ const Home: NextPage<Props> = ({ schemaCategories }) => {
       </Box>
 
       <UserLayoutContainer>
-        <Box sx={{ p: 3, pb: 6, mx: { sx: 0, md: 6, xl: 20 } }}>
+        <Box sx={{ p: 3, pb: 3, mx: { sx: 0, md: 6, xl: 20 } }}>
           <Typography variant="h6">
             <ClosedMessage />
           </Typography>
         </Box>
 
-        <ServiceCategories schemaCategories={schemaCategories} />
+        <Box
+          sx={{
+            p: 3,
+            pb: 6,
+            mx: { sx: 0, md: 6, xl: 20 },
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
+        >
+          <AiSearch onResultsUpdated={setSearchResults} />
+          {searchResults?.length && (
+            <>
+              <Typography variant="h6">
+                These services might be of interest to you:
+              </Typography>
+              <UserServicesView services={searchResults} />
+            </>
+          )}
+          ;
+        </Box>
+
+        {(!searchResults || !searchResults.length) && (
+          <ServiceCategories schemaCategories={schemaCategories} />
+        )}
       </UserLayoutContainer>
     </>
   );

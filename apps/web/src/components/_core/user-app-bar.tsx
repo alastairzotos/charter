@@ -37,11 +37,13 @@ export const UserAppBar: React.FC = () => {
             width: "100%",
           }}
         >
-          {isDesktop ? (
+          {/* {isDesktop ? (
             <ServiceSearch sx={{ ml: 3, mr: 3, width: 600, minWidth: 150 }} />
           ) : (
             <div />
-          )}
+          )} */}
+
+          <div />
 
           <Button
             color="inherit"
