@@ -25,6 +25,8 @@ export class EnvService {
     fromEmail: process.env.FROM_EMAIL as string,
     timezone: process.env.TIMEZONE as string,
     feedbackEmail: process.env.FEEDBACK_EMAIL as string,
+    openAiApiKey: process.env.OPENAI_API_KEY as string,
+    pineconeApiKey: process.env.PINECONE_API_KEY as string,
   };
 
   get() {
