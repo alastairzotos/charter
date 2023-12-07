@@ -7,7 +7,9 @@ import {
   Button,
   Chip,
   CircularProgress,
+  IconButton,
   Paper,
+  SxProps,
   TextField,
   Typography,
 } from "@mui/material";
@@ -143,6 +145,10 @@ export const AiAsk: React.FC = () => {
     }
   };
 
+  const padding: SxProps = {
+    p: { xs: 1, md: 4 },
+  };
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
       <Box sx={{ width: "100%", display: "flex", gap: 1 }}>
@@ -165,14 +171,14 @@ export const AiAsk: React.FC = () => {
           disabled={status === "fetching"}
           onClick={askAi}
         >
-          <SearchIcon />
+          <SearchIcon fontSize="small" />
         </Button>
       </Box>
 
       {status === "fetching" && (
         <Paper
           sx={{
-            p: 4,
+            ...padding,
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -182,7 +188,7 @@ export const AiAsk: React.FC = () => {
         >
           <CircularProgress />
           <Typography>
-            Hold tight, our AI travel guide is planning your perfect day
+            Hold tight, our smart travel guide is planning your perfect day
           </Typography>
         </Paper>
       )}
@@ -194,7 +200,7 @@ export const AiAsk: React.FC = () => {
       )}
 
       {!!results && status === "success" && (
-        <Paper sx={{ p: 4 }}>
+        <Paper sx={padding}>
           <Markdown
             parseParagraphContent={(content) =>
               parseParagraphContent(content, results.services)

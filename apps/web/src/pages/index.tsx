@@ -80,7 +80,7 @@ const Home: NextPage<Props> = ({ schemaCategories }) => {
 
         <Box
           sx={{
-            p: 3,
+            p: { sm: 1, md: 3 },
             pb: 6,
             mx: { sx: 0, md: 6, xl: 20 },
           }}
