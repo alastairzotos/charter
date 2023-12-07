@@ -9,4 +9,9 @@ export class AiController {
   async search(@Query('query') query: string) {
     return await this.aiService.search(query);
   }
+
+  @Get('ask')
+  async ask(@Query('query') query: string) {
+    return await this.aiService.ask(query);
+  }
 }

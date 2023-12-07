@@ -73,7 +73,7 @@ export const createOperatorSlug = (operator: Partial<OperatorDto>) =>
   paramCase(operator.name || "");
 
 export const createServiceSlug = (service: Partial<ServiceDto>) =>
-  `${paramCase(service.name || "")}-by-${paramCase(
+  `${paramCase(service?.name || "")}-by-${paramCase(
     service?.operator?.name || ""
   )}`;
 

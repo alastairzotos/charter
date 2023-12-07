@@ -13,12 +13,16 @@ import { Titled } from "ui";
 import { urls } from "urls";
 
 interface Props {
+  title?: string;
   schemaCategories: ServiceSchemaCategoryDto[];
 }
 
-export const ServiceCategories: React.FC<Props> = ({ schemaCategories }) => {
+export const ServiceCategories: React.FC<Props> = ({
+  title = "Available services",
+  schemaCategories,
+}) => {
   return (
-    <Titled title="Available services" center>
+    <Titled title={title} center>
       <Grid container gap={2} sx={{ mt: 3 }} justifyContent="center">
         {schemaCategories.map((category) => (
           <Grid key={category._id} item xs={12} md={3}>

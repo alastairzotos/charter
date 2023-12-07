@@ -9,34 +9,17 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import { searchWithAi } from "clients/ai.client";
 import { ServiceDto } from "dtos";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { usePlaceholder } from "components/_core/ai/placeholders";
 
 interface Props {
   onResultsUpdated: (services: ServiceDto[]) => void;
 }
 
-const placeholders = [
-  "I would like to try some watersports",
-  "What family-friendly boat trips are there?",
-  "I'd like to hire a boat",
-  "I want to drive a car around the island",
-  "I would like to see Corfu town",
-];
-
 export const AiSearch: React.FC<Props> = ({ onResultsUpdated }) => {
   const [status, setStatus] = useState<FetchStatus | undefined>();
   const [query, setQuery] = useState("");
-  const [currentPlaceholderIndex, setCurrentPlaceholderIndex] = useState(0);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentPlaceholderIndex((prevIndex) =>
-        prevIndex === placeholders.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 3000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  const placeholder = usePlaceholder();
 
   const performSearch = async () => {
     try {
@@ -65,7 +48,7 @@ export const AiSearch: React.FC<Props> = ({ onResultsUpdated }) => {
             background: "white",
           }}
           variant="outlined"
-          placeholder={placeholders[currentPlaceholderIndex]}
+          placeholder={placeholder}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           disabled={status === "fetching"}

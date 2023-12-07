@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { ServiceDto, ServiceSchemaCategoryDto } from "dtos";
+import { ServiceSchemaCategoryDto } from "dtos";
 import { GetServerSideProps, NextPage } from "next";
 import Image from "next/image";
 
@@ -10,17 +10,14 @@ import { SeoHead } from "components/_core/seo-head";
 import { UserLayoutContainer } from "components/_core/user-layout-container";
 import { ServiceCategories } from "components/_core/user-service-categories";
 import { APP_NAME, capitalise } from "util/misc";
-import { AiSearch } from "components/_core/ai/ai-search";
-import { useState } from "react";
-import { UserServicesView } from "components/_core/user-services-view";
+import { AiAsk } from "components/_core/ai/ai-ask";
+import { Titled } from "ui";
 
 interface Props {
   schemaCategories: ServiceSchemaCategoryDto[];
 }
 
 const Home: NextPage<Props> = ({ schemaCategories }) => {
-  const [searchResults, setSearchResults] = useState<ServiceDto[] | null>(null);
-
   const serviceList = capitalise(
     schemaCategories
       .map((category) => category.pluralName.toLocaleLowerCase())
@@ -86,29 +83,17 @@ const Home: NextPage<Props> = ({ schemaCategories }) => {
             p: 3,
             pb: 6,
             mx: { sx: 0, md: 6, xl: 20 },
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
           }}
         >
-          <AiSearch onResultsUpdated={setSearchResults} />
-
-          {searchResults &&
-            (searchResults.length === 0 ? (
-              <Typography>Sorry, no results found for your search</Typography>
-            ) : (
-              <>
-                <Typography variant="h6">
-                  These services might be of interest to you:
-                </Typography>
-                <UserServicesView services={searchResults} />
-              </>
-            ))}
+          <Titled title="Ask anything" center>
+            <AiAsk />
+          </Titled>
         </Box>
 
-        {!searchResults && (
-          <ServiceCategories schemaCategories={schemaCategories} />
-        )}
+        <ServiceCategories
+          title="Or browse services manually"
+          schemaCategories={schemaCategories}
+        />
       </UserLayoutContainer>
     </>
   );

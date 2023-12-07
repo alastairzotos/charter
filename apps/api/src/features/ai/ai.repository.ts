@@ -21,16 +21,26 @@ export class AiRepository {
     this.index = pinecone.index('charter');
   }
 
-  async findSimilar(vector: number[], topK: number): Promise<Service[]> {
-    const results = await this.index.query({
+  async findSimilar(
+    vector: number[],
+    topK: number,
+    includeMetadata: boolean = false,
+  ) {
+    const embeddings = await this.index.query({
       vector,
       topK,
+      includeMetadata,
     });
 
-    const ids = results.matches.map((match) => match.id);
+    const ids = embeddings.matches.map((match) => match.id);
 
-    return await this.serviceModel
-      .find({ _id: { $in: ids }, hidden: false })
+    const services = await this.serviceModel
+      .find({ _id: { $in: ids } })
       .populate('operator');
+
+    return {
+      embeddings,
+      services,
+    };
   }
 }
