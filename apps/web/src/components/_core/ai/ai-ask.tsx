@@ -52,12 +52,14 @@ const parseParagraphContent = (
       const serviceParts = currentToken.split(" ");
       const id = serviceParts.pop()!;
 
+      let name = serviceParts.join(" ").trim();
+      if (!name || name === "") {
+        name = "View";
+      }
+
       parts.push({
         type: "service",
-        service: {
-          id,
-          name: serviceParts.join(" "),
-        },
+        service: { id, name },
       });
     }
 
