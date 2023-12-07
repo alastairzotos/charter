@@ -9,7 +9,7 @@ import { AiRepository } from 'features/ai/ai.repository';
 import { Service } from 'schemas/service.schema';
 import { AskAiDto } from 'dtos';
 
-const FIND_RESULTS = 8;
+const FIND_RESULTS = 5;
 
 @Injectable()
 export class AiService {
