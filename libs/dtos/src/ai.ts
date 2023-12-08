@@ -1,6 +1,7 @@
 import { ServiceDto } from "./service";
 
-export interface AskAiDto {
-  services: ServiceDto[];
-  response: string;
+export interface AiResponse {
+  services?: ServiceDto[];
+  token?: string;
+  stop?: true;
 }

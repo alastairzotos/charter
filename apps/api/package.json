@@ -50,7 +50,8 @@
     "stripe": "^11.9.1",
     "urls": "*",
     "utils": "*",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "ws": "^8.14.2"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

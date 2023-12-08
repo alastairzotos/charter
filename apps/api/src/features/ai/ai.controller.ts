@@ -11,7 +11,7 @@ export class AiController {
   }
 
   @Get('ask')
-  async ask(@Query('query') query: string) {
-    return await this.aiService.ask(query);
+  async ask(@Query('query') query: string, @Query('wsref') wsRef: string) {
+    return await this.aiService.ask(query, wsRef);
   }
 }

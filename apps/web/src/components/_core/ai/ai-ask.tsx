@@ -7,7 +7,6 @@ import {
   Button,
   Chip,
   CircularProgress,
-  IconButton,
   Paper,
   SxProps,
   TextField,
@@ -15,11 +14,14 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { askWithAi } from "clients/ai.client";
-import { AskAiDto, ServiceDto } from "dtos";
+import { AiResponse, ServiceDto } from "dtos";
 import { Markdown } from "components/_core/markdown";
 import Link from "next/link";
+import { v4 as uuidv4 } from "uuid";
 import { urls } from "urls";
 import { usePlaceholder } from "components/_core/ai/placeholders";
+import { useWebSockets } from "hooks/ws";
+import { getEnv } from "util/env";
 
 const parseParagraphContent = (
   content: string,
@@ -118,20 +120,41 @@ const parseParagraphContent = (
   );
 };
 
+const wsRef = uuidv4();
+
 export const AiAsk: React.FC = () => {
-  const [status, setStatus] = useState<FetchStatus | undefined>();
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<AskAiDto | null>(null);
+  const [status, setStatus] = useState<FetchStatus | null>(null);
+  const [services, setServices] = useState<ServiceDto[] | null>(null);
+  const [response, setResponse] = useState("");
   const placeholder = usePlaceholder();
+
+  const [wsConn, refreshWsConn] = useWebSockets(
+    getEnv().wsUrl,
+    wsRef,
+    (data: AiResponse) => {
+      if (data.token) {
+        setResponse((r) => r + data.token);
+      } else if (data.services) {
+        setServices(data.services);
+      } else if (data.stop) {
+        setStatus("success");
+      }
+    }
+  );
+
+  useEffect(() => {
+    if (wsConn === "disconnected") {
+      refreshWsConn();
+    }
+  }, [wsConn]);
 
   const askAi = async () => {
     try {
+      setResponse("");
       setStatus("fetching");
-      const results = await askWithAi(query);
 
-      setResults(results);
-
-      setStatus("success");
+      await askWithAi(query, wsRef);
     } catch {
       setStatus("error");
     }
@@ -173,21 +196,29 @@ export const AiAsk: React.FC = () => {
         </Button>
       </Box>
 
-      {status === "fetching" && (
-        <Paper
-          sx={{
-            ...padding,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: 2,
-          }}
-        >
-          <CircularProgress />
-          <Typography>
-            Hold tight, our smart travel guide is planning your perfect day
-          </Typography>
+      {status && (
+        <Paper sx={padding}>
+          {status === "fetching" && response === "" ? (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Markdown
+              parseParagraphContent={(content) =>
+                parseParagraphContent(content, services || [])
+              }
+            >
+              {response}
+            </Markdown>
+          )}
         </Paper>
       )}
 
@@ -195,18 +226,6 @@ export const AiAsk: React.FC = () => {
         <Alert severity="error">
           There was an unexpected error. We are working hard to fix it.
         </Alert>
-      )}
-
-      {!!results && status === "success" && (
-        <Paper sx={padding}>
-          <Markdown
-            parseParagraphContent={(content) =>
-              parseParagraphContent(content, results.services)
-            }
-          >
-            {results.response}
-          </Markdown>
-        </Paper>
       )}
 
       <Box sx={{ textAlign: "right" }}>

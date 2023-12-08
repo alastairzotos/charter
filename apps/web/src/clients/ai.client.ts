@@ -1,5 +1,5 @@
 import { httpClient } from "clients/http.client";
-import { AskAiDto, ServiceDto } from "dtos";
+import { ServiceDto } from "dtos";
 
 export const searchWithAi = async (query: string) => {
   const { data } = await httpClient.get<ServiceDto[]>(
@@ -9,8 +9,10 @@ export const searchWithAi = async (query: string) => {
   return data;
 };
 
-export const askWithAi = async (query: string) => {
-  const { data } = await httpClient.get<AskAiDto>(`/ai/ask?query=${query}`);
+export const askWithAi = async (query: string, wsRef: string) => {
+  const { data } = await httpClient.get(
+    `/ai/ask?query=${query}&wsref=${wsRef}`
+  );
 
   return data;
 };

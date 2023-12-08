@@ -7,7 +7,8 @@ import { LLMChain } from 'langchain/chains';
 import { EnvService } from 'environment/environment.service';
 import { AiRepository } from 'features/ai/ai.repository';
 import { Service } from 'schemas/service.schema';
-import { AskAiDto } from 'dtos';
+import { WebSocketManager } from 'utils/ws';
+import { AiResponse } from 'dtos';
 
 const FIND_RESULTS = 5;
 
@@ -15,11 +16,14 @@ const FIND_RESULTS = 5;
 export class AiService {
   private embeddings: OpenAIEmbeddings;
   private chain: LLMChain;
+  private wsManager: WebSocketManager;
 
   constructor(
     private readonly envService: EnvService,
     private readonly aiRepo: AiRepository,
   ) {
+    this.wsManager = new WebSocketManager(5432);
+
     this.embeddings = new OpenAIEmbeddings({
       openAIApiKey: this.envService.get().openAiApiKey,
     });
@@ -29,6 +33,7 @@ export class AiService {
       modelName: 'gpt-3.5-turbo',
       // modelName: 'gpt-4-1106-preview',
       temperature: 0,
+      streaming: true,
     });
 
     const prompt = new PromptTemplate({
@@ -65,7 +70,9 @@ export class AiService {
     return similar.services;
   }
 
-  async ask(query: string): Promise<AskAiDto> {
+  async ask(query: string, wsRef: string) {
+    const wsChannel = this.wsManager.getChannel(wsRef);
+
     const vector = await this.embeddings.embedQuery(query);
 
     const similar = await this.aiRepo.findSimilar(vector, FIND_RESULTS, true);
@@ -81,15 +88,25 @@ export class AiService {
       )
       .join('\n---\n');
 
-    const res = await this.chain.call({
-      location: 'Corfu, Greece',
-      context,
-      query,
-    });
+    wsChannel.sendMessage<AiResponse>({ services: similar.services });
 
-    return {
-      services: similar.services,
-      response: res.text,
-    };
+    await this.chain.call(
+      {
+        location: 'Corfu, Greece',
+        context,
+        query,
+      },
+      {
+        callbacks: [
+          {
+            handleLLMNewToken(token) {
+              wsChannel.sendMessage<AiResponse>({ token });
+            },
+          },
+        ],
+      },
+    );
+
+    wsChannel.sendMessage<AiResponse>({ stop: true });
   }
 }
