@@ -44,11 +44,12 @@ export class AiService {
         You may also use your knowledge of {location} to make your replies more interesting.
         All you can do it make recommendations. You can't do anything on behalf of the user, such as make bookings or contact service operators.
         Don't ask for follow-up questions or help. The user cannot reply to you.
-        Each service has a "service reference" in this format: [<service name>:<id>]. For example, [My Service:123].
         Phrase your recommendations like this:
-          <service reference>: <content>
+          1. <service id>\n<content>
+          2. <service id>\n<content>
         For example:
-          [My Service:123]: We recommend you try this service
+          1. [123]\nWe recommend you try this service
+          2. [456]\nYou might also like this one
         You may recommend one or more services depending on their relevance.
         If you recommend multiple services put them in a list format.
         `,
@@ -77,18 +78,30 @@ export class AiService {
 
     const similar = await this.aiRepo.findSimilar(vector, FIND_RESULTS, true);
 
-    // const context = similar.embeddings.matches
-    //   .map((match) => `id: ${match.id}\n${match.metadata?.content}`)
-    //   .join('\n---\n');
-
-    const context = similar.services
-      .map(
-        (match) =>
-          `reference: [${match.name}:${match._id}]\ndescription: ${match.description}`,
-      )
+    const context = similar.embeddings.matches
+      .map((match) => `id: ${match.id}\n${match.metadata?.content}`)
       .join('\n---\n');
 
-    wsChannel.sendMessage<AiResponse>({ services: similar.services });
+    // const context = similar.services
+    //   .map(
+    //     (match) =>
+    //       `service id: [${match._id}]\ndescription: ${match.description}`,
+    //   )
+    //   .join('\n---\n');
+
+    const serviceTable = similar.services.reduce(
+      (acc, cur) => ({ ...acc, [cur._id]: cur }),
+      {} as Record<string, Service>,
+    );
+
+    let inServiceRef = false;
+    let serviceRefTokens = [];
+
+    const sendToken = (token: string) => {
+      if (token !== '') {
+        wsChannel.sendMessage<AiResponse>({ type: 'token', token });
+      }
+    };
 
     await this.chain.call(
       {
@@ -100,13 +113,41 @@ export class AiService {
         callbacks: [
           {
             handleLLMNewToken(token) {
-              wsChannel.sendMessage<AiResponse>({ token });
+              if (inServiceRef) {
+                if (token.includes(']')) {
+                  const [serviceRefToken, regularToken] = token.split(']');
+                  serviceRefTokens.push(serviceRefToken);
+
+                  const id = serviceRefTokens.join('');
+
+                  inServiceRef = false;
+                  serviceRefTokens = [];
+
+                  wsChannel.sendMessage<AiResponse>({
+                    type: 'service-ref',
+                    serviceRef: serviceTable[id],
+                  });
+                  sendToken(regularToken);
+                } else {
+                  serviceRefTokens.push(token);
+                }
+              } else {
+                if (token.includes('[')) {
+                  inServiceRef = true;
+                  const [regularToken, serviceRefToken] = token.split('[');
+
+                  serviceRefTokens.push(serviceRefToken);
+                  sendToken(regularToken);
+                } else {
+                  sendToken(token);
+                }
+              }
             },
           },
         ],
       },
     );
 
-    wsChannel.sendMessage<AiResponse>({ stop: true });
+    wsChannel.sendMessage<AiResponse>({ type: 'stop' });
   }
 }

@@ -6,13 +6,9 @@ import Link from "next/link";
 
 interface Props {
   children: string;
-  parseParagraphContent?: (content: string) => React.ReactNode;
 }
 
-export const Markdown: React.FC<Props> = ({
-  children,
-  parseParagraphContent,
-}) => (
+export const Markdown: React.FC<Props> = ({ children }) => (
   <ReactMarkdown
     components={{
       h1: ({ children }) => <Typography variant="h1">{children}</Typography>,
@@ -28,11 +24,7 @@ export const Markdown: React.FC<Props> = ({
       ),
       p: ({ children }) => (
         <>
-          <Typography>
-            {parseParagraphContent
-              ? parseParagraphContent(children as string)
-              : children}
-          </Typography>
+          <Typography>{children}</Typography>
           <br />
         </>
       ),
