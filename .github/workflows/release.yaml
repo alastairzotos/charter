@@ -32,7 +32,7 @@ jobs:
           tags: bitmetro/charter-api:${{ github.ref_name }}
           build-args: |
             SCOPE=api
-            PORT=3001
+            PORT=3001 5432
   web:
     runs-on: ubuntu-latest
 
