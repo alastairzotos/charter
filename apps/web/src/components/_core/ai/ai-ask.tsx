@@ -51,10 +51,8 @@ const parseParagraphContent = (
         text: currentToken,
       });
     } else {
-      const serviceParts = currentToken.split(" ");
-      const id = serviceParts.pop()!;
+      let [name, id] = currentToken.split(":");
 
-      let name = serviceParts.join(" ").trim();
       if (!name || name === "") {
         name = "View";
       }

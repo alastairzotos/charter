@@ -37,14 +37,15 @@ export class AiService {
         The user has asked you the following thing: {query}.
         Reply to them with reference to the following services that we offer: {context}.
         You may also use your knowledge of {location} to make your replies more interesting.
-        You may recommend one or more services depending on their relevance.
-        If you recommend multiple services put them in a list format.
         All you can do it make recommendations. You can't do anything on behalf of the user, such as make bookings or contact service operators.
         Don't ask for follow-up questions or help. The user cannot reply to you.
-        When mentioning a service you must provide its name and id in the following format: [<Service name> <service id>].
-          The service name and service id MUST be inside the square brackets.
-          For example, if "Service A" has id "123" you must say "[Service A 123]".
-          You must not mention the service name outside the square brackets.
+        Each service has a "service reference" in this format: [<service name>:<id>]. For example, [My Service:123].
+        Phrase your recommendations like this:
+          <service reference>: <content>
+        For example:
+          [My Service:123]: We recommend you try this service
+        You may recommend one or more services depending on their relevance.
+        If you recommend multiple services put them in a list format.
         `,
       inputVariables: ['location', 'context', 'query'],
     });
@@ -69,12 +70,15 @@ export class AiService {
 
     const similar = await this.aiRepo.findSimilar(vector, FIND_RESULTS, true);
 
-    // const context = similar.services
-    //   .map(match => `id: ${match._id}\nname: ${match.name}\ndescription: ${match.description}`)
+    // const context = similar.embeddings.matches
+    //   .map((match) => `id: ${match.id}\n${match.metadata?.content}`)
     //   .join('\n---\n');
 
-    const context = similar.embeddings.matches
-      .map((match) => `id: ${match.id}\n${match.metadata?.content}`)
+    const context = similar.services
+      .map(
+        (match) =>
+          `reference: [${match.name}:${match._id}]\ndescription: ${match.description}`,
+      )
       .join('\n---\n');
 
     const res = await this.chain.call({
