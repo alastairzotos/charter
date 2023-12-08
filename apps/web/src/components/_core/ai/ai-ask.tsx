@@ -28,6 +28,7 @@ export const AiAsk: React.FC = () => {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<FetchStatus | null>(null);
   const [content, setContent] = useState<AiContentToken[]>([]);
+
   const placeholder = usePlaceholder();
 
   const [wsConn, refreshWsConn] = useWebSockets(
@@ -115,7 +116,7 @@ export const AiAsk: React.FC = () => {
               <CircularProgress />
             </Box>
           ) : (
-            content.map((token) =>
+            content.map((token, index) =>
               token.type === "service-ref" ? (
                 <ServiceChip service={token.serviceRef} />
               ) : (
