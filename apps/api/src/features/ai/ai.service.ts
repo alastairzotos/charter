@@ -7,8 +7,8 @@ import { LLMChain } from 'langchain/chains';
 import { EnvService } from 'environment/environment.service';
 import { AiRepository } from 'features/ai/ai.repository';
 import { Service } from 'schemas/service.schema';
-import { WebSocketManager } from 'utils/ws';
 import { AiResponse } from 'dtos';
+import { WebSocketManager } from 'utils/ws';
 
 const FIND_RESULTS = 5;
 

@@ -68,6 +68,7 @@
     "@types/stylis": "^4.2.4",
     "@types/supertest": "^2.0.11",
     "@types/uuid": "^9.0.0",
+    "@types/ws": "^8.5.10",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "dtos": "*",
