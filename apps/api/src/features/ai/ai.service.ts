@@ -52,6 +52,7 @@ export class AiService {
           2. [456]\nYou might also like this one
         You may recommend one or more services depending on their relevance.
         If you recommend multiple services put them in a list format.
+        Keep your recommendations brief.
         `,
       inputVariables: ['location', 'context', 'query'],
     });

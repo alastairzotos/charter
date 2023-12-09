@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FetchStatus } from "@bitmetro/create-query";
 import {
   Alert,
@@ -11,6 +11,7 @@ import {
   SxProps,
   TextField,
   Typography,
+  styled,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { askWithAi } from "clients/ai.client";
@@ -24,7 +25,15 @@ import { AiResponseToken } from "components/_core/ai/ai-response-token";
 
 const wsRef = uuidv4();
 
+const Scrollable = styled("div")(() => ({
+  height: 500,
+  maxHeight: `calc(100vh - 200px)`,
+  overflowY: "scroll",
+}));
+
 export const AiAsk: React.FC = () => {
+  const scrollingDivRef = useRef<HTMLDivElement>(null);
+
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState<FetchStatus | null>(null);
   const [content, setContent] = useState<AiContentToken[]>([]);
@@ -35,6 +44,11 @@ export const AiAsk: React.FC = () => {
     getEnv().wsUrl,
     wsRef,
     (data: AiResponse) => {
+      if (scrollingDivRef.current) {
+        scrollingDivRef.current.scrollTop =
+          scrollingDivRef.current.scrollHeight;
+      }
+
       switch (data.type) {
         case "token":
         case "service-ref":
@@ -116,13 +130,15 @@ export const AiAsk: React.FC = () => {
               <CircularProgress />
             </Box>
           ) : (
-            content.map((token, index) =>
-              token.type === "service-ref" ? (
-                <ServiceChip service={token.serviceRef} />
-              ) : (
-                <AiResponseToken text={token.token} />
-              )
-            )
+            <Scrollable ref={scrollingDivRef}>
+              {content.map((token, index) =>
+                token.type === "service-ref" ? (
+                  <ServiceChip service={token.serviceRef} />
+                ) : (
+                  <AiResponseToken text={token.token} />
+                )
+              )}
+            </Scrollable>
           )}
         </Paper>
       )}
